@@ -1,26 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { Error404Component } from './pages/error404/error404.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { HeaderComponent } from './shared/header/header.component';
+//*Own Modules
 import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
+import { PagesModule } from './pages/pages.module';
+import { AppRoutingModule } from './app-routing.module';
+
+//*Components
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Error404Component,
-    DashboardComponent,
-    BreadcrumbsComponent,
-    SidebarComponent,
-    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AuthModule,
+    SharedModule,
+    PagesModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
