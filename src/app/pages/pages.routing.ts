@@ -14,7 +14,7 @@ import { MedicalRecordComponent } from './medical-record/medical-record.componen
           { path: 'dashboard', component: DashboardComponent },
           { path: 'medical-record', component: MedicalRecordComponent },
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-          
+          { path: '**', component: Error404Component}
           
         ]
     },
