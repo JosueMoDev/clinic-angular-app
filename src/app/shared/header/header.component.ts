@@ -13,8 +13,8 @@ export class HeaderComponent {
   ngOnInit() {
       this.darkMode = localStorage.getItem('theme');
     
-      if (this.darkMode === null) { 
-        this.darkMode = 'light';
+    if (this.darkMode === null) { 
+        this.darkMode = 'light'
         return localStorage.removeItem('theme');
       }
       if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -25,11 +25,10 @@ export class HeaderComponent {
     }
 
   toggleDarkMode() { 
-    
     (document.documentElement.classList.toggle('dark'))
       ? localStorage.setItem('theme', 'dark')
       : localStorage.setItem('theme', 'light')
-      this.darkMode = localStorage.getItem('theme');
+    this.darkMode = localStorage.getItem('theme');   
   }
 
 }
