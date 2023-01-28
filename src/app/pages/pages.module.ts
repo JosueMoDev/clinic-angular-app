@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
+import { PorcentageCardComponent } from './components/porcentage-card/porcentage-card.component';
 
 
 
@@ -18,6 +19,7 @@ import { PagesComponent } from './pages.component';
     DashboardComponent,
     Error404Component,
     MedicalRecordComponent,
+    PorcentageCardComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { PagesComponent } from './pages.component';
   ],
   exports: [
     DashboardComponent,
+    PagesComponent,
     Error404Component
   ]
 })
