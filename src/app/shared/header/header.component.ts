@@ -13,9 +13,9 @@ export class HeaderComponent {
   ngOnInit() {
       this.darkMode = localStorage.getItem('theme');
     
-    if (this.darkMode === null) { 
+      if (this.darkMode === null) { 
         this.darkMode = 'light'
-        return localStorage.removeItem('theme');
+        
       }
       if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark')
