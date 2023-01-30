@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styles: [
   ]
 })
-export class Error404Component {
 
+export class Error404Component {
 }

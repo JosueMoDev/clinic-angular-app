@@ -15,10 +15,7 @@
         </div>
         <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
           <li class="flex items-center">
-            <a (click)="toggleDarkMode()" class="p-0 mx-2 text-sm text-white transition-all ease-nav-brand">
-              <i *ngIf="darkMode==='dark'" class="cursor-pointer fa fa-sun"></i>
-              <i *ngIf="darkMode==='light'" class="cursor-pointer fa fa-moon"></i>
-            </a>
+            <app-setter-theme></app-setter-theme>
           </li>
         </ul>
       </div>

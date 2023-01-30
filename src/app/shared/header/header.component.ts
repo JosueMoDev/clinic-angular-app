@@ -8,27 +8,5 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
-  darkMode!: string | null;
-
-  ngOnInit() {
-      this.darkMode = localStorage.getItem('theme');
-    
-      if (this.darkMode === null) { 
-        this.darkMode = 'light'
-        
-      }
-      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-    }
-
-  toggleDarkMode() { 
-    (document.documentElement.classList.toggle('dark'))
-      ? localStorage.setItem('theme', 'dark')
-      : localStorage.setItem('theme', 'light')
-    this.darkMode = localStorage.getItem('theme');   
-  }
 
 }

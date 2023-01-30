@@ -7,6 +7,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AddButtonComponent } from './add-button/add-button.component';
+import { SetterThemeComponent } from './setter-theme/setter-theme.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AddButtonComponent } from './add-button/add-button.component';
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    AddButtonComponent
+    AddButtonComponent,
+    SetterThemeComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { AddButtonComponent } from './add-button/add-button.component';
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    AddButtonComponent
+    AddButtonComponent,
+    SetterThemeComponent
   ]
 })
 export class SharedModule { }
