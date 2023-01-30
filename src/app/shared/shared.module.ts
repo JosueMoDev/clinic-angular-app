@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { SetterThemeComponent } from './setter-theme/setter-theme.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SetterThemeComponent } from './setter-theme/setter-theme.component';
   ],
   imports: [
     CommonModule,
+    RouterModule
   ],
   exports: [
     BreadcrumbsComponent,
