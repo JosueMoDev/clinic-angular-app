@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ThemeService } from './services/theme.service';
+import { UiService } from './services/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,6 @@ import { ThemeService } from './services/theme.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public theme: ThemeService){}
+  constructor(public ui: UiService){}
   title = 'my-medical-angular-app-fronted';
 }

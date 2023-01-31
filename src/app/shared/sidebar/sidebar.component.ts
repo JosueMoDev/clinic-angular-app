@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,11 +8,10 @@ import { Component } from '@angular/core';
   ]
 })
 export class SidebarComponent {
-  public isSideBarOpen: boolean = false;
-
+  constructor(public ui: UiService) { }
+  
   toggleSideBar() {
-    this.isSideBarOpen = !this.isSideBarOpen;
-    console.log( this.isSideBarOpen)
+    this.ui.toggleSideBar();
   }
 
 }

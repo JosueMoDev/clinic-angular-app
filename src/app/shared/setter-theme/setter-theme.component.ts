@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ThemeService } from 'src/app/services/theme.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-setter-theme',
@@ -9,14 +9,14 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class SetterThemeComponent {
   darkMode!: string | null;
-  constructor( public theme: ThemeService){}
+  constructor( public ui: UiService){}
   ngOnInit() {
     this.darkMode = localStorage.getItem("theme");
     if (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) { this.darkMode = 'dark' } 
   }
 
   toggleDarkMode() { 
-    this.theme.setTheme();
+    this.ui.setTheme();
     this.darkMode = localStorage.getItem("theme");
   }
 }
