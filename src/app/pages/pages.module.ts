@@ -10,6 +10,7 @@ import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
 import { PorcentageCardComponent } from './components/porcentage-card/porcentage-card.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -20,6 +21,7 @@ import { PorcentageCardComponent } from './components/porcentage-card/porcentage
     Error404Component,
     MedicalRecordComponent,
     PorcentageCardComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,

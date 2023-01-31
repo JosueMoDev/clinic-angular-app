@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { Error404Component } from './error404/error404.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
  
  const routes: Routes = [
     {
@@ -13,6 +14,8 @@ import { Error404Component } from './error404/error404.component';
         children: [
           { path: '', component: DashboardComponent },
           { path: 'medical-record', component: MedicalRecordComponent },
+          { path: 'user-profile', component: UserProfileComponent },
+
           {path: '**', component: Error404Component}
         ]
     },
