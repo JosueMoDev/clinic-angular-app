@@ -1,23 +1,21 @@
   <!-- Navbar -->
-  <nav class="sticky  border-none flex flex-wrap items-center justify-between px-2 py-2 mx-[3%] xl:mx-[2%] transition-all  duration-250 rounded-2xl   top-[1%] backdrop-saturate-200 dark:bg-slate-850 bg-blue-500   z-110">
-    <div class="flex items-center justify-between w-full px-1 py-1 mx-auto flex-wrap-inherit" navbar-main navbar-scroll="true">
+  <nav class="sticky  border-none flex flex-wrap items-center justify-between px-2 py-2 mx-2 md:mx-[3%] xl:mx-[2%] transition-all  duration-250 rounded-2xl   top-[1%] backdrop-saturate-200 dark:bg-slate-850 bg-blue-500   z-110">
+    <div class="block md:flex items-center justify-between w-full  py-1  space-x-0 md:space-x-[5%] flex-wrap-inherit" navbar-main navbar-scroll="true">
       
       <app-breadcrumbs></app-breadcrumbs>
 
-      <div class="flex items-center justify-end mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
-        <div class="flex items-center w-8/12 md:ml-auto md:pr-4">
+      <div class="flex items-center justify-end grow">
+        <div class="flex items-center w-full ">
           <div class="relative flex flex-wrap items-end w-full transition-all rounded-lg ease">
             <span class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
               <i class="fas fa-search"></i>
             </span>
-            <input type="text" class="pl-9 text-sm focus:shadow-primary-outline ease w-12/12 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow" placeholder="Type here..." />
+            <input type="text" class="pl-9 text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 md:py-3.5  text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow" placeholder="Type here..." />
+          </div>
+          <div class="mx-0 md:mx-1">
+            <app-setter-theme></app-setter-theme>
           </div>
         </div>
-        <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
-          <li class="flex items-center">
-            <app-setter-theme></app-setter-theme>
-          </li>
-        </ul>
       </div>
     </div>
   </nav>

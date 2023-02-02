@@ -9,6 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { SetterThemeComponent } from './setter-theme/setter-theme.component';
 import { RouterModule } from '@angular/router';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     SidebarComponent,
     AddButtonComponent,
-    SetterThemeComponent
+    SetterThemeComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
