@@ -11,6 +11,10 @@ import { MedicalRecordComponent } from './medical-record/medical-record.componen
 import { PagesComponent } from './pages.component';
 import { PorcentageCardComponent } from './components/porcentage-card/porcentage-card.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RegisterComponent } from './users/register.component';
+import { StepperComponent } from './components/stepper/stepper.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -22,11 +26,14 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MedicalRecordComponent,
     PorcentageCardComponent,
     UserProfileComponent,
+    RegisterComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   
   ],
   exports: [
