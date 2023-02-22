@@ -14,6 +14,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RegisterComponent } from './users/register.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularMaterialModule } from '../angular-material.module';
 
 
 
@@ -33,7 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AppRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularMaterialModule
   
   ],
   exports: [

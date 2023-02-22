@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AngularMaterialModule } from '../angular-material.module'; 
 
 //* Components
 import { FooterComponent } from './footer/footer.component';
@@ -24,7 +25,8 @@ import { CalendarComponent } from './calendar/calendar.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AngularMaterialModule
   ],
   exports: [
     BreadcrumbsComponent,
