@@ -17,6 +17,8 @@ import { map } from 'rxjs';
 })
 export class RegisterComponent {
   public isFirstStepValid: string = '';
+  public isSecondStepValid: string = '';
+
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   
@@ -27,28 +29,32 @@ export class RegisterComponent {
       email: ['jonastest@mail.com', Validators.required],
       password: ['', Validators.required],
     }),
+    rol: ['',Validators.required],
     file:['']
 
   });
   ngOnInit() {
-    const isvalid = this.registerForm.get('personalInformation')?.statusChanges.pipe(map(e=> e))
-    isvalid?.subscribe( status => this.isFirstStepValid = status)
+    this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status)
+    this.registerForm.get('rol')?.statusChanges.subscribe( status => this.isSecondStepValid = status)
+    
   }
   constructor(private formbuilder: FormBuilder, private userservice: UserService) {}
 
 
   createUser() {
-    this.formSubmitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
+    console.log(this.isFirstStepValid === 'VALID' && this.isSecondStepValid === 'VALID') 
+
+    // this.formSubmitted = true;
+    // if (!this.registerForm.invalid) {
+    //   return;
+    // }
     // send data
     this.userservice.crearteNewUserWithEmailAndPassword(this.registerForm.value)
      
   }
 
   nextPage() {
-    if (  this.isFirstStepValid ==='VALID' ) {
+    if (  this.isFirstStepValid ==='VALID' || this.isSecondStepValid==='VALID' ) {
      
        this.currentStep = this.currentStep+1
     }
