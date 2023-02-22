@@ -25,9 +25,9 @@ export class RegisterComponent {
 
   public registerForm: FormGroup = this.formbuilder.group({
     personalInformation: this.formbuilder.group({
-      name: ['', Validators.required],
+      name: ['jonas', Validators.required],
       email: ['jonastest@mail.com', Validators.required],
-      password: ['', Validators.required],
+      password: ['12345', Validators.required],
     }),
     rol: ['',Validators.required],
     file:['']
