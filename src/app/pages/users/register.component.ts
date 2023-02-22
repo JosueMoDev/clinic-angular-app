@@ -3,6 +3,7 @@ import { Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -15,29 +16,26 @@ import { UserService } from 'src/app/services/user.service';
   ]
 })
 export class RegisterComponent {
-  public isFirstStepValid = false;
+  public isFirstStepValid: string = '';
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   
 
   public registerForm: FormGroup = this.formbuilder.group({
-    name: ['', Validators.required],
-    email: ['jonastest@mail.com', Validators.required],
-    password: ['', Validators.required],
+    personalInformation: this.formbuilder.group({
+      name: ['', Validators.required],
+      email: ['jonastest@mail.com', Validators.required],
+      password: ['', Validators.required],
+    }),
     file:['']
 
   });
-
+  ngOnInit() {
+    const isvalid = this.registerForm.get('personalInformation')?.statusChanges.pipe(map(e=> e))
+    isvalid?.subscribe( status => this.isFirstStepValid = status)
+  }
   constructor(private formbuilder: FormBuilder, private userservice: UserService) {}
 
-  firstStep() { 
-    if (
-      !this.registerForm.get('name')?.invalid &&
-      !this.registerForm.get('email')?.invalid
-      && !this.registerForm.get('password')?.invalid) {
-       console.log(this.isFirstStepValid=true)
-    }
-  }
 
   createUser() {
     this.formSubmitted = true;
@@ -50,13 +48,13 @@ export class RegisterComponent {
   }
 
   nextPage() {
-    if (  this.isFirstStepValid ) {
+    if (  this.isFirstStepValid ==='VALID' ) {
      
        this.currentStep = this.currentStep+1
     }
   }
   previusPage() {
-    this.isFirstStepValid=false
+    
     this.currentStep = this.currentStep-1
   }
 

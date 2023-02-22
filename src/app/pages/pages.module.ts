@@ -13,7 +13,7 @@ import { PorcentageCardComponent } from './components/porcentage-card/porcentage
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RegisterComponent } from './users/register.component';
 import { StepperComponent } from './components/stepper/stepper.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 
 

@@ -35,8 +35,8 @@
           <li class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-slate-100 after:border-4 dark:after:border-slate-500 after:inline-block ">
             <span class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full dark:bg-slate-500 lg:h-10 lg:w-10 shrink-0" >
               <div class="flex items-center justify-center">
-                <mat-icon *ngIf="!isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="person"/>
-                <mat-icon *ngIf="isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
+                <mat-icon *ngIf="isFirstStepValid==='VALID'" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
+                <mat-icon *ngIf="isFirstStepValid!=='VALID'" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="person"/>
               </div>
             </span>
           </li>
@@ -63,7 +63,7 @@
       <form role="form text-left w-full" (ngSubmit)="createUser()" [formGroup]="registerForm">
         <div class="py-5 ">
           <!-- Step 1 -->
-          <section *ngIf="currentStep===1" >
+          <div *ngIf="currentStep===1" formGroupName="personalInformation" >
             <div class="mb-4">
               <input 
               type="text"  
@@ -72,7 +72,6 @@
               aria-label="Name" 
               aria-describedby="email-addon" 
               formControlName="name"
-              (change)="firstStep()"
 
               />
             </div>
@@ -84,7 +83,6 @@
               aria-label="Email" 
               aria-describedby="email-addon" 
               formControlName="email"
-              change="firstStep()"
               />
             </div>
             <div class="mb-4">
@@ -95,15 +93,14 @@
               aria-label="Password" 
               aria-describedby="password-addon" 
               formControlName="password"
-              change="firstStep()"
 
               />
             </div>
            
             <div class="text-center" >
-              <button type="button" [disabled]="!isFirstStepValid" (click)="nextPage()" class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
+              <button type="button" [disabled]="isFirstStepValid!=='VALID'" (click)="nextPage()" class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
             </div>
-          </section>
+          </div>
     
           <!-- Step 2 -->
     
