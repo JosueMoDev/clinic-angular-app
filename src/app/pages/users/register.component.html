@@ -1,33 +1,6 @@
-<!-- 
-<mat-stepper class="px-5 mx-10 bg-red-100">
-  <mat-step label="User Information"  state="person">
-    <p>Put down your phones.</p>
-    <div>
-      <button mat-button matStepperNext>Next</button>
-    </div>
-  </mat-step>
-  <mat-step label="User assignment"  editable="false" state="assignment">
-    <p>Socialize with each other.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
-  </mat-step>
-  <mat-step label="Set Photo" editable="false" state="photo_camera">
-    <p>You're welcome.</p>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Submit</button>
-  </mat-step>
-
-  // Icon overrides.
-  <ng-template matStepperIcon="done">
-    <mat-icon>done</mat-icon>
-  </ng-template>
-</mat-stepper> -->
-
 <div class="w-full ">
   <div class="flex justify-center ">
-    <div class=" w-[90%] md:w-[80%] bg-slate-50 rounded-xl dark:bg-slate-850 m-5 p-5 space-y-2">
+    <div class=" w-[90%] md:w-[80%] bg-slate-50 shadow-xl dark:shadow-none rounded-xl dark:bg-slate-850 m-5 p-5 space-y-2">
       <p class="text-2xl text-start">Register form</p>
       <ol class="flex items-center justify-center w-full">
         <div class="flex justify-center w-full">
@@ -40,10 +13,10 @@
               </div>
             </span>
           </li>
-          <li *ngIf="isFirstStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-green-800 after:border-4  after:inline-block " >
-            <span class="flex items-center justify-center w-8 h-8 bg-green-800 rounded-full lg:h-10 lg:w-10 shrink-0" >
+          <li *ngIf="isFirstStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
+            <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
               <div class="flex items-center justify-center">
-                <mat-icon  class="text-base text-center text-green-50" fontIcon="done"/>
+                <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
               </div>
             </span>
           </li>
@@ -57,10 +30,10 @@
               </div>
             </span>
           </li>
-          <li *ngIf="isSecondStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-green-800 after:border-4  after:inline-block " >
-            <span class="flex items-center justify-center w-8 h-8 bg-green-800 rounded-full lg:h-10 lg:w-10 shrink-0" >
+          <li *ngIf="isSecondStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
+            <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
               <div class="flex items-center justify-center">
-                <mat-icon  class="text-base text-center text-green-50" fontIcon="done"/>
+                <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
               </div>
             </span>
           </li>
@@ -80,38 +53,99 @@
         <div class="py-5 ">
           <!-- Step 1 -->
           <div *ngIf="currentStep===1" formGroupName="personalInformation" >
-            <div class="mb-4">
-              <input 
-              type="text"  
-              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
-              placeholder="Name" 
-              aria-label="Name" 
-              aria-describedby="email-addon" 
-              formControlName="name"
-
-              />
+            <div class="flex-col justify-center w-full columns-1 md:columns-2 ">
+              <div class="w-full mb-4">
+                <div class="mb-4">
+                  <div class="flex rounded-md ">
+                    <span class="inline-flex items-center px-3 py-2 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
+                      <div class="flex items-center justify-center align-middle">
+                        <select 
+                          class="uppercase bg-transparent border-none focus:outline-none" 
+                          name="document"
+                          formControlName="document_type"
+                        > 
+                          <option class="text-center " value="DUI">DUI</option>
+                          <option value="PASSPORT">PASSPORT</option>
+                        </select>
+                      </div>
+                    </span>
+                    <input 
+                      *ngIf="document_type==='DUI'"
+                      type="text"  
+                      class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                      placeholder="DUI" 
+                      aria-label="DUI" 
+                      aria-describedby="dui-addon" 
+                      formControlName="user_id"
+                      mask="00000000-0"
+                    />
+                    <input 
+                    *ngIf="document_type==='PASSPORT'"
+                    type="text"  
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="PASSPORT" 
+                    aria-label="PASSPORT" 
+                    aria-describedby="passport-addon" 
+                    formControlName="user_id"
+                    mask="A0000000"
+                  />
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="flex rounded-md ">
+                
+                    <input 
+                      type="email" 
+                      class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border border-l border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                      placeholder="Email" 
+                      aria-label="Email" 
+                      aria-describedby="email-addon" 
+                      formControlName="email"
+                    />
+                  
+                  <span class="inline-flex items-center px-3 py-2 text-sm font-normal transition-all border-none rounded-r-lg cursor-pointer bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
+                    <div class="flex items-center justify-center align-middle">
+                      <select 
+                        class="lowercase bg-transparent border-none focus:outline-none" 
+                        name="document"
+                        formControlName="mail_provider"
+                      > 
+                        <option value="@gmail.com">@gmail.com</option>
+                        <option value="@theclinic.com">@theclinic.com</option>
+                      </select>
+                    </div>
+                  </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="mb-4">
-              <input 
-              type="email" 
-              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white  dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-              placeholder="Email" 
-              aria-label="Email" 
-              aria-describedby="email-addon" 
-              formControlName="email"
-              />
+          
+            <div class="flex-col justify-center w-full columns-1 md:columns-2 ">
+              <div class="w-full mb-4">
+                <input 
+                type="text"  
+                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                placeholder="Name" 
+                aria-label="Name" 
+                aria-describedby="email-addon" 
+                formControlName="name"
+  
+                />
+              </div>
+              <div class="w-full mb-4">
+                <input 
+                type="text"  
+                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                placeholder="Lastname" 
+                aria-label="Lastname" 
+                aria-describedby="lastname-addon" 
+                formControlName="lastname"
+  
+                />
+              </div>
             </div>
-            <div class="mb-4">
-              <input 
-              type="password" 
-              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white  dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
-              placeholder="Password" 
-              aria-label="Password" 
-              aria-describedby="password-addon" 
-              formControlName="password"
-
-              />
-            </div>
+         
+           
             <div class="flex justify-end w-full">
               <div class="flex justify-end text-center w-fit" >
                 <button type="button" [disabled]="isFirstStepValid!=='VALID'" (click)="nextPage()" class="inline-block w-full3 px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
@@ -121,16 +155,17 @@
     
           <!-- Step 2 -->
     
-          <section *ngIf="currentStep===2" >
-            <div class="mb-4">
+          <div *ngIf="currentStep===2" >
+            <div class="mb-4 ">
               <select
-                type="t" 
-                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
+                type="text" 
+                class="placeholder:text-gray-700   text-center text-sm focus:shadow-primary-outline leading-5.6 ease block w-full rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="rol" 
                 aria-label="rol" 
                 aria-describedby="email-addon" 
                 formControlName="rol"
                 >
+                <option value="" class="hidden" selected disabled>Select user rol</option>
                 <option value="operador">operador</option>
                 <option value="doctor">doctor</option>
 
@@ -144,7 +179,7 @@
                 <button type="button" (click)="nextPage()" [disabled]="!(isFirstStepValid==='VALID'&& isSecondStepValid==='VALID')" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
               </div>
             </div>
-          </section>
+          </div>
 
 
         <!-- Step 3 -->

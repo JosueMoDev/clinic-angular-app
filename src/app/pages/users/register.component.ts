@@ -3,7 +3,7 @@ import { Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
-import { map } from 'rxjs';
+
 
 @Component({
   selector: 'app-register',
@@ -18,16 +18,19 @@ import { map } from 'rxjs';
 export class RegisterComponent {
   public isFirstStepValid: string = '';
   public isSecondStepValid: string = '';
+  public document_type:string = 'DUI';
 
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   
-
   public registerForm: FormGroup = this.formbuilder.group({
     personalInformation: this.formbuilder.group({
+      document_type: ['DUI', Validators.required],
+      user_id: ['04850790-7', Validators.required],
+      mail_provider:['@gmail.com', Validators.required],
+      email: ['jonasmorales', Validators.required],
       name: ['jonas', Validators.required],
-      email: ['jonastest@mail.com', Validators.required],
-      password: ['12345', Validators.required],
+      lastname: ['morales', Validators.required],
     }),
     rol: ['',Validators.required],
     file:['']
@@ -35,8 +38,8 @@ export class RegisterComponent {
   });
   ngOnInit() {
     this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status)
-    this.registerForm.get('rol')?.statusChanges.subscribe( status => this.isSecondStepValid = status)
-    
+    this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
+    this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
   }
   constructor(private formbuilder: FormBuilder, private userservice: UserService) {}
 

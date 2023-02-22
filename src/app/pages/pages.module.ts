@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularMaterialModule } from '../angular-material.module';
 
 
 //* Components
@@ -13,8 +15,8 @@ import { PorcentageCardComponent } from './components/porcentage-card/porcentage
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RegisterComponent } from './users/register.component';
 import { StepperComponent } from './components/stepper/stepper.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularMaterialModule } from '../angular-material.module';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 
 
 
@@ -35,13 +37,16 @@ import { AngularMaterialModule } from '../angular-material.module';
     AppRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   
   ],
   exports: [
     DashboardComponent,
     PagesComponent,
     Error404Component
-  ]
+  ],
+  providers:[provideNgxMask()]
 })
 export class PagesModule { }
