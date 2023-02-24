@@ -49,7 +49,7 @@
           </div>
         </ol>  
       
-      <form role="form text-left w-full" (ngSubmit)="createUser()" [formGroup]="registerForm">
+      <form role="form text-left w-full"  (ngSubmit)="createUser()" [formGroup]="registerForm">
         <div class="py-5 ">
           <!-- Step 1 -->
           <div *ngIf="currentStep===1" formGroupName="personalInformation" >
