@@ -53,8 +53,8 @@
         <div class="py-5 ">
           <!-- Step 1 -->
           <div *ngIf="currentStep===1" formGroupName="personalInformation" >
-            <div class="flex-col justify-center w-full columns-1 md:columns-2 ">
-              <div class="w-full mb-4">
+            <div class="grid grid-cols-1 gap-4 ">
+              <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                 <div class="mb-4">
                   <div class="flex rounded-md ">
                     <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
@@ -120,7 +120,7 @@
               </div>
             </div>
           
-            <div class="flex-col justify-center w-full columns-1 md:columns-2 ">
+            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
               <div class="w-full mb-4">
                 <input 
                 type="text"  
@@ -129,8 +129,31 @@
                 aria-label="Name" 
                 aria-describedby="email-addon" 
                 formControlName="name"
-  
+                appForbiddenName="bob"
                 />
+                <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                    class="alert alert-danger">
+
+                  <div  *ngIf="name?.errors?.['required']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/> 
+                      Name is required.
+                    </span>
+                  </div>
+                  <div *ngIf="name?.errors?.['minlength']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                      Name must be at least 3 characters long.
+                    </span>
+                  </div>
+                  <div *ngIf="name?.errors?.['forbiddenName']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                        Name cannot be jonas.
+                    </span>
+                  </div>
+                </div>
+  
               </div>
               <div class="w-full mb-4">
                 <input 
@@ -142,10 +165,27 @@
                 formControlName="lastname"
   
                 />
+                <div *ngIf="lastname?.invalid && (lastname?.dirty || lastname?.touched)">
+                  <div  *ngIf="lastname?.errors?.['required']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/> 
+                      Lastame is required.
+                    </span>
+                  </div>
+                  <div *ngIf="lastname?.errors?.['minlength']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                      Lastname must be at least 3 characters long.
+                    </span>
+                  </div>
+                  <!-- <div *ngIf="name?.errors?.['jonas']">
+                    Name cannot be Jonas.
+                  </div> -->
+                </div>
               </div>
             </div>
          
-            <div class="flex-col justify-center w-full columns-1 md:columns-2 ">
+            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
               <div class="w-full mb-4">
                 <input 
                 type="text"  
