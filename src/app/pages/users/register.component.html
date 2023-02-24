@@ -49,7 +49,7 @@
           </div>
         </ol>  
       
-      <form role="form text-left w-full"  (ngSubmit)="createUser()" [formGroup]="registerForm">
+      <form role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="createUser()" [formGroup]="registerForm">
         <div class="py-5 ">
           <!-- Step 1 -->
           <div *ngIf="currentStep===1" formGroupName="personalInformation" >
@@ -102,6 +102,7 @@
                       aria-describedby="email-addon" 
                       formControlName="email"
                     />
+                    
                   
                   <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-r-lg cursor-pointer bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
                     <div class="flex items-center justify-center align-middle">
@@ -116,6 +117,27 @@
                     </div>
                   </span>
                   </div>
+                  <div *ngIf="mail?.invalid && (mail?.dirty || mail?.touched)">
+                    <div  *ngIf="lastname?.errors?.['required']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/> 
+                        mail is required.
+                      </span>
+                    </div>
+                    <div *ngIf="mail?.errors?.['minlength']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/>
+                        mail must be at least 10 characters long.
+                      </span>
+                    </div>
+                    <div *ngIf="mail?.errors?.['forbiddenName']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2 "  fontIcon="error"/>
+                          mail only could have  
+                          a-z and dot(.) or  underscore(_)
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -129,7 +151,6 @@
                 aria-label="Name" 
                 aria-describedby="email-addon" 
                 formControlName="name"
-                appForbiddenName="bob"
                 />
                 <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
                     class="alert alert-danger">
@@ -146,10 +167,20 @@
                       Name must be at least 3 characters long.
                     </span>
                   </div>
+                  <div *ngIf="name?.errors?.['maxlength']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                      Name must be longger than 25 characters.
+                    </span>
+                  </div>
                   <div *ngIf="name?.errors?.['forbiddenName']">
                     <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                       <mat-icon class="mx-2"  fontIcon="error"/>
-                        Name cannot be jonas.
+                        Name only could have letters a-z.
+                    </span>
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                        Only two names are allowed.
                     </span>
                   </div>
                 </div>
@@ -178,9 +209,16 @@
                       Lastname must be at least 3 characters long.
                     </span>
                   </div>
-                  <!-- <div *ngIf="name?.errors?.['jonas']">
-                    Name cannot be Jonas.
-                  </div> -->
+                  <div *ngIf="name?.errors?.['forbiddenName']">
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                        Lastname only could have letters a-z.
+                    </span>
+                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                      <mat-icon class="mx-2"  fontIcon="error"/>
+                        Only two lastnames are allowed.
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,7 +230,7 @@
                 class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="Phone" 
                 aria-label="Name" 
-                aria-describedby="email-addon" 
+                aria-describedby="phone-addon" 
                 formControlName="phone"
                 prefix="+503"
                 mask="0000-0000"

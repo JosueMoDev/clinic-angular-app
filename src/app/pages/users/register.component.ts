@@ -31,14 +31,13 @@ export class RegisterComponent implements OnInit{
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: ['DUI', Validators.required],
-        user_id: ['04850790-7', Validators.required],
+        user_id: ['', Validators.required],
         mail_provider: ['@gmail.com', Validators.required],
-        email: ['jonasmorales', Validators.required],
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), this.forbiddenNameValidator( /^[(! " # $ % & ' * + , -. / : ; < = > ?^@ _ `{}|)+(0-9)+(0-9,0-9)+((! " # $ % & ' * + , -. / : ; < = > ?^@ _ `{}|),(! " # $ % & ' * + , -. / : ; < = > ?^@ _ `{}|))]/)]],
-        lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)] ],
+        email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+        lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
         phone: ['', Validators.required],
         gender: ['', Validators.required],
-       // \  [ ] ^  { | }}
       }),
       rol: ['',Validators.required],
       file:['']
@@ -65,13 +64,21 @@ export class RegisterComponent implements OnInit{
   }
 
   get name() { return this.registerForm.get('personalInformation.name'); }
-  get lastname(){ return this.registerForm.get('personalInformation.lastname'); }
-  
-  forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+  get lastname() { return this.registerForm.get('personalInformation.lastname'); }
+  get mail() { return this.registerForm.get('personalInformation.email'); } 
+
+  forbiddenInputTextValidator(): ValidatorFn {
+    const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/
     return (control: AbstractControl): ValidationErrors | null => {
-      const forbidden = nameRe.test(control.value);
-      console.log(forbidden ? {forbiddenName: {value: control.value}} : null)
-      return forbidden ? {forbiddenName: {value: control.value}} : null;
+      const isforbidden = isForbiddenInput.test(control.value);
+      return !isforbidden ? {forbiddenName: {value: control.value}} : null;
+    };
+  }
+  forbiddenInputMailValidator(): ValidatorFn {
+    const isForbiddenInput: RegExp = /^[a-zA-Z0-9._]+[a-zA-Z0-9._]+$/
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isforbidden = isForbiddenInput.test(control.value);
+      return !isforbidden ? {forbiddenName: {value: control.value}} : null;
     };
   }
   
