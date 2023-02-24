@@ -2,77 +2,71 @@
 
 <a *ngIf="!ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover: dark:hover:bg-slate-800  rounded-lg z-30 fixed py-1 px-1 cursor-pointer text-xl justify-center left-0 text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
 <aside [ngClass]="{'ml-0 -translate-x-full': !ui.isSideBarOpen }"  class="fixed inset-y-0 flex-wrap items-center justify-between block p-0 my-2 ml-0  overflow-y-auto antialiased transition-transform duration-200 bg-white border-0 shadow-xl w-12/12 dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 rounded-2xl xl:ml-[1%] xl:left-0 xl:translate-x-0">
-  <a *ngIf="ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover:bg-bg-blue-500/13 dark:hover:bg-slate-800 rounded-lg z-30 absolute py-1 px-1 cursor-pointer text-xl justify-center left-[1%] text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
-  <div class="h-19">
-    <a routerLink="/dashboard/user-profile" class="block w-full px-4 py-4 bg-transparent rounded-lg cursor-pointer dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
-      <div class="flex py-1">
-        <div class="my-auto">
-          <img src="./assets/img/team-2.jpg" class="inline-flex items-center justify-center w-12 h-12 mr-4 text-sm text-white max-w-none rounded-xl" />
-        </div>
-        <div class="flex flex-col justify-center">
-          <h6 class="mb-1 text-sm font-normal dark:text-white"><span class="font-semibold">Jonasovichj Morales</span></h6>
-          <p class="flex items-center justify-start mb-0 text-xs text-slate-400 dark:text-white/80">
-            <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
-            User Profile
-          </p>
-        </div>
+  <div class="flex-col w-full h-full capitalize ">
+    <a *ngIf="ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover:bg-bg-blue-500/13 dark:hover:bg-slate-800 rounded-lg z-30 absolute py-1 px-1 cursor-pointer text-xl justify-center left-[1%] text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
+   <div class="flex-col w-full h-full">
+      <div class="h-19">
+        <a routerLink="/dashboard/user-profile" class="block w-full px-4 py-4 bg-transparent rounded-lg cursor-pointer dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
+          <div class="flex py-1">
+            <div class="my-auto">
+              <img src="./assets/img/team-2.jpg" class="inline-flex items-center justify-center w-12 h-12 mr-4 text-sm text-white max-w-none rounded-xl" />
+            </div>
+            <div class="flex flex-col justify-center">
+              <h6 class="mb-1 text-sm font-normal dark:text-white"><span class="font-semibold">Jonasovichj Morales</span></h6>
+              <p class="flex items-center justify-start mb-0 text-xs text-slate-200 dark:text-white/80">
+                <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
+                User Profile
+              </p>
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
+      <hr class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-slate-600 dark:to-transparent" />
+      <div class="items-center block w-auto max-h-screen mt-2 overflow-auto">
+        <ul class="flex flex-col pl-0 mb-0 space-y-3">
+          <li class="mt-0.5 w-full">
+            <a routerLink="/dashboard/main" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+              <mat-icon  class="text-purple-400 " fontIcon="monitor"/>
+              <span >Dashboard</span>
+            </a>
+          </li>
+    
+          <li class="mt-0.5 w-full">
+            <a routerLink="/dashboard/register" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+              <mat-icon  class="text-orange-400 " fontIcon="person"/>
+              <span >Users</span>
+            </a>
+          </li>
+    
+          <li class="mt-0.5 w-full">
+            <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+              <mat-icon  class="text-red-400 " fontIcon="local_hospital"/>
+              <span >Clinics</span>
+            </a>
+          </li>
+    
+          <li class="mt-0.5 w-full">
+            <a routerLink="/dashboard/patients" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+              <mat-icon  class="text-yellow-400 " fontIcon="local_hospital"/>
+              <span >Patients</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+              <mat-icon  class="text-green-400 " fontIcon="description"/>
+              <span >medical records</span>
+            </a>
+          </li>
+    
+    
+        </ul>
+      </div>
+    </div> 
+    <div class="absolute flex-col w-full bottom-1">
+      <a class="flex items-center justify-center w-full px-8 py-2 text-base font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-red-500 border-0 rounded-lg shadow-md cursor-pointer select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px" >Log Out<mat-icon  class="text-base text-center " fontIcon="logout"/></a>
+    </div>
   </div>
 
-  <hr class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-slate-600 dark:to-transparent" />
-  <div class="items-center block w-auto max-h-screen mt-2 overflow-auto">
-    <ul class="flex flex-col pl-0 mb-0">
-      <li class="mt-0.5 w-full">
-        <a routerLink="/dashboard" routerLinkActive="bg-blue-500/13" class="py-2.7   dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 dark:text-white transition-colors">
-          <div class="flex items-center justify-center w-8 h-8 text-center bg-center rounded-lg stroke-0 ">
-            <mat-icon  class="relative top-0 text-lg leading-normal text-purple-400" fontIcon="monitor"/>
-          </div>
-          <span class="duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
-        </a>
-      </li>
-
-      <li class="mt-0.5 w-full">
-        <a routerLink="/dashboard/register"  class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/tables.html">
-          <div class="flex items-center justify-center w-8 h-8 text-center bg-center rounded-lg stroke-0 ">
-            <mat-icon  class="relative top-0 text-lg leading-normal text-orange-400" fontIcon="person"/>
-          </div>
-          <span class="duration-300 opacity-100 pointer-events-none ease">Users</span>
-        </a>
-      </li>
-
-      <li class="mt-0.5 w-full">
-        <a routerLink="/dashboard/medical-record"  class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/tables.html">
-          <div class="flex items-center justify-center w-8 h-8 text-center bg-center rounded-lg stroke-0 ">
-            <mat-icon  class="relative top-0 text-lg leading-normal text-red-400" fontIcon="local_hospital"/>
-          </div>
-          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Clinics</span>
-        </a>
-      </li>
-
-      <li class="mt-0.5 w-full">
-        <a routerLink="/dashboard/medical-record"  class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/tables.html">
-          <div class="flex items-center justify-center w-8 h-8 text-center bg-center rounded-lg stroke-0 ">
-            <mat-icon  class="relative top-0 text-lg leading-normal text-yellow-400" fontIcon="group"/>
-          </div>
-          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Patients</span>
-        </a>
-      </li>
-      <li class="mt-0.5 w-full">
-        <a routerLink="/dashboard/medical-record"  class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/tables.html">
-          <div class="flex items-center justify-center w-8 h-8 text-center bg-center rounded-lg stroke-0 ">
-            <mat-icon  class="relative top-0 text-lg leading-normal text-green-400" fontIcon="description"/>
-          </div>
-          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">medical records</span>
-        </a>
-      </li>
-
-
-    </ul>
-  </div>
-  <div class="flex justify-center w-full px-2 mt-20 sm:absolute sm:mt-0 bottom-2">
-    <a class="flex items-center justify-center w-full px-8 py-2 text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-red-500 border-0 rounded-lg shadow-md cursor-pointer select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px" >Log Out<mat-icon  class="text-sm text-center " fontIcon="logout"/></a>
-  </div>
 </aside>
 
 

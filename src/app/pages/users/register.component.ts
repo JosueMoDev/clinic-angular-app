@@ -31,6 +31,8 @@ export class RegisterComponent {
       email: ['jonasmorales', Validators.required],
       name: ['jonas', Validators.required],
       lastname: ['morales', Validators.required],
+      phone: ['', Validators.required],
+      gender: ['', Validators.required],
     }),
     rol: ['',Validators.required],
     file:['']
