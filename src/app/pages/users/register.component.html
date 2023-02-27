@@ -1,6 +1,6 @@
 <div class="w-full ">
   <div class="flex justify-center ">
-    <div class=" w-[90%] md:w-[80%] bg-slate-50 shadow-xl dark:shadow-none rounded-xl dark:bg-slate-850 m-5 p-5 space-y-2">
+    <div class="w-full p-5 m-5 space-y-2 shadow-xl mx-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
       <p class="text-2xl text-start">Register form</p>
       <ol class="flex items-center justify-center w-full">
         <div class="flex justify-center w-full">
@@ -118,7 +118,7 @@
                   </span>
                   </div>
                   <div *ngIf="mail?.invalid && (mail?.dirty || mail?.touched)">
-                    <div  *ngIf="lastname?.errors?.['required']">
+                    <div  *ngIf="mail?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                         <mat-icon class="mx-2"  fontIcon="error"/> 
                         mail is required.

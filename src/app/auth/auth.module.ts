@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AngularMaterialModule } from '../angular-material.module';
 
 
 
@@ -22,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularMaterialModule
   ], exports: [
     LoginComponent,
     RegisterComponent

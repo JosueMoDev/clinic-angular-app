@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://localhost:3000/api'
+  THECLINIC_API_URL: 'http://localhost:3000/api',
+  GOOGLE_CLIENT_KEY: '709723758043-f4jq6v5933ojqc5p5fd2tjhmqt8edb9r.apps.googleusercontent.com'
 };
 
 /*
