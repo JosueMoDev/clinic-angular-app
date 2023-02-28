@@ -2,7 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
-import { catchError, pipe } from 'rxjs';
+import {  Event, NavigationEnd, Router } from '@angular/router';
+import {  Subscription} from 'rxjs';
 
 
 @Component({
@@ -24,10 +25,13 @@ export class RegisterComponent implements OnInit{
   public formSubmitted:boolean = false;
   
   public registerForm!: FormGroup;
+  public currentRoute!: string;
+  public routeSubs$!: Subscription
     
  
      
   ngOnInit() {
+
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: ['DUI', Validators.required],
@@ -40,24 +44,43 @@ export class RegisterComponent implements OnInit{
         gender: ['', Validators.required],
       }),
       rol: ['',Validators.required],
-      photo:['']
+      photo: ['']
+      
+      
   
     });
-
+    if (this.currentRoute === '/register/patient') {
+      this.registerForm.get('rol')?.setValue('patient')
+    }
+ 
+    
     this.isPersonalInformationStepValid
     this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
+    
+
   }
-  constructor(private formbuilder: FormBuilder, private userservice: UserService) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private userservice: UserService,
+    private router: Router
+  ) {
+    
+    this.routeSubs$ = this.router.events.subscribe(
+      (event: Event) => {
+        if (event instanceof NavigationEnd) {
+          this.currentRoute = event.url
+        }
+      }
+    )
+
+    this.routeSubs$.unsubscribe
+  }
 
 
   createUser() {
     if (this.isFirstStepValid === 'VALID' && this.isSecondStepValid === 'VALID') {   
-      // this.formSubmitted = true;
-      // if (!this.registerForm.invalid) {
-        //   return;
-        // }
-        // send data
+
         const { personalInformation, rol, photo } = this.registerForm.value
         const newRegisterForm = {
           document_type: personalInformation.document_type,
@@ -71,6 +94,7 @@ export class RegisterComponent implements OnInit{
           rol,
           photo
         }
+      
 
       this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm)
     }
@@ -82,6 +106,7 @@ export class RegisterComponent implements OnInit{
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
+  get rol(){ return this.registerForm.get('rol')?.value}
 
   forbiddenInputTextValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/

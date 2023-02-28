@@ -16,6 +16,8 @@ export class UserService {
 
 
   crearteNewUserWithEmailAndPassword(user: UserRegisterForm) { 
+    // const token = sessionStorage.getItem('the_clinic_session_token') || ''
+    // { headers: { 'x-token': token }, user}
     return this.http.post(`${environment.THECLINIC_API_URL}/users`, user).subscribe(resp => { 
       console.log(resp)
     }, (err)=> console.warn(err.error.message));

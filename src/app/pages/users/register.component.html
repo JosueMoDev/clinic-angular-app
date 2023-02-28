@@ -111,6 +111,7 @@
                     </div>
                   </span>
                   </div>
+                  
                   <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
                     <div  *ngIf="email?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
@@ -269,9 +270,10 @@
                 placeholder="rol" 
                 formControlName="rol"
                 >
-                <option value="" class="hidden" selected disabled>Select user rol</option>
-                <option value="operador">operador</option>
-                <option value="doctor">doctor</option>
+                <option [value]="rol" class="hidden" selected disabled>Select user rol</option>
+                <option *ngIf=" rol" value="patient" >patient</option>
+                <option *ngIf="!rol" value="operador">operador</option>
+                <option *ngIf="!rol" value="doctor">doctor</option>
 
               </select>
             </div>
