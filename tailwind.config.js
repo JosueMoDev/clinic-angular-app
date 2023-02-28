@@ -722,9 +722,9 @@ module.exports = {
       DEFAULT: "1",
     },
     fontFamily: {
-      sans: ["Open Sans"],
-      serif: ['SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', "serif"],
-      body: ["Roboto", "sans-serif"],
+      // sans: ["Open Sans"],
+      // serif: ['SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', "serif"],
+      body: ["Roboto", "Roboto"],
       awesome: ["FontAwesome"],
     },
     fontSize: ({ theme }) => ({

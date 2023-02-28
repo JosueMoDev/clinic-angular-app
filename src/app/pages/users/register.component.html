@@ -1,6 +1,6 @@
 <div class="w-full ">
   <div class="flex justify-center ">
-    <div class="w-full p-5 m-5 space-y-2 shadow-xl mx-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
+    <div class="w-full p-5 px-10 space-y-2 shadow-xl m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
       <p class="text-2xl text-start">Register form</p>
       <ol class="flex items-center justify-center w-full">
         <div class="flex justify-center w-full">
@@ -64,7 +64,7 @@
                           name="document"
                           formControlName="document_type"
                         > 
-                          <option class="text-center " value="DUI">DUI</option>
+                          <option value="DUI">DUI</option>
                           <option value="PASSPORT">PASSPORT</option>
                         </select>
                       </div>
@@ -74,9 +74,7 @@
                       type="text"  
                       class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                       placeholder="DUI" 
-                      aria-label="DUI" 
-                      aria-describedby="dui-addon" 
-                      formControlName="user_id"
+                      formControlName="document_number"
                       mask="00000000-0"
                     />
                     <input 
@@ -84,9 +82,7 @@
                     type="text"  
                     class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                     placeholder="PASSPORT" 
-                    aria-label="PASSPORT" 
-                    aria-describedby="passport-addon" 
-                    formControlName="user_id"
+                    formControlName="document_number"
                     mask="A0000000"
                   />
                   </div>
@@ -98,8 +94,6 @@
                       type="email" 
                       class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border border-l border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                       placeholder="Email" 
-                      aria-label="Email" 
-                      aria-describedby="email-addon" 
                       formControlName="email"
                     />
                     
@@ -109,7 +103,7 @@
                       <select 
                         class="lowercase bg-transparent border-none focus:outline-none" 
                         name="document"
-                        formControlName="mail_provider"
+                        formControlName="email_provider"
                       > 
                         <option value="@gmail.com">@gmail.com</option>
                         <option value="@theclinic.com">@theclinic.com</option>
@@ -117,20 +111,20 @@
                     </div>
                   </span>
                   </div>
-                  <div *ngIf="mail?.invalid && (mail?.dirty || mail?.touched)">
-                    <div  *ngIf="mail?.errors?.['required']">
+                  <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                    <div  *ngIf="email?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                         <mat-icon class="mx-2"  fontIcon="error"/> 
                         mail is required.
                       </span>
                     </div>
-                    <div *ngIf="mail?.errors?.['minlength']">
+                    <div *ngIf="email?.errors?.['minlength']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                         <mat-icon class="mx-2"  fontIcon="error"/>
                         mail must be at least 10 characters long.
                       </span>
                     </div>
-                    <div *ngIf="mail?.errors?.['forbiddenName']">
+                    <div *ngIf="email?.errors?.['forbiddenName']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                         <mat-icon class="mx-2 "  fontIcon="error"/>
                           mail only could have  
@@ -148,8 +142,6 @@
                 type="text"  
                 class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="Name" 
-                aria-label="Name" 
-                aria-describedby="email-addon" 
                 formControlName="name"
                 />
                 <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
@@ -191,8 +183,6 @@
                 type="text"  
                 class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="Lastname" 
-                aria-label="Lastname" 
-                aria-describedby="lastname-addon" 
                 formControlName="lastname"
   
                 />
@@ -209,7 +199,7 @@
                       Lastname must be at least 3 characters long.
                     </span>
                   </div>
-                  <div *ngIf="name?.errors?.['forbiddenName']">
+                  <div *ngIf="lastname?.errors?.['forbiddenName']">
                     <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                       <mat-icon class="mx-2"  fontIcon="error"/>
                         Lastname only could have letters a-z.
@@ -229,12 +219,9 @@
                 type="text"  
                 class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="Phone" 
-                aria-label="Name" 
-                aria-describedby="phone-addon" 
                 formControlName="phone"
                 prefix="+503"
                 mask="0000-0000"
-                formControlName="phone"
                 />
               </div>
               <div class="w-full mb-4">
@@ -280,8 +267,6 @@
                 type="text" 
                 class="placeholder:text-gray-700   text-center text-sm focus:shadow-primary-outline leading-5.6 ease block w-full rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-2 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                 placeholder="rol" 
-                aria-label="rol" 
-                aria-describedby="email-addon" 
                 formControlName="rol"
                 >
                 <option value="" class="hidden" selected disabled>Select user rol</option>
@@ -309,9 +294,7 @@
               type="file" 
               class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
               placeholder="Name" 
-              aria-label="Name" 
-              aria-describedby="email-addon" 
-              formControlName="file"
+              formControlName="photo"
               />
           </div>
 

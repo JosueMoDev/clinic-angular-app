@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -8,8 +9,13 @@ import { UiService } from 'src/app/services/ui.service';
   ]
 })
 export class SidebarComponent {
-  constructor(public ui: UiService) { }
-  
+  constructor(
+    public ui: UiService,
+    private authService: AuthService
+  ) { }
+  logout() { 
+    this.authService.logout();
+  }
   toggleSideBar() {
     this.ui.toggleSideBar();
   }

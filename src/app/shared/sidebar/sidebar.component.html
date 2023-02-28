@@ -4,8 +4,9 @@
 <aside [ngClass]="{'ml-0 -translate-x-full': !ui.isSideBarOpen }"  class="fixed inset-y-0 flex-wrap items-center justify-between block p-0 my-2 ml-0  overflow-y-auto antialiased transition-transform duration-200 bg-white border-0 shadow-xl w-12/12 dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 rounded-2xl xl:ml-[1%] xl:left-0 xl:translate-x-0">
   <div class="flex-col w-full h-full capitalize ">
     <a *ngIf="ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover:bg-bg-blue-500/13 dark:hover:bg-slate-800 rounded-lg z-30 absolute py-1 px-1 cursor-pointer text-xl justify-center left-[1%] text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
+
    <div class="flex-col w-full h-full">
-      <div class="h-19">
+      <div class="h-24">
         <a routerLink="/dashboard/user-profile" class="block w-full px-4 py-4 bg-transparent rounded-lg cursor-pointer dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
           <div class="flex py-1">
             <div class="my-auto">
@@ -13,7 +14,7 @@
             </div>
             <div class="flex flex-col justify-center">
               <h6 class="mb-1 text-sm font-normal dark:text-white"><span class="font-semibold">Jonasovichj Morales</span></h6>
-              <p class="flex items-center justify-start mb-0 text-xs text-slate-200 dark:text-white/80">
+              <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
                 <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
                 User Profile
               </p>
@@ -63,7 +64,7 @@
       </div>
     </div> 
     <div class="absolute flex-col w-full px-2 bottom-2">
-      <a class="flex items-center justify-center w-full px-8 py-2 text-base font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-red-500 border-0 rounded-lg shadow-md cursor-pointer select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px" >Log Out<mat-icon  class="text-base text-center " fontIcon="logout"/></a>
+      <a (click)="logout()" class="flex items-center justify-center w-full px-8 py-2 text-base font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-red-500 border-0 rounded-lg shadow-md cursor-pointer select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px" >Log Out<mat-icon  class="text-base text-center " fontIcon="logout"/></a>
     </div>
   </div>
 

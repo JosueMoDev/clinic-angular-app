@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 declare const google: any;
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private formBuider: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private _ngZone: NgZone
   ) { } 
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async handleCredentialResponse(response: any) {
-    await this.userService.googleSingIn(response.credential)
+    await this.authService.googleSingIn(response.credential)
       .subscribe(
       (response: any )=> {
         if (response.ok) {
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   
   loginWithEmailAndPassword() { 
-    this.userService.loginWithEmailAndPassword(this.loginForm.value)
+    this.authService.loginWithEmailAndPassword(this.loginForm.value)
       .subscribe( 
         (resp) => {
           if (resp.ok) {
