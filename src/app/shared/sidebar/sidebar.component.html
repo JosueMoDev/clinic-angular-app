@@ -1,24 +1,23 @@
 <!-- sidenav  -->
 
-<a *ngIf="!ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover: dark:hover:bg-slate-800  rounded-lg z-30 fixed py-1 px-1 cursor-pointer text-xl justify-center left-0 text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
-<aside [ngClass]="{'ml-0 -translate-x-full': !ui.isSideBarOpen }"  class="fixed inset-y-0 flex-wrap items-center justify-between block p-0 my-2 ml-0  overflow-y-auto antialiased transition-transform duration-200 bg-white border-0 shadow-xl w-12/12 dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 rounded-2xl xl:ml-[1%] xl:left-0 xl:translate-x-0">
+<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed w-fix right-0 translate-x-fit inset-y-0 flex-wrap items-center justify-between block p-0 snap-none mt-2 mr-0  overflow-y-auto antialiased transition-transform duration-200 bg-white border-0 shadow-xl w-12/12 dark:shadow-none dark:bg-slate-850  ease-nav-brand z-990 rounded-2xl xl:mr-[1%] xl:right-0 xl:translate-x-0">
   <div class="flex-col w-full h-full capitalize ">
-    <a *ngIf="ui.isSideBarOpen" (click)="toggleSideBar()" class=" hover:bg-bg-blue-500/13 dark:hover:bg-slate-800 rounded-lg z-30 absolute py-1 px-1 cursor-pointer text-xl justify-center left-[1%] text-slate-900 dark:text-white top-[48%] xl:hidden"><i class="fa fa-grip-lines-vertical"></i></a>
-
-   <div class="flex-col w-full h-full">
-      <div class="h-24">
-        <a routerLink="/dashboard/user-profile" class="block w-full px-4 py-4 bg-transparent rounded-lg cursor-pointer dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
-          <div class="flex py-1">
-            <div class="my-auto">
-              <img src="./assets/img/team-2.jpg" class="inline-flex items-center justify-center w-12 h-12 mr-4 text-sm text-white max-w-none rounded-xl" />
-            </div>
-            <div class="flex flex-col justify-center">
-              <h6 class="mb-1 text-sm font-normal dark:text-white"><span class="font-semibold">Jonasovichj Morales</span></h6>
-              <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
-                <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
-                User Profile
-              </p>
-            </div>
+    
+   <div class="flex-col w-full h-full p-1">
+      <button mat-mini-fab matTooltip="Primary" (click)="ui.closeSideBar()"   class="block float-right m-1 mt-5 text-xs align-middle bg-red-600 rounded-full xl:hidden hover:bg-red-700 ">
+        <mat-icon class="text-base text-center text-white align-middle xl:hidden">close</mat-icon>
+      </button>
+      <div class="h-30">
+        <a routerLink="/dashboard/user-profile" class="flex w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700 ">
+          <div class="my-auto">
+            <img src="./assets/img/team-2.jpg" class="inline-flex items-center justify-center w-16 h-16 mr-4 text-sm text-white max-w-none rounded-xl" />
+          </div>
+          <div class="flex flex-col justify-center">
+            <h6 class="mb-1 text-sm font-normal dark:text-white"><span class="font-semibold">Jonasovichj Morales</span></h6>
+            <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
+              <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
+              User Profile
+            </p>
           </div>
         </a>
       </div>
@@ -68,7 +67,7 @@
     </div>
   </div>
 
-</aside>
+</div>
 
 
 <!-- end sidenav -->

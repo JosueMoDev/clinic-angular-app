@@ -1,11 +1,12 @@
   <!-- Navbar -->
-  <nav class="sticky  border-none flex flex-wrap items-center justify-between px-2 py-2 mx-2 md:mx-[3%] xl:mx-[2%] transition-all  duration-250 rounded-2xl   top-[1%] backdrop-saturate-200 dark:bg-slate-850 bg-blue-500   z-110">
-    <div class="block md:flex items-center justify-between w-full  py-1  space-x-0 md:space-x-[5%] flex-wrap-inherit" navbar-main navbar-scroll="true">
-      
+  <nav class="sticky   border-none flex flex-wrap items-center justify-between px-2 py-2 mx-2 md:mx-[3%] xl:mx-[2%] transition-all  duration-250 rounded-2xl top-2 backdrop-saturate-200 dark:bg-slate-850 bg-blue-500   z-110">
+    
+    <div class="block md:flex items-center justify-between w-full  py-1  space-x-0 md:space-x-[5%] flex-wrap-inherit" navbar-main navbar-scroll="true"> 
       <app-breadcrumbs></app-breadcrumbs>
 
       <div class="flex items-center justify-end grow">
         <div class="flex items-center w-full ">
+       
           <div class="relative flex flex-wrap items-end w-full transition-all rounded-lg ease">
             <span class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
               <i class="fas fa-search"></i>
@@ -14,6 +15,12 @@
           </div>
           <div class="mx-0 md:mx-1">
             <app-setter-theme></app-setter-theme>
+          </div>
+          <div class="mx-0 md:mx-1 xl:hidden">
+            <a (click)="ui.openSideBar()" class="m-2 transition-all cursor-pointer md:text-lg ease-nav-brand">
+              <mat-icon   class="flex justify-center text-yellow-50"  aria-hidden="false" aria-label="Example home icon" fontIcon="menu"></mat-icon>
+          
+          </a>
           </div>
         </div>
       </div>

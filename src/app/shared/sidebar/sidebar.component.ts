@@ -16,8 +16,6 @@ export class SidebarComponent {
   logout() { 
     this.authService.logout();
   }
-  toggleSideBar() {
-    this.ui.toggleSideBar();
-  }
+  
 
 }

@@ -28,7 +28,10 @@ export class UiService {
     this.darkMode = localStorage.getItem('theme');   
   }
 
-  toggleSideBar() {
-    this.isSideBarOpen = !this.isSideBarOpen;
+  openSideBar() {
+    this.isSideBarOpen = true;
+  }
+  closeSideBar() {
+    this.isSideBarOpen = false;
   }
 }
