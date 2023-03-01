@@ -23,19 +23,39 @@ export class AuthService {
     })
   }
 
-  loginWithEmailAndPassword(loginForm: LoginForm) {
+  loginWithEmailAndPassword(loginForm: LoginForm, currentRoute: string) {
+    console.log(currentRoute);
+    if (currentRoute === '/login/patient') { 
+      
+      return this.http.post(`${environment.THECLINIC_API_URL}/login/patient`, loginForm)
+      .pipe(tap( (resp: any ) => { 
+        sessionStorage.setItem('the_clinic_session_token', resp.token),
+        console.log( 'funciona')
+
+      }));
+    }
+   
     return this.http.post(`${environment.THECLINIC_API_URL}/login`, loginForm)
       .pipe(tap( (resp: any ) => { 
-        sessionStorage.setItem('the_clinic_session_token', resp.token)
-      }));
+        sessionStorage.setItem('the_clinic_session_token', resp.token),
+        console.log( 'siempre paso por aqwi')
+    }));
     
   }
 
-  googleSingIn(token: string) { 
-
+  googleSingIn(token: string, currentRoute:string) { 
+    console.log(currentRoute);
+    if (currentRoute === '/login/patient') {
+      return this.http.post(`${environment.THECLINIC_API_URL}/login/google/patient`, { token })
+        .pipe(tap((resp: any) => {
+          sessionStorage.setItem('the_clinic_session_token', resp.token),
+          console.log( 'funciona')
+        }));
+    }
     return this.http.post(`${environment.THECLINIC_API_URL}/login/google`, { token })
-    .pipe(tap( (resp: any ) => { 
-      sessionStorage.setItem('the_clinic_session_token', resp.token)
+    .pipe(tap((resp: any) => {
+      sessionStorage.setItem('the_clinic_session_token', resp.token),
+      console.log( 'siempre paso por aqwi')
     }));
   }
   isValidToken(): Observable<boolean> {

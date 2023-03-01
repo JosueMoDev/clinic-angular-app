@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 declare const google: any;
@@ -15,7 +16,9 @@ declare const google: any;
 export class LoginComponent implements OnInit, AfterViewInit {
   public loginForm!: FormGroup;
   public error_message: any = null;
-  
+  public currentRoute!: string;
+  public routeSubs$!: Subscription
+
   @ViewChild('googleLogin') googleLogin!: ElementRef;
 
   constructor(
@@ -23,9 +26,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private _ngZone: NgZone
-  ) { } 
+  ) { 
+    this.routeSubs$ = this.router.events.subscribe(
+      (event: Event) => {
+        if (event instanceof NavigationEnd) {
+          this.currentRoute = event.url
+        }
+      }
+    )
+
+    this.routeSubs$.unsubscribe
+  } 
 
   ngOnInit(): void {
+    console.log(this.currentRoute)
+
     this.loginForm = this.formBuider.group({
       email: [localStorage.getItem('user_email'), [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
@@ -49,7 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async handleCredentialResponse(response: any) {
-    await this.authService.googleSingIn(response.credential)
+    await this.authService.googleSingIn(response.credential, this.currentRoute)
       .subscribe(
       (response: any )=> {
         if (response.ok) {
@@ -75,7 +90,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   
   loginWithEmailAndPassword() { 
-    this.authService.loginWithEmailAndPassword(this.loginForm.value)
+    this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
       .subscribe( 
         (resp) => {
           if (resp.ok) {

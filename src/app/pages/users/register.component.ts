@@ -4,6 +4,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
 import {  Event, NavigationEnd, Router } from '@angular/router';
 import {  Subscription} from 'rxjs';
+import { PatientService } from 'src/app/services/patient.service';
 
 
 @Component({
@@ -63,7 +64,8 @@ export class RegisterComponent implements OnInit{
   constructor(
     private formbuilder: FormBuilder,
     private userservice: UserService,
-    private router: Router
+    private router: Router,
+    private patientService: PatientService
   ) {
     
     this.routeSubs$ = this.router.events.subscribe(
@@ -95,8 +97,13 @@ export class RegisterComponent implements OnInit{
           photo
         }
       
-
-      this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm)
+      if (this.currentRoute === '/register/patient') {
+        console.log('here')
+        this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm)
+      } else {
+        this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm)
+      }
+    
     }
      
   }

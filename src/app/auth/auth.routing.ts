@@ -8,6 +8,7 @@ import { RegisterComponent } from '../pages/users/register.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'login/patient', component:LoginComponent, data: { title: 'login/patient'} },
     { path: 'register/patient', component:RegisterComponent, data: { title: 'register/patient'} },
     
 ];
