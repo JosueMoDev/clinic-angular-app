@@ -1,6 +1,6 @@
 <!-- sidenav  -->
 
-<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed w-fix right-0 translate-x-fit inset-y-0 flex-wrap items-center justify-between block p-0 snap-none mt-2 mr-0  overflow-y-auto antialiased transition-transform duration-200 bg-white border-0 shadow-xl  dark:shadow-none dark:bg-slate-850  ease-nav-brand z-990 rounded-2xl h-max-screen xl:mr-[1%] xl:right-0 xl:translate-x-0">
+<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed inset-y-0 right-0 flex-wrap items-center justify-between block p-0 mt-2 mr-0 overflow-y-auto antialiased transition-transform duration-200 border-0 shadow-xl w-fix translate-x-fit snap-none dark:shadow-none dark:bg-slate-850/95 bg-slate-50 ease-nav-brand z-990 rounded-2xl h-max-screen xl:mr-2 xl:right-0 xl:translate-x-0">
   <div class="flex-col w-full h-full capitalize ">
     
    <div class="flex-col w-full h-full p-1">
@@ -39,7 +39,7 @@
           </li>
     
           <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+            <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
               <mat-icon  class="text-red-400 " fontIcon="local_hospital"/>
               <span >Clinics</span>
             </a>
@@ -52,7 +52,7 @@
             </a>
           </li>
           <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+            <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
               <mat-icon  class="text-green-400 " fontIcon="description"/>
               <span >medical records</span>
             </a>

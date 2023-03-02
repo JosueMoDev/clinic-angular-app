@@ -27,14 +27,6 @@
             </div>
             <div class="flex-auto p-6">
               <form  role="form text-left"  (ngSubmit)="loginWithEmailAndPassword()" [formGroup]="loginForm">
-                <div class="flex justify-center mb-3" *ngIf="!!errors">
-                  <div>
-                    <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                      <mat-icon class="mx-2"  fontIcon="error"/> 
-                      {{errors}}
-                    </span>
-                  </div>
-                </div>
                 <div class="mb-4">
                   <span class="px-1 py-2 text-sm text-white/80">Email</span>       
                   <input type="email"

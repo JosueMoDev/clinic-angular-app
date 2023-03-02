@@ -1,0 +1,218 @@
+<div class="w-full ">
+    
+    <div class="flex justify-center ">
+      <div class="w-full p-5 px-10 space-y-2 shadow-xl m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
+        <p class="text-2xl text-start">Register form</p>
+        <ol class="flex items-center justify-center w-full">
+          <div class="flex justify-center w-full">
+            <!-- first step -->
+            <li *ngIf="isFirstStepValid" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
+              <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
+                <div class="flex items-center justify-center">
+                  <mat-icon *ngIf="!isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
+                  <mat-icon  class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="apartment"/>
+                </div>
+              </span>
+            </li>
+            <li *ngIf="!isFirstStepValid" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
+              <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
+                <div class="flex items-center justify-center">
+                  <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
+                </div>
+              </span>
+            </li>
+            <!-- first step -->
+            <!-- first step -->
+            <!-- <li *ngIf="isSecondStepValid" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block " >
+              <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
+                <div class="flex items-center justify-center">
+                  <mat-icon *ngIf="isSecondStepValid==='VALID'" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
+                  <mat-icon  class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="assignment"/>
+                </div>
+              </span>
+            </li>
+            <li *ngIf="isSecondStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
+              <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
+                <div class="flex items-center justify-center">
+                  <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
+                </div>
+              </span>
+            </li> -->
+            <!-- first step -->
+            
+              <li class="flex items-center w-fit ">
+                <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
+                  <div class="flex items-center justify-center">
+                    <mat-icon class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="photo_camera"/>
+                  </div>
+                </span>
+              </li>
+            </div>
+          </ol>  
+        
+        <form role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="createClinic()" [formGroup]="registerClinicForm">
+          <div class="py-5 ">
+            <!-- Step 1 -->
+            <div *ngIf="currentStep===1"  >
+              <div class="grid grid-cols-1 gap-4 ">
+                <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3" formGroupName="information">
+                  <div class="mb-4">
+                    <span class="px-1 py-2 text-sm text-white/80">Register Number</span>
+                    <div class="flex rounded-md ">
+                      <input 
+                        type="text"  
+                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                        placeholder="Register Number" 
+                        formControlName="register_number"
+                        mask="0000-0000-000-0"
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full mb-4">
+                    <span class="px-1 py-2 text-sm text-white/80">Phone</span>
+                    <input 
+                    type="text"  
+                    class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Phone" 
+                    formControlName="phone"
+                    prefix="+503"
+                    mask="0000-0000"
+                    />
+                  </div>
+                  <div class="w-full mb-4">
+                    <span class="px-1 py-2 text-sm text-white/80">Name</span>
+                    <input 
+                    type="text"  
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Name" 
+                    formControlName="name"
+                    />
+                    <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                        class="alert alert-danger">
+    
+                      <div  *ngIf="name?.errors?.['required']">
+                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                          <mat-icon class="mx-2"  fontIcon="error"/> 
+                          Name is required.
+                        </span>
+                      </div>
+                      <div *ngIf="name?.errors?.['minlength']">
+                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                          <mat-icon class="mx-2"  fontIcon="error"/>
+                          Name must be at least 3 characters long.
+                        </span>
+                      </div>
+                      <div *ngIf="name?.errors?.['maxlength']">
+                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                          <mat-icon class="mx-2"  fontIcon="error"/>
+                          Name must be longger than 25 characters.
+                        </span>
+                      </div>
+                      <div *ngIf="name?.errors?.['forbiddenName']">
+                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                          <mat-icon class="mx-2"  fontIcon="error"/>
+                            Name only could have letters a-z.
+                        </span>
+                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                          <mat-icon class="mx-2"  fontIcon="error"/>
+                            Only two names are allowed.
+                        </span>
+                      </div>
+                    </div>
+      
+                  </div>
+                </div>
+                <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4" formGroupName="address">
+                    <div class="mb-4">
+                      <span class="px-1 py-2 text-sm text-white/80">Country</span>
+                      <div class="flex rounded-md ">
+                        <input 
+                          type="text"  
+                          class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                          placeholder="Country" 
+                          formControlName="country"
+                         
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="px-1 py-2 text-sm text-white/80">Province</span>
+                        <div class="flex rounded-md ">
+                          <input 
+                            type="text"  
+                            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                            placeholder="Province" 
+                            formControlName="province"
+                           
+                          />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <span class="px-1 py-2 text-sm text-white/80">City</span>
+                        <div class="flex rounded-md ">
+                          <input 
+                            type="text"  
+                            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                            placeholder="City" 
+                            formControlName="city"
+                           
+                          />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <span class="px-1 py-2 text-sm text-white/80">Street</span>
+                        <div class="flex rounded-md ">
+                          <input 
+                            type="text"  
+                            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                            placeholder="Street" 
+                            formControlName="street"
+                           
+                          />
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+            
+             
+           
+           
+              <div class="flex justify-end w-full">
+                <div class="flex justify-end text-center w-fit" >
+                  <button type="button" [disabled]="isFirstStepValid" (click)="nextPage()" class="inline-block w-full3 px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
+                </div>
+              </div>
+            </div>
+      
+            
+          <!-- Step 3 -->
+  
+          <section *ngIf="currentStep===3" >
+            <div class="mb-4">
+              <input 
+                type="file" 
+                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
+                placeholder="Name" 
+                formControlName="photo"
+                />
+            </div>
+  
+            <div class="flex justify-between w-full ">
+              <div class="flex justify-start text-center w-fit">
+                <button type="button" (click)="previusPage()" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Previus</button>
+              </div>
+              <div class="flex justify-end text-center w-fit">
+                <button type="submit" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-green-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Register</button>
+              </div>
+            </div>
+          </section>
+  
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+

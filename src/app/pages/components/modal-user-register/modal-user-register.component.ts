@@ -28,12 +28,12 @@ export class ModalUserRegisterComponent {
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: ['DUI', Validators.required],
-        document_number: ['048507907', Validators.required],
+        document_number: ['', Validators.required],
         email_provider: ['@gmail.com', Validators.required],
-        email: ['jonasjosuemo', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
-        name: ['Jonas', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
-        lastname: ['Morales', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
-        phone: ['60436759', Validators.required],
+        email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+        lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
+        phone: ['', Validators.required],
         gender: ['', Validators.required],
       }),
       rol: ['',Validators.required],

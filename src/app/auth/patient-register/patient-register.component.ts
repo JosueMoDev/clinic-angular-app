@@ -20,14 +20,14 @@ export class PatientRegisterComponent {
 
     this.registerPatientForm = this.formbuilder.group({
       document_type: ['DUI', Validators.required],
-      document_number: ['048507907', Validators.required],
+      document_number: ['', Validators.required],
       email_provider: ['@gmail.com', Validators.required],
-      email: ['jonasjosuemo', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+      email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
       password: [null, [Validators.required, Validators.minLength(8)]],
       confirmationPassword: [null, [Validators.required, Validators.minLength(8)]],
-      name: ['Jonas', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
-      lastname: ['Morales', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
-      phone: ['60436759', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+      lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
+      phone: ['', Validators.required],
       gender: ['', Validators.required],
     });
     

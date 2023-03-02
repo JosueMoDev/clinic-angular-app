@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/auth.interface';
 import { tap, map, Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
+
+
 declare const google: any;
 
 @Injectable({
@@ -24,15 +26,9 @@ export class AuthService {
   }
 
   loginWithEmailAndPassword(loginForm: LoginForm, currentRoute: string) {
-    console.log(currentRoute);
     if (currentRoute === '/login/patient') { 
-      
       return this.http.post(`${environment.THECLINIC_API_URL}/login/patient`, loginForm)
-      .pipe(tap( (resp: any ) => { 
-        sessionStorage.setItem('the_clinic_session_token', resp.token),
-        console.log( 'funciona')
-
-      }));
+      .pipe(tap( (resp: any ) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
     }
    
     return this.http.post(`${environment.THECLINIC_API_URL}/login`, loginForm)
@@ -44,19 +40,12 @@ export class AuthService {
   }
 
   googleSingIn(token: string, currentRoute:string) { 
-    console.log(currentRoute);
     if (currentRoute === '/login/patient') {
       return this.http.post(`${environment.THECLINIC_API_URL}/login/google/patient`, { token })
-        .pipe(tap((resp: any) => {
-          sessionStorage.setItem('the_clinic_session_token', resp.token),
-          console.log( 'funciona')
-        }));
+        .pipe(tap((resp: any) => {sessionStorage.setItem('the_clinic_session_token', resp.token)}));
     }
     return this.http.post(`${environment.THECLINIC_API_URL}/login/google`, { token })
-    .pipe(tap((resp: any) => {
-      sessionStorage.setItem('the_clinic_session_token', resp.token),
-      console.log( 'siempre paso por aqwi')
-    }));
+    .pipe(tap((resp: any) => {sessionStorage.setItem('the_clinic_session_token', resp.token)}));
   }
   isValidToken(): Observable<boolean> {
     const token = sessionStorage.getItem('the_clinic_session_token') || ''

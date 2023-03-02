@@ -11,7 +11,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CalendarComponent } from '../shared/calendar/calendar.component';
 import { PatientsComponent } from './patients/patients.component';
 
-import { ClinicsComponent } from './components/clinics/clinics.component';
+import { ClinicsComponent } from './clinics/clinics.component';
 import { UsersComponent } from './users/users.component';
  
  const routes: Routes = [

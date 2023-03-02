@@ -4,6 +4,7 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 declare const google: any;
 
 @Component({
@@ -15,7 +16,6 @@ declare const google: any;
 
 export class LoginComponent implements OnInit, AfterViewInit {
   public loginForm!: FormGroup;
-  public error_message: any = null;
   public currentRoute!: string;
   public routeSubs$!: Subscription
   public type : string ='password'
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           })}
       },
       (error: any) => { 
-        this.error_message = error.error.message
+        this.error(error.error.message)
       }
     )
   }
@@ -86,14 +86,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   get email() { return this.loginForm.get('email') }
   get password(){ return this.loginForm.get('password')}
-  get errors() { return this.error_message }
   get rememberme() { return this.loginForm.get('rememberme')?.value }
 
   changeVisibility() {
     this.visibility= !this.visibility;
     (this.type==='password')? this.type = 'text': this.type='password'
   }
-
+  error(error: string) {
+    return Swal.fire({
+    icon: 'error',
+    title: error,
+    showConfirmButton: false,
+    timer:2000
+    })
+  }
   
   loginWithEmailAndPassword() { 
     this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
@@ -113,7 +119,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             
           }
         },
-        (error) => {this.error_message = error.error.message}
+        (error) => { this.error(error.error.message)}
       );}
 
 }

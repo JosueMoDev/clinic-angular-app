@@ -18,6 +18,8 @@ import { PatientsComponent } from './patients/patients.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { ModalUserRegisterComponent } from './components/modal-user-register/modal-user-register.component';
 import { UsersComponent } from './users/users.component';
+import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
+import { ClinicsComponent } from './clinics/clinics.component';
 
 
 
@@ -35,7 +37,9 @@ import { UsersComponent } from './users/users.component';
     StepperComponent,
     PatientsComponent,
     ModalUserRegisterComponent,
-    UsersComponent
+    UsersComponent,
+    RegisterClinicComponent,
+    ClinicsComponent
   ],
   imports: [
     CommonModule,
