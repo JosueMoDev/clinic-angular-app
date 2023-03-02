@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { AngularMaterialModule } from '../angular-material.module';
+import { PatientRegisterComponent } from './patient-register/patient-register.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 
@@ -14,6 +16,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 @NgModule({
   declarations: [
     LoginComponent,
+    PatientRegisterComponent,
   ],
   imports: [
     CommonModule,
@@ -21,9 +24,13 @@ import { AngularMaterialModule } from '../angular-material.module';
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ], exports: [
     LoginComponent,
-  ]
+  ],
+  providers:[provideNgxMask()]
+  
 })
 export class AuthModule { }

@@ -14,9 +14,11 @@ import { MedicalRecordComponent } from './medical-record/medical-record.componen
 import { PagesComponent } from './pages.component';
 import { PorcentageCardComponent } from './components/porcentage-card/porcentage-card.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { RegisterComponent } from './users/register.component';
 import { PatientsComponent } from './patients/patients.component';
 import { StepperComponent } from './components/stepper/stepper.component';
+import { ModalUserRegisterComponent } from './components/modal-user-register/modal-user-register.component';
+import { UsersComponent } from './users/users.component';
+
 
 
 
@@ -30,9 +32,10 @@ import { StepperComponent } from './components/stepper/stepper.component';
     MedicalRecordComponent,
     PorcentageCardComponent,
     UserProfileComponent,
-    RegisterComponent,
     StepperComponent,
-    PatientsComponent
+    PatientsComponent,
+    ModalUserRegisterComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { StepperComponent } from './components/stepper/stepper.component';
   exports: [
     DashboardComponent,
     PagesComponent,
-    Error404Component
+    Error404Component,
+    ModalUserRegisterComponent
   ],
   providers:[provideNgxMask()]
 })

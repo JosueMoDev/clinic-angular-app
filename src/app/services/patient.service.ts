@@ -17,4 +17,11 @@ export class PatientService {
       console.log(resp)
     }, (err)=> console.warn(err.error.message));
   }
+  crearteNewPatientWithEmailAndPasswordOutside(patient: UserRegisterForm) { 
+    // const token = sessionStorage.getItem('the_clinic_session_token') || ''
+    // { headers: { 'x-token': token }, user}
+    return this.http.post(`${environment.THECLINIC_API_URL}/register/patient/outside`, patient).subscribe(resp => { 
+      console.log(resp)
+    }, (err)=> console.warn(err.error.message));
+  }
 }

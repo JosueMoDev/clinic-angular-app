@@ -36,8 +36,9 @@
                   </div>
                 </div>
                 <div class="mb-4">
+                  <span class="px-1 py-2 text-sm text-white/80">Email</span>       
                   <input type="email"
-                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white  dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                    placeholder="Email" 
                    aria-label="Email"
                    aria-describedby="email-addon"
@@ -61,14 +62,24 @@
                   </div>
                 </div>
                 <div class="mb-4">
-                  <input 
-                   type="password"
-                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white  dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                   placeholder="Password" 
-                   aria-label="Password"
-                   aria-describedby="password-addon" 
-                   formControlName="password"
-                   />
+                  <span class="px-1 py-2 text-sm text-white/80">Password</span>       
+                  <div class="relative flex">
+                    <input 
+                    type={{type}}
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="passoword" 
+                    formControlName="password"
+                    />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <button (click)="changeVisibility()" *ngIf="visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
+                            <mat-icon>visibility_off</mat-icon>
+                        </button>
+                        <button (click)="changeVisibility()"  *ngIf="!visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                    </div>
+
+                  </div>
                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
                     <div  *ngIf="password?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">

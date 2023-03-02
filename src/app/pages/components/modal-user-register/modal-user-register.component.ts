@@ -1,15 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
-import {  Event, NavigationEnd, Router } from '@angular/router';
-import {  Subscription} from 'rxjs';
 import { PatientService } from 'src/app/services/patient.service';
 
-
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
+  selector: 'app-modal-user-register',
+  templateUrl: './modal-user-register.component.html',
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
@@ -17,20 +14,15 @@ import { PatientService } from 'src/app/services/patient.service';
     },
   ]
 })
-export class RegisterComponent implements OnInit{
+export class ModalUserRegisterComponent {
   public isFirstStepValid: string = '';
   public isSecondStepValid: string = '';
   public document_type:string = 'DUI';
-
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
-  
   public registerForm!: FormGroup;
-  public currentRoute!: string;
-  public routeSubs$!: Subscription
-    
+  
  
-     
   ngOnInit() {
 
     this.registerForm= this.formbuilder.group({
@@ -46,38 +38,19 @@ export class RegisterComponent implements OnInit{
       }),
       rol: ['',Validators.required],
       photo: ['']
-      
-      
-  
     });
-    if (this.currentRoute === '/register/patient') {
-      this.registerForm.get('rol')?.setValue('patient')
-    }
- 
     
     this.isPersonalInformationStepValid
     this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
-    
-
+  
   }
   constructor(
     private formbuilder: FormBuilder,
     private userservice: UserService,
-    private router: Router,
     private patientService: PatientService
-  ) {
-    
-    this.routeSubs$ = this.router.events.subscribe(
-      (event: Event) => {
-        if (event instanceof NavigationEnd) {
-          this.currentRoute = event.url
-        }
-      }
-    )
 
-    this.routeSubs$.unsubscribe
-  }
+  ) { }
 
 
   createUser() {
@@ -97,10 +70,12 @@ export class RegisterComponent implements OnInit{
           photo
         }
       
-      if (this.currentRoute === '/register/patient') {
-        console.log('here')
+      if (rol==='patient') {
         this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm)
-      } else {
+      }
+      console.log(rol)
+      if (['doctor', 'operator'].includes(rol)) {
+        console.log('here')
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm)
       }
     

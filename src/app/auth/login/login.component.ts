@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   public error_message: any = null;
   public currentRoute!: string;
   public routeSubs$!: Subscription
+  public type : string ='password'
+  public visibility: boolean = true;
+  
 
   @ViewChild('googleLogin') googleLogin!: ElementRef;
 
@@ -86,7 +89,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   get errors() { return this.error_message }
   get rememberme() { return this.loginForm.get('rememberme')?.value }
 
-  
+  changeVisibility() {
+    this.visibility= !this.visibility;
+    (this.type==='password')? this.type = 'text': this.type='password'
+  }
 
   
   loginWithEmailAndPassword() { 

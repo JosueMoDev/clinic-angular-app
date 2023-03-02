@@ -11,8 +11,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CalendarComponent } from '../shared/calendar/calendar.component';
 import { PatientsComponent } from './patients/patients.component';
 
-import { RegisterComponent } from './users/register.component';
 import { ClinicsComponent } from './components/clinics/clinics.component';
+import { UsersComponent } from './users/users.component';
  
  const routes: Routes = [
     {
@@ -25,7 +25,7 @@ import { ClinicsComponent } from './components/clinics/clinics.component';
           { path: 'patients', component: PatientsComponent, data: { title: 'Patients' } },
           { path: 'clinics', component: ClinicsComponent, data: { title: 'Clinics'} },
           { path: 'calendar', component: CalendarComponent, data: { title: 'Calendar' } },
-          { path: 'register', component:RegisterComponent, data: { title: 'Register'} },
+          { path: 'users', component:UsersComponent, data: { title: 'Users'} },
           
           
 
