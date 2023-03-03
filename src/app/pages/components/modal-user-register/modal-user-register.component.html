@@ -41,9 +41,14 @@
             <!-- first step -->
             
               <li class="flex items-center w-fit ">
-                <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
+                <span *ngIf="!photo?.value" class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
                   <div class="flex items-center justify-center">
                     <mat-icon class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="photo_camera"/>
+                  </div>
+                </span>
+                <span *ngIf="photo?.value" class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full lg:h-10 lg:w-10 dark:bg-teal-900 shrink-0">
+                  <div class="flex items-center justify-center">
+                    <mat-icon class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
                   </div>
                 </span>
               </li>
@@ -65,6 +70,7 @@
                             class="uppercase bg-transparent border-none focus:outline-none" 
                             name="document"
                             formControlName="document_type"
+                            [value]="document_type"
                           > 
                             <option value="DUI">DUI</option>
                             <option value="PASSPORT">PASSPORT</option>
@@ -97,6 +103,7 @@
                         class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border border-l border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                         placeholder="Email" 
                         formControlName="email"
+                       
                       />
                       
                     
@@ -106,6 +113,7 @@
                           class="lowercase bg-transparent border-none focus:outline-none" 
                           name="document"
                           formControlName="email_provider"
+                          [value]="email_provider"
                         > 
                           <option value="@gmail.com">@gmail.com</option>
                           <option value="@theclinic.com">@theclinic.com</option>
@@ -330,7 +338,7 @@
                 class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
                 placeholder="Photo" 
                 formControlName="photo"
-                (change)="uploadPhoto($event.target)"
+                (change)="preparePhoto($event.target)"
                 />
             </div>
   

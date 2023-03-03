@@ -18,7 +18,8 @@ import Swal from 'sweetalert2';
 export class ModalUserRegisterComponent {
   public isFirstStepValid: string = '';
   public isSecondStepValid: string = '';
-  public document_type:string = 'DUI';
+  public document_type: string = 'DUI';
+  public email_provider: string = '@gmail.com';
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   public registerForm!: FormGroup;
@@ -28,9 +29,9 @@ export class ModalUserRegisterComponent {
 
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
-        document_type: ['DUI', Validators.required],
+        document_type: [this.document_type, Validators.required],
         document_number: ['', Validators.required],
-        email_provider: ['@gmail.com', Validators.required],
+        email_provider: [this.email_provider, Validators.required],
         email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
         name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
         lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
@@ -53,10 +54,23 @@ export class ModalUserRegisterComponent {
     private patientService: PatientService
 
   ) { }
-  uploadPhoto(event: any) {
+  preparePhoto(event: any) {
     const photo = event.files[0]
     this.registerForm.patchValue({ 'photoSrc': photo })
     
+  }
+  async uploadPhoto(user_id: string ) {
+      const formData = new FormData();
+      formData.append('photo', this.registerForm.get('photoSrc')?.value)     
+        await this.userservice.uploadImageCloudinary(user_id, formData).subscribe(
+          (resp: any) => {
+            if (resp.ok) {
+              this.success(resp.message)
+              formData.delete
+            }
+          },
+          (err) => this.error(err.error.message)
+    );
   }
 
   createUser() {
@@ -79,24 +93,14 @@ export class ModalUserRegisterComponent {
       if (rol==='patient') {
         this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm)
       }
-      console.log(rol)
       if (['doctor', 'operator'].includes(rol)) {
-        console.log('here')
-        this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe((resp:any) => { 
-          if (resp.ok) {
-            if (this.registerForm.get('photoSrc')?.value) {
-              console.log(resp.user.user_id)
-              const formData = new FormData();
-              formData.append('photo', this.registerForm.get('photoSrc')?.value)     
-              this.userservice.uploadImageCloudinary(resp.user.user_id, formData).subscribe(
-                (resp: any) => console.log(resp.ok),
-                (err) => this.error(err.error.message)
-              );
-            }
-          
-          
-            this.success
+        this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
+          if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
+            await this.uploadPhoto(resp.user.user_id)     
           }
+          this.success(resp.message)
+          this.currentStep = 1;
+          this.registerForm.reset()
         }, (err)=>this.error(err.error.message));
       }
     
@@ -110,7 +114,7 @@ export class ModalUserRegisterComponent {
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
   get rol() { return this.registerForm.get('rol')?.value }
-  
+  get photo() { return this.registerForm.get('photo')}
   error(error: string) {
     return Swal.fire({
     icon: 'error',
@@ -120,10 +124,10 @@ export class ModalUserRegisterComponent {
     })
   }
   
-  get success() {
+  success(message:string) {
     return Swal.fire({
       icon: 'success',
-      title: 'Patient has enrolled successfull',
+      title: message,
       showConfirmButton: false,
       timer:2000
     })

@@ -22,7 +22,7 @@ export class UserService {
     return this.http.post(`${environment.THECLINIC_API_URL}/users`, user)
   }
 
- uploadImageCloudinary(id:string, photo:any) { 
+  uploadImageCloudinary(id:string, photo:any) { 
     return  this.http.post(`${environment.THECLINIC_API_URL}/file/photo/upload/users/${id}`, photo)
   }
 
