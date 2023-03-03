@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, 
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-user-register',
@@ -36,14 +37,15 @@ export class ModalUserRegisterComponent {
         phone: ['', Validators.required],
         gender: ['', Validators.required],
       }),
-      rol: ['',Validators.required],
-      photo: ['']
+      rol: ['', Validators.required],
+      photo:[''],
+      photoSrc: ['']
     });
     
     this.isPersonalInformationStepValid
     this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
-  
+    
   }
   constructor(
     private formbuilder: FormBuilder,
@@ -51,7 +53,11 @@ export class ModalUserRegisterComponent {
     private patientService: PatientService
 
   ) { }
-
+  uploadPhoto(event: any) {
+    const photo = event.files[0]
+    this.registerForm.patchValue({ 'photoSrc': photo })
+    
+  }
 
   createUser() {
     if (this.isFirstStepValid === 'VALID' && this.isSecondStepValid === 'VALID') {   
@@ -76,7 +82,22 @@ export class ModalUserRegisterComponent {
       console.log(rol)
       if (['doctor', 'operator'].includes(rol)) {
         console.log('here')
-        this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm)
+        this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe((resp:any) => { 
+          if (resp.ok) {
+            if (this.registerForm.get('photoSrc')?.value) {
+              console.log(resp.user.user_id)
+              const formData = new FormData();
+              formData.append('photo', this.registerForm.get('photoSrc')?.value)     
+              this.userservice.uploadImageCloudinary(resp.user.user_id, formData).subscribe(
+                (resp: any) => console.log(resp.ok),
+                (err) => this.error(err.error.message)
+              );
+            }
+          
+          
+            this.success
+          }
+        }, (err)=>this.error(err.error.message));
       }
     
     }
@@ -88,7 +109,25 @@ export class ModalUserRegisterComponent {
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
-  get rol(){ return this.registerForm.get('rol')?.value}
+  get rol() { return this.registerForm.get('rol')?.value }
+  
+  error(error: string) {
+    return Swal.fire({
+    icon: 'error',
+    title: error,
+    showConfirmButton: false,
+    timer:2000
+    })
+  }
+  
+  get success() {
+    return Swal.fire({
+      icon: 'success',
+      title: 'Patient has enrolled successfull',
+      showConfirmButton: false,
+      timer:2000
+    })
+  }
 
   forbiddenInputTextValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/

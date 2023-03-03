@@ -15,29 +15,15 @@ export class UserService {
   ) { }
   
 
-  error(error: string) {
-    return Swal.fire({
-    icon: 'error',
-    title: error,
-    showConfirmButton: false,
-    timer:2000
-    })
-  }
   
-  get success() {
-    return Swal.fire({
-      icon: 'success',
-      title: 'Patient has enrolled successfull',
-      showConfirmButton: false,
-      timer:2000
-    })
-  }
   crearteNewUserWithEmailAndPassword(user: UserRegisterForm) { 
     // const token = sessionStorage.getItem('the_clinic_session_token') || ''
     // { headers: { 'x-token': token }, user}
-    return this.http.post(`${environment.THECLINIC_API_URL}/users`, user).subscribe(resp => { 
-      if(resp){ this.success }
-    }, (err)=>this.error(err.error.message));
+    return this.http.post(`${environment.THECLINIC_API_URL}/users`, user)
+  }
+
+ uploadImageCloudinary(id:string, photo:any) { 
+    return  this.http.post(`${environment.THECLINIC_API_URL}/file/photo/upload/users/${id}`, photo)
   }
 
   
