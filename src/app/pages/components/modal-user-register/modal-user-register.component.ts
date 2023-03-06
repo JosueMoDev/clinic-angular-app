@@ -24,7 +24,7 @@ export class ModalUserRegisterComponent {
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   public registerForm!: FormGroup;
-  
+  public imagenTemp!: any;
  
   ngOnInit() {
 
@@ -59,7 +59,15 @@ export class ModalUserRegisterComponent {
   preparePhoto(event: any) {
     const photo = event.files[0]
     this.registerForm.patchValue({ 'photoSrc': photo })
-    
+    if (!photo) {
+      return this.imagenTemp = null
+    }
+    const renderImg = new FileReader();
+    renderImg.readAsDataURL(photo);
+    renderImg.onloadend = () => { 
+      this.imagenTemp = renderImg.result;
+    }
+    return this.imagenTemp
   }
   async uploadPhoto(id: string, schema: string ) {
       const formData = new FormData();

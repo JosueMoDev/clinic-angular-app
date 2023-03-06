@@ -1,23 +1,28 @@
 <!-- sidenav  -->
 
-<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed inset-y-0 right-0 flex-wrap items-center justify-between block p-0 mt-2 mr-0 overflow-y-auto antialiased transition-transform duration-200 border-0 shadow-xl w-fix translate-x-fit snap-none dark:shadow-none dark:bg-slate-850/100 bg-slate-50 ease-nav-brand z-990 rounded-2xl h-max-screen xl:mr-2 xl:right-0 xl:translate-x-0">
-  <div class="flex-col w-full h-full capitalize ">
+<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed inset-y-0 right-0 flex-wrap items-center justify-between block p-0 mt-2 mr-0 overflow-y-auto antialiased transition-transform duration-200 border-0 shadow-xl w-max-full w-fit translate-x-fit snap-none dark:shadow-none dark:bg-slate-850/100 bg-slate-50 ease-nav-brand z-990 rounded-2xl h-max-screen xl:mr-2 xl:right-0 xl:translate-x-0">
+  <div class="flex-col w-full h-full capitalize">
     
-   <div class="flex-col w-full h-full p-1">
+   <div class="flex-col w-full h-full p-1 px-3">
       <button mat-mini-fab matTooltip="Primary" (click)="ui.closeSideBar()"   class="block float-right m-1 mt-5 text-xs align-middle bg-red-600 rounded-full xl:hidden hover:bg-red-700 ">
         <mat-icon class="text-base text-center text-white align-middle xl:hidden">close</mat-icon>
       </button>
-      <div class="h-30">
-        <a routerLink="/dashboard/user-profile" class="flex w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700 ">
-          <div class="my-auto">
-            <img [src]="loggedUser.photo||'assets/img/no-photo.jpg'" class="inline-flex items-center justify-center object-cover object-top w-16 h-16 mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+      <div class="h-fit">
+        <a routerLink="/dashboard/user-profile" class="flex flex-col w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
+          <div class="flex">
+            <div class="my-auto">
+              <img [src]="loggedUser.photo||'assets/img/no-photo.jpg'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+            </div>
+            <div class="flex flex-col justify-center">
+              <h6 class="mb-1 text-sm font-normal capitalize dark:text-white"><span class="font-semibold">{{loggedUser.name}}  {{loggedUser.lastname}}</span></h6>
+              <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
+                <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
+                User Profile
+              </p>
+            </div>
           </div>
-          <div class="flex flex-col justify-center">
-            <h6 class="mb-1 text-sm font-normal lowercase dark:text-white"><span class="font-semibold">{{loggedUser.email}}</span></h6>
-            <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
-              <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
-              User Profile
-            </p>
+          <div class="grid w-full mt-3">
+            <h6 class="grid w-full mb-1 text-xs font-normal text-center lowercase dark:text-white"><span class="font-semibold">{{loggedUser.email}}</span></h6>
           </div>
         </a>
       </div>

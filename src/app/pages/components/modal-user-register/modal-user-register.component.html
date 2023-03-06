@@ -1,7 +1,7 @@
 <div class="w-full ">
     
     <div class="flex justify-center ">
-      <div class="w-full p-5 px-10 space-y-2 shadow-xl m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
+      <div class="w-full p-1 px-1 m-3 space-y-2 shadow-xl md:p-5 md:px-10 md:m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
         <p class="text-2xl text-start">Register form</p>
         <ol class="flex items-center justify-center w-full">
           <div class="flex justify-center w-full">
@@ -62,7 +62,7 @@
               <div class="grid grid-cols-1 gap-4 ">
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                   <div class="mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Document Number</span>
+                    <span class="px-1 py-2 text-sm text-black dark:text-white">Document Number</span>
                     <div class="flex rounded-md ">
                       <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
                         <div class="flex items-center justify-center align-middle">
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Email</span>
+                    <span class="px-1 py-2 text-sm text-black dark:text-white">Email</span>
                     <div class="flex rounded-md ">
                       <input 
                         type="email" 
@@ -149,7 +149,7 @@
             
               <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                 <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Name</span>
+                  <span class="px-1 py-2 text-sm text-black dark:text-white">Name</span>
                   <input 
                   type="text"  
                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
@@ -191,7 +191,7 @@
     
                 </div>
                 <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Last name</span>
+                  <span class="px-1 py-2 text-sm text-black dark:text-white">Last name</span>
                   <input 
                   type="text"  
                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
@@ -228,7 +228,7 @@
            
               <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                 <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Phone</span>
+                  <span class="px-1 py-2 text-sm text-black dark:text-white">Phone</span>
                   <input 
                   type="text"  
                   class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
@@ -239,7 +239,7 @@
                   />
                 </div>
                 <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Choose your gender</span>       
+                  <span class="px-1 py-2 text-sm text-black dark:text-white">Choose your gender</span>       
                   <fieldset class="px-3 py-1 " data-role="controlgroup">
                     <div class="float-left">
                       <label for="male">Male</label>
@@ -277,7 +277,7 @@
       
             <div *ngIf="currentStep===2" >
               <div class="mb-4 ">
-                <span class="px-1 py-2 text-sm text-white/80">Choose user rol</span>       
+                <span class="px-1 py-2 text-sm text-black dark:text-white">Choose user rol</span>       
                 <fieldset class="px-3 py-1 " data-role="controlgroup">
                   <div class="flex-col justify-between w-full text-black dark:text-white columns-1 md:columns-3">
                     <div class="">
@@ -333,7 +333,13 @@
   
           <section *ngIf="currentStep===3" >
             <div class="mb-4">
-              <input 
+              <span class="px-1 py-2 text-sm text-black dark:text-white">Choose your profile photo</span>       
+              <div class="flex items-center justify-center w-full mb-5">
+                <img *ngIf="imagenTemp" [src]="imagenTemp" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+                <img *ngIf="!imagenTemp" src="assets/img/no-photo.jpg" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+              </div>
+              <input
+               accept="image/png, image/jpeg, image/jpg" 
                 type="file" 
                 class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
                 placeholder="Photo" 
