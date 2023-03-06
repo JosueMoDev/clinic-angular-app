@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, 
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -51,7 +52,8 @@ export class ModalUserRegisterComponent {
   constructor(
     private formbuilder: FormBuilder,
     private userservice: UserService,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private cloudinary : CloudinaryService
 
   ) { }
   preparePhoto(event: any) {
@@ -59,10 +61,10 @@ export class ModalUserRegisterComponent {
     this.registerForm.patchValue({ 'photoSrc': photo })
     
   }
-  async uploadPhoto(user_id: string ) {
+  async uploadPhoto(id: string, schema: string ) {
       const formData = new FormData();
       formData.append('photo', this.registerForm.get('photoSrc')?.value)     
-        await this.userservice.uploadImageCloudinary(user_id, formData).subscribe(
+        await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
               this.success(resp.message)
@@ -91,12 +93,19 @@ export class ModalUserRegisterComponent {
         }
       
       if (rol==='patient') {
-        this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm)
+        this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
+          if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
+            await this.uploadPhoto(resp.patient.patient_id, 'patients')     
+          }
+          this.success(resp.message)
+          this.currentStep = 1;
+          this.registerForm.reset()
+        }, (err)=>this.error(err.error.message));
       }
       if (['doctor', 'operator'].includes(rol)) {
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
-            await this.uploadPhoto(resp.user.user_id)     
+            await this.uploadPhoto(resp.user.user_id, 'users')     
           }
           this.success(resp.message)
           this.currentStep = 1;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { PatientService } from 'src/app/services/patient.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-patient-register',
@@ -32,7 +33,6 @@ export class PatientRegisterComponent {
     });
     
     this.registerPatientForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
-    console.log( this.isPassworCorrect)
   }
   constructor(
     private formbuilder: FormBuilder,
@@ -63,10 +63,30 @@ export class PatientRegisterComponent {
           rol:'patient',
         }
 
-      this.patientService.crearteNewPatientWithEmailAndPasswordOutside(newRegisterForm)
+      this.patientService.crearteNewPatientWithEmailAndPasswordOutside(newRegisterForm).subscribe(resp => { 
+        if (resp) { this.success }
+      }, (err)=>{this.error(err.error.message)});
           
     }
      
+  }
+
+  error(error: string) {
+    return Swal.fire({
+    icon: 'error',
+    title: error,
+    showConfirmButton: false,
+    timer:2000
+    })
+  }
+  
+  success(message:string) {
+    return Swal.fire({
+      icon: 'success',
+      title: message,
+      showConfirmButton: false,
+      timer:2000
+    })
   }
 
   get name() { return this.registerPatientForm.get('name'); }
