@@ -76,7 +76,8 @@ export class ModalUserRegisterComponent {
           (resp: any) => {
             if (resp.ok) {
               this.success(resp.message)
-              formData.delete
+              formData.delete,
+              this.imagenTemp = null;
             }
           },
           (err) => this.error(err.error.message)

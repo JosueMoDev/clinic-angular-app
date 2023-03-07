@@ -6,39 +6,22 @@
         <ol class="flex items-center justify-center w-full">
           <div class="flex justify-center w-full">
             <!-- first step -->
-            <li *ngIf="isFirstStepValid" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
+            <li *ngIf="!isFirstStepValid" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
               <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
                 <div class="flex items-center justify-center">
-                  <mat-icon *ngIf="!isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
                   <mat-icon  class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="apartment"/>
+                  <!-- <mat-icon *ngIf="!isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/> -->
                 </div>
               </span>
             </li>
-            <li *ngIf="!isFirstStepValid" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
+            <li *ngIf="isFirstStepValid" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
               <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
                 <div class="flex items-center justify-center">
                   <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
                 </div>
               </span>
             </li>
-            <!-- first step -->
-            <!-- first step -->
-            <!-- <li *ngIf="isSecondStepValid" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block " >
-              <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
-                <div class="flex items-center justify-center">
-                  <mat-icon *ngIf="isSecondStepValid==='VALID'" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
-                  <mat-icon  class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="assignment"/>
-                </div>
-              </span>
-            </li>
-            <li *ngIf="isSecondStepValid==='VALID'" class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-teal-600 after:dark:border-teal-900 after:border-4  after:inline-block " >
-              <span class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full dark:bg-teal-900 lg:h-10 lg:w-10 shrink-0" >
-                <div class="flex items-center justify-center">
-                  <mat-icon  class="text-base text-center text-teal-50" fontIcon="done"/>
-                </div>
-              </span>
-            </li> -->
-            <!-- first step -->
+
             
               <li class="flex items-center w-fit ">
                 <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
@@ -131,33 +114,39 @@
                           class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                           placeholder="Country" 
                           formControlName="country"
-                         
+                          value="country" 
                         />
                       </div>
                     </div>
                     <div class="mb-4">
-                        <span class="px-1 py-2 text-sm text-white/80">Province</span>
+                        <span class="px-1 py-2 text-sm text-white/80">Province </span>
                         <div class="flex rounded-md ">
-                          <input 
+                          <select
                             type="text"  
                             class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                             placeholder="Province" 
                             formControlName="province"
-                           
-                          />
+                            (change)="citiesByProvince"
+                            
+                          >
+                          <option value="" selected disabled>select Province</option>
+                          <option *ngFor="let province of provinces" [value]="province">{{province}}</option>
+                        </select>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <span class="px-1 py-2 text-sm text-white/80">City</span>
                         <div class="flex rounded-md ">
-                          <input 
+                          <select 
                             type="text"  
                             class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                             placeholder="City" 
                             formControlName="city"
-                           
-                          />
+                          >
+                          <option value="" selected disabled>select city</option>
+                          <option *ngFor="let city of citiesByProvince" [value]="city">{{city}}</option>
+                        </select>
                         </div>
                     </div>
 
@@ -182,21 +171,28 @@
            
               <div class="flex justify-end w-full">
                 <div class="flex justify-end text-center w-fit" >
-                  <button type="button" [disabled]="isFirstStepValid" (click)="nextPage()" class="inline-block w-full3 px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
+                  <button type="button" [disabled]="!isFirstStepValid" (click)="nextPage()" class="inline-block w-full3 px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
                 </div>
               </div>
             </div>
       
             
-          <!-- Step 3 -->
+          <!-- Step 2 -->
   
-          <section *ngIf="currentStep===3" >
+          <section *ngIf="currentStep===2" >
             <div class="mb-4">
-              <input 
+              <span class="px-1 py-2 text-sm text-black dark:text-white">Choose photo for clinic</span>       
+              <div class="flex items-center justify-center w-full mb-5">
+                <img *ngIf="imagenTemp" [src]="imagenTemp" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+                <img *ngIf="!imagenTemp" src="assets/img/no-photo.jpg" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+              </div>
+              <input
+               accept="image/png, image/jpeg, image/jpg" 
                 type="file" 
-                class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                placeholder="Name" 
+                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
+                placeholder="Photo" 
                 formControlName="photo"
+                (change)="preparePhoto($event.target)"
                 />
             </div>
   
