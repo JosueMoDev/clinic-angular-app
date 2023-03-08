@@ -3,10 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
-import Swal from 'sweetalert2';
 import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
 import { User } from '../../../models/user.model';
-
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
  
 @Component({
@@ -99,12 +98,12 @@ export class RegisterClinicComponent {
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.success(resp.message)
+              success(resp.message)
               formData.delete,
               this.imagenTemp = null;
             }
           },
-          (err) => this.error(err.error.message)
+          (err) => error(err.error.message)
     );
   }
 
@@ -130,27 +129,9 @@ export class RegisterClinicComponent {
       if (resp.ok && this.registerClinicForm.get('photoSrc')?.value) { 
         await this.uploadPhoto(resp.clinic.clinic_id, 'clinics')     
       }
-      this.success(resp.message)
+      success(resp.message)
       this.currentStep = 1;
       this.registerClinicForm.reset()
-    }, (err)=>this.error(err.error.message));
+    }, (err)=>error(err.error.message));
   }
-  error(error: string) {
-    return Swal.fire({
-    icon: 'error',
-    title: error,
-    showConfirmButton: false,
-    timer:2000
-    })
-  }
-  
-  success(message:string) {
-    return Swal.fire({
-      icon: 'success',
-      title: message,
-      showConfirmButton: false,
-      timer:2000
-    })
-  }
-  
 }

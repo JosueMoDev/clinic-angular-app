@@ -4,7 +4,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
-import Swal from 'sweetalert2';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 
 @Component({
   selector: 'app-modal-user-register',
@@ -75,12 +76,12 @@ export class ModalUserRegisterComponent {
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.success(resp.message)
+              success(resp.message)
               formData.delete,
               this.imagenTemp = null;
             }
           },
-          (err) => this.error(err.error.message)
+          (err) => error(err.error.message)
     );
   }
 
@@ -106,20 +107,20 @@ export class ModalUserRegisterComponent {
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
             await this.uploadPhoto(resp.patient.patient_id, 'patients')     
           }
-          this.success(resp.message)
+          success(resp.message)
           this.currentStep = 1;
           this.registerForm.reset()
-        }, (err)=>this.error(err.error.message));
+        }, (err)=>error(err.error.message));
       }
       if (['doctor', 'operator'].includes(rol)) {
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
             await this.uploadPhoto(resp.user.user_id, 'users')     
           }
-          this.success(resp.message)
+          success(resp.message)
           this.currentStep = 1;
           this.registerForm.reset()
-        }, (err)=>this.error(err.error.message));
+        }, (err)=>error(err.error.message));
       }
     
     }
@@ -132,24 +133,9 @@ export class ModalUserRegisterComponent {
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
   get rol() { return this.registerForm.get('rol')?.value }
-  get photo() { return this.registerForm.get('photo')}
-  error(error: string) {
-    return Swal.fire({
-    icon: 'error',
-    title: error,
-    showConfirmButton: false,
-    timer:2000
-    })
-  }
+  get photo() { return this.registerForm.get('photo') }
   
-  success(message:string) {
-    return Swal.fire({
-      icon: 'success',
-      title: message,
-      showConfirmButton: false,
-      timer:2000
-    })
-  }
+  
 
   forbiddenInputTextValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/

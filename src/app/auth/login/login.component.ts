@@ -4,7 +4,7 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 declare const google: any;
 
 @Component({
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   public routeSubs$!: Subscription
   public type : string ='password'
   public visibility: boolean = true;
+  public error : any = error
   
 
   @ViewChild('googleLogin') googleLogin!: ElementRef;
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   } 
 
   ngOnInit(): void {
-    console.log(this.currentRoute)
 
     this.loginForm = this.formBuider.group({
       email: [localStorage.getItem('user_email'), [Validators.required, Validators.email]],
@@ -75,11 +75,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this._ngZone.run(
             () => { 
              this.router.navigate(['/'])
-          })}
+            })
+        }
+        success('Welcome');
       },
-      (error: any) => { 
-        this.error(error.error.message)
-      }
+      (error: any) => this.error(error.error.message)
     )
   }
 
@@ -92,14 +92,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.visibility= !this.visibility;
     (this.type==='password')? this.type = 'text': this.type='password'
   }
-  error(error: string) {
-    return Swal.fire({
-    icon: 'error',
-    title: error,
-    showConfirmButton: false,
-    timer:2000
-    })
-  }
+ 
   
   loginWithEmailAndPassword() { 
     this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
@@ -116,6 +109,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             sessionStorage.setItem('userToken', resp.token)
             this.loginForm.reset()
             this.router.navigateByUrl('/') 
+            success('Welcome');
             
           }
         },
