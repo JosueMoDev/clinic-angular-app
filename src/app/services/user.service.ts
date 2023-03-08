@@ -4,20 +4,24 @@ import { environment } from 'src/environments/environment';
 import { UserRegisterForm } from '../interfaces/user.interface';
 import { delay, map } from 'rxjs';
 import { User } from '../models/user.model';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  
+  public headers: {} = this.authService.headers;
 
   constructor(
     private http: HttpClient,
+    private authService: AuthService
   ) { }
-  
 
   allUsers(from: number) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/users?pagination=${from}`).pipe(
+    console.log( this.headers)
+    return this.http.get(`${environment.THECLINIC_API_URL}/users?pagination=${from}`, this.headers).pipe(
       delay(200),
       map(
         (resp:any) => {
@@ -32,9 +36,7 @@ export class UserService {
   )
   }
   crearteNewUserWithEmailAndPassword(user: UserRegisterForm) { 
-    // const token = sessionStorage.getItem('the_clinic_session_token') || ''
-    // { headers: { 'x-token': token }, user}
-    return this.http.post(`${environment.THECLINIC_API_URL}/users`, user)
+    return this.http.post(`${environment.THECLINIC_API_URL}/users`, user , this.headers)
   }
   
 }

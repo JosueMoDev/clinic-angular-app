@@ -20,7 +20,19 @@ export class AuthService {
     private _ngZone: NgZone
   ) { }
 
+  get token(): string {
+    return sessionStorage.getItem('the_clinic_session_token') || '';
+  }
+
   
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      },
+    }
+  }
+
   logout() {
     sessionStorage.removeItem('the_clinic_session_token');
     google.accounts.id.revoke('jonasjosuemoralese@gmail.com', () => { 
@@ -35,10 +47,7 @@ export class AuthService {
     }
    
     return this.http.post(`${environment.THECLINIC_API_URL}/login`, loginForm)
-      .pipe(tap( (resp: any ) => { 
-        sessionStorage.setItem('the_clinic_session_token', resp.token),
-        console.log( 'siempre paso por aqwi')
-    }));
+      .pipe(tap( (resp: any ) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
     
   }
 
@@ -50,19 +59,13 @@ export class AuthService {
   googleSingIn(token: string, currentRoute:string) { 
     if (currentRoute === '/login/patient') {
       return this.http.post(`${environment.THECLINIC_API_URL}/login/google/patient`, { token })
-        .pipe(tap((resp: any) => {     
-          // this.userLogged(resp);
-          sessionStorage.setItem('the_clinic_session_token', resp.token)
-        }));
+        .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
     }
     return this.http.post(`${environment.THECLINIC_API_URL}/login/google`, { token })
-      .pipe(tap((resp: any) => {
-          sessionStorage.setItem('the_clinic_session_token', resp.token)
-      }));
+      .pipe(tap((resp: any) => {sessionStorage.setItem('the_clinic_session_token', resp.token)}));
   }
   isValidToken(): Observable<boolean> {
-    const token = sessionStorage.getItem('the_clinic_session_token') || ''
-    return this.http.get(`${environment.THECLINIC_API_URL}/login/renew`, { headers: { 'x-token': token } })
+    return this.http.get(`${environment.THECLINIC_API_URL}/login/renew`, this.headers)
       .pipe(
         tap((resp: any) => { 
           if (resp.ok) {

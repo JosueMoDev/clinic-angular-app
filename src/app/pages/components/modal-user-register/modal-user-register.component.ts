@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { DialogRef } from '@angular/cdk/dialog';
 
 
 @Component({
@@ -54,7 +55,8 @@ export class ModalUserRegisterComponent {
     private formbuilder: FormBuilder,
     private userservice: UserService,
     private patientService: PatientService,
-    private cloudinary : CloudinaryService
+    private cloudinary: CloudinaryService,
+    public dialogRef: DialogRef
 
   ) { }
   preparePhoto(event: any) {

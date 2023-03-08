@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../../services/user.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-users',
@@ -14,12 +21,23 @@ export class UsersComponent implements OnInit {
   public dataTemp: User[] = [];
   public from: number = 0;
   public loading: boolean = true;
-  constructor(private userService: UserService) { }
+
+  animal!: string | undefined;
+  name!: string;
+
+  constructor(
+    private userService: UserService,
+    public dialog: Dialog
+  ) { }
 
   ngOnInit(): void {
     this.allUsers()
   }
   
+  openDialog(): void {
+    this.dialog.open(ModalUserRegisterComponent);
+  } 
+
   allUsers() {
     this.loading = true;
     this.userService.allUsers(this.from)

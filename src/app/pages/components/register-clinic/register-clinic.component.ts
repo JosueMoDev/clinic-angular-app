@@ -7,6 +7,8 @@ import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
 import { User } from '../../../models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
+
+
  
 @Component({
   selector: 'app-register-clinic',
@@ -23,8 +25,9 @@ export class RegisterClinicComponent {
   public addressStep!: string;
   public loggedUser!: User;
   public imagenTemp!: any;
-
+ 
   ngOnInit() {
+
     this.loggedUser = this.authService.currentUserLogged;
 
     this.registerClinicForm = this.formbuilder.group({

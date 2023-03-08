@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .subscribe(
       (response: any )=> {
         if (response.ok) {
-          sessionStorage.setItem('userToken', response.token);
+          // sessionStorage.setItem('userToken', response.token);
           this._ngZone.run(
             () => { 
              this.router.navigate(['/'])
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginWithEmailAndPassword() { 
     this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
       .subscribe( 
-        (resp) => {
+        (resp:any) => {
           if (resp.ok) {
             if (this.rememberme) {
               localStorage.setItem('rememberme-state', this.rememberme);
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               localStorage.removeItem('rememberme-state');
               localStorage.removeItem('user_email');
             }
-            sessionStorage.setItem('userToken', resp.token)
+            // sessionStorage.setItem('userToken', resp.token)
             this.loginForm.reset()
             this.router.navigateByUrl('/') 
             success('Welcome');

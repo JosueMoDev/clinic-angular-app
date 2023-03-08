@@ -2,19 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserRegisterForm } from '../interfaces/user.interface';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
-
-  constructor(private http: HttpClient) { }
+  public headers : {} = this.authService.headers
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
 
   crearteNewPatientWithEmailAndPassword(patient: UserRegisterForm) { 
-    // const token = sessionStorage.getItem('the_clinic_session_token') || ''
-    // { headers: { 'x-token': token }, user}
-    return this.http.post(`${environment.THECLINIC_API_URL}/register/patient`, patient)
+    return this.http.post(`${environment.THECLINIC_API_URL}/register/patient`, patient, this.headers)
   }
   crearteNewPatientWithEmailAndPasswordOutside(patient: UserRegisterForm) { 
     return this.http.post(`${environment.THECLINIC_API_URL}/register/patient/outside`, patient)
