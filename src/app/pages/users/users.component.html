@@ -1,1 +1,61 @@
-<app-modal-user-register/>
+<!-- <app-modal-user-register/> -->
+<div class="flex flex-wrap mx-3 mt-6">
+    <div class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:flex-none">
+      <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border">
+        <div class="p-4 pb-0 mb-0 rounded-t-4">
+          <div class="flex justify-between">
+            <p class="text-2xl font-semibold text-black text-start dark:text-white">User's table</p>
+            <button mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+                <mat-icon  fontIcon="add"></mat-icon> <span>new user</span> 
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
+            <tbody>
+              <tr *ngFor="let user of userList">
+                <td class="align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                    <div class="flex items-center px-3 py-1 align-top">
+                        <div>
+                            <img [src]="user.photo||'assets/img/no-photo.jpg'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />
+                        </div>
+                    </div>
+                </td>
+                <td class="align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                    <div class="text-center align-top">
+                      <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Full name:</p>
+                      <h6 class="mb-0 text-sm leading-normal dark:text-white">{{user.name}} {{user.lastname}}</h6>
+                    </div>
+                </td>
+                <td class="align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                  <div class="text-center align-top">
+                    <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">E-mail:</p>
+                    <h6 class="mb-0 text-sm leading-normal dark:text-white">{{user.email}}</h6>
+                  </div>
+                </td>
+                <td class="align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                  <div class="text-center align-top">
+                    <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Rol:</p>
+                    <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{user.rol}}</h6>
+                  </div>
+                </td>
+                <td class="align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                  <div class="flex-col items-center space-y-1 align-top">
+                    <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
+                    <div class="flex items-center justify-center">
+                        <!-- <button mat-raised-button class="flex items-center justify-center mb-2 text-sm font-semibold text-white align-middle bg-teal-700 rounded-lg dark dark:text-teal-700 dark:bg-white">
+                            <mat-icon class="text-base" fontIcon="person"></mat-icon> <span class="pr-1 text-center">Anable</span> 
+                        </button> -->
+                        <button mat-raised-button class="flex items-center justify-center mb-2 text-sm font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+                            <mat-icon class="text-base" fontIcon="person_off"></mat-icon> <span class="pr-1 text-center">Anable</span> 
+                        </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>

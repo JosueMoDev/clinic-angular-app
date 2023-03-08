@@ -1,23 +1,26 @@
 import Swal from "sweetalert2"
+
 export const success = async (message:string) => {
    
 
     const Toast = Swal.mixin({
         toast: true,
         position: 'top',
-        iconColor: 'white',
-        background: '#059669',
+        iconColor: '#d1fae5',
+        background: '#047857',
         showConfirmButton: false,
-        timer: 2000,
+        showCloseButton: true,
+        timer: 5000,
         timerProgressBar: true,
-        color: 'white',
-        width:'fit-content'
+        color: '#f9fafb',
+        
+        
         
     })
 
     await Toast.fire({
         icon:'success',
-        title:message
+        title: message,
     })
       
 }
@@ -26,14 +29,13 @@ export const error = async (error:string) => {
     const Toast = Swal.mixin({
         toast: true,
         position: 'top',
-        iconColor: 'white',
-        background: '#e11d48',
+        iconColor: '#ffe4e6',
+        background: '#be123c',
         showConfirmButton: false,
         showCloseButton: true,
-        timer: 2000,
+        timer: 5000,
         timerProgressBar: true,
-        color: 'white',
-        width:'fit-content'
+        color: '#f9fafb',
         
       })
   
