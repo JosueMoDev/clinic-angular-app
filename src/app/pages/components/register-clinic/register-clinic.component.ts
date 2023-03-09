@@ -6,6 +6,7 @@ import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
 import { User } from '../../../models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { DialogRef } from '@angular/cdk/dialog';
 
 
 
@@ -49,13 +50,15 @@ export class RegisterClinicComponent {
     this.provinces = provicesAndCities.map( ({province}) => province)
     this.registerClinicForm.get('address.city')?.disable();  
   }
+  
   constructor(
     private formbuilder: FormBuilder,
     private authService: AuthService,
     private clinicService: ClinicService,
-    private cloudinary: CloudinaryService
-
+    private cloudinary: CloudinaryService,
+    public dialogRef: DialogRef
   ) { }
+
   get nameProvince() { return this.registerClinicForm.get('address.province')?.value; }
   get country(){ return 'El Salvador'}
   get isFirstStepValid() {

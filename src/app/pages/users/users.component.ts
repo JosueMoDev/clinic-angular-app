@@ -5,11 +5,6 @@ import { Dialog} from '@angular/cdk/dialog';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
 
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -32,14 +27,15 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.allUsers()
-    console.log()
   }
 
 
   openDialog(): void {
 
     this.dialog.open(ModalUserRegisterComponent, {
-      width: '100vh'
+      width: '100vh',
+      minWidth: '100vh',
+      backdropClass:'top'
     });
   } 
 

@@ -1,8 +1,17 @@
-<div class="w-full ">
+<div class="flex justify-start items-center align-middle   min-w-full min-h-screen h-screen z-[2] w-fit absolute top-0 bg-slate-900/90 ">
     
-    <div class="flex justify-center ">
+    <div class="flex justify-center items-center  w-full   xl:w-[83.5%]  h-fit">
       <div class="w-full p-5 px-10 space-y-2 shadow-xl m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
-        <p class="text-2xl text-start">Register form</p>
+        <div class="flex-col w-full mb-5 align-middle columns-2">
+          <div class="flex justify-start ">
+            <p class="float-left text-2xl text-start">Register New Clinic</p>
+          </div>
+          <div class="flex justify-end">
+            <button (click)="dialogRef.close()" mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+              <mat-icon  fontIcon="close"></mat-icon> <span>close</span> 
+            </button>
+          </div>
+        </div>
         <ol class="flex items-center justify-center w-full">
           <div class="flex justify-center w-full">
             <!-- first step -->
