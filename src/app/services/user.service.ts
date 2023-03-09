@@ -25,7 +25,10 @@ export class UserService {
       map(
         (resp:any) => {
           const users = resp.users.map(
-            ({ email, rol, name, lastname, user_id, document_number, photo}:User)=> new User(email, rol, name, lastname, user_id, document_number, photo)
+            ({ user_id, document_type, document_number, email, name,
+              lastname, gender, phone, validationState, email_provider, rol, photo }: User) =>
+              new User(user_id, document_type, document_number, email, name,
+                lastname, gender, phone, validationState, email_provider, rol, photo)
           );
           return {
             total: resp.total,

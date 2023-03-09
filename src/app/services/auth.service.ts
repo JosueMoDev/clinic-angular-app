@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/auth.interface';
 import { tap, map, Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
+import {  UserLogged } from '../models/user.model';
 
 
 declare const google: any;
@@ -13,7 +13,7 @@ declare const google: any;
   providedIn: 'root'
 })
 export class AuthService {
-  public currentUserLogged!: User;
+  public currentUserLogged!: UserLogged;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -51,9 +51,9 @@ export class AuthService {
     
   }
 
-  userLogged(userLogged: User) { 
+  userLogged(userLogged: UserLogged) { 
     const { email, rol, name, lastname, user_id, document_number, photo} = userLogged
-    this.currentUserLogged = new User( email, rol, name, lastname, user_id, document_number, photo)
+    this.currentUserLogged = new UserLogged( email, rol, name, lastname, user_id, document_number, photo)
   }
 
   googleSingIn(token: string, currentRoute:string) { 

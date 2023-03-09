@@ -1,12 +1,17 @@
 export class Patient {
 
     constructor(
+        public patient_id: string,
+        public document_type: string,
+        public document_number: string,
         public email: string,
         public name: string,
-        public lastname:string,
-        public patient_id: string,
-        public document_number: string,
-        public register_by: string,
+        public lastname: string,
+        public gender: string,
+        public phone: string,
+        public validationState: boolean,
+        public email_provider: string,
+        public rol: string,
         public photo?: string
     ){}
 

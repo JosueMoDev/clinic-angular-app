@@ -3,6 +3,8 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from '../../services/user.service';
 import { Dialog} from '@angular/cdk/dialog';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
+import { UpdateProfileService } from '../../services/update-profile.service';
+
 
 
 @Component({
@@ -17,16 +19,20 @@ export class UsersComponent implements OnInit {
   public dataTemp: User[] = [];
   public from: number = 0;
   public loading: boolean = true;
-  
+
   
 
   constructor(
     private userService: UserService,
+    public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
-  ) { }
+  ) { 
+ 
+  }
 
   ngOnInit(): void {
     this.allUsers()
+     
   }
 
 

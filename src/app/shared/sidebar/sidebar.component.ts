@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UiService } from 'src/app/services/ui.service';
+import { UserLogged } from '../../models/user.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,7 +11,7 @@ import { UiService } from 'src/app/services/ui.service';
   ]
 })
 export class SidebarComponent implements OnInit {
-  loggedUser!: User;
+  loggedUser!: UserLogged;
   constructor(
     public ui: UiService,
     private authService: AuthService
