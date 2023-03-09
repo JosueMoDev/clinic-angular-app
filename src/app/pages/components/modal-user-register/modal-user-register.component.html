@@ -1,7 +1,10 @@
-<div class="w-full ">
+<div class="flex  justify-center z-[2] w-screen fixed top-[10%] ">
     
     <div class="flex justify-center ">
       <div class="w-full p-1 px-1 m-3 space-y-2 shadow-xl md:p-5 md:px-10 md:m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
+        <button (click)="dialogRef.close()" mat-raised-button class="flex items-center justify-center float-right p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+          <mat-icon  fontIcon="close"></mat-icon> <span>close</span> 
+        </button>
         <p class="text-2xl text-start">Register form</p>
         <ol class="flex items-center justify-center w-full">
           <div class="flex justify-center w-full">

@@ -111,7 +111,9 @@ export class ModalUserRegisterComponent {
           }
           success(resp.message)
           this.currentStep = 1;
-          this.registerForm.reset()
+          this.registerForm.reset();
+          this.dialogRef.close();
+
         }, (err)=>error(err.error.message));
       }
       if (['doctor', 'operator'].includes(rol)) {
@@ -121,7 +123,8 @@ export class ModalUserRegisterComponent {
           }
           success(resp.message)
           this.currentStep = 1;
-          this.registerForm.reset()
+          this.registerForm.reset();
+          this.dialogRef.close();
         }, (err)=>error(err.error.message));
       }
     

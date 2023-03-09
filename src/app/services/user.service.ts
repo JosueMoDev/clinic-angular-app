@@ -20,7 +20,6 @@ export class UserService {
   ) { }
 
   allUsers(from: number) {
-    console.log( this.headers)
     return this.http.get(`${environment.THECLINIC_API_URL}/users?pagination=${from}`, this.headers).pipe(
       delay(200),
       map(
