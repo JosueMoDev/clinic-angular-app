@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,14 +26,16 @@ export class UserService {
       map(
         (resp:any) => {
           const users = resp.users.map(
-            ({ user_id, document_type, document_number, email, name,
+            ({ id, document_type, document_number, email, name,
               lastname, gender, phone, validationState, email_provider, rol, photo }: User) =>
-              new User(user_id, document_type, document_number, email, name,
-                lastname, gender, phone, validationState, email_provider, rol, photo)
+              new User(id, document_type, document_number, email, name,
+                lastname, gender, phone,  validationState, email_provider, rol, photo)
           );
           return {
             total: resp.total,
             users
+            
+            
           }
      })
   )

@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { success } from 'src/app/helpers/sweetAlert.helper';
-import { error } from '../../helpers/sweetAlert.helper';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { UserService } from '../../services/user.service';
 import { UpdateProfileService } from '../../services/update-profile.service';
 import { Patient } from 'src/app/models/patient.model';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
+import Swal from 'sweetalert2';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -21,7 +25,14 @@ export class UserProfileComponent {
   public visibility: boolean = true;
   public profileSelected: User | Patient;
   public currectPhoto!: string | undefined;
-  
+  public letShowPassWordField: boolean = false;
+  public photoForm!: FormGroup;
+  public imagenTemp!: any
+  color: any = '#3b82f6';
+  mode: ProgressSpinnerMode = 'indeterminate';
+  value = 80;
+
+
   ngOnInit() {
 
     this.profileForm = this.formbuilder.group({
@@ -37,18 +48,29 @@ export class UserProfileComponent {
       gender: [this.profileSelected.gender, Validators.required],
     });
 
-
+    this.photoForm = this.formbuilder.group({
+      photo: [''],
+      photoSrc:['']
+    })
     
-    this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
+    this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
+    this.letShowPassWordField = (this.authService.currentUserLogged.id === this.profileSelected.id )
+   
   }
+
+  
+
   constructor(
     private formbuilder: FormBuilder,
     private userService: UserService,
+    private authService: AuthService,
+    private cloudinary: CloudinaryService,
     public updateProfileService: UpdateProfileService
 
   ) { 
     this.profileSelected = updateProfileService.userProfileToUpdate;
-    this.currectPhoto = updateProfileService.userProfileToUpdate.photo
+    this.currectPhoto = updateProfileService.userProfileToUpdate.photo;
+
   }
 
   changeVisibility() {
@@ -80,6 +102,68 @@ export class UserProfileComponent {
           
     }
      
+  }
+
+  preparePhoto(event: any) {
+    const photo = event.files[0]
+    this.photoForm.patchValue({ 'photoSrc': photo })
+    if (!photo) {
+      return this.imagenTemp = null
+    }
+    const renderImg = new FileReader();
+    renderImg.readAsDataURL(photo);
+    renderImg.onloadend = () => { 
+      this.imagenTemp = renderImg.result;
+    }
+    return this.imagenTemp
+  }
+
+  startLoaddingPhoto() {
+    let schema!: string;
+    if (this.profileSelected.rol === 'patient') {
+      schema = 'patients'
+    } else { schema='users'}
+    this.uploadPhoto(this.profileSelected.id, schema)
+  }
+
+  deletePhoto(id: string) {
+    let schema!: string;
+    if (this.profileSelected.rol === 'patient') {
+      schema = 'patients'
+    } else { schema='users'}
+    Swal.fire({
+      title: 'Are you sure?, Do you want to delete your current photo',
+      icon: 'warning',
+      iconColor: '#dc2626',
+      showCancelButton: true,
+      confirmButtonColor: '#3b82f6',
+      cancelButtonColor: '#dc2626',
+      width:'75%',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
+          (resp: any) => {
+            if (resp.ok) { success(resp.message) }
+          },
+          (err) => error(err.error.message)
+        )
+      }
+    })
+  }
+  async uploadPhoto(id: string, schema: string) {
+      const formData = new FormData();
+      formData.append('photo', this.photoForm.get('photoSrc')?.value)     
+        await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
+          (resp: any) => {
+            if (resp.ok) {
+              success(resp.message)
+              formData.delete,
+              this.imagenTemp = null;
+            }
+          },
+          (err) => error(err.error.message)
+    );
   }
 
  

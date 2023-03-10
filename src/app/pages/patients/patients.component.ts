@@ -4,6 +4,7 @@ import { PatientService } from 'src/app/services/patient.service';
 import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
 import { Patient } from 'src/app/models/patient.model';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 @Component({
   selector: 'app-patients',
@@ -24,6 +25,7 @@ export class PatientsComponent {
   constructor(
     private patientService: PatientService,
     public dialog: Dialog,
+    public updateProfileService: UpdateProfileService,
   ) { }
 
   ngOnInit(): void {

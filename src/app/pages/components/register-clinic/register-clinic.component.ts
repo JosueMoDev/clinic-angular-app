@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
-import { User, UserLogged } from '../../../models/user.model';
+import {  User } from '../../../models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { DialogRef } from '@angular/cdk/dialog';
 
@@ -24,7 +24,7 @@ export class RegisterClinicComponent {
   public cities!: string[];
   public informationStep!: string;
   public addressStep!: string;
-  public loggedUser!: UserLogged;
+  public loggedUser!: User;
   public imagenTemp!: any;
  
   ngOnInit() {
@@ -126,7 +126,7 @@ export class RegisterClinicComponent {
       phone: information.phone,
       name: information.name,
       address,
-      user_id: this.loggedUser.user_id,
+      user_id: this.loggedUser.id,
       user_rol: this.loggedUser.rol
  
     }

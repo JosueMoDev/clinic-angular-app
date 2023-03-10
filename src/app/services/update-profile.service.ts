@@ -7,11 +7,13 @@ import { User } from 'src/app/models/user.model';
 })
 export class UpdateProfileService {
   public userProfile!: User | Patient;
+
   constructor() { }
 
   get userProfileToUpdate() {
     return this.userProfile
   }
+  
   profileToUpdate(profile: User | Patient) { 
     this.userProfile = profile
   }

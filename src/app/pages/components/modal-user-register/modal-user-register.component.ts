@@ -107,7 +107,7 @@ export class ModalUserRegisterComponent {
       if (rol==='patient') {
         this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
-            await this.uploadPhoto(resp.patient.patient_id, 'patients')     
+            await this.uploadPhoto(resp.patient.id, 'patients')     
           }
           success(resp.message)
           this.currentStep = 1;
@@ -119,7 +119,7 @@ export class ModalUserRegisterComponent {
       if (['doctor', 'operator'].includes(rol)) {
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
-            await this.uploadPhoto(resp.user.user_id, 'users')     
+            await this.uploadPhoto(resp.user.id, 'users')     
           }
           success(resp.message)
           this.currentStep = 1;

@@ -22,9 +22,9 @@ export class PatientService {
       map(
         (resp:any) => {
           const patients = resp.patients.map(
-            ({ patient_id, document_type, document_number, email, name,
+            ({ id, document_type, document_number, email, name,
               lastname, gender, phone, validationState, email_provider, rol, photo }: Patient) =>
-              new Patient(patient_id, document_type, document_number, email, name,
+              new Patient( id, document_type, document_number, email, name,
                 lastname, gender, phone, validationState, email_provider, rol, photo)
           );
           return {

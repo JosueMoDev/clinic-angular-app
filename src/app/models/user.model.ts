@@ -1,20 +1,8 @@
-export class UserLogged {
 
-    constructor(
-        public email: string,
-        public rol: string,
-        public name: string,
-        public lastname:string,
-        public user_id: string,
-        public document_number:string,
-        public photo?: string
-    ){}
-
-}
 export class User {
 
     constructor(
-        public user_id: string,
+        public id: string,
         public document_type: string,
         public document_number: string,
         public email: string,

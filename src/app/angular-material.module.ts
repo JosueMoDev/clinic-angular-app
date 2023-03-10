@@ -4,7 +4,9 @@ import {DialogModule} from '@angular/cdk/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -16,7 +18,9 @@ import {MatInputModule} from '@angular/material/input';
     MatIconModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AngularMaterialModule { }

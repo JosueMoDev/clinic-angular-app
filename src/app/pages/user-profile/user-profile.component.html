@@ -97,6 +97,9 @@
                   </div>
                 </div>
      <!-- password -->
+
+            <div *ngIf="letShowPassWordField">
+
               <div class="w-full mb-4"  *ngIf="(confirmationPassword?.dirty || confirmationPassword?.touched) && (password?.dirty || password?.touched)" >
                   <div *ngIf="!isPassworCorrect">
                   <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
@@ -105,69 +108,71 @@
                   </span>
                   </div>
               </div>
-                <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-                
-                  <div class="w-full mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Password </span>
-                    <input 
-                    type={{type}} 
-                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                    placeholder="password" 
-                    formControlName="password"
-                    />
-                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-                        class="alert alert-danger">
-    
-                      <div  *ngIf="password?.errors?.['required']">
-                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                          <mat-icon class="mx-2"  fontIcon="error"/> 
-                          password is required.
-                        </span>
-                      </div>
-                      <div *ngIf="password?.errors?.['minlength']">
-                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                          <mat-icon class="mx-2"  fontIcon="error"/>
-                          Name must be at least 8 characters long.
-                        </span>
-                      </div>
-                    </div>
-      
-                  </div>
-                  <div class="w-full mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Password  Confirmation</span>
-                    <div class="relative">
-                      <input 
-                      type={{type}}
-                      class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                      placeholder="Confirmation Passoword" 
-                      formControlName="confirmationPassword"
-                      />
-                      <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
-                          <button (click)="changeVisibility()" *ngIf="visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
-                              <mat-icon>visibility_off</mat-icon>
-                          </button>
-                          <button (click)="changeVisibility()"  *ngIf="!visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
-                              <mat-icon>visibility</mat-icon>
-                          </button>
-                      </div>
+              <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+              
+                <div class="w-full mb-4">
+                  <span class="px-1 py-2 text-sm text-white/80">Password </span>
+                  <input 
+                  type={{type}} 
+                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                  placeholder="password" 
+                  formControlName="password"
+                  />
+                  <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+                      class="alert alert-danger">
   
+                    <div  *ngIf="password?.errors?.['required']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/> 
+                        password is required.
+                      </span>
                     </div>
-                    <div *ngIf="confirmationPassword?.invalid && (confirmationPassword?.dirty || confirmationPassword?.touched)">
-                      <div  *ngIf="confirmationPassword?.errors?.['required']">
-                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                          <mat-icon class="mx-2"  fontIcon="error"/> 
-                           Confirmation Password is required.
-                        </span>
-                      </div>
-                      <div *ngIf="confirmationPassword?.errors?.['minlength']">
-                        <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                          <mat-icon class="mx-2"  fontIcon="error"/>
-                          Confirmation Password must be at least 8 characters long.
-                        </span>
-                      </div>
+                    <div *ngIf="password?.errors?.['minlength']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/>
+                        Name must be at least 8 characters long.
+                      </span>
+                    </div>
+                  </div>
+    
+                </div>
+                <div class="w-full mb-4">
+                  <span class="px-1 py-2 text-sm text-white/80">Password  Confirmation</span>
+                  <div class="relative">
+                    <input 
+                    type={{type}}
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Confirmation Passoword" 
+                    formControlName="confirmationPassword"
+                    />
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <button (click)="changeVisibility()" *ngIf="visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
+                            <mat-icon>visibility_off</mat-icon>
+                        </button>
+                        <button (click)="changeVisibility()"  *ngIf="!visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                    </div>
+
+                  </div>
+                  <div *ngIf="confirmationPassword?.invalid && (confirmationPassword?.dirty || confirmationPassword?.touched)">
+                    <div  *ngIf="confirmationPassword?.errors?.['required']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/> 
+                          Confirmation Password is required.
+                      </span>
+                    </div>
+                    <div *ngIf="confirmationPassword?.errors?.['minlength']">
+                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                        <mat-icon class="mx-2"  fontIcon="error"/>
+                        Confirmation Password must be at least 8 characters long.
+                      </span>
                     </div>
                   </div>
                 </div>
+              </div>
+                    
+            </div>
        <!-- password-->
               
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
@@ -213,6 +218,7 @@
                     </div>
       
                   </div>
+
                   <div class="w-full mb-4">
                     <span class="px-1 py-2 text-sm text-white/80">Last Name</span>
                     <input 
@@ -297,18 +303,33 @@
             </div>
         </div>
       </form>
-      <form class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0">
+      <form (submit)="startLoaddingPhoto()" [formGroup]="photoForm" class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0">
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-          <img class="w-full rounded-t-2xl bg-slate-500" [src]="currectPhoto||'assets/img/no-photo.jpg'" alt="profile cover image">
+          <div>
+            
+            <img *ngIf="!imagenTemp" class="w-full rounded-t-2xl bg-slate-500" [src]="currectPhoto||'assets/img/no-photo.jpg'" alt="profile cover image">
+            <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full rounded-t-2xl bg-slate-500" />
+          </div>
+   
           <div class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
-            <div class="flex justify-between">
-              <button type="button" class="hidden px-8 py-2 text-xs font-bold leading-normal text-center text-white align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer bg-cyan-500 lg:block tracking-tight-rem hover:shadow-xs hover:-translate-y-px active:opacity-85">Connect</button>
-              <div class="flex items-center justify-center w-full h-10">
-                <div class="p-2 bg-white border border-gray-100 rounded-md shadow-md">
-                  <label for="upload" class="flex flex-col items-center gap-2 cursor-pointer">
-                    <span class="font-medium text-gray-600">Upload file</span>
+            <div class="flex justify-center space-x-3">
+              <div class="flex w-fit">
+                <button type="button" (click)="deletePhoto(profileSelected.id)"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+                  <mat-icon  fontIcon="delete"></mat-icon> <span>Delete</span> 
+                </button>
+              </div>
+              <div *ngIf="!this.photoForm.get('photoSrc')?.touched  && this.photoForm.get('photoSrc')?.value" class="flex w-fit">
+                <button type="submit"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle bg-blue-500 rounded-lg dark dark:text-blue-500 dark:bg-white">
+                  <mat-icon  fontIcon="upload_imagen"></mat-icon> <span>Upload</span> 
+                </button>
+              </div>
+              <div class="flex w-fit">
+                <div class="flex items-center justify-center p-3 mb-2 space-x-1 align-middle bg-teal-600 border rounded-lg dark:bg-white ">
+                  <label for="photo" class="flex flex-col items-center gap-2 cursor-pointer">
+                    <span class="flex items-center justify-center text-base font-semibold text-white align-middle dark:text-teal-600"><mat-icon  class="text-white dark:text-teal-600" fontIcon="camera"></mat-icon> new</span> 
                   </label>
-                  <input id="upload" type="file" class="hidden" />
+                
+                  <input id="photo" accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden" />
                 </div>
               </div>
             </div>

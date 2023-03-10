@@ -1,7 +1,7 @@
 export class Patient {
 
     constructor(
-        public patient_id: string,
+        public id: string,
         public document_type: string,
         public document_number: string,
         public email: string,

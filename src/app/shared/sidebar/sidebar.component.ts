@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UiService } from 'src/app/services/ui.service';
-import { UserLogged } from '../../models/user.model';
+import { User } from '../../models/user.model';
+import { UpdateProfileService } from '../../services/update-profile.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,10 +11,11 @@ import { UserLogged } from '../../models/user.model';
   ]
 })
 export class SidebarComponent implements OnInit {
-  loggedUser!: UserLogged;
+  loggedUser!: User;
   constructor(
     public ui: UiService,
-    private authService: AuthService
+    private authService: AuthService,
+    public updateProfileService: UpdateProfileService,
   ) { }
 
   ngOnInit(): void {
