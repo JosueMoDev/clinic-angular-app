@@ -28,9 +28,7 @@ export class UserProfileComponent {
   public letShowPassWordField: boolean = false;
   public photoForm!: FormGroup;
   public imagenTemp!: any
-  color: any = '#3b82f6';
-  mode: ProgressSpinnerMode = 'indeterminate';
-  value = 80;
+  public isLoading: boolean = false;
 
 
   ngOnInit() {
@@ -153,16 +151,24 @@ export class UserProfileComponent {
   }
   async uploadPhoto(id: string, schema: string) {
       const formData = new FormData();
-      formData.append('photo', this.photoForm.get('photoSrc')?.value)     
+      formData.append('photo', this.photoForm.get('photoSrc')?.value) 
+      this.isLoading = true;    
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
+              this.isLoading = false;
               success(resp.message)
               formData.delete,
+              this.photoForm.reset()
               this.imagenTemp = null;
             }
           },
-          (err) => error(err.error.message)
+          (err) => {
+            formData.delete,
+            this.photoForm.reset()
+            this.isLoading = false;
+            error(err.error.message)
+          }
     );
   }
 
