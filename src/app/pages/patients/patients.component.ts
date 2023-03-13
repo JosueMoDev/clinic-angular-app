@@ -5,6 +5,9 @@ import { RegisterClinicComponent } from '../components/register-clinic/register-
 import { Patient } from 'src/app/models/patient.model';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.reducer';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-patients',
@@ -13,26 +16,32 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
   ]
 })
 export class PatientsComponent {
-
+  public uiSubscription!: Subscription;
   public totalPatients: number = 0;
   public patientList: Patient[] = [];
   public dataTemp: Patient[] = [];
   public from: number = 0;
-  public loading: boolean = true;
-  
-  
+
 
   constructor(
     private patientService: PatientService,
     public dialog: Dialog,
     public updateProfileService: UpdateProfileService,
+    private store : Store <AppState>
   ) { }
 
   ngOnInit(): void {
-    this.allPatients()
+    this.allPatients();
+    this.uiSubscription = this.store.select('ui').subscribe(state => {
+      if (state.isLoading) {
+        this.allPatients();
+      }
+    })
   }
 
-
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe();
+  }
   openDialog(): void {
 
     this.dialog.open(ModalUserRegisterComponent, {
@@ -44,14 +53,12 @@ export class PatientsComponent {
 
 
   allPatients() {
-    this.loading = true;
     this.patientService.allPatients(this.from)
       .subscribe(
         ({ patients, total }) => {
           this.patientList = patients;
           this.dataTemp = patients;
           this.totalPatients = total;
-          this.loading = false
         }
       )
   }

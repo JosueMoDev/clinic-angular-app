@@ -4,8 +4,9 @@ import { UserService } from '../../services/user.service';
 import { Dialog} from '@angular/cdk/dialog';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
 import { UpdateProfileService } from '../../services/update-profile.service';
-
-
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.reducer';
 
 @Component({
   selector: 'app-users',
@@ -14,11 +15,11 @@ import { UpdateProfileService } from '../../services/update-profile.service';
   ]
 })
 export class UsersComponent implements OnInit {
+  public uiSubscription!: Subscription;
   public totalUsers: number = 0;
   public userList: User[] = [];
   public dataTemp: User[] = [];
   public from: number = 0;
-  public loading: boolean = true;
 
   
 
@@ -26,15 +27,24 @@ export class UsersComponent implements OnInit {
     private userService: UserService,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
+    private store : Store <AppState>
   ) { 
  
   }
 
   ngOnInit(): void {
     this.allUsers()
-     
+    this.uiSubscription = this.store.select('ui').subscribe(state => {
+      if (state.isLoading) {
+        this.allUsers();
+      }
+    })
+    
   }
 
+ ngOnDestroy(): void {
+  this.uiSubscription.unsubscribe();
+ }
 
   openDialog(): void {
 
@@ -47,14 +57,13 @@ export class UsersComponent implements OnInit {
 
 
   allUsers() {
-    this.loading = true;
     this.userService.allUsers(this.from)
       .subscribe(
         ({ users, total }) => {
           this.userList = users;
+
           this.dataTemp = users;
           this.totalUsers = total;
-          this.loading = false
         }
       )
   }

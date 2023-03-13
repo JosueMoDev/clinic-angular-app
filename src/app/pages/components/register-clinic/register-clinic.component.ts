@@ -7,6 +7,10 @@ import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
 import {  User } from '../../../models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { DialogRef } from '@angular/cdk/dialog';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from '../../../store/actions/ui.actions';
+
 
 
 
@@ -56,7 +60,8 @@ export class RegisterClinicComponent {
     private authService: AuthService,
     private clinicService: ClinicService,
     private cloudinary: CloudinaryService,
-    public dialogRef: DialogRef
+    public dialogRef: DialogRef,
+    private store : Store <AppState>
   ) { }
 
   get nameProvince() { return this.registerClinicForm.get('address.province')?.value; }
@@ -98,13 +103,15 @@ export class RegisterClinicComponent {
     }
     return this.imagenTemp
   }
-  async uploadPhoto(id: string, schema: string ) {
+  async uploadPhoto(id: string, schema: string) {
+    this.store.dispatch(ui.isLoadingTable())
       const formData = new FormData();
       formData.append('photo', this.registerClinicForm.get('photoSrc')?.value)     
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
               success(resp.message)
+              this.store.dispatch(ui.isLoadingTable())
               formData.delete,
               this.imagenTemp = null;
             }
@@ -133,10 +140,13 @@ export class RegisterClinicComponent {
 
     this.clinicService.createClinic(newClinicRegisterForm).subscribe(async (resp:any) => { 
       if (resp.ok && this.registerClinicForm.get('photoSrc')?.value) { 
-        await this.uploadPhoto(resp.clinic.clinic_id, 'clinics')     
+        await this.uploadPhoto(resp.clinic.clinic_id, 'clinics')  
+        
       }
       success(resp.message)
+      this.store.dispatch(ui.isLoadingTable())
       this.currentStep = 1;
+      this.dialogRef.close();
       this.registerClinicForm.reset()
     }, (err)=>error(err.error.message));
   }

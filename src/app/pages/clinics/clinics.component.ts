@@ -3,6 +3,9 @@ import { Dialog} from '@angular/cdk/dialog';
 import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.reducer';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,6 +15,7 @@ import { RegisterClinicComponent } from '../components/register-clinic/register-
   ]
 })
 export class ClinicsComponent {
+  public uiSubscription!: Subscription;
   public totalClinics: number = 0;
   public clinicList: Clinic[] = [];
   public dataTemp: Clinic[] = [];
@@ -23,13 +27,22 @@ export class ClinicsComponent {
   constructor(
     private clinicService: ClinicService,
     public dialog: Dialog,
+    private store: Store<AppState>
+  
   ) { }
 
   ngOnInit(): void {
     this.allClinics()
+    this.uiSubscription = this.store.select('ui').subscribe(state => {
+      if (state.isLoading) {
+        this.allClinics();
+      }
+    })
   }
 
-
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe();
+  }
   openDialog(): void {
 
     this.dialog.open(RegisterClinicComponent, {

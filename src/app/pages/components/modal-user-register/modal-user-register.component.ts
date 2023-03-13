@@ -6,7 +6,9 @@ import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { DialogRef } from '@angular/cdk/dialog';
-
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.reducer';
+import * as ui from '../../../store/actions/ui.actions';
 
 @Component({
   selector: 'app-modal-user-register',
@@ -19,6 +21,7 @@ import { DialogRef } from '@angular/cdk/dialog';
   ]
 })
 export class ModalUserRegisterComponent {
+ 
   public isFirstStepValid: string = '';
   public isSecondStepValid: string = '';
   public document_type: string = 'DUI';
@@ -33,12 +36,12 @@ export class ModalUserRegisterComponent {
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: [this.document_type, Validators.required],
-        document_number: ['', Validators.required],
+        document_number: ['010203045', Validators.required],
         email_provider: [this.email_provider, Validators.required],
-        email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
-        lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
-        phone: ['', Validators.required],
+        email: ['pruebla2023prueba', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+        name: ['prueba', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+        lastname: ['prueba', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
+        phone: ['60436759', Validators.required],
         gender: ['', Validators.required],
       }),
       rol: ['', Validators.required],
@@ -49,14 +52,14 @@ export class ModalUserRegisterComponent {
     this.isPersonalInformationStepValid
     this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
-    
   }
   constructor(
     private formbuilder: FormBuilder,
     private userservice: UserService,
     private patientService: PatientService,
     private cloudinary: CloudinaryService,
-    public dialogRef: DialogRef
+    public dialogRef: DialogRef,
+    private store : Store <AppState>
 
   ) { }
   preparePhoto(event: any) {
@@ -72,13 +75,15 @@ export class ModalUserRegisterComponent {
     }
     return this.imagenTemp
   }
-  async uploadPhoto(id: string, schema: string ) {
+  async uploadPhoto(id: string, schema: string) {
+      this.store.dispatch(ui.isLoadingTable())
       const formData = new FormData();
       formData.append('photo', this.registerForm.get('photoSrc')?.value)     
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
               success(resp.message)
+              this.store.dispatch(ui.isLoadingTable())
               formData.delete,
               this.imagenTemp = null;
             }
@@ -107,9 +112,10 @@ export class ModalUserRegisterComponent {
       if (rol==='patient') {
         this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
-            await this.uploadPhoto(resp.patient.id, 'patients')     
+            await this.uploadPhoto(resp.patient.id, 'patients')
           }
-          success(resp.message)
+          success(resp.message);
+          this.store.dispatch(ui.isLoadingTable())
           this.currentStep = 1;
           this.registerForm.reset();
           this.dialogRef.close();
@@ -119,9 +125,11 @@ export class ModalUserRegisterComponent {
       if (['doctor', 'operator'].includes(rol)) {
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
-            await this.uploadPhoto(resp.user.id, 'users')     
+            await this.uploadPhoto(resp.user.id, 'users')  
+            
           }
           success(resp.message)
+          this.store.dispatch(ui.isLoadingTable())
           this.currentStep = 1;
           this.registerForm.reset();
           this.dialogRef.close();
