@@ -7,6 +7,8 @@ import { UpdateProfileService } from '../../services/update-profile.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
@@ -16,23 +18,37 @@ import { AppState } from '../../app.reducer';
 })
 export class UsersComponent implements OnInit {
   public uiSubscription!: Subscription;
-  public totalUsers: number = 0;
   public userList: User[] = [];
   public dataTemp: User[] = [];
-  public from: number = 0;
-
   
+  length!:number;
+  pageSize = 5;
+  from = 0;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  
+ 
+
+  hidePageSize = false;
+  showPageSizeOptions = true;
+  disabled = false;
+  pageEvent!: PageEvent;
 
   constructor(
     private userService: UserService,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
-    private store : Store <AppState>
+    private store: Store<AppState>,
+    public mat: MatPaginatorIntl
   ) { 
  
   }
 
   ngOnInit(): void {
+    this.mat.previousPageLabel = '';
+    this.mat.nextPageLabel = '';
+    this.mat.itemsPerPageLabel = 'User per pega';
+   
     this.allUsers()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -55,6 +71,8 @@ export class UsersComponent implements OnInit {
     });
   } 
 
+ 
+
 
   allUsers() {
     this.userService.allUsers(this.from)
@@ -63,18 +81,31 @@ export class UsersComponent implements OnInit {
           this.userList = users;
 
           this.dataTemp = users;
-          this.totalUsers = total;
+          this.length = total;
         }
       )
   }
-  userPagination( from: number) {
-    this.from += from;
-    if (this.from < 0) {
-      this.from = 0
-    } else if (this.from >=this.totalUsers ) {
-      this.from-=from
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex=e.pageIndex
+    if (e.pageIndex) {
+      this.from=+this.pageSize
+      console.log('next', this.pageSize)
+      this.allUsers()
     }
-    this.allUsers()
+    if (e.previousPageIndex ) {
+      this.from-=this.pageSize
+      console.log('previous', this.pageSize)
+      console.log(this.pageIndex = e.previousPageIndex);
+      this.allUsers()
+    }
+  }
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    console.log(this.showPageSizeOptions)
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
   }
   
 }

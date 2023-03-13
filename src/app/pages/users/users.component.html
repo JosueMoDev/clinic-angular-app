@@ -54,8 +54,19 @@
                       </div>
                     </div>
                   </td>
-                 
               </tr>
+              <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
+                <mat-paginator 
+                  class="flex h-full w-fit "
+                  MatPaginatorIntl
+                  (page)="handlePageEvent($event)"
+                  [length]="length"
+                  [pageSize]="pageSize"
+                  [pageIndex]="pageIndex"
+                  
+                  >
+                </mat-paginator>
+              </div>
             </tbody>
           </table>
         </div>
