@@ -10,6 +10,7 @@ import { AppState } from '../../app.reducer';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -47,7 +48,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
-    this.mat.itemsPerPageLabel = 'User per pega';
+    this.mat.itemsPerPageLabel = 'Users per page';
    
     this.allUsers()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
@@ -76,10 +77,9 @@ export class UsersComponent implements OnInit {
 
   allUsers() {
     this.userService.allUsers(this.from)
-      .subscribe(
-        ({ users, total }) => {
+    .subscribe(
+      ({ users, total }) => {
           this.userList = users;
-
           this.dataTemp = users;
           this.length = total;
         }
@@ -89,17 +89,14 @@ export class UsersComponent implements OnInit {
     this.pageEvent = e;
     this.length = e.length;
     this.pageIndex=e.pageIndex
-    if (e.pageIndex) {
-      this.from=+this.pageSize
-      console.log('next', this.pageSize)
-      this.allUsers()
+    
+    if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
+      this.from = this.from + this.pageSize
+    } else { 
+      this.from = this.from - this.pageSize
     }
-    if (e.previousPageIndex ) {
-      this.from-=this.pageSize
-      console.log('previous', this.pageSize)
-      console.log(this.pageIndex = e.previousPageIndex);
-      this.allUsers()
-    }
+    this.allUsers()
+
   }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     console.log(this.showPageSizeOptions)
