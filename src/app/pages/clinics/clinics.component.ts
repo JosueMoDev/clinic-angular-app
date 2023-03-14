@@ -8,6 +8,7 @@ import { AppState } from '../../app.reducer';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
+import { UpdateProfileService } from '../../services/update-profile.service';
 
 
 @Component({
@@ -37,8 +38,9 @@ export class ClinicsComponent {
 
   constructor(
     private clinicService: ClinicService,
-    public dialog: Dialog,
     private store: Store<AppState>,
+    public updateProfileService: UpdateProfileService,
+    public dialog: Dialog,
     public mat: MatPaginatorIntl
   
   ) { }

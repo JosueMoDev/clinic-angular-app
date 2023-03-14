@@ -18,18 +18,17 @@ import Swal from 'sweetalert2';
   ]
 })
 export class ShowUserComponent {
-  public document_type:string = 'DUI';
-  public formSubmitted:boolean = false;
   public profileForm!: FormGroup;
-  public type : string ='password'
-  public visibility: boolean = true;
+  public photoForm!: FormGroup;
+
+  public document_type:string = 'DUI';
   public profileSelected: User | Patient;
   public currectPhoto!: string | undefined;
-  public letShowPassWordField: boolean = false;
-  public photoForm!: FormGroup;
   public imagenTemp!: any
   public isLoading: boolean = false;
-
+  public letShowPassWordField: boolean = false;
+  public type : string ='password'
+  public visibility: boolean = true;
 
   ngOnInit() {
 

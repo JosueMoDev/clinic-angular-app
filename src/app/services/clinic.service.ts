@@ -22,7 +22,7 @@ export class ClinicService {
       map(
         (resp:any) => {
           const clinics = resp.clinics.map(
-            ({ clinic_id, register_number, name, province, city, register_by, photo}:Clinic)=> new Clinic( clinic_id, register_number, name, province, city, register_by, photo)
+            ({ clinic_id, register_number, name, phone,  province, city, street, register_by, photo}:Clinic)=> new Clinic( clinic_id, register_number, name, phone, province, city, street, register_by, photo)
           );
           return {
             total: resp.total,

@@ -37,9 +37,9 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private store: Store<AppState>,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
-    private store: Store<AppState>,
     public mat: MatPaginatorIntl
   ) { 
  
