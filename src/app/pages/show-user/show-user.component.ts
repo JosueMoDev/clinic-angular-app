@@ -8,16 +8,16 @@ import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import Swal from 'sweetalert2';
-import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+
 
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
+  selector: 'app-show-user',
+  templateUrl: './show-user.component.html',
   styles: [
   ]
 })
-export class UserProfileComponent {
+export class ShowUserComponent {
   public document_type:string = 'DUI';
   public formSubmitted:boolean = false;
   public profileForm!: FormGroup;

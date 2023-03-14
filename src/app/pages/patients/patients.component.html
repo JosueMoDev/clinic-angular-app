@@ -13,7 +13,7 @@
           <table class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
             <tbody>
               <tr  *ngFor="let patient of patientList" class="flex w-full min-w-full ">
-                <a routerLink="/dashboard/user-profile" (click)="this.updateProfileService.profileToUpdate(patient)" class="flex w-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
+                <a routerLink="/dashboard/show-user" (click)="this.updateProfileService.profileToUpdate(patient)" class="flex w-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
                     <td class="flex p-2 align-middle bg-transparent border-b w-fit whitespace-nowrap dark:border-white/40">
                         <div class="flex items-center align-top">
                             <div>
