@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { Dialog} from '@angular/cdk/dialog';
 import { PatientService } from 'src/app/services/patient.service';
-import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
 import { Patient } from 'src/app/models/patient.model';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-patients',
@@ -17,20 +18,35 @@ import { Subscription } from 'rxjs';
 })
 export class PatientsComponent {
   public uiSubscription!: Subscription;
-  public totalPatients: number = 0;
   public patientList: Patient[] = [];
   public dataTemp: Patient[] = [];
+
+  public length!:number;
+  public pageSize: number = 5;
   public from: number = 0;
+  public pageIndex:number = 0;
+  public pageSizeOptions: number[] = [5, 10, 25];
+  
+  public hidePageSize: boolean = false;
+  public showPageSizeOptions: boolean = true;
+  public disabled: boolean = false;
+  public pageEvent!: PageEvent;
+  
 
 
   constructor(
     private patientService: PatientService,
     public dialog: Dialog,
     public updateProfileService: UpdateProfileService,
-    private store : Store <AppState>
+    private store: Store<AppState>,
+    public mat: MatPaginatorIntl
+    
   ) { }
 
   ngOnInit(): void {
+    this.mat.previousPageLabel = '';
+    this.mat.nextPageLabel = '';
+    this.mat.itemsPerPageLabel = 'Patients per page';
     this.allPatients();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -58,18 +74,28 @@ export class PatientsComponent {
         ({ patients, total }) => {
           this.patientList = patients;
           this.dataTemp = patients;
-          this.totalPatients = total;
+          this.length = total;
         }
       )
   }
-  patientPagination( from: number) {
-    this.from += from;
-    if (this.from < 0) {
-      this.from = 0
-    } else if (this.from >=this.totalPatients ) {
-      this.from-=from
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex=e.pageIndex
+    
+    if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
+      this.from = this.from + this.pageSize
+    } else { 
+      this.from = this.from - this.pageSize
     }
     this.allPatients()
+
+  }
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    console.log(this.showPageSizeOptions)
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
   }
   
   

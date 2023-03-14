@@ -6,6 +6,8 @@ import { RegisterClinicComponent } from '../components/register-clinic/register-
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator'
 
 
 @Component({
@@ -16,22 +18,35 @@ import { Subscription } from 'rxjs';
 })
 export class ClinicsComponent {
   public uiSubscription!: Subscription;
-  public totalClinics: number = 0;
   public clinicList: Clinic[] = [];
   public dataTemp: Clinic[] = [];
+
+  public length!:number;
+  public pageSize: number = 5;
   public from: number = 0;
-  public loading: boolean = true;
+  public pageIndex:number = 0;
+  public pageSizeOptions: number[] = [5, 10, 25];
+  
+  public hidePageSize: boolean = false;
+  public showPageSizeOptions: boolean = true;
+  public disabled: boolean = false;
+  public pageEvent!: PageEvent;
+
   
   
 
   constructor(
     private clinicService: ClinicService,
     public dialog: Dialog,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    public mat: MatPaginatorIntl
   
   ) { }
 
   ngOnInit(): void {
+    this.mat.previousPageLabel = '';
+    this.mat.nextPageLabel = '';
+    this.mat.itemsPerPageLabel = 'Clinics per page';
     this.allClinics()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -54,25 +69,34 @@ export class ClinicsComponent {
 
 
   allClinics() {
-    this.loading = true;
     this.clinicService.allClinics(this.from)
       .subscribe(
         ({ clinics, total }) => {
           this.clinicList = clinics;
           this.dataTemp = clinics;
-          this.totalClinics = total;
-          this.loading = false
+          this.length = total;
         }
       )
   }
-  clinicPagination( from: number) {
-    this.from += from;
-    if (this.from < 0) {
-      this.from = 0
-    } else if (this.from >=this.totalClinics ) {
-      this.from-=from
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex=e.pageIndex
+    
+    if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
+      this.from = this.from + this.pageSize
+    } else { 
+      this.from = this.from - this.pageSize
     }
     this.allClinics()
+
   }
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    console.log(this.showPageSizeOptions)
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
+  }
+
   
 }

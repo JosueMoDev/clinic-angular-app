@@ -22,18 +22,18 @@ export class UsersComponent implements OnInit {
   public userList: User[] = [];
   public dataTemp: User[] = [];
   
-  length!:number;
-  pageSize = 5;
-  from = 0;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  public length!:number;
+  public pageSize: number = 5;
+  public from: number = 0;
+  public pageIndex:number = 0;
+  public pageSizeOptions: number[] = [5, 10, 25];
   
+  public hidePageSize: boolean = false;
+  public showPageSizeOptions: boolean = true;
+  public disabled: boolean = false;
+  public pageEvent!: PageEvent;
  
 
-  hidePageSize = false;
-  showPageSizeOptions = true;
-  disabled = false;
-  pageEvent!: PageEvent;
 
   constructor(
     private userService: UserService,
