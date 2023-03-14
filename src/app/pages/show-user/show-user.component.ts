@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { UserService } from '../../services/user.service';
+import { PatientService } from '../../services/patient.service';
 import { UpdateProfileService } from '../../services/update-profile.service';
 import { Patient } from 'src/app/models/patient.model';
 import { User } from 'src/app/models/user.model';
@@ -55,11 +56,15 @@ export class ShowUserComponent {
    
   }
 
-  
+  ngOnDestroy(): void {
+    sessionStorage.removeItem('profile-to-show');
+    sessionStorage.removeItem('current-photo-profile');
+  }
 
   constructor(
     private formbuilder: FormBuilder,
     private userService: UserService,
+    private patientService: PatientService,
     private authService: AuthService,
     private cloudinary: CloudinaryService,
     public updateProfileService: UpdateProfileService
@@ -76,7 +81,8 @@ export class ShowUserComponent {
   }
 
   updateProfile() {
-    if ( !this.profileForm.invalid ) {   
+    
+    if ( !this.profileForm.errors ) {   
 
       const { document_type, document_number, email_provider, email,
         name, lastname, password, phone, gender } = this.profileForm.value
@@ -84,18 +90,37 @@ export class ShowUserComponent {
           document_type,
           document_number,
           email_provider,
-          email: email.trim() + email_provider,
+          // email: email.trim() + email_provider,
+          email,
           password,
           name: name.trim(),
           lastname: lastname.trim(),
           phone,
-          gender,
-          rol:'patient',
+          gender
         }
+      if (this.profileSelected.rol === 'patient') {
+          this.patientService.updatePatient(newRegisterForm, this.profileSelected.id).subscribe((resp: any)=> { 
+            if (resp.ok) {
+              this.updateProfileService.userToUpdate(resp.patient)
+              this.profileSelected = this.updateProfileService.userProfileToUpdate;
 
-      // this.userService.crearteNewPatientWithEmailAndPasswordOutside(newRegisterForm).subscribe((resp: any)=> { 
-      //   if (resp) { success(resp.message) }
-      // }, (err:any)=>{error(err.error.message)});
+              success(resp.message)
+            }
+        }, (err: any) => {
+          error(err.error.message)
+        });
+      } else {
+        this.userService.updateUser(newRegisterForm, this.profileSelected.id).subscribe((resp: any)=> { 
+          if (resp.ok) {
+            this.updateProfileService.userToUpdate(resp.user)
+            this.profileSelected = this.updateProfileService.userProfileToUpdate;
+            success(resp.message)
+          }
+        }, (err: any) => {
+          error(err.error.message)
+        });
+      }
+      
           
     }
      
@@ -141,7 +166,12 @@ export class ShowUserComponent {
       if (result.isConfirmed) {
         this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
           (resp: any) => {
-            if (resp.ok) { success(resp.message) }
+            if (resp.ok) {
+              this.updateProfileService.userToUpdate({...this.profileSelected, photo:resp.photo})
+              this.updateProfileService.deletePhoto()
+              this.currectPhoto = this.updateProfileService.currentPhoto
+              success(resp.message)
+            }
           },
           (err) => error(err.error.message)
         )
@@ -156,6 +186,9 @@ export class ShowUserComponent {
           (resp: any) => {
             if (resp.ok) {
               this.isLoading = false;
+              this.updateProfileService.userToUpdate({...this.profileSelected, photo:resp.photo})
+              this.updateProfileService.updatePhoto(resp.photo)
+              this.currectPhoto = this.updateProfileService.currentPhoto
               success(resp.message)
               formData.delete,
               this.photoForm.reset()
@@ -198,6 +231,9 @@ export class ShowUserComponent {
       const isforbidden = isForbiddenInput.test(control.value);
       return !isforbidden ? {forbiddenName: {value: control.value}} : null;
     };
+  }
+  toggleForm() {
+    
   }
 
 }

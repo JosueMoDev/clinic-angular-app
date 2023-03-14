@@ -43,5 +43,9 @@ export class UserService {
   crearteNewUserWithEmailAndPassword(user: UserRegisterForm) { 
     return this.http.post(`${environment.THECLINIC_API_URL}/users`, user , this.headers)
   }
+
+  updateUser(user: any, id: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/users/${id}`, user , this.headers)
+  }
   
 }

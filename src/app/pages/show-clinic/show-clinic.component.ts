@@ -48,6 +48,11 @@ export class ShowClinicComponent {
     
     this.provinces = provicesAndCities.map( ({province}) => province)
   }
+  ngOnDestroy(): void {
+    sessionStorage.removeItem('profile-to-show');
+    sessionStorage.removeItem('current-photo-profile');
+  }
+
   constructor(
     private formbuilder: FormBuilder,
     private clinicService: ClinicService,
@@ -61,7 +66,29 @@ export class ShowClinicComponent {
   }
 
   updateProfile() {
-    
+    if ( !this.profileForm.errors ) {   
+
+      const {information, address} = this.profileForm.value
+        const newUpdateForm = {
+          register_number: information.register_number,
+          phone: information.phone,
+          name: information.name,
+          country: 'El Salvador',
+          province: address.province,
+          city: address.city,
+          street: address.street
+        }
+      console.log(newUpdateForm)
+      this.clinicService.updateClinic(newUpdateForm, this.profileSelected.clinic_id).subscribe((resp: any)=> { 
+        if (resp.ok) {
+          this.updateProfileService.clinicToUpdate(resp.clinic)
+          this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
+          success(resp.message)
+        }
+      }, (err: any) => {
+        error(err.error.message)
+      });    
+    }
   }
 
   get name() { return this.profileForm.get('information.name'); }
@@ -108,7 +135,12 @@ export class ShowClinicComponent {
       if (result.isConfirmed) {
         this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
           (resp: any) => {
-            if (resp.ok) { success(resp.message) }
+            if (resp.ok) {
+              this.updateProfileService.clinicToUpdate({...this.profileSelected, photo:resp.photo})
+              this.updateProfileService.deletePhoto()
+              this.currectPhoto = this.updateProfileService.currentPhoto
+              success(resp.message)
+            }
           },
           (err) => error(err.error.message)
         )
@@ -123,6 +155,9 @@ export class ShowClinicComponent {
           (resp: any) => {
             if (resp.ok) {
               this.isLoading = false;
+              this.updateProfileService.clinicToUpdate({...this.profileSelected, photo:resp.photo})
+              this.updateProfileService.updatePhoto(resp.photo)
+              this.currectPhoto = this.updateProfileService.currentPhoto
               success(resp.message)
               formData.delete,
               this.photoForm.reset()

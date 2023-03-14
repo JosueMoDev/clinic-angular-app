@@ -40,4 +40,7 @@ export class PatientService {
   crearteNewPatientWithEmailAndPasswordOutside(patient: UserRegisterForm) { 
     return this.http.post(`${environment.THECLINIC_API_URL}/patients/outside`, patient)
   }
+  updatePatient(patient: any, id: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/patients/${id}`, patient , this.headers)
+  }
 }

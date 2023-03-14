@@ -59,9 +59,9 @@ export class UsersComponent implements OnInit {
     
   }
 
- ngOnDestroy(): void {
-  this.uiSubscription.unsubscribe();
- }
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe();
+  }
 
   openDialog(): void {
 

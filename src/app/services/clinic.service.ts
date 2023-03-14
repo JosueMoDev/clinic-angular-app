@@ -36,4 +36,8 @@ export class ClinicService {
   createClinic(clinic:any) {
     return this.http.post(`${environment.THECLINIC_API_URL}/clinics`, clinic, this.headers)
   }
+
+  updateClinic(clinic: any, clinic_id:string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/${clinic_id}`, clinic, this.headers)
+  }
 }
