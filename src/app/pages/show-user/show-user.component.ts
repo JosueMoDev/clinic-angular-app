@@ -86,7 +86,7 @@ export class ShowUserComponent {
 
       const { document_type, document_number, email_provider, email,
         name, lastname, password, phone, gender } = this.profileForm.value
-        const newRegisterForm = {
+        const newUpdateForm = {
           document_type,
           document_number,
           email_provider,
@@ -99,7 +99,7 @@ export class ShowUserComponent {
           gender
         }
       if (this.profileSelected.rol === 'patient') {
-          this.patientService.updatePatient(newRegisterForm, this.profileSelected.id).subscribe((resp: any)=> { 
+          this.patientService.updatePatient(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
             if (resp.ok) {
               this.updateProfileService.userToUpdate(resp.patient)
               this.profileSelected = this.updateProfileService.userProfileToUpdate;
@@ -110,7 +110,7 @@ export class ShowUserComponent {
           error(err.error.message)
         });
       } else {
-        this.userService.updateUser(newRegisterForm, this.profileSelected.id).subscribe((resp: any)=> { 
+        this.userService.updateUser(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
           if (resp.ok) {
             this.updateProfileService.userToUpdate(resp.user)
             this.profileSelected = this.updateProfileService.userProfileToUpdate;

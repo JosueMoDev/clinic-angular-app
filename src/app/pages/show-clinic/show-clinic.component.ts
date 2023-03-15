@@ -78,7 +78,6 @@ export class ShowClinicComponent {
           city: address.city,
           street: address.street
         }
-      console.log(newUpdateForm)
       this.clinicService.updateClinic(newUpdateForm, this.profileSelected.clinic_id).subscribe((resp: any)=> { 
         if (resp.ok) {
           this.updateProfileService.clinicToUpdate(resp.clinic)

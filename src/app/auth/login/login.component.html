@@ -1,3 +1,39 @@
+<style type="text/css">
+  #customBtn {
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 190px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+  }
+  #customBtn:hover {
+    cursor: pointer;
+  }
+  span.label {
+    font-family: serif;
+    font-weight: normal;
+  }
+  span.icon {
+    background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+  }
+  span.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 42px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    /* Use the Roboto font that is loaded in the <head> */
+    font-family: 'Roboto', sans-serif;
+  }
+</style>
 <main class="mt-0">
   <section class="min-h-full">
     <div class="bg-top relative z-10 flex items-start pt-12  overflow-hidden bg-cover min-h-96  bg-[url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg')]">
@@ -12,13 +48,6 @@
             </div>
             <div class="grid items-center justify-center align-middle sm:px-10">
               <div class="flex justify-center w-full max-w-full px-1 ml-auto align-middle flex-0">
-                
-                <!-- <a (click)="googleInit()" class="inline-block w-full px-4 py-2 font-bold text-gray-200 uppercase bg-transparent border border-gray-200 border-solid rounded-lg shadow-none cursor-pointer md:px-6 md:py-3 dark:bg-slate-700 hover:-translate-y-px hover:bg-transparent ">
-                  <svg class="w-[2rem] h-[2rem] fill-black dark:fill-white" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <title>Google</title>
-                    <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
-                  </svg>
-                </a> -->
                 <div #googleLogin ></div>
               </div>
               <div class="relative w-full max-w-full px-3 mt-2 text-center shrink-0">

@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
     google.accounts.id.renderButton(
         this.googleLogin.nativeElement,
-        { theme: "outline", size: "large" }  
+        { theme: "dark", size: "large" }  
     );
   }
 
@@ -76,8 +76,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
             () => { 
              this.router.navigate(['/'])
             })
+            success(`Welcome ${response.user}` );
         }
-        success('Welcome');
       },
       (error: any) => this.error(error.error.message)
     )
