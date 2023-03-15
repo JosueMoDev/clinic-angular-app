@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UiService } from '../services/ui.service';
 
 @Component({
   selector: 'app-pages',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class PagesComponent {
-
+  constructor(
+    public ui: UiService
+  ){}
 }
