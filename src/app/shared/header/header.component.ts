@@ -34,5 +34,12 @@ export class HeaderComponent {
       this.ui.openNavMenu()
     }
   }
+  toggleSideNave() { 
+    if (this.ui.isSideBarOpen) {
+      this.ui.closeSideBar()
+    } else {
+      this.ui.openSideBar()
+    }
+  }
 
 }
