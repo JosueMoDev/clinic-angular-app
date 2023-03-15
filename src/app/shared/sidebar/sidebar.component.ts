@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
-import { User } from '../../models/user.model';
-import { UpdateProfileService } from '../../services/update-profile.service';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -10,21 +8,12 @@ import { UpdateProfileService } from '../../services/update-profile.service';
   styles: [
   ]
 })
-export class SidebarComponent implements OnInit {
-  loggedUser!: User;
+export class SidebarComponent  {
   constructor(
     public ui: UiService,
-    private authService: AuthService,
-    public updateProfileService: UpdateProfileService,
+    
   ) { }
 
-  ngOnInit(): void {
-    this.loggedUser = this.authService.currentUserLogged 
-  }
-
-  logout() { 
-    this.authService.logout();
-  }
   
 
 }

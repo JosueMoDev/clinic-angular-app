@@ -1,78 +1,53 @@
-<!-- sidenav  -->
-
-<div [ngClass]="{'mr-0 translate-x-full ': !ui.isSideBarOpen }"  class="fixed inset-y-0 right-0 flex-wrap items-center justify-between block p-0 mt-2 mr-0 overflow-y-auto antialiased transition-transform duration-200 border-0 shadow-xl w-max-full w-fit translate-x-fit snap-none dark:shadow-none dark:bg-slate-850/100 bg-slate-50 ease-nav-brand z-[1] rounded-2xl h-max-screen xl:mr-2 xl:right-0 xl:translate-x-0">
-  <div class="flex-col w-full h-full capitalize">
-    
-   <div class="flex-col w-full h-full p-1 px-3">
-      <button  (click)="ui.closeSideBar()" class="block float-right m-1 mt-5 text-xs align-middle bg-red-600 rounded-full xl:hidden hover:bg-red-700 ">
-        <mat-icon class="text-base text-center text-white align-middle xl:hidden">close</mat-icon>
-      </button>
-      <div class="h-fit">
-        <a routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(loggedUser)" class="flex flex-col w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
-          <div class="flex">
-            <div class="my-auto">
-              <img [src]="loggedUser.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
-            </div>
-            <div class="flex flex-col justify-center">
-              <h6 class="mb-1 text-sm font-normal capitalize dark:text-white"><span class="font-semibold">{{loggedUser.name}}  {{loggedUser.lastname}}</span></h6>
-              <p class="flex items-center justify-start mb-0 text-xs text-black/80 dark:text-white/80">
-                <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
-                User Profile
-              </p>
-            </div>
-          </div>
-          <div class="grid w-full mt-3">
-            <h6 class="grid w-full mb-1 text-xs font-normal text-center lowercase dark:text-white"><span class="font-semibold">{{loggedUser.email}}</span></h6>
-          </div>
-        </a>
-      </div>
-      <hr class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-slate-600 dark:to-transparent" />
-      <div class="items-center block w-auto max-h-screen mt-2 overflow-auto">
-        <ul class="flex flex-col pl-0 mb-0 space-y-3">
-          <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/main" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
-              <mat-icon  class="text-purple-400 " fontIcon="monitor"/>
-              <span >Dashboard</span>
-            </a>
-          </li>
-    
-          <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/users" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
-              <mat-icon  class="text-orange-400 " fontIcon="person"/>
-              <span >Users</span>
-            </a>
-          </li>
-    
-          <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
-              <mat-icon  class="text-red-400 " fontIcon="local_hospital"/>
-              <span >Clinics</span>
-            </a>
-          </li>
-    
-          <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/patients" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
-              <mat-icon  class="text-yellow-400 " fontIcon="group"/>
-              <span >Patients</span>
-            </a>
-          </li>
-          <li class="mt-0.5 w-full">
-            <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
-              <mat-icon  class="text-green-400 " fontIcon="description"/>
-              <span >medical records</span>
-            </a>
-          </li>
-    
-    
-        </ul>
-      </div>
-    </div> 
-    <div class="absolute flex-col w-full px-2 bottom-2">
-      <a (click)="logout()" class="flex items-center justify-center w-full px-8 py-2 text-base font-bold leading-normal text-center text-white align-middle transition-all ease-in bg-red-500 border-0 rounded-lg shadow-md cursor-pointer select-none bg-150 bg-x-25 hover:shadow-xs hover:-translate-y-px" >Log Out<mat-icon  class="text-base text-center " fontIcon="logout"/></a>
-    </div>
+<aside [ngClass]="{'mr-2 translate-x-2 ': ui.isSideBarOpen }"  class="fixed inset-y-0 flex-wrap items-center px-3 justify-between block w-fit p-0 my-2 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-[1] xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0">
+  <div class="h-19">
+    <button  (click)="ui.closeSideBar()" class="block float-right m-1 mt-5 text-xs align-middle bg-red-600 rounded-full xl:hidden hover:bg-red-700 ">
+      <mat-icon class="text-base text-center text-white align-middle xl:hidden">close</mat-icon>
+    </button>
+    <a class="block px-8 py-6 m-0 text-sm text-left whitespace-nowrap dark:text-white text-slate-700">
+      <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Argon Dashboard 2</span>
+    </a>
   </div>
 
-</div>
+  <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
+
+  <div class="items-center block w-auto max-h-screen mt-2 overflow-auto">
+    <ul class="flex flex-col pl-0 mb-0 space-y-3">
+      <li class="mt-0.5 w-full">
+        <a routerLink="/dashboard/main" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+          <mat-icon  class="text-purple-400 " fontIcon="monitor"/>
+          <span >Dashboard</span>
+        </a>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <a routerLink="/dashboard/users" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+          <mat-icon  class="text-orange-400 " fontIcon="person"/>
+          <span >Users</span>
+        </a>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+          <mat-icon  class="text-red-400 " fontIcon="local_hospital"/>
+          <span >Clinics</span>
+        </a>
+      </li>
+
+      <li class="mt-0.5 w-full">
+        <a routerLink="/dashboard/patients" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+          <mat-icon  class="text-yellow-400 " fontIcon="group"/>
+          <span >Patients</span>
+        </a>
+      </li>
+      <li class="mt-0.5 w-full">
+        <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer" >
+          <mat-icon  class="text-green-400 " fontIcon="description"/>
+          <span >medical records</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
 
 
 <!-- end sidenav -->

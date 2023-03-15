@@ -1,5 +1,7 @@
-<a (click)="toggleDarkMode()" class="m-2 transition-all cursor-pointer md:text-lg ease-nav-brand">
-    <mat-icon  *ngIf="darkMode==='dark'" class="flex justify-center text-yellow-50"  aria-hidden="false" aria-label="Example home icon" fontIcon="light_mode"></mat-icon>
-    <mat-icon  *ngIf="darkMode==='light'|| !darkMode" class="flex justify-center text-yellow-50"  aria-hidden="false" aria-label="Example home icon" fontIcon="dark_mode"></mat-icon>
+<button (click)="toggleDarkMode()" mat-raised-button class="w-full">
+    <mat-icon  *ngIf="darkMode==='dark'" class="text-yellow-900 dark:text-yellow-50"   fontIcon="light_mode"></mat-icon>
+    <mat-icon  *ngIf="darkMode==='light'|| !darkMode" class="text-yellow-900 dark:text-yellow-50"  fontIcon="dark_mode"></mat-icon>
+    <span class="text-yellow-900 dark:text-yellow-50" *ngIf="darkMode==='dark'">Light Mode</span>
+    <span class="text-yellow-900 dark:text-yellow-50" *ngIf="darkMode==='light'|| !darkMode">Dark Mode</span>
 
-</a>
+</button>

@@ -5,8 +5,9 @@
         <div class="p-4 pb-0 mb-0 rounded-t-4">
           <div class="flex justify-between">
             <p class="text-2xl font-semibold text-black text-start dark:text-white">User's table</p>
-            <button (click)="openDialog()"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
-                <mat-icon  fontIcon="add"></mat-icon> <span>new user</span> 
+            <button mat-raised-button (click)="openDialog()" placeholder="User" class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+                <mat-icon  fontIcon="person_add"></mat-icon>
+                New User
             </button>
           </div>
         </div>
@@ -17,9 +18,7 @@
                 <a routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(user)" class="flex w-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
                     <td class="flex p-2 align-middle bg-transparent border-b w-fit whitespace-nowrap dark:border-white/40">
                         <div class="flex items-center align-top">
-                            <div>
-                                <img  [src]="user.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />
-                            </div>
+                          <img  [src]="user.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
                         </div>
                     </td>
                     <td class="w-full p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
