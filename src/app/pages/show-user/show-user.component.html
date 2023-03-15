@@ -9,7 +9,7 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
             <div class="flex justify-between px-2 py-4">
               <p class="px-2 text-xl font-semibold text-black text-start dark:text-white">Edit Information for {{this.profileSelected.rol}}</p>
-              <button (click)="toggleForm()"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+              <button type="button" *ngIf="letShowPassWordField" (click)="confirmCurrentPassword()"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
                   <mat-icon  fontIcon="vpn_key"></mat-icon> <span>Change password</span> 
               </button>
             </div>
@@ -101,7 +101,7 @@
                 </div>
      <!-- password -->
 
-            <div *ngIf="letShowPassWordField">
+            <!-- <div *ngIf="letShowPassWordField">
 
               <div class="w-full mb-4"  *ngIf="(confirmationPassword?.dirty || confirmationPassword?.touched) && (password?.dirty || password?.touched)" >
                   <div *ngIf="!isPassworCorrect">
@@ -175,7 +175,7 @@
                 </div>
               </div>
                     
-            </div>
+            </div> -->
        <!-- password-->
               
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">

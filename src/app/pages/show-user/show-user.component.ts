@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class ShowUserComponent {
   public profileForm!: FormGroup;
   public photoForm!: FormGroup;
+  public changePasswordForm!: FormGroup;
 
   public document_type:string = 'DUI';
   public profileSelected: User | Patient;
@@ -38,13 +39,16 @@ export class ShowUserComponent {
       document_number: [this.profileSelected.document_number, Validators.required],
       email_provider: [this.profileSelected.email_provider, Validators.required],
       email: [this.profileSelected.email, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
-      password: [null, [Validators.required, Validators.minLength(8)]],
-      confirmationPassword: [null, [Validators.required, Validators.minLength(8)]],
       name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
       lastname: [this.profileSelected.lastname, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
       phone: [this.profileSelected.phone, Validators.required],
       gender: [this.profileSelected.gender, Validators.required],
     });
+
+    this.changePasswordForm = this.formbuilder.group({
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmationPassword: [null, [Validators.required, Validators.minLength(8)]],
+    })
 
     this.photoForm = this.formbuilder.group({
       photo: [''],
@@ -124,6 +128,30 @@ export class ShowUserComponent {
           
     }
      
+  }
+
+  confirmCurrentPassword() {
+    Swal.fire({
+      showCancelButton: true,
+      preConfirm: () => {
+        const password = Swal.getPopup()
+        password?.querySelector('#password')?.ariaValueText
+        if ( !password) {
+          Swal.showValidationMessage(`Please enter login and password`)
+        }
+        return {  password: password }
+      },
+      cancelButtonColor: '#dc2626',
+      showConfirmButton: true,
+      confirmButtonColor: '#3b82f6',
+      confirmButtonText:'Confirm Password',
+      allowOutsideClick: () => {
+        const popup = Swal.getPopup()
+        popup?.classList.remove('swal2-show')
+        return false
+      }
+      
+    })
   }
 
   preparePhoto(event: any) {
