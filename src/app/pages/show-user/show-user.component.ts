@@ -131,27 +131,7 @@ export class ShowUserComponent {
   }
 
   confirmCurrentPassword() {
-    Swal.fire({
-      showCancelButton: true,
-      preConfirm: () => {
-        const password = Swal.getPopup()
-        password?.querySelector('#password')?.ariaValueText
-        if ( !password) {
-          Swal.showValidationMessage(`Please enter login and password`)
-        }
-        return {  password: password }
-      },
-      cancelButtonColor: '#dc2626',
-      showConfirmButton: true,
-      confirmButtonColor: '#3b82f6',
-      confirmButtonText:'Confirm Password',
-      allowOutsideClick: () => {
-        const popup = Swal.getPopup()
-        popup?.classList.remove('swal2-show')
-        return false
-      }
-      
-    })
+  
   }
 
   preparePhoto(event: any) {

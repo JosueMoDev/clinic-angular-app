@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { UiService } from 'src/app/services/ui.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private store: Store<AppState>,
+    private ui : UiService,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
     public mat: MatPaginatorIntl
@@ -64,7 +66,7 @@ export class UsersComponent implements OnInit {
   }
 
   openDialog(): void {
-
+    this.ui.currentUserType('')
     this.dialog.open(ModalUserRegisterComponent, {
       width: '100vh',
       minWidth: '100vh',

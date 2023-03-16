@@ -9,7 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [],
@@ -26,7 +27,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule
   ]
 })
 export class AngularMaterialModule { }

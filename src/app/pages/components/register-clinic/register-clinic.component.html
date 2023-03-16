@@ -1,6 +1,6 @@
-<div class="flex justify-start items-center align-middle   min-w-full min-h-screen h-screen z-[2] w-fit absolute top-0 bg-slate-900/90 ">
+<div class="flex justify-center items-center align-middle w-full h-full z-[2]  absolute top-0 dark:bg-slate-900/90 bg-slate-50/50  ">
     
-    <div class="flex justify-center items-center  w-full   xl:w-[83.5%]  h-fit">
+    <mat-dialog-content  role="dialog" class="flex justify-center items-center  w-full   xl:w-[83.5%]  h-fit" >
       <div class="w-full p-5 px-10 space-y-2 shadow-xl m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
         <div class="flex-col w-full mb-5 align-middle columns-2">
           <div class="flex justify-start ">
@@ -19,7 +19,6 @@
               <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
                 <div class="flex items-center justify-center">
                   <mat-icon  class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="apartment"/>
-                  <!-- <mat-icon *ngIf="!isFirstStepValid" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/> -->
                 </div>
               </span>
             </li>
@@ -30,15 +29,23 @@
                 </div>
               </span>
             </li>
-
+            <!-- first step -->
+            
+              <!-- second step -->
             
               <li class="flex items-center w-fit ">
-                <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
+                <span *ngIf="!photo" class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full lg:h-10 lg:w-10 dark:bg-blue-800 shrink-0">
                   <div class="flex items-center justify-center">
                     <mat-icon class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="photo_camera"/>
                   </div>
                 </span>
+                <span *ngIf="photo" class="flex items-center justify-center w-8 h-8 bg-teal-600 rounded-full lg:h-10 lg:w-10 dark:bg-teal-900 shrink-0">
+                  <div class="flex items-center justify-center">
+                    <mat-icon class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
+                  </div>
+                </span>
               </li>
+              <!-- second step -->
             </div>
           </ol>  
         
@@ -175,12 +182,9 @@
                 </div>
               </div>
             
-             
-           
-           
               <div class="flex justify-end w-full">
                 <div class="flex justify-end text-center w-fit" >
-                  <button type="button" [disabled]="!isFirstStepValid" (click)="nextPage()" class="inline-block w-full3 px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Next</button>
+                  <button  mat-raised-button type="button" [disabled]="!isFirstStepValid" (click)="nextPage()" class="dark:disabled:text-white/75"><mat-icon  fontIcon="skip_next"></mat-icon>Next</button>
                 </div>
               </div>
             </div>
@@ -190,27 +194,29 @@
   
           <section *ngIf="currentStep===2" >
             <div class="mb-4">
-              <span class="px-1 py-2 text-sm text-black dark:text-white">Choose photo for clinic</span>       
+              <div class="flex items-center justify-center flex-1 w-full mb-5">
+                <span class="px-1 py-2 text-sm text-black dark:text-white">Choose photo for clinic</span>       
+              </div>
               <div class="flex items-center justify-center w-full mb-5">
                 <img *ngIf="imagenTemp" [src]="imagenTemp" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
                 <img *ngIf="!imagenTemp" src="assets/img/no-photo.jpg" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
               </div>
-              <input
-               accept="image/png, image/jpeg, image/jpg" 
-                type="file" 
-                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white dark:bg-slate-600 dark:border-slate-750 dark:placeholder:text-slate-300 dark:text-slate-50 bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 dark:focus:border-blue-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" 
-                placeholder="Photo" 
-                formControlName="photo"
-                (change)="preparePhoto($event.target)"
-                />
+              <div class="flex items-center justify-center flex-1 w-full mb-5">
+                <button mat-raised-button type="button"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle w-fit ">
+                  <label for="photo" class="flex rounded-md cursor-pointer h-15">
+                    <mat-icon  class="text-lg " fontIcon="camera"></mat-icon> <span>Select a photo</span>
+                  </label>
+                  <input  id="photo"  accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden w-full h-full " />
+                </button>
+              </div>
             </div>
   
             <div class="flex justify-between w-full ">
               <div class="flex justify-start text-center w-fit">
-                <button type="button" (click)="previusPage()" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Previus</button>
+                <button mat-raised-button type="button" (click)="previusPage()" class="dark:disabled:text-white/75" ><mat-icon  fontIcon="skip_previous"></mat-icon>Previous</button>
               </div>
               <div class="flex justify-end text-center w-fit">
-                <button type="submit" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-green-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Register</button>
+                <button mat-raised-button type="submit" ><mat-icon  fontIcon="save"></mat-icon>enrollement</button>
               </div>
             </div>
           </section>
@@ -218,6 +224,6 @@
           </div>
         </form>
       </div>
-    </div>
+    </mat-dialog-content>
   </div>
 

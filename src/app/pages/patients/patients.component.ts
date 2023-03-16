@@ -9,6 +9,7 @@ import { AppState } from '../../app.reducer';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-patients',
@@ -36,9 +37,10 @@ export class PatientsComponent {
 
   constructor(
     private patientService: PatientService,
+    private store: Store<AppState>,
+    private ui : UiService,
     public dialog: Dialog,
     public updateProfileService: UpdateProfileService,
-    private store: Store<AppState>,
     public mat: MatPaginatorIntl
     
   ) { }
@@ -58,8 +60,8 @@ export class PatientsComponent {
   ngOnDestroy(): void {
     this.uiSubscription.unsubscribe();
   }
-  openDialog(): void {
-
+  openDialog(userType: string): void {
+    this.ui.currentUserType(userType)
     this.dialog.open(ModalUserRegisterComponent, {
       width: '100vh',
       minWidth: '100vh',

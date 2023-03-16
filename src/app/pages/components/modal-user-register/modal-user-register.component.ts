@@ -9,6 +9,8 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
 import * as ui from '../../../store/actions/ui.actions';
+import { UiService } from 'src/app/services/ui.service';
+
 
 @Component({
   selector: 'app-modal-user-register',
@@ -23,16 +25,17 @@ import * as ui from '../../../store/actions/ui.actions';
 export class ModalUserRegisterComponent {
  
   public isFirstStepValid: string = '';
-  public isSecondStepValid: string = '';
   public document_type: string = 'DUI';
   public email_provider: string = '@gmail.com';
   public currentStep : number = 1  ;
   public formSubmitted:boolean = false;
   public registerForm!: FormGroup;
   public imagenTemp!: any;
- 
-  ngOnInit() {
+  public rol!: string | null;
 
+
+  ngOnInit() {
+    this.rol = this.ui.currentUserToEnrrolled
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: [this.document_type, Validators.required],
@@ -43,14 +46,14 @@ export class ModalUserRegisterComponent {
         lastname: ['prueba', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
         phone: ['60436759', Validators.required],
         gender: ['', Validators.required],
+        rol: [this.rol, Validators.required],
       }),
-      rol: ['', Validators.required],
+      
       photo:[''],
       photoSrc: ['']
     });
     
     this.isPersonalInformationStepValid
-    this.registerForm.get('rol')?.statusChanges.subscribe(status => this.isSecondStepValid = status)
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
   }
   constructor(
@@ -58,10 +61,12 @@ export class ModalUserRegisterComponent {
     private userservice: UserService,
     private patientService: PatientService,
     private cloudinary: CloudinaryService,
+    private store: Store<AppState>,
+    private ui: UiService,
     public dialogRef: DialogRef,
-    private store : Store <AppState>
 
   ) { }
+  
   preparePhoto(event: any) {
     const photo = event.files[0]
     this.registerForm.patchValue({ 'photoSrc': photo })
@@ -93,9 +98,9 @@ export class ModalUserRegisterComponent {
   }
 
   createUser() {
-    if (this.isFirstStepValid === 'VALID' && this.isSecondStepValid === 'VALID') {   
-
-        const { personalInformation, rol, photo } = this.registerForm.value
+    if (this.isFirstStepValid === 'VALID') {   
+        console.log('hola')
+        const { personalInformation, photo } = this.registerForm.value
         const newRegisterForm = {
           document_type: personalInformation.document_type,
           document_number: personalInformation.document_number,
@@ -105,11 +110,11 @@ export class ModalUserRegisterComponent {
           lastname: personalInformation.lastname.trim(),
           phone: personalInformation.phone,
           gender: personalInformation.gender,
-          rol,
+          rol: personalInformation.rol,
           photo
         }
       
-      if (rol==='patient') {
+      if ( personalInformation.rol==='patient') {
         this.patientService.crearteNewPatientWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
             await this.uploadPhoto(resp.patient.id, 'patients')
@@ -122,7 +127,7 @@ export class ModalUserRegisterComponent {
 
         }, (err)=>error(err.error.message));
       }
-      if (['doctor', 'operator'].includes(rol)) {
+      if (['doctor', 'operator'].includes(personalInformation.rol)) {
         this.userservice.crearteNewUserWithEmailAndPassword(newRegisterForm).subscribe(async (resp:any) => { 
           if (resp.ok && this.registerForm.get('photoSrc')?.value) { 
             await this.uploadPhoto(resp.user.id, 'users')  
@@ -145,7 +150,6 @@ export class ModalUserRegisterComponent {
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
-  get rol() { return this.registerForm.get('rol')?.value }
   get photo() { return this.registerForm.get('photo') }
   
   
@@ -167,7 +171,7 @@ export class ModalUserRegisterComponent {
   }
   
   nextPage() {
-    if (  this.isFirstStepValid ==='VALID' || this.isSecondStepValid==='VALID' ) { this.currentStep = this.currentStep+1 }
+    if (  this.isFirstStepValid ==='VALID' ) { this.currentStep = this.currentStep+1 }
   }
   previusPage() { this.currentStep = this.currentStep - 1 }
   

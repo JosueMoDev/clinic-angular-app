@@ -154,23 +154,23 @@
           <div class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
             <div class="flex justify-center py-3 space-x-3">
               <div class="flex w-fit">
-                <button type="button" (click)="deletePhoto(profileSelected.clinic_id)"   class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg shadow-xs hover:shadow-sm hover:shadow-gray-600 bg-rose-700 dark dark:text-rose-700 dark:bg-white">
+                <button mat-raised-button type="button" (click)="deletePhoto(profileSelected.clinic_id)"   class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg shadow-xs hover:shadow-sm ">
                   <mat-icon  fontIcon="delete"></mat-icon> <span>Delete</span> 
                 </button>
               </div>
               <div *ngIf="!this.photoForm.get('photoSrc')?.touched  && this.photoForm.get('photoSrc')?.value" class="flex w-fit">
-                <button type="submit" [disabled]="isLoading"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle bg-blue-500 rounded-lg shadow-xs hover:shadow-sm hover:shadow-gray-600 dark dark:text-blue-500 dark:bg-white">
+                <button mat-raised-button type="submit" [disabled]="isLoading"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle dark:disabled:text-white/75">
                   <mat-icon  *ngIf="!isLoading" fontIcon="upload_imagen"></mat-icon>  
-                  <mat-icon *ngIf="isLoading" class="animate-spin" fontIcon="change_circle"></mat-icon> <span>Upload</span> 
+                  <mat-icon *ngIf="isLoading" class="animate-spin" fontIcon="autorenew"></mat-icon> <span>Upload</span> 
                 </button>
               </div>
               
-                <div  class="flex items-center justify-center align-middle bg-teal-600 rounded-md shadow-xs cursor-pointer hover:shadow-gray-600 hover:shadow-sm h-fit w-fit dark:bg-white ">
-                  <label for="photo" class="space-x-2 rounded-md cursor-pointer h-15">
-                    <span class="flex items-center justify-center h-10 w-full py-1.5 text-base font-semibold px-4 text-white align-middle dark:text-teal-600"><mat-icon  class="pr-2 text-lg text-white dark:text-teal-600" fontIcon="camera"></mat-icon> new</span> 
-                  </label>
-                  <input id="photo"  accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden w-full h-full " />
-                </div>
+              <button mat-raised-button type="button"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle bg-blue-500 rounded-lg shadow-xs hover:shadow-sm hover:shadow-gray-600 dark dark:text-blue-500 dark:bg-white">
+                <label for="photo" class="flex rounded-md cursor-pointer h-15">
+                  <mat-icon  class="text-lg " fontIcon="camera"></mat-icon> <span>New</span>
+                </label>
+                <input  id="photo"  accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden w-full h-full " />
+              </button>
              
             </div>
           </div>

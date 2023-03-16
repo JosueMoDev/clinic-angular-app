@@ -7,7 +7,7 @@ export class UiService {
   public darkMode!: string | null;
   public isSideBarOpen: boolean = false;
   public isNavMenuOpen: boolean = false;
-
+  public userType!: string | null
   constructor() { 
 
     this.darkMode = localStorage.getItem('theme');
@@ -41,4 +41,15 @@ export class UiService {
   closeSideBar() {
     this.isSideBarOpen = false;
   }
+  get currentUserToEnrrolled() {
+    return this.userType
+  }
+  currentUserType(type: string) {
+    if (type) {
+     this.userType = type
+    } else {
+      this.userType = ''
+    }
+  }
+
 }

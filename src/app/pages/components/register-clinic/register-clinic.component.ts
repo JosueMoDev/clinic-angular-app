@@ -71,6 +71,7 @@ export class RegisterClinicComponent {
     this.registerClinicForm.get('address')?.statusChanges.subscribe(status => this.addressStep = status)
     return( this.informationStep ==='VALID' && this.addressStep ==='VALID')
   }
+  get photo(){ return this.registerClinicForm.get('photo')?.value}
   get name() { return this.registerClinicForm.get('information.name'); }
 
   get citiesByProvince() {
