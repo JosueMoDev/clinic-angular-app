@@ -4,8 +4,8 @@
         <div class="p-4 pb-0 mb-0 rounded-t-4">
           <div class="flex justify-between">
             <p class="text-2xl font-semibold text-black text-start dark:text-white">Patient's table</p>
-            <button (click)="openDialog('patient')"  mat-raised-button class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
-                <mat-icon  fontIcon="add"></mat-icon> <span>new patient</span> 
+            <button (click)="openDialog('patient')" color="primary" mat-raised-button class="z-0">
+                <mat-icon  fontIcon="person_add"></mat-icon> <span>new patient</span> 
             </button>
           </div>
         </div>
@@ -36,7 +36,7 @@
                     <td class="w-full p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
                       <div class="text-center align-top">
                         <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Document Number:</p>
-                        <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{patient.document_number}}</h6>
+                        <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{patient.document_number |  mask: '00000000-0'}}</h6>
                       </div>
                     </td>
                   </a>
@@ -44,11 +44,11 @@
                     <div class="flex-col items-center space-y-1 align-top">
                       <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                       <div class="flex items-center justify-center">
-                          <!-- <button mat-raised-button class="flex items-center justify-center mb-2 text-sm font-semibold text-white align-middle bg-teal-700 rounded-lg dark dark:text-teal-700 dark:bg-white">
-                              <mat-icon class="text-base" fontIcon="person"></mat-icon> <span class="pr-1 text-center">Anable</span> 
-                          </button> -->
-                          <button mat-raised-button class="flex items-center justify-center mb-2 text-sm font-semibold text-white align-middle rounded-lg bg-rose-700 dark dark:text-rose-700 dark:bg-white">
-                              <mat-icon class="text-base" fontIcon="person_off"></mat-icon> <span class="pr-1 text-center">Anable</span> 
+                          <button mat-raised-button color="warn" class="z-0">
+                            <mat-icon  fontIcon="person"></mat-icon> Disable
+                          </button>
+                          <button mat-raised-button color="primary" class="z-0">
+                            <mat-icon  fontIcon="person_off"></mat-icon> Anable
                           </button>
                       </div>
                     </div>

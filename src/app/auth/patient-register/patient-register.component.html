@@ -288,9 +288,7 @@
             </div>
       
             <div class="flex float-right w-fit">
-                <button type="button" *ngIf="registerPatientForm.invalid" disabled class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-green-300 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Register</button>
-                
-                <button type="submit" *ngIf="!registerPatientForm.invalid" class="inline-block w-full px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-green-600 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Register</button>
+                <button mat-raised-button type="button" color="accent" [disabled]="registerPatientForm.invalid" class=""><mat-icon fontIcon="person_add"></mat-icon> Register</button>
             </div>
         </form>
       </div>

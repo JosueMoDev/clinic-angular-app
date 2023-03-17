@@ -28,7 +28,6 @@ export class UsersComponent implements OnInit {
   public from: number = 0;
   public pageIndex:number = 0;
   public pageSizeOptions: number[] = [5, 10, 25];
-  
   public hidePageSize: boolean = false;
   public showPageSizeOptions: boolean = true;
   public disabled: boolean = false;

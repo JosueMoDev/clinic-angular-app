@@ -28,8 +28,8 @@
         </div>
       </div>
     </div>
-    <li *ngIf="ui.isNavMenuOpen" class="relative flex items-center w-full pr-2 ">
-      <ul  class="absolute top-0 px-2 py-4 space-y-3 text-sm font-normal text-left text-white bg-white border-0 border-transparent border-solid divide-y-2 divide-gray-400 rounded-lg cursor-pointer divide-solid right-5 min-w-fit shadow-dark-xl dark:shadow-dark-xl dark:shadow-gray-900 shadow-gray-300 dark:bg-slate-850 ">
+    <li *ngIf="ui.isNavMenuOpen" class="relative flex items-center w-full pr-2 z-[2]">
+      <ul  class="absolute top-0 px-2 py-4 space-y-3 text-sm font-normal text-left text-white bg-white border-0 border-transparent border-solid divide-y-2 divide-gray-400 rounded-lg cursor-pointer divide-solid right-5 min-w-fit shadow-dark-xl dark:shadow-dark-xl dark:shadow-gray-900 shadow-gray-300 dark:bg-slate-850">
         <!-- add show class on dropdown open js -->
         <div class="w-full ">
           <li class="relative h-fit ">
@@ -60,7 +60,7 @@
           </li>
   
           <li class="relative w-full h-10 mb-1">
-            <button (click)="logout()" mat-raised-button class="w-full" > <span class="w-full text-red-900 dark:text-red-100">Log Out</span><mat-icon class="w-full text-red-900 dark:text-red-100" fontIcon="logout"/></button>
+            <button (click)="logout()" mat-raised-button class="w-full" color="warn" > Log Out<mat-icon  fontIcon="logout"/></button>
           </li>
         </div>
       </ul>

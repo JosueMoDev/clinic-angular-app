@@ -1,7 +1,7 @@
-<button (click)="toggleDarkMode()" mat-raised-button class="w-full">
-    <mat-icon  *ngIf="darkMode==='dark'" class="text-yellow-900 dark:text-yellow-50"   fontIcon="light_mode"></mat-icon>
-    <mat-icon  *ngIf="darkMode==='light'|| !darkMode" class="text-yellow-900 dark:text-yellow-50"  fontIcon="dark_mode"></mat-icon>
-    <span class="text-yellow-900 dark:text-yellow-50" *ngIf="darkMode==='dark'">Light Mode</span>
-    <span class="text-yellow-900 dark:text-yellow-50" *ngIf="darkMode==='light'|| !darkMode">Dark Mode</span>
+<button (click)="toggleDarkMode()" color="primary" mat-raised-button class="w-full">
+    <mat-icon  *ngIf="darkMode==='dark'"    fontIcon="light_mode"></mat-icon>
+    <mat-icon  *ngIf="darkMode==='light'|| !darkMode"   fontIcon="dark_mode"></mat-icon>
+    <span  *ngIf="darkMode==='dark'">Light Mode</span>
+    <span  *ngIf="darkMode==='light'|| !darkMode">Dark Mode</span>
 
 </button>
