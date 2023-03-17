@@ -1,6 +1,6 @@
 <div class="flex justify-center absolute top-0 left-0 w-screen h-screen   z-[2]   dark:bg-slate-900/90 bg-slate-50/50 ">
     
-    <mat-dialog-content role="dialog" class="flex justify-center items-center  w-full   xl:w-[83.5%]  h-fit  ">
+    <mat-dialog-content role="dialog" class="flex items-center justify-center w-full h-fit ">
       <div class="w-full p-2 px-1 m-3 space-y-2 shadow-2xl md:p-5 md:px-10 md:m-7 bg-slate-50 dark:shadow-none rounded-xl dark:bg-slate-850">
         <div class="flex-col w-full mb-5 align-middle columns-2">
           <div class="flex justify-start ">
@@ -60,33 +60,31 @@
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                   <div class="mb-4">
                     <span class="px-1 py-2 text-sm text-black dark:text-white">Document Number</span>
-                    <div class="relative flex rounded-md ">
-                      <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
-                        <div class="flex items-center justify-center align-middle">
-                          <select 
-                            class="uppercase bg-transparent border-none focus:outline-none" 
-                            name="document"
-                            formControlName="document_type"
-                            [value]="document_type"
-                          > 
-                            <option value="DUI">DUI</option>
-                            <option value="PASSPORT">PASSPORT</option>
-                          </select>
-                        </div>
-                      </span>
-                      
-                      <input 
-                        *ngIf="document_type==='DUI'"
-                        type="text"  
-                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                        placeholder="DUI" 
-                        formControlName="document_number"
-                        mask="00000000-0"
-                      />
-                      <input 
+                      <div class="relative flex rounded-md ">
+                        <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
+                          <div class="flex items-center justify-center align-middle">
+                            <select 
+                              class="uppercase bg-transparent border-none focus:outline-none" 
+                              name="document"
+                              formControlName="document_type"
+                            > 
+                              <option value="DUI">DUI</option>
+                              <option value="PASSPORT">PASSPORT</option>
+                            </select>
+                          </div>
+                        </span>
+                        <input 
+                          *ngIf="document_type==='DUI'"
+                          type="text"  
+                          class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full border-r-0 appearance-none rounded-r-lg border border-l  border-y-0 border-r-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                          placeholder="DUI" 
+                          formControlName="document_number"
+                          mask="00000000-0"
+                        />
+                        <input 
                         *ngIf="document_type==='PASSPORT'"
                         type="text"  
-                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-l border-y-0 border-r-0 border-r-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                         placeholder="PASSPORT" 
                         formControlName="document_number"
                         mask="A0000000"
@@ -96,34 +94,33 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="mb-4">
                     <span class="px-1 py-2 text-sm text-black dark:text-white">Email</span>
-                    <div class="relative flex rounded-md">
-                      <div class="relative w-full">
-                        <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
-                          <mat-icon class="text-base" color="accent">done</mat-icon>
-                        </div>
-                        <input 
+                    <div class="flex rounded-md ">
+                      <input 
                         type="email" 
-                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border border-l border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border  border-y-0 border-l-0  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                         placeholder="Email" 
                         formControlName="email"
-                       
-                        />
-                      </div>
-                     
+                      />
+                      
                     
                     <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-r-lg cursor-pointer bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
                       <div class="flex items-center justify-center align-middle">
+                        
                         <select 
                           class="lowercase bg-transparent border-none focus:outline-none" 
                           name="document"
                           formControlName="email_provider"
-                          [value]="email_provider"
+                          
                         > 
                           <option value="@gmail.com">@gmail.com</option>
                           <option value="@theclinic.com">@theclinic.com</option>
                         </select>
+                        <div *ngIf="!email?.invalid" class="flex items-center justify-center ml-3">
+                          <mat-icon class="text-base text-center text-teal-600" fontIcon="done"/>
+                        </div>
                       </div>
                     </span>
                     </div>
@@ -157,7 +154,7 @@
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Name</span>
                   <div class="relative w-full">
-                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                    <div *ngIf="!name?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
                       <mat-icon class="text-base" color="accent">done</mat-icon>
                     </div>
                     <input 
@@ -204,7 +201,7 @@
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Last name</span>
                   <div class="relative w-full">
-                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                    <div *ngIf="!lastname?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
                       <mat-icon class="text-base" color="accent">done</mat-icon>
                     </div>
                     <input 
@@ -246,7 +243,7 @@
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Phone</span>
                   <div class="relative w-full">
-                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                    <div *ngIf="!phone?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
                       <mat-icon class="text-base" color="accent">done</mat-icon>
                     </div>
                     <input 
@@ -254,7 +251,7 @@
                     class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                     placeholder="Phone" 
                     formControlName="phone"
-                    prefix="+503"
+                    prefix="(+503) "
                     mask="0000-0000"
                     />
                   </div>

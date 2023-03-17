@@ -99,6 +99,11 @@ export class ShowClinicComponent {
     return province[0].cities
  
   }
+  get register_number() { return this.profileForm.get('information.register_number') }
+  get phone_number(){return this.profileForm.get('information.phone')}
+  get province() {return this.profileForm.get('address.province')}
+  get city() { return this.profileForm.get('address.city') }
+  get country(){ return this.profileForm.get('address.country')}
 
   preparePhoto(event: any) {
     const photo = event.files[0]

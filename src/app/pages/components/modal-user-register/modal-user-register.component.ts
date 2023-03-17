@@ -39,16 +39,15 @@ export class ModalUserRegisterComponent {
     this.registerForm= this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: [this.document_type, Validators.required],
-        document_number: ['010203045', Validators.required],
+        document_number: [null, Validators.required],
         email_provider: [this.email_provider, Validators.required],
-        email: ['pruebla2023prueba', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
-        name: ['prueba', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
-        lastname: ['prueba', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
-        phone: ['60436759', Validators.required],
-        gender: ['', Validators.required],
+        email: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+        name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+        lastname: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
+        phone: [null, Validators.required],
+        gender: [null, Validators.required],
         rol: [this.rol, Validators.required],
       }),
-      
       photo:[''],
       photoSrc: ['']
     });
@@ -152,6 +151,7 @@ export class ModalUserRegisterComponent {
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 
   get photo() { return this.registerForm.get('photo') }
+  get phone() { return this.registerForm.get('personalInformation.phone'); }
   
   
 

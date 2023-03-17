@@ -217,10 +217,10 @@ export class ShowUserComponent {
   get name() { return this.profileForm.get('name'); }
   get lastname() { return this.profileForm.get('lastname'); }
   get email() { return this.profileForm.get('email'); } 
-
+  get document_number() { return this.profileForm.get('document_number'); }
   get password() { return this.profileForm.get('password') }
   get confirmationPassword(){ return this.profileForm.get('password')}
-
+  get phone() { return this.profileForm.get('phone'); }
   get isPassworCorrect() {
     return (this.profileForm.get('password')?.value === this.profileForm.get('confirmationPassword')?.value)
   }

@@ -13,8 +13,8 @@
             <div class="grid grid-cols-1 gap-4 p-5">
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3" formGroupName="information">
                   <div class="mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Register Number</span>
-                    <div class="flex rounded-md ">
+                    <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Register Number</span>
+                    <div class="relative flex rounded-md">
                       <input 
                         type="text"  
                         class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
@@ -22,27 +22,41 @@
                         formControlName="register_number"
                         mask="0000-0000-000-0"
                       />
+                      <div *ngIf="!register_number?.invalid && register_number?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
                     </div>
                   </div>
-                  <div class="w-full mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Phone</span>
-                    <input 
-                    type="text"  
-                    class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                    placeholder="Phone" 
-                    formControlName="phone"
-                    prefix="+503"
-                    mask="0000-0000"
-                    />
+                  <div class="w-full mb-4 ">
+                    <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Phone</span>
+                    <div class="relative flex rounded-md">
+                      <input 
+                      type="text"  
+                      class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                      placeholder="Phone" 
+                      formControlName="phone"
+                      prefix="(+503) "
+                      mask="0000-0000"
+                      />
+                      <div *ngIf="!phone_number?.invalid && phone_number?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
+                    </div>
+                  
                   </div>
                   <div class="w-full mb-4">
-                    <span class="px-1 py-2 text-sm text-white/80">Name</span>
-                    <input 
-                    type="text"  
-                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                    placeholder="Name" 
-                    formControlName="name"
-                    />
+                    <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Name</span>
+                    <div class="relative flex rounded-md">
+                      <input 
+                      type="text"  
+                      class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                      placeholder="Name" 
+                      formControlName="name"
+                      />
+                      <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
+                    </div>
                     <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
                         class="alert alert-danger">
     
@@ -79,67 +93,80 @@
                   </div>
                 </div>
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4" formGroupName="address">
-                    <div class="mb-4">
-                      <span class="px-1 py-2 text-sm text-white/80">Country</span>
-                      <div class="flex rounded-md ">
+                  <div class="mb-4">
+                    <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Country</span>
+                    <div class="relative flex rounded-md">
+                      <input 
+                        type="text"  
+                        class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                        placeholder="Country" 
+                        formControlName="country"
+                        value="country" 
+                      />
+                      <div *ngIf="!country?.invalid && country?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                      <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Province </span>
+                      <div class="relative flex rounded-md">
+                        <select
+                          type="text"  
+                          class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                          placeholder="Province" 
+                          formControlName="province"
+                          (change)="citiesByProvince"
+                          
+                        >
+                        <option value="" selected disabled>select Province</option>
+                        <option *ngFor="let province of provinces" [value]="province">{{province}}</option>
+                      </select>
+                      <div *ngIf="province?.value && province?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
+                      </div>
+                  </div>
+
+                  <div class="mb-4">
+                      <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">City</span>
+                      <div class="relative flex rounded-md ">
+                        <select 
+                          type="text"  
+                          class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                          placeholder="City" 
+                          formControlName="city"
+                          
+                        >
+                        <option value="" selected disabled>select city</option>
+                        <option *ngFor="let city of citiesByProvince" [value]="city">{{city}}</option>
+                      </select>
+                      <div *ngIf="city?.value && city?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
+                      </div>
+                  </div>
+
+                  <div class="mb-4">
+                      <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80">Street</span>
+                      <div class="relative flex rounded-md">
                         <input 
                           type="text"  
                           class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                          placeholder="Country" 
-                          formControlName="country"
-                          value="country" 
+                          placeholder="Street" 
+                          formControlName="street"
+                         
                         />
+                        <div *ngIf="!street?.invalid && street?.touched" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                          <mat-icon class="text-base" color="accent">done</mat-icon>
+                        </div>
                       </div>
-                    </div>
-                    <div class="mb-4">
-                        <span class="px-1 py-2 text-sm text-white/80">Province </span>
-                        <div class="flex rounded-md ">
-                          <select
-                            type="text"  
-                            class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                            placeholder="Province" 
-                            formControlName="province"
-                            (change)="citiesByProvince"
-                            
-                          >
-                          <option value="" selected disabled>select Province</option>
-                          <option *ngFor="let province of provinces" [value]="province">{{province}}</option>
-                        </select>
-                        </div>
-                    </div>
+                  </div>
 
-                    <div class="mb-4">
-                        <span class="px-1 py-2 text-sm text-white/80">City</span>
-                        <div class="flex rounded-md ">
-                          <select 
-                            type="text"  
-                            class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                            placeholder="City" 
-                            formControlName="city"
-                          >
-                          <option value="" selected disabled>select city</option>
-                          <option *ngFor="let city of citiesByProvince" [value]="city">{{city}}</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <span class="px-1 py-2 text-sm text-white/80">Street</span>
-                        <div class="flex rounded-md ">
-                          <input 
-                            type="text"  
-                            class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                            placeholder="Street" 
-                            formControlName="street"
-                           
-                          />
-                        </div>
-                    </div>
-
-                </div>
+              </div>
               </div>
             <div class="flex justify-end w-full p-5 ">
-                <button type="submit"  class="inline-block fe w-fit px-5 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">update</button>
+                <button mat-raised-button type="submit" [disabled]="!this.profileForm.invalid && !this.profileForm.touched" color="accent" class="z-0"><mat-icon>update</mat-icon>update</button>
             </div>
         </div>
       </form>
@@ -154,18 +181,18 @@
           <div class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
             <div class="flex justify-center py-3 space-x-3">
               <div class="flex w-fit">
-                <button mat-raised-button type="button" (click)="deletePhoto(profileSelected.clinic_id)"   class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle rounded-lg shadow-xs hover:shadow-sm ">
+                <button mat-raised-button [disabled]="!currectPhoto" type="button" (click)="deletePhoto(profileSelected.clinic_id)" color="warn"   class="z-0">
                   <mat-icon  fontIcon="delete"></mat-icon> <span>Delete</span> 
                 </button>
               </div>
               <div *ngIf="!this.photoForm.get('photoSrc')?.touched  && this.photoForm.get('photoSrc')?.value" class="flex w-fit">
-                <button mat-raised-button type="submit" [disabled]="isLoading"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle dark:disabled:text-white/75">
+                <button mat-raised-button type="submit" color="accent" [disabled]="isLoading"  class="z-0 dark:disabled:text-white">
                   <mat-icon  *ngIf="!isLoading" fontIcon="upload_imagen"></mat-icon>  
                   <mat-icon *ngIf="isLoading" class="animate-spin" fontIcon="autorenew"></mat-icon> <span>Upload</span> 
                 </button>
               </div>
               
-              <button mat-raised-button type="button"  class="flex items-center justify-center p-2 mb-2 space-x-1 text-base font-semibold text-white align-middle bg-blue-500 rounded-lg shadow-xs hover:shadow-sm hover:shadow-gray-600 dark dark:text-blue-500 dark:bg-white">
+              <button mat-raised-button type="button" color="primary" class="z-0">
                 <label for="photo" class="flex rounded-md cursor-pointer h-15">
                   <mat-icon  class="text-lg " fontIcon="camera"></mat-icon> <span>New</span>
                 </label>

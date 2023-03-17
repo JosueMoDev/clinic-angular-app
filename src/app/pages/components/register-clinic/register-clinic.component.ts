@@ -73,8 +73,6 @@ export class RegisterClinicComponent {
   }
   get photo(){ return this.registerClinicForm.get('photo')?.value}
   get name() { return this.registerClinicForm.get('information.name'); }
-  get register_number() { return this.registerClinicForm.get('information.register_number') }
-  get phone_number(){return this.registerClinicForm.get('information.phone')}
   get citiesByProvince() {
     if (this.nameProvince) {
       this.registerClinicForm.get('address.city')?.enable();
@@ -83,6 +81,8 @@ export class RegisterClinicComponent {
     }
     return;
   }
+  get register_number() { return this.registerClinicForm.get('information.register_number') }
+  get phone_number(){return this.registerClinicForm.get('information.phone')}
   get province() {return this.registerClinicForm.get('address.province')}
   get city() { return this.registerClinicForm.get('address.city') }
   get street(){ return this.registerClinicForm.get('address.street')}
