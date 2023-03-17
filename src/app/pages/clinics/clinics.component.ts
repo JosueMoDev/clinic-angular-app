@@ -9,6 +9,10 @@ import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { UpdateProfileService } from '../../services/update-profile.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from '../../models/user.model';
+import { Patient } from 'src/app/models/patient.model';
+import { success, error } from '../../helpers/sweetAlert.helper';
 
 
 @Component({
@@ -32,13 +36,14 @@ export class ClinicsComponent {
   public showPageSizeOptions: boolean = true;
   public disabled: boolean = false;
   public pageEvent!: PageEvent;
-
+  public currentUserLogged!: User | Patient
   
   
 
   constructor(
     private clinicService: ClinicService,
     private store: Store<AppState>,
+    private authService: AuthService,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
     public mat: MatPaginatorIntl
@@ -49,6 +54,7 @@ export class ClinicsComponent {
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Clinics per page';
+    this.currentUserLogged = this.authService.currentUserLogged;
     this.allClinics()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -98,6 +104,15 @@ export class ClinicsComponent {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
+  }
+
+  changeClinicState(clinic_to_change: string, user_logged: string ) {
+    this.clinicService.changeClinicStatus(clinic_to_change, user_logged).subscribe((resp: any)=> { 
+      if (resp.ok) {
+        success(resp.message)
+        this.allClinics();
+      }
+    }, (err)=>{error(err.error.message)});
   }
 
   

@@ -56,7 +56,6 @@ export class UsersComponent implements OnInit {
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Users per page';
     this.currentUserLogged = this.authService.currentUserLogged;
-    this,
     this.allUsers()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -114,9 +113,9 @@ export class UsersComponent implements OnInit {
 
   changeUserState(user_to_change: string, user_logged: string ) {
     this.userService.changeUserStatus(user_to_change, user_logged).subscribe((resp: any)=> { 
-      if (resp) {
+      if (resp.ok) {
         success(resp.message)
-        this.allUsers()
+        this.allUsers();
       }
     }, (err)=>{error(err.error.message)});
   }

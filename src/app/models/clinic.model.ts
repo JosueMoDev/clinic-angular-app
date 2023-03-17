@@ -9,6 +9,7 @@ export class Clinic {
         public city: string,
         public street: string,
         public register_by: string,
+        public validationState: boolean,
         public photo?: string
     ){}
 

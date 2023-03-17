@@ -43,4 +43,7 @@ export class PatientService {
   updatePatient(patient: any, id: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/patients/${id}`, patient , this.headers)
   }
+  changePatientStatus(patient_to_change: string, user_logged: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/patients/delete/${patient_to_change}`, { user_logged } , this.headers)
+  }
 }

@@ -22,7 +22,8 @@ export class ClinicService {
       map(
         (resp:any) => {
           const clinics = resp.clinics.map(
-            ({ clinic_id, register_number, name, phone,  province, city, street, register_by, photo}:Clinic)=> new Clinic( clinic_id, register_number, name, phone, province, city, street, register_by, photo)
+            ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo }: Clinic) =>
+              new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo)
           );
           return {
             total: resp.total,
@@ -39,5 +40,9 @@ export class ClinicService {
 
   updateClinic(clinic: any, clinic_id:string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/${clinic_id}`, clinic, this.headers)
+  }
+
+  changeClinicStatus(clinic_to_change: string, user_logged: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/delete/${clinic_to_change}`, { user_logged } , this.headers)
   }
 }
