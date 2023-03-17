@@ -47,5 +47,9 @@ export class UserService {
   updateUser(user: any, id: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/users/${id}`, user , this.headers)
   }
+
+  changeUserStatus(user_to_change: string, user_logged: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/users/delete/${user_to_change}`, { user_logged } , this.headers)
+  }
   
 }

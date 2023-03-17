@@ -10,6 +10,10 @@ import { AppState } from '../../app.reducer';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { UiService } from 'src/app/services/ui.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Patient } from 'src/app/models/patient.model';
+import { success, error } from '../../helpers/sweetAlert.helper';
+
 
 
 @Component({
@@ -32,13 +36,14 @@ export class UsersComponent implements OnInit {
   public showPageSizeOptions: boolean = true;
   public disabled: boolean = false;
   public pageEvent!: PageEvent;
- 
+  public currentUserLogged!: User | Patient
 
 
   constructor(
     private userService: UserService,
     private store: Store<AppState>,
-    private ui : UiService,
+    private ui: UiService,
+    private authService: AuthService,
     public updateProfileService: UpdateProfileService,
     public dialog: Dialog,
     public mat: MatPaginatorIntl
@@ -50,7 +55,8 @@ export class UsersComponent implements OnInit {
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Users per page';
-   
+    this.currentUserLogged = this.authService.currentUserLogged;
+    this,
     this.allUsers()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
@@ -105,5 +111,16 @@ export class UsersComponent implements OnInit {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
   }
+
+  changeUserState(user_to_change: string, user_logged: string ) {
+    this.userService.changeUserStatus(user_to_change, user_logged).subscribe((resp: any)=> { 
+      if (resp) {
+        success(resp.message)
+        this.allUsers()
+      }
+    }, (err)=>{error(err.error.message)});
+  }
+
+
   
 }
