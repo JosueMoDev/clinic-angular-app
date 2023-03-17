@@ -42,7 +42,7 @@ export class RegisterClinicComponent {
         phone: ['', Validators.required],
       }),
       address: this.formbuilder.group({
-        country: [{ value:this.country, disabled: true }],
+        country: [{ value:'El Salvador', disabled: true }],
         province: ['', [Validators.required]],
         city: ['', Validators.required],
         street:[null, Validators.required]
@@ -65,7 +65,7 @@ export class RegisterClinicComponent {
   ) { }
 
   get nameProvince() { return this.registerClinicForm.get('address.province')?.value; }
-  get country(){ return 'El Salvador'}
+  get country(){ return this.registerClinicForm.get('address.country')}
   get isFirstStepValid() {
     this.registerClinicForm.get('information')?.statusChanges.subscribe(status => this.informationStep = status)
     this.registerClinicForm.get('address')?.statusChanges.subscribe(status => this.addressStep = status)
@@ -73,7 +73,8 @@ export class RegisterClinicComponent {
   }
   get photo(){ return this.registerClinicForm.get('photo')?.value}
   get name() { return this.registerClinicForm.get('information.name'); }
-
+  get register_number() { return this.registerClinicForm.get('information.register_number') }
+  get phone_number(){return this.registerClinicForm.get('information.phone')}
   get citiesByProvince() {
     if (this.nameProvince) {
       this.registerClinicForm.get('address.city')?.enable();
@@ -82,7 +83,9 @@ export class RegisterClinicComponent {
     }
     return;
   }
-
+  get province() {return this.registerClinicForm.get('address.province')}
+  get city() { return this.registerClinicForm.get('address.city') }
+  get street(){ return this.registerClinicForm.get('address.street')}
 
   forbiddenInputMailValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z0-9]+[\sa-zA-Z0-9]+$/

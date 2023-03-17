@@ -147,6 +147,7 @@ export class ModalUserRegisterComponent {
   get isPersonalInformationStepValid() {
     return this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status)
   }
+  get document_number() { return this.registerForm.get('personalInformation.document_number'); }
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
   get email() { return this.registerForm.get('personalInformation.email'); } 

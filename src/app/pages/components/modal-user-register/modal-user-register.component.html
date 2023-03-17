@@ -60,7 +60,7 @@
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                   <div class="mb-4">
                     <span class="px-1 py-2 text-sm text-black dark:text-white">Document Number</span>
-                    <div class="flex rounded-md ">
+                    <div class="relative flex rounded-md ">
                       <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-l-lg cursor-pointer bg-blue-500/13 dark:bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
                         <div class="flex items-center justify-center align-middle">
                           <select 
@@ -74,6 +74,7 @@
                           </select>
                         </div>
                       </span>
+                      
                       <input 
                         *ngIf="document_type==='DUI'"
                         type="text"  
@@ -83,26 +84,34 @@
                         mask="00000000-0"
                       />
                       <input 
-                      *ngIf="document_type==='PASSPORT'"
-                      type="text"  
-                      class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                      placeholder="PASSPORT" 
-                      formControlName="document_number"
-                      mask="A0000000"
-                    />
+                        *ngIf="document_type==='PASSPORT'"
+                        type="text"  
+                        class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-r-lg border border-r border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                        placeholder="PASSPORT" 
+                        formControlName="document_number"
+                        mask="A0000000"
+                      />
+                      <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+                        <mat-icon class="text-base" color="accent">done</mat-icon>
+                      </div>
                     </div>
                   </div>
                   <div class="mb-4">
                     <span class="px-1 py-2 text-sm text-black dark:text-white">Email</span>
-                    <div class="flex rounded-md ">
-                      <input 
+                    <div class="relative flex rounded-md">
+                      <div class="relative w-full">
+                        <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                          <mat-icon class="text-base" color="accent">done</mat-icon>
+                        </div>
+                        <input 
                         type="email" 
                         class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border border-l border-y-0 border-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                         placeholder="Email" 
                         formControlName="email"
                        
-                      />
-                      
+                        />
+                      </div>
+                     
                     
                     <span class="inline-flex items-center px-3 py-4 text-sm font-normal transition-all border-none rounded-r-lg cursor-pointer bg-blue-500/13 dark:placeholder:text-slate-300 text-slate-800 dark:text-slate-100 bg-clip-padding focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
                       <div class="flex items-center justify-center align-middle">
@@ -147,12 +156,17 @@
               <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Name</span>
-                  <input 
-                  type="text"  
-                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                  placeholder="Name" 
-                  formControlName="name"
-                  />
+                  <div class="relative w-full">
+                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                      <mat-icon class="text-base" color="accent">done</mat-icon>
+                    </div>
+                    <input 
+                    type="text"  
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Name" 
+                    formControlName="name"
+                    />
+                  </div>
                   <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
                       class="alert alert-danger">
   
@@ -189,13 +203,18 @@
                 </div>
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Last name</span>
-                  <input 
-                  type="text"  
-                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                  placeholder="Lastname" 
-                  formControlName="lastname"
-    
-                  />
+                  <div class="relative w-full">
+                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                      <mat-icon class="text-base" color="accent">done</mat-icon>
+                    </div>
+                    <input 
+                    type="text"  
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Lastname" 
+                    formControlName="lastname"
+      
+                    />
+                  </div>
                   <div *ngIf="lastname?.invalid && (lastname?.dirty || lastname?.touched)">
                     <div  *ngIf="lastname?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
@@ -226,14 +245,19 @@
               <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                 <div class="w-full mb-4">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Phone</span>
-                  <input 
-                  type="text"  
-                  class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                  placeholder="Phone" 
-                  formControlName="phone"
-                  prefix="+503"
-                  mask="0000-0000"
-                  />
+                  <div class="relative w-full">
+                    <div *ngIf="!document_number?.invalid" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                      <mat-icon class="text-base" color="accent">done</mat-icon>
+                    </div>
+                    <input 
+                    type="text"  
+                    class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+                    placeholder="Phone" 
+                    formControlName="phone"
+                    prefix="+503"
+                    mask="0000-0000"
+                    />
+                  </div>
                 </div>
                 <!-- <div class="mb-4 ">
                   <span class="px-1 py-2 text-sm text-black dark:text-white">Choose your gender</span>       
