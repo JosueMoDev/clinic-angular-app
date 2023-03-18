@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UserService } from '../../services/user.service';
-import { Dialog} from '@angular/cdk/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
 import { UpdateProfileService } from '../../services/update-profile.service';
 import { Subscription } from 'rxjs';
@@ -45,7 +45,7 @@ export class UsersComponent implements OnInit {
     private ui: UiService,
     private authService: AuthService,
     public updateProfileService: UpdateProfileService,
-    public dialog: Dialog,
+    public matDialog: MatDialog,
     public mat: MatPaginatorIntl
   ) { 
  
@@ -71,10 +71,12 @@ export class UsersComponent implements OnInit {
 
   openDialog(): void {
     this.ui.currentUserType('')
-    this.dialog.open(ModalUserRegisterComponent, {
-      width: '100vh',
-      minWidth: '100vh',
-      backdropClass:'top'
+    this.matDialog.open(ModalUserRegisterComponent, {
+      width: '100%',
+      height: '90%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
     });
   } 
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Dialog} from '@angular/cdk/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { PatientService } from 'src/app/services/patient.service';
 import { Patient } from 'src/app/models/patient.model';
 import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
@@ -44,7 +44,7 @@ export class PatientsComponent {
     private store: Store<AppState>,
     private ui: UiService,
     private authService: AuthService,
-    public dialog: Dialog,
+    public matDialog: MatDialog,
     public updateProfileService: UpdateProfileService,
     public mat: MatPaginatorIntl
     
@@ -68,10 +68,12 @@ export class PatientsComponent {
   }
   openDialog(userType: string): void {
     this.ui.currentUserType(userType)
-    this.dialog.open(ModalUserRegisterComponent, {
-      width: '100vh',
-      minWidth: '100vh',
-      backdropClass:'top'
+    this.matDialog.open(ModalUserRegisterComponent, {
+      width: '100%',
+      height: '80%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
     });
   } 
 

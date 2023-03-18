@@ -5,7 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { DialogRef } from '@angular/cdk/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
 import * as ui from '../../../store/actions/ui.actions';
@@ -62,7 +62,7 @@ export class ModalUserRegisterComponent {
     private cloudinary: CloudinaryService,
     private store: Store<AppState>,
     private ui: UiService,
-    public dialogRef: DialogRef,
+    public matdialogRef: MatDialogRef<ModalUserRegisterComponent>,
 
   ) { }
   
@@ -122,7 +122,7 @@ export class ModalUserRegisterComponent {
           this.store.dispatch(ui.isLoadingTable())
           this.currentStep = 1;
           this.registerForm.reset();
-          this.dialogRef.close();
+          this.matdialogRef.close();
 
         }, (err)=>error(err.error.message));
       }
@@ -136,7 +136,7 @@ export class ModalUserRegisterComponent {
           this.store.dispatch(ui.isLoadingTable())
           this.currentStep = 1;
           this.registerForm.reset();
-          this.dialogRef.close();
+          this.matdialogRef.close();
         }, (err)=>error(err.error.message));
       }
     

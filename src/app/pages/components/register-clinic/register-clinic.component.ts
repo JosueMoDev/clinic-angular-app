@@ -6,7 +6,7 @@ import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
 import {  User } from '../../../models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { DialogRef } from '@angular/cdk/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from '../../../store/actions/ui.actions';
@@ -60,7 +60,7 @@ export class RegisterClinicComponent {
     private authService: AuthService,
     private clinicService: ClinicService,
     private cloudinary: CloudinaryService,
-    public dialogRef: DialogRef,
+    public matdialogRef: MatDialogRef<RegisterClinicComponent>,
     private store : Store <AppState>
   ) { }
 
@@ -150,7 +150,7 @@ export class RegisterClinicComponent {
       success(resp.message)
       this.store.dispatch(ui.isLoadingTable())
       this.currentStep = 1;
-      this.dialogRef.close();
+      this.matdialogRef.close();
       this.registerClinicForm.reset()
     }, (err)=>error(err.error.message));
   }

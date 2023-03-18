@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Dialog} from '@angular/cdk/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
@@ -45,7 +45,7 @@ export class ClinicsComponent {
     private store: Store<AppState>,
     private authService: AuthService,
     public updateProfileService: UpdateProfileService,
-    public dialog: Dialog,
+    public matDialog: MatDialog,
     public mat: MatPaginatorIntl
   
   ) { }
@@ -68,10 +68,12 @@ export class ClinicsComponent {
   }
   openDialog(): void {
 
-    this.dialog.open(RegisterClinicComponent, {
-      width: '100vh',
-      minWidth: '100vh',
-      backdropClass:'top'
+    this.matDialog.open(RegisterClinicComponent, {
+      width: '100%',
+      height: '80%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
     });
   } 
 
