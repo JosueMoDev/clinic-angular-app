@@ -2,4 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.mat-mdc-paginator-icon {
+    fill:currentColor;
+}
+
 
