@@ -97,10 +97,10 @@
                 <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Email</span>
                 <div class="flex rounded-md ">
                   <input 
-                    type="email" 
+                    type="text" 
                     class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-l-lg border  border-y-0 border-l-0  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
                     placeholder="Email" 
-                    formControlName="email"
+                    formControlName="email_name"
                   />
                   
                 
@@ -116,27 +116,27 @@
                       <option value="@gmail.com">@gmail.com</option>
                       <option value="@theclinic.com">@theclinic.com</option>
                     </select>
-                    <div *ngIf="!email?.invalid" class="flex items-center justify-center ml-3">
+                    <div *ngIf="!email_name?.invalid" class="flex items-center justify-center ml-3">
                       <mat-icon class="text-base text-center text-teal-600" fontIcon="done"/>
                     </div>
                   </div>
                 </span>
                 </div>
                 
-                <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-                  <div  *ngIf="email?.errors?.['required']">
+                <div *ngIf="email_name?.invalid && (email_name?.dirty || email_name?.touched)">
+                  <div  *ngIf="email_name?.errors?.['required']">
                     <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                       <mat-icon class="mx-2"  fontIcon="error"/> 
                       mail is required.
                     </span>
                   </div>
-                  <div *ngIf="email?.errors?.['minlength']">
+                  <div *ngIf="email_name?.errors?.['minlength']">
                     <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                       <mat-icon class="mx-2"  fontIcon="error"/>
                       mail must be at least 10 characters long.
                     </span>
                   </div>
-                  <div *ngIf="email?.errors?.['forbiddenName']">
+                  <div *ngIf="email_name?.errors?.['forbiddenName']">
                     <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
                       <mat-icon class="mx-2 "  fontIcon="error"/>
                         mail only could have  

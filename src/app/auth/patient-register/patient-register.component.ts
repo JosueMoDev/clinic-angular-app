@@ -21,14 +21,14 @@ export class PatientRegisterComponent {
 
     this.registerPatientForm = this.formbuilder.group({
       document_type: ['DUI', Validators.required],
-      document_number: ['', Validators.required],
+      document_number: ['048507907', Validators.required],
       email_provider: ['@gmail.com', Validators.required],
-      email: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+      email_name: ['jonasjosuemoralese', [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
       password: [null, [Validators.required, Validators.minLength(8)]],
       confirmationPassword: [null, [Validators.required, Validators.minLength(8)]],
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
-      lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
-      phone: ['', Validators.required],
+      name: ['Jonas', [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
+      lastname: ['Morales', [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
+      phone: ['60436759', Validators.required],
       gender: ['', Validators.required],
     });
     
@@ -47,14 +47,15 @@ export class PatientRegisterComponent {
 
   createPatient() {
     if ( !this.registerPatientForm.invalid ) {   
-
-      const { document_type, document_number, email_provider, email,
+      
+      const { document_type, document_number, email_provider, email_name,
         name, lastname, password, phone, gender } = this.registerPatientForm.value
         const newRegisterForm = {
           document_type,
           document_number,
           email_provider,
-          email: email.trim() + email_provider,
+          email_name,
+          email: email_name.trim()+email_provider,
           password,
           name: name.trim(),
           lastname: lastname.trim(),
@@ -62,10 +63,9 @@ export class PatientRegisterComponent {
           gender,
           rol:'patient',
         }
-
       this.patientService.crearteNewPatientWithEmailAndPasswordOutside(newRegisterForm).subscribe((resp: any)=> { 
         if (resp) { success(resp.message) }
-      }, (err)=>{error(err.error.message)});
+      }, (err) => { error(err.error.message)});
           
     }
      
@@ -75,7 +75,7 @@ export class PatientRegisterComponent {
 
   get name() { return this.registerPatientForm.get('name'); }
   get lastname() { return this.registerPatientForm.get('lastname'); }
-  get email() { return this.registerPatientForm.get('email'); } 
+  get email_name() { return this.registerPatientForm.get('email_email'); } 
 
   get password() { return this.registerPatientForm.get('password') }
   get confirmationPassword(){ return this.registerPatientForm.get('password')}

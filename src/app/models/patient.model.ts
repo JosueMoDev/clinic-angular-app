@@ -10,6 +10,7 @@ export class Patient {
         public gender: string,
         public phone: string,
         public validationState: boolean,
+        public email_name: string,
         public email_provider: string,
         public rol: string,
         public photo?: string

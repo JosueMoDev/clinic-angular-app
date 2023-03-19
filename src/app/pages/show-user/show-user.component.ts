@@ -40,7 +40,7 @@ export class ShowUserComponent {
       document_type: [this.profileSelected.document_type, Validators.required],
       document_number: [this.profileSelected.document_number, Validators.required],
       email_provider: [this.profileSelected.email_provider, Validators.required],
-      email: [this.profileSelected.email, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+      email_name: [this.profileSelected.email_name, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
       name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
       lastname: [this.profileSelected.lastname, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
       phone: [this.profileSelected.phone, Validators.required],
@@ -83,14 +83,14 @@ export class ShowUserComponent {
     
     if ( !this.profileForm.errors ) {   
 
-      const { document_type, document_number, email_provider, email,
-        name, lastname, password, phone, gender } = this.profileForm.value
+      const { document_type, document_number, email_name ,email_provider, email,
+        name, lastname, phone, gender } = this.profileForm.value
         const newUpdateForm = {
           document_type,
           document_number,
+          email_name,
           email_provider,
-          // email: email.trim() + email_provider,
-          email,
+          email: email_name.trim()+email_provider,
           name: name.trim(),
           lastname: lastname.trim(),
           phone,
@@ -206,7 +206,7 @@ export class ShowUserComponent {
 
   get name() { return this.profileForm.get('name'); }
   get lastname() { return this.profileForm.get('lastname'); }
-  get email() { return this.profileForm.get('email'); } 
+  get email_name() { return this.profileForm.get('email_name'); } 
   get document_number() { return this.profileForm.get('document_number'); }
   get phone() { return this.profileForm.get('phone'); }
  

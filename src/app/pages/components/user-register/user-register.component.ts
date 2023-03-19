@@ -41,7 +41,7 @@ export class UserRegisterComponent {
         document_type: [this.document_type, Validators.required],
         document_number: [null, Validators.required],
         email_provider: [this.email_provider, Validators.required],
-        email: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+        email_name: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
         name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
         lastname: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
         phone: [null, Validators.required],
@@ -98,13 +98,13 @@ export class UserRegisterComponent {
 
   createUser() {
     if (this.isFirstStepValid === 'VALID') {   
-        console.log('hola')
         const { personalInformation, photo } = this.registerForm.value
         const newRegisterForm = {
           document_type: personalInformation.document_type,
           document_number: personalInformation.document_number,
           email_provider: personalInformation.email_provider,
-          email: personalInformation.email.trim()+ personalInformation.email_provider,
+          email_name: personalInformation.email_name,
+          email: personalInformation.email_name.trim()+ personalInformation.email_provider,
           name: personalInformation.name.trim(),
           lastname: personalInformation.lastname.trim(),
           phone: personalInformation.phone,
@@ -149,7 +149,7 @@ export class UserRegisterComponent {
   get document_number() { return this.registerForm.get('personalInformation.document_number'); }
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
-  get email() { return this.registerForm.get('personalInformation.email'); } 
+  get email_name() { return this.registerForm.get('personalInformation.email_name'); } 
   get photo() { return this.registerForm.get('photo') }
   get phone() { return this.registerForm.get('personalInformation.phone'); }
   

@@ -54,9 +54,9 @@ export class AuthService {
 
   userLogged(userLogged: User) { 
     const { id, document_type, document_number, email, name,
-      lastname, gender, phone, validationState, email_provider, rol, photo} = userLogged
+      lastname, gender, phone, validationState, email_name, email_provider, rol, photo} = userLogged
     this.currentUserLogged = new User( id, document_type, document_number, email, name,
-      lastname, gender, phone, validationState, email_provider, rol, photo)
+      lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
   }
 
   googleSingIn(token: string, currentRoute:string) { 
