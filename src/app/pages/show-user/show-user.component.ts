@@ -9,6 +9,9 @@ import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import Swal from 'sweetalert2';
+import { MatDialog} from '@angular/material/dialog';
+import { PasswordRecoveryComponent } from '../components/password-recovery/password-recovery.component';
+   
 
 
 
@@ -21,16 +24,15 @@ import Swal from 'sweetalert2';
 export class ShowUserComponent {
   public profileForm!: FormGroup;
   public photoForm!: FormGroup;
-  public changePasswordForm!: FormGroup;
+
 
   public document_type:string = 'DUI';
   public profileSelected: User | Patient;
   public currectPhoto!: string | undefined;
   public imagenTemp!: any
   public isLoading: boolean = false;
-  public letShowPassWordField: boolean = false;
-  public type : string ='password'
-  public visibility: boolean = true;
+  public ShowPassWordButtom: boolean = false;
+
 
   ngOnInit() {
 
@@ -45,18 +47,13 @@ export class ShowUserComponent {
       gender: [this.profileSelected.gender, Validators.required],
     });
 
-    this.changePasswordForm = this.formbuilder.group({
-      password: [null, [Validators.required, Validators.minLength(8)]],
-      confirmationPassword: [null, [Validators.required, Validators.minLength(8)]],
-    })
-
     this.photoForm = this.formbuilder.group({
       photo: [''],
       photoSrc:['']
     })
     
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
-    this.letShowPassWordField = (this.authService.currentUserLogged.id === this.profileSelected.id )
+    this.ShowPassWordButtom= (this.authService.currentUserLogged.id === this.profileSelected.id )
    
   }
 
@@ -71,7 +68,8 @@ export class ShowUserComponent {
     private patientService: PatientService,
     private authService: AuthService,
     private cloudinary: CloudinaryService,
-    public updateProfileService: UpdateProfileService
+    public updateProfileService: UpdateProfileService,
+    public matDialog: MatDialog
 
   ) { 
     this.profileSelected = updateProfileService.userProfileToUpdate;
@@ -79,10 +77,7 @@ export class ShowUserComponent {
 
   }
 
-  changeVisibility() {
-    this.visibility= !this.visibility;
-    (this.type==='password')? this.type = 'text': this.type='password'
-  }
+  
 
   updateProfile() {
     
@@ -96,7 +91,6 @@ export class ShowUserComponent {
           email_provider,
           // email: email.trim() + email_provider,
           email,
-          password,
           name: name.trim(),
           lastname: lastname.trim(),
           phone,
@@ -128,10 +122,6 @@ export class ShowUserComponent {
           
     }
      
-  }
-
-  confirmCurrentPassword() {
-  
   }
 
   preparePhoto(event: any) {
@@ -218,12 +208,8 @@ export class ShowUserComponent {
   get lastname() { return this.profileForm.get('lastname'); }
   get email() { return this.profileForm.get('email'); } 
   get document_number() { return this.profileForm.get('document_number'); }
-  get password() { return this.profileForm.get('password') }
-  get confirmationPassword(){ return this.profileForm.get('password')}
   get phone() { return this.profileForm.get('phone'); }
-  get isPassworCorrect() {
-    return (this.profileForm.get('password')?.value === this.profileForm.get('confirmationPassword')?.value)
-  }
+ 
   
   forbiddenInputTextValidator(): ValidatorFn{
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/
@@ -240,8 +226,13 @@ export class ShowUserComponent {
       return !isforbidden ? {forbiddenName: {value: control.value}} : null;
     };
   }
-  toggleForm() {
-    
-  }
+  openDialog(): void {
+    this.matDialog.open(PasswordRecoveryComponent, {
+      height:'75%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+    });
+  } 
 
 }

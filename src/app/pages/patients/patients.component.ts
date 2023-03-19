@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import { PatientService } from 'src/app/services/patient.service';
 import { Patient } from 'src/app/models/patient.model';
-import { ModalUserRegisterComponent } from '../components/modal-user-register/modal-user-register.component';
+import { UserRegisterComponent } from '../components/user-register/user-register.component';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
@@ -68,7 +68,7 @@ export class PatientsComponent {
   }
   openDialog(userType: string): void {
     this.ui.currentUserType(userType)
-    this.matDialog.open(ModalUserRegisterComponent, {
+    this.matDialog.open(UserRegisterComponent, {
       width: '100%',
       height: '80%',
       hasBackdrop: true,

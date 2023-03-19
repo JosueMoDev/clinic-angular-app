@@ -16,11 +16,12 @@ import { PorcentageCardComponent } from './components/porcentage-card/porcentage
 import { ShowUserComponent } from './show-user/show-user.component';
 import { PatientsComponent } from './patients/patients.component';
 import { StepperComponent } from './components/stepper/stepper.component';
-import { ModalUserRegisterComponent } from './components/modal-user-register/modal-user-register.component';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
 import { ClinicsComponent } from './clinics/clinics.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 
 
 
@@ -37,11 +38,12 @@ import { ShowClinicComponent } from './show-clinic/show-clinic.component';
     ShowUserComponent,
     StepperComponent,
     PatientsComponent,
-    ModalUserRegisterComponent,
+    UserRegisterComponent,
     UsersComponent,
     RegisterClinicComponent,
     ClinicsComponent,
-    ShowClinicComponent
+    ShowClinicComponent,
+    PasswordRecoveryComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,7 @@ import { ShowClinicComponent } from './show-clinic/show-clinic.component';
     DashboardComponent,
     PagesComponent,
     Error404Component,
-    ModalUserRegisterComponent
+    UserRegisterComponent
   ],
   providers:[provideNgxMask()]
 })

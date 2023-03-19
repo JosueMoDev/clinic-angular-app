@@ -9,7 +9,7 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
             <div class="flex justify-between px-2 py-4">
               <p class="px-2 text-xl font-semibold text-black text-start dark:text-white">Edit Information for {{this.profileSelected.rol}}</p>
-              <button type="button" color="warn" *ngIf="letShowPassWordField" (click)="confirmCurrentPassword()"  mat-raised-button class="z-0">
+              <button type="button" color="warn" *ngIf="ShowPassWordButtom" (click)="openDialog()"  mat-raised-button class="z-0">
                   <mat-icon  fontIcon="vpn_key"></mat-icon> <span>Change password</span> 
               </button>
             </div>
@@ -106,84 +106,7 @@
                     </div>
                   </div>
                 </div>
-     <!-- password -->
 
-            <!-- <div *ngIf="letShowPassWordField">
-
-              <div class="w-full mb-4"  *ngIf="(confirmationPassword?.dirty || confirmationPassword?.touched) && (password?.dirty || password?.touched)" >
-                  <div *ngIf="!isPassworCorrect">
-                  <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                      <mat-icon class="mx-2"  fontIcon="error"/> 
-                      Password End Confirmation are not equals
-                  </span>
-                  </div>
-              </div>
-              <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-              
-                <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Password </span>
-                  <input 
-                  type={{type}} 
-                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                  placeholder="password" 
-                  formControlName="password"
-                  />
-                  <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-                      class="alert alert-danger">
-  
-                    <div  *ngIf="password?.errors?.['required']">
-                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/> 
-                        password is required.
-                      </span>
-                    </div>
-                    <div *ngIf="password?.errors?.['minlength']">
-                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/>
-                        Name must be at least 8 characters long.
-                      </span>
-                    </div>
-                  </div>
-    
-                </div>
-                <div class="w-full mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Password  Confirmation</span>
-                  <div class="relative">
-                    <input 
-                    type={{type}}
-                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                    placeholder="Confirmation Passoword" 
-                    formControlName="confirmationPassword"
-                    />
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
-                        <button (click)="changeVisibility()" *ngIf="visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
-                            <mat-icon>visibility_off</mat-icon>
-                        </button>
-                        <button (click)="changeVisibility()"  *ngIf="!visibility" mat-icon-button matTooltip="Basic" aria-label="Example icon-button with a heart icon">
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                    </div>
-
-                  </div>
-                  <div *ngIf="confirmationPassword?.invalid && (confirmationPassword?.dirty || confirmationPassword?.touched)">
-                    <div  *ngIf="confirmationPassword?.errors?.['required']">
-                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/> 
-                          Confirmation Password is required.
-                      </span>
-                    </div>
-                    <div *ngIf="confirmationPassword?.errors?.['minlength']">
-                      <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/>
-                        Confirmation Password must be at least 8 characters long.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                    
-            </div> -->
-       <!-- password-->
               
                 <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
                   <div class="w-full mb-4">

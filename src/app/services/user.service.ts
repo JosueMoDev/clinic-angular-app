@@ -51,5 +51,14 @@ export class UserService {
   changeUserStatus(user_to_change: string, user_logged: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/users/delete/${user_to_change}`, { user_logged } , this.headers)
   }
+
+  confirmateOldPassword(user: string, oldPassword:string) {
+    return this.http.post(`${environment.THECLINIC_API_URL}/users/confirm-password/${user}`, {oldPassword} , this.headers)
+  }
+
+  changePassword(user: string, newPassword:string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/users/change-password/${user}`, {newPassword} , this.headers)
+    
+  }
   
 }

@@ -46,4 +46,12 @@ export class PatientService {
   changePatientStatus(patient_to_change: string, user_logged: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/patients/delete/${patient_to_change}`, { user_logged } , this.headers)
   }
+  confirmateOldPassword(patient: string, oldPassword:string) {
+    return this.http.post(`${environment.THECLINIC_API_URL}/patients/confirm-password/${patient}`, {oldPassword} , this.headers)
+  }
+
+  changePassword(patient: string, newPassword:string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/patients/change-password/${patient}`, {newPassword} , this.headers)
+    
+  }
 }

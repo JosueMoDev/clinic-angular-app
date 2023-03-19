@@ -13,8 +13,8 @@ import { UiService } from 'src/app/services/ui.service';
 
 
 @Component({
-  selector: 'app-modal-user-register',
-  templateUrl: './modal-user-register.component.html',
+  selector: 'app-user-register',
+  templateUrl: './user-register.component.html',
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
@@ -22,7 +22,7 @@ import { UiService } from 'src/app/services/ui.service';
     },
   ]
 })
-export class ModalUserRegisterComponent {
+export class UserRegisterComponent {
  
   public isFirstStepValid: string = '';
   public document_type: string = 'DUI';
@@ -62,7 +62,7 @@ export class ModalUserRegisterComponent {
     private cloudinary: CloudinaryService,
     private store: Store<AppState>,
     private ui: UiService,
-    public matdialogRef: MatDialogRef<ModalUserRegisterComponent>,
+    public matdialogRef: MatDialogRef<UserRegisterComponent>,
 
   ) { }
   
