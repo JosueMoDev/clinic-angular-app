@@ -228,7 +228,7 @@ export class ShowUserComponent {
   }
   openDialog(): void {
     this.matDialog.open(PasswordRecoveryComponent, {
-      height:'75%',
+      height:'70%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

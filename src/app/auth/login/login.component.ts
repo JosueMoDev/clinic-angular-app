@@ -106,10 +106,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
               localStorage.removeItem('rememberme-state');
               localStorage.removeItem('user_email');
             }
-            // sessionStorage.setItem('userToken', resp.token)
-            this.loginForm.reset()
-            this.router.navigateByUrl('/') 
-            success('Welcome');
+            this.loginForm.reset();
+            this.router.navigateByUrl('/'); 
+            success(`Welcome ${resp.user}`);
             
           }
         },
