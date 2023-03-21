@@ -34,6 +34,9 @@ export class PatientService {
      })
   )
   }
+  getSinglePatient(document_number:string) {
+    return this.http.get(`${environment.THECLINIC_API_URL}/patients/${document_number}`, this.headers)    
+  }
   crearteNewPatientWithEmailAndPassword(patient: UserRegisterForm) { 
     return this.http.post(`${environment.THECLINIC_API_URL}/patients`, patient, this.headers)
   }

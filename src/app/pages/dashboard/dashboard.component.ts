@@ -156,7 +156,6 @@ export class DashboardComponent {
   }
 
   addEvent(event:any): void {
-    // console.log( 'event')
     // this.events = [
     //   ...this.events,
     //   {
@@ -172,10 +171,11 @@ export class DashboardComponent {
     //   },
     // ];
     this.matdialig.open(AppointmentDialogComponent, {
+      width:'100%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ start: event }
+      data:{ start: startOfDay(new Date(event.date)) }
     });
   }
 
