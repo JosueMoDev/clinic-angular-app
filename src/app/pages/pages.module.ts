@@ -23,6 +23,7 @@ import { RegisterClinicComponent } from './components/register-clinic/register-c
 import { ClinicsComponent } from './clinics/clinics.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
 
 
 
@@ -44,7 +45,8 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
     RegisterClinicComponent,
     ClinicsComponent,
     ShowClinicComponent,
-    PasswordRecoveryComponent
+    PasswordRecoveryComponent,
+    AppointmentDialogComponent
   ],
   imports: [
     CommonModule,

@@ -70,6 +70,9 @@
                 </button> 
               </div>
           </div>
+          <button mat-raised-button color="accent" class="flex" (click)="addEvent('')">
+            Add new
+          </button>
           <div class="flex items-center justify-between w-full pt-12 overflow-x-auto">
             <div [ngSwitch]="view" class="w-full text-center text-blue-900 rounded-md">
               <mwl-calendar-month-view
@@ -78,7 +81,7 @@
                 [events]="events"
                 [refresh]="refresh"
                 [activeDayIsOpen]="activeDayIsOpen"
-                (dayClicked)="dayClicked($event.day)"
+                (dayClicked)="addEvent($event.day)"
                 (eventClicked)="handleEvent('Clicked', $event.event)"
                 (eventTimesChanged)="eventTimesChanged($event)"
               >

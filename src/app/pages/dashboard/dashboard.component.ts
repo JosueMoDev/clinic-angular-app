@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  Inject,
 } from '@angular/core';
 import {
   startOfDay,
@@ -23,7 +24,8 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
+import { AppointmentDialogComponent } from '../components/appointment-dialog/appointment-dialog.component';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -108,7 +110,9 @@ export class DashboardComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: MatDialogModule) {}
+  constructor(
+    public matdialig: MatDialog,
+  ) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -143,25 +147,36 @@ export class DashboardComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    // this.modal.open();
+    this.matdialig.open(AppointmentDialogComponent, {
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+      data:{ event, action }
+    });
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+  addEvent(event:any): void {
+    // console.log( 'event')
+    // this.events = [
+    //   ...this.events,
+    //   {
+    //     title: 'New event',
+    //     start: startOfDay(new Date()),
+    //     end: endOfDay(new Date()),
+    //     color: colors['red'],
+    //     draggable: true,
+    //     resizable: {
+    //       beforeStart: true,
+    //       afterEnd: true,
+    //     },
+    //   },
+    // ];
+    this.matdialig.open(AppointmentDialogComponent, {
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+      data:{ start: event }
+    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
