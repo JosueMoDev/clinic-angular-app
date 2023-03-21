@@ -5,7 +5,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 //* Components
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -52,7 +53,8 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
     ReactiveFormsModule,
     AngularMaterialModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   
   ],
   exports: [
