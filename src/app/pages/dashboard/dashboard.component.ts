@@ -26,6 +26,7 @@ import {
 import { EventColor } from 'calendar-utils';
 import { MatDialog} from '@angular/material/dialog';
 import { AppointmentDialogComponent } from '../components/appointment-dialog/appointment-dialog.component';
+import { AppoinmentService } from '../../services/appoinment.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -59,14 +60,12 @@ const colors: Record<string, EventColor> = {
   ]
 })
 export class DashboardComponent {
+
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
   modalData!: {
     action: string;
     event: CalendarEvent;
@@ -92,28 +91,22 @@ export class DashboardComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    }
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
   constructor(
+    private appointmentService: AppoinmentService,
     public matdialig: MatDialog,
   ) { }
+  ngOnInit(): void {
+     this.getAllAppointments()   
+  }
 
+  getAllAppointments() {
+    this.appointmentService.getAllAppointments().subscribe(  ({ appointments }:any) => {
+      this.events = appointments;})
+  }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -175,7 +168,10 @@ export class DashboardComponent {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ start: startOfDay(new Date(event.date)) }
+      data: {
+        start: addHours(new Date(event.date), 1),
+        end: addHours(new Date(event.date), 2)
+      }
     });
   }
 

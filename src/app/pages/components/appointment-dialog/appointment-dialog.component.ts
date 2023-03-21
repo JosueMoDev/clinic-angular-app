@@ -29,8 +29,7 @@ export class AppointmentDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
   ngOnInit(): void {
-    this.userLogged = this.authService.currentUserLogged.id
-    console.log(this.patientByDocumentNumber);        
+    this.userLogged = this.authService.currentUserLogged.id        
     this.confirmPatientForm = this.formBuilder.group({
       document_number: ['048507907', [Validators.required, Validators.minLength(9)]]
     });
@@ -40,11 +39,15 @@ export class AppointmentDialogComponent {
       clinic: ['6407c555c2b922df6a51892e', [Validators.required]],
       doctor: ['640f5e005315005242ddb7d9', [Validators.required]],
       patient: ['64166963788b744d6897d617', [Validators.required]],
-      date : [this.data.start, [Validators.required]]
+      start: [this.data['start'], [Validators.required]],
+      end: [this.data['end'], [Validators.required]],
+      title: ['', [Validators.required]]
+      
+      
     });
   }
 
-  get patientByDocumentNumber(){ return this.patient }
+  get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }) }
   get document_number() { return this.confirmPatientForm.get('document_number') }
   get completename() { return this.patient?.name+' '+this.patient?.lastname }
 
@@ -77,7 +80,6 @@ export class AppointmentDialogComponent {
           }
         },
         (err: any) => {
-          console.log(err)
           error(err.error.message)
         }
       )
