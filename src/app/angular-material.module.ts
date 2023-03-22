@@ -14,11 +14,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';   
+
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    NgxMatTimepickerModule.setLocale('en-Us')
   ],
   exports: [
     DialogModule,
@@ -34,7 +37,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    NgxMatTimepickerModule
 
   ]
 })

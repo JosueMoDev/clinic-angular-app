@@ -70,9 +70,7 @@
                 </button> 
               </div>
           </div>
-          <!-- <button mat-raised-button color="accent" class="flex" (click)="addEvent('')">
-            Add new
-          </button> -->
+   
           <div class="flex items-center justify-between w-full pt-12 overflow-x-auto">
             <div [ngSwitch]="view" class="w-full text-center text-blue-900 rounded-md">
               <mwl-calendar-month-view
@@ -82,7 +80,6 @@
                 [refresh]="refresh"
                 [activeDayIsOpen]="activeDayIsOpen"
                 (dayClicked)="dayClicked($event.day)"
-                (dblclick)="addEvent()"
                 (eventClicked)="handleEvent('Clicked', $event.event)"
                 (eventTimesChanged)="eventTimesChanged($event)"
               >
@@ -127,4 +124,9 @@
           </div>
       </div>
   </div>
+</div>
+<div class="fixed left-8 bottom-10 z-[2]">
+  <button  (click)="addEvent()" mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+    <mat-icon>event</mat-icon>
+  </button>
 </div>

@@ -28,6 +28,7 @@
     "calendar-utils": "^0.10.4",
     "date-fns": "^2.29.3",
     "ngx-mask": "^15.0.2",
+    "ngx-mat-timepicker": "^15.1.6",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.8",
     "tslib": "^2.3.0",

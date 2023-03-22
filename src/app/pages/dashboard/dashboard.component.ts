@@ -17,10 +17,8 @@ import {
 import { MatDialog} from '@angular/material/dialog';
 import { AppointmentDialogComponent } from '../components/appointment-dialog/appointment-dialog.component';
 import { AppoinmentService } from '../../services/appoinment.service';
-import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
-import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -51,11 +49,11 @@ export class DashboardComponent {
         this.getAllAppointments();
       }
     })
+    
   }
 
   getAllAppointments() {
-    this.appointmentService.getAllAppointments().subscribe(  ({ appointments }:any) => {
-      this.events = appointments;})
+    this.appointmentService.getAllAppointments().subscribe(  ({ appointments }:any) => {this.events = appointments;})
   }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {

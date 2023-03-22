@@ -8,15 +8,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 import * as ui from '../../../store/actions/ui.actions';
 import {
-  isSameDay,
-  isSameMonth,
   addHours,
-  getYear,
 } from 'date-fns';
-import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
-import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -32,6 +27,9 @@ export class AppointmentDialogComponent {
   public isDocument_numberCorrenct: boolean = false;
   public minDate: Date;
   public maxDate: Date;
+  public minTime: string = '08:00';
+  public maxTime: string = '18:00';
+
  
 
   constructor(
@@ -48,7 +46,7 @@ export class AppointmentDialogComponent {
     const currentMonth = today.getMonth();
     const currentDay = today.getDate();
     this.minDate = new Date(currentYear , currentMonth, currentDay);
-    this.maxDate = new Date(currentYear , currentMonth,currentDay+3);
+    this.maxDate = new Date(currentYear, currentMonth + 3, currentDay );
   }
 
   ngOnInit(): void {
@@ -60,7 +58,8 @@ export class AppointmentDialogComponent {
     this.newAppointmentForm = this.formBuilder.group({
       clinic: ['6407c555c2b922df6a51892e', [Validators.required]],
       doctor: ['640f5e005315005242ddb7d9', [Validators.required]],
-      start: [null, [Validators.required]],      
+      start: [null, [Validators.required]],
+      time:[null,[Validators.required]]
     });
   }
 
@@ -86,10 +85,11 @@ export class AppointmentDialogComponent {
 
   createAppointment() {
     if (!this.newAppointmentForm.invalid && this.patient?.id) {
-      const { start, clinic, doctor } = this.newAppointmentForm.value;
-      const appointmentForm = {
-        start: addHours( new Date(start), 1),
-        end: addHours( new Date(start), 2),
+      const { start, clinic, doctor, time } = this.newAppointmentForm.value;
+      console.log( addHours(new Date(start), parseInt(time)))
+       const appointmentForm = {
+        start: addHours( new Date(start), parseInt(time)),
+        end: addHours( new Date(start), parseInt(time)+1),
         title: this.completename,
         clinic,
         doctor,
