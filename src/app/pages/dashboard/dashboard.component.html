@@ -1,6 +1,7 @@
 <div class="flex items-center justify-center px-10 py-8 rounded-xl">
   <div class="min-w-full shadow-lg rounded-xl ">
-      <div class="p-5 bg-white md:p-16 md:pb-12 dark:bg-slate-850 rounded-xl">
+    <div class="p-5 bg-white md:p-16 md:pb-12 dark:bg-slate-850 rounded-xl">
+        <h1 class="flex justify-center text-2xl font-bold text-gray-800 dark:text-gray-100">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
           <div class="flex items-center justify-between px-4 rounded-xl">
             <div class="flex items-center space-x-1 text-gray-800 dark:text-gray-100">
                 <button mat-raised-button color="primary" class="z-0">
@@ -10,7 +11,7 @@
                     [view]="view"
                     [(viewDate)]="viewDate"
                     (viewDateChange)="closeOpenMonthViewDay()"
-                  >
+                  > 
                     Previous
                   </div>
                 </button>
@@ -37,7 +38,6 @@
                   </div>
                 </button>
             </div>
-              <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h1>
               <div class="flex items-center space-x-1 text-gray-800 dark:text-gray-100">
                 <button mat-raised-button color="warn" class="z-0">
                   <div
@@ -106,7 +106,7 @@
             </div>
           </div>
       </div>
-      <div class="px-5 my-10 rounded-b md:py-8 md:px-16 dark:bg-slate-850 bg-gray-50">
+      <!-- <div class="px-5 my-10 rounded-b md:py-8 md:px-16 dark:bg-slate-850 bg-gray-50">
           <div class="px-4">
               <div class="pb-4 border-b border-gray-400 border-dashed">
                   <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">9:00 AM</p>
@@ -123,7 +123,7 @@
                   <p class="pt-2 text-sm leading-4 text-gray-600 dark:text-gray-300">Discussion on UX sprint and Wireframe review</p>
               </div>
           </div>
-      </div>
+      </div> -->
   </div>
 </div>
 <div class="fixed left-8 bottom-10 z-[2]">

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog'
 import { PatientService } from 'src/app/services/patient.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,17 +7,14 @@ import { Patient } from 'src/app/models/patient.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
 import * as ui from '../../../store/actions/ui.actions';
-import {
-  addHours,
-} from 'date-fns';
+import {addHours} from 'date-fns';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
 
 @Component({
   selector: 'app-appointment-dialog',
   templateUrl: './appointment-dialog.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class AppointmentDialogComponent {
   public confirmPatientForm!: FormGroup;
@@ -49,9 +46,10 @@ export class AppointmentDialogComponent {
   }
 
   ngOnInit(): void {
-    this.userLogged = this.authService.currentUserLogged.id        
+    this.userLogged = this.authService.currentUserLogged.id 
+    
     this.confirmPatientForm = this.formBuilder.group({
-      document_number: ['048507907', [Validators.required, Validators.minLength(9)]]
+      document_number: ['', [Validators.required, Validators.minLength(9)]]
     });
     
     this.newAppointmentForm = this.formBuilder.group({
@@ -65,8 +63,7 @@ export class AppointmentDialogComponent {
   get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }) }
   get document_number() { return this.confirmPatientForm.get('document_number') }
   get completename() { return this.patient?.name+' '+this.patient?.lastname }
-  get endDate() { return this.newAppointmentForm.get('start')?.value}
-
+  
   confirmCurrentPatient() {
     if (!this.document_number?.invalid) {
       this.patientService.getSinglePatient(this.document_number?.value).subscribe(
@@ -85,7 +82,6 @@ export class AppointmentDialogComponent {
   createAppointment() {
     if (!this.newAppointmentForm.invalid && this.patient?.id) {
       const { start, clinic, doctor, time } = this.newAppointmentForm.value;
-      console.log( addHours(new Date(start), parseInt(time)))
        const appointmentForm = {
         start: addHours( new Date(start), parseInt(time)),
         end: addHours( new Date(start), parseInt(time)+1),

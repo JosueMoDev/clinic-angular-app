@@ -14,10 +14,7 @@ export class AppoinmentService {
     private http: HttpClient,
     private authService: AuthService
   ) { }
-
-  createNewAppointment(appointment: any) {
-    return this.http.post(`${environment.THECLINIC_API_URL}/appointments`, appointment, this.headers)
-  }
+ 
   getAllAppointments() {
     return this.http.get(`${environment.THECLINIC_API_URL}/appointments`, this.headers).pipe(
       delay(200),
@@ -34,4 +31,16 @@ export class AppoinmentService {
      })
     )
   }
+  createNewAppointment(appointment: any) {
+    return this.http.post(`${environment.THECLINIC_API_URL}/appointments`, appointment, this.headers)
+  }
+
+  editAppointment(id:string, appointment:any ) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/appointments/${id}`, appointment, this.headers)
+  }
+  
+  deleteAppointment(id:string, userLogged:string) {
+    return this.http.delete(`${environment.THECLINIC_API_URL}/appointments/${id}?user=${userLogged}`, this.headers)
+  }
+
 }

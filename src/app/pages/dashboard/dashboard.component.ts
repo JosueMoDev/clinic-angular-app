@@ -1,20 +1,8 @@
-
-import {
-  Component,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  isSameDay,
-  isSameMonth,
-} from 'date-fns';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { isSameDay,  isSameMonth } from 'date-fns';
 import { Subject, Subscription } from 'rxjs';
-import {
-  CalendarEvent,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-import { MatDialog} from '@angular/material/dialog';
+import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { MatDialog } from '@angular/material/dialog';
 import { AppointmentDialogComponent } from '../components/appointment-dialog/appointment-dialog.component';
 import { AppoinmentService } from '../../services/appoinment.service';
 import { Store } from '@ngrx/store';
@@ -29,8 +17,6 @@ import { ActionsAppointmentDialogComponent } from '../components/actions-appoint
 })
 export class DashboardComponent {
 
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
-
   public view: CalendarView = CalendarView.Month;
   public CalendarView = CalendarView;
   public viewDate: Date = new Date();
@@ -38,11 +24,13 @@ export class DashboardComponent {
   public events: CalendarEvent[] = [];
   public activeDayIsOpen: boolean = true;
   public uiSubscription!: Subscription;
+
   constructor(
     private appointmentService: AppoinmentService,
     private store: Store<AppState>,
     public matdialig: MatDialog,
   ) { }
+
   ngOnInit(): void {
     this.getAllAppointments() 
     this.uiSubscription = this.store.select('ui').subscribe(state => {
@@ -50,12 +38,16 @@ export class DashboardComponent {
         this.getAllAppointments();
       }
     })
-    
+  }
+
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe();
   }
 
   getAllAppointments() {
     this.appointmentService.getAllAppointments().subscribe(  ({ appointments }:any) => {this.events = appointments;})
   }
+  
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (

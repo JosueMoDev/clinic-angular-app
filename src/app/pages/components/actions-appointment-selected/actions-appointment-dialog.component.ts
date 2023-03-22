@@ -21,11 +21,8 @@ import { Appointment } from 'src/app/models/appointment.model';
   ]
 })
 export class ActionsAppointmentDialogComponent {
-  public confirmPatientForm!: FormGroup;
-  public newAppointmentForm!: FormGroup;
-  public patient!: Patient | null;
+  public editAppointmentForm!: FormGroup;
   public userLogged!: string;
-  public isDocument_numberCorrenct: boolean = false;
   public minDate: Date;
   public maxDate: Date;
   public minTime: string = '08:00';
@@ -33,7 +30,6 @@ export class ActionsAppointmentDialogComponent {
   public dataAppointment!: Appointment;  
   
   constructor(
-    private patientService: PatientService,
     private formBuilder: FormBuilder,
     private appointmentService: AppoinmentService,
     private authService: AuthService,
@@ -55,12 +51,8 @@ export class ActionsAppointmentDialogComponent {
     const today = new Date(this.dataAppointment.start);
     const appointmentTime = today.getHours()+':'+today.getMinutes()
     this.userLogged = this.authService.currentUserLogged.id;
-    
-    this.confirmPatientForm = this.formBuilder.group({
-      document_number: ['048507907', [Validators.required, Validators.minLength(9)]]
-    });
-    
-    this.newAppointmentForm = this.formBuilder.group({
+     
+    this.editAppointmentForm = this.formBuilder.group({
       clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.dataAppointment.doctor, [Validators.required]],
       start: [this.dataAppointment.start, [Validators.required]],
@@ -68,45 +60,19 @@ export class ActionsAppointmentDialogComponent {
     });
   }
 
-  get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }) }
-  get document_number() { return this.confirmPatientForm.get('document_number') }
-  get completename() { return this.patient?.name+' '+this.patient?.lastname }
-  get endDate() { return this.newAppointmentForm.get('start')?.value}
-
-  confirmCurrentPatient() {
-    if (!this.document_number?.invalid) {
-      this.patientService.getSinglePatient(this.document_number?.value).subscribe(
-        (resp: any)=>{
-          if (resp.ok) {
-            this.patient = resp.patient;
-            this.patientByDocumentNumber
-            this.isDocument_numberCorrenct = true
-          }
-        },
-        (err:any)=>{ error(err.error.message)}
-      )
-    }
-  }
-
-  createAppointment() {
-    if (!this.newAppointmentForm.invalid && this.patient?.id) {
-      const { start, clinic, doctor, time } = this.newAppointmentForm.value;
-      console.log( addHours(new Date(start), parseInt(time)))
-       const appointmentForm = {
+  editAppointment() {
+    if (!this.editAppointmentForm.invalid) {
+      const { start, clinic, doctor, time } = this.editAppointmentForm.value;
+       const appointmentEditForm = {
         start: addHours( new Date(start), parseInt(time)),
         end: addHours( new Date(start), parseInt(time)+1),
-        title: this.completename,
         clinic,
         doctor,
-        patient: this.patient?.id,
-        createdby:this.userLogged
       }
-      this.appointmentService.createNewAppointment(appointmentForm).subscribe(
+      this.appointmentService.editAppointment( this.dataAppointment.appointment_id, appointmentEditForm).subscribe(
         (resp: any)=>{
           if (resp.ok) {
-            this.isDocument_numberCorrenct = false;
-            this.newAppointmentForm.reset();
-            this.confirmPatientForm.reset();
+            this.editAppointmentForm.reset();
             this.dialogRef.close();
             success(resp.message);
             this.store.dispatch(ui.isLoadingTable())
@@ -117,6 +83,21 @@ export class ActionsAppointmentDialogComponent {
         }
       )
     } 
+  }
+
+  deleteAppointment() {
+    this.appointmentService.deleteAppointment( this.dataAppointment.appointment_id, this.userLogged).subscribe(
+      (resp: any)=>{
+        if (resp.ok) {
+          this.dialogRef.close();
+          success(resp.message);
+          this.store.dispatch(ui.isLoadingTable())
+        }
+      },
+      (err: any) => {
+        error(err.error.message)
+      }
+    )
   }
 
   close(): void {
