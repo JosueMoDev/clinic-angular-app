@@ -2,9 +2,6 @@
   <span class="px-1 py-2 text-2xl text-black dark:text-white">Create New Appointment</span>
 </p>
 <mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
-  <!-- <div class="text-white bg-red-600">å
-    {{data | json}}
-  </div> -->
   <form role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="confirmCurrentPatient()" [formGroup]="confirmPatientForm">
     <div class="w-full mb-4">
         <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Confirmate your DUI</span>
@@ -43,7 +40,15 @@
       <div class="flex-col w-full columns-1">
         <p class="flex justify-center w-full px-1 py-2 text-lg text-center text-black dark:text-white">{{completename}}</p>
       </div>
+      
       <div class="flex-col w-full columns-1">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [min]="minDate" formControlName="start" [max]="maxDate" [matDatepicker]="picker">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
         <div class="w-full mb-4">
           <span class="px-1 py-2 text-sm text-black dark:text-white">Doctor</span>
           <div class="relative w-full">
