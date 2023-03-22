@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+// import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';   
 
 
@@ -37,7 +37,7 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMomentDateModule,
+    // MatMomentDateModule,
     NgxMatTimepickerModule
 
   ]

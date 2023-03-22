@@ -13,10 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
-import { PorcentageCardComponent } from './components/porcentage-card/porcentage-card.component';
 import { ShowUserComponent } from './show-user/show-user.component';
 import { PatientsComponent } from './patients/patients.component';
-import { StepperComponent } from './components/stepper/stepper.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
@@ -37,9 +35,7 @@ import { ActionsAppointmentDialogComponent } from './components/actions-appointm
     DashboardComponent,
     Error404Component,
     MedicalRecordComponent,
-    PorcentageCardComponent,
     ShowUserComponent,
-    StepperComponent,
     PatientsComponent,
     UserRegisterComponent,
     UsersComponent,
