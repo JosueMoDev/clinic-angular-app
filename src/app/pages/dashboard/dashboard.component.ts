@@ -19,6 +19,7 @@ import { AppointmentDialogComponent } from '../components/appointment-dialog/app
 import { AppoinmentService } from '../../services/appoinment.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
+import { ActionsAppointmentDialogComponent } from '../components/actions-appointment-selected/actions-appointment-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -85,15 +86,15 @@ export class DashboardComponent {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.editEvent(event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.matdialig.open(AppointmentDialogComponent, {
+  editEvent( event: CalendarEvent): void {
+    this.matdialig.open(ActionsAppointmentDialogComponent, {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ event, action }
+      data:{ ...event }
     });
   }
 

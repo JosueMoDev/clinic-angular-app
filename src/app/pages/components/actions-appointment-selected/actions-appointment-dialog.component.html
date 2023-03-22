@@ -1,0 +1,206 @@
+<p mat-dialog-title class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <span class="px-1 py-2 text-2xl font-semibold text-black dark:text-white">Edit Appointment </span>
+    
+    
+  <mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <form  role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="createAppointment()" [formGroup]="newAppointmentForm">
+      <div class="grid w-full grid-cols-1">
+        <div class="flex-col w-full mb-5 columns-2">
+            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">person</mat-icon><span class="font-semibold">Patient:<span class="font-normal"> {{ dataAppointment.title}}</span></span></p>
+            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">calendar_month</mat-icon><span class="font-semibold">Date:<span class="font-normal"> {{ dataAppointment.start | date:'medium'}}</span></span></p>
+        </div>
+        
+        <div class="flex-col w-full columns-2">
+          <div class="w-full mb-4">
+            <mat-form-field class="w-full" appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput  [min]="minDate" formControlName="start" [max]="maxDate" [matDatepicker]="picker">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+    
+          <!-- time -->  
+          <div class="w-full mb-4">
+            <mat-form-field class="w-full">
+              <input 
+                matInput
+                [format]="24"
+                type="datetime"
+                class="w-full"
+                name="selected_time_A"
+                formControlName="time"
+                [ngxMatTimepicker]="pickerA"
+                placeholder="Choose time"
+                [max]="maxTime"
+                [min]="minTime"
+                readonly 
+              />
+              <mat-icon class="cursor-pointer" matSuffix (click)="pickerA.open()">watch_later</mat-icon>
+            </mat-form-field>
+            <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+          </div>
+        </div>                
+            
+          <!-- time -->
+          <div class="w-full mb-4">
+            <span class="px-1 py-2 text-sm text-black dark:text-white">Doctor</span>
+            <div class="relative w-full">
+              <!-- <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                <mat-icon class="text-base" color="accent">done</mat-icon>
+              </div> -->
+              <input 
+              matInput
+              type="text"  
+              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+              placeholder="Doctor" 
+              formControlName="doctor"
+              />
+            </div>
+  
+            <!-- <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                class="alert alert-danger">
+    
+              <div  *ngIf="name?.errors?.['required']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/> 
+                  Name is required.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['minlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be at least 3 characters long.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['maxlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be longger than 25 characters.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['forbiddenName']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Name only could have letters a-z.
+                </span>
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Only two names are allowed.
+                </span>
+              </div>
+            </div> -->
+    
+          </div>
+          <div class="w-full mb-4 ">
+            <span class="px-1 py-2 text-sm text-black dark:text-white">Clinic</span>
+            <div class="relative w-full">
+              <!-- <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                <mat-icon class="text-base" color="accent">done</mat-icon>
+              </div> -->
+              <input 
+              type="text"  
+              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+              placeholder="Name" 
+              formControlName="clinic"
+              />
+            </div>
+            <!-- <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                class="alert alert-danger">
+    
+              <div  *ngIf="name?.errors?.['required']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/> 
+                  Name is required.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['minlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be at least 3 characters long.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['maxlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be longger than 25 characters.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['forbiddenName']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Name only could have letters a-z.
+                </span>
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Only two names are allowed.
+                </span>
+              </div>
+            </div> -->
+    
+          </div>
+          <!-- <div class="w-full mb-4">
+            <span class="px-1 py-2 text-sm text-black dark:text-white">Date</span>
+            <div class="relative w-full">
+              <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+                <mat-icon class="text-base" color="accent">done</mat-icon>
+              </div> 
+              <input 
+              type="date"  
+              class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+              placeholder="Name" 
+              formControlName="date"
+              [value]="newAppointmentForm.get('start_date')?.value"
+              
+              />
+            </div>
+             <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                class="alert alert-danger">
+    
+              <div  *ngIf="name?.errors?.['required']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/> 
+                  Name is required.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['minlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be at least 3 characters long.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['maxlength']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                  Name must be longger than 25 characters.
+                </span>
+              </div>
+              <div *ngIf="name?.errors?.['forbiddenName']">
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Name only could have letters a-z.
+                </span>
+                <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
+                  <mat-icon class="mx-2"  fontIcon="error"/>
+                    Only two names are allowed.
+                </span>
+              </div>
+            </div> 
+    
+          </div> -->
+        </div>   
+  
+      
+      <div class="flex justify-center w-full mb-4 space-x-2">
+        <!-- !(!newAppointmentForm.invalid && isDocument_numberCorrenct && newAppointmentForm.touched) -->
+          <button mat-raised-button type="submit" [disabled]="newAppointmentForm.invalid" color="accent" ><mat-icon>edit_calendar</mat-icon>Edit Appointment</button>
+          <button mat-raised-button type="button" [disabled]="newAppointmentForm.invalid" color="warn" ><mat-icon>event_busy</mat-icon>Delete Appointment</button>
+
+      </div>  
+    </form> 
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <button mat-raised-button color="warn" class="z-0" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+
+  

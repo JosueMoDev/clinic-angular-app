@@ -24,6 +24,7 @@ import { ClinicsComponent } from './clinics/clinics.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
+import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
 
 
 
@@ -46,7 +47,8 @@ import { AppointmentDialogComponent } from './components/appointment-dialog/appo
     ClinicsComponent,
     ShowClinicComponent,
     PasswordRecoveryComponent,
-    AppointmentDialogComponent
+    AppointmentDialogComponent,
+    ActionsAppointmentDialogComponent
   ],
   imports: [
     CommonModule,
