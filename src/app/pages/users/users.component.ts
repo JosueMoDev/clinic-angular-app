@@ -87,11 +87,12 @@ export class UsersComponent implements OnInit {
     this.userService.allUsers(this.from)
     .subscribe(
       ({ users, total }) => {
+          console.log(users)
           this.userList = users;
           this.dataTemp = users;
           this.length = total;
         }
-      )
+    )
   }
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;

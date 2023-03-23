@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UserRegisterForm } from '../interfaces/user.interface';
-import { delay, map } from 'rxjs';
+import { delay, map, filter } from 'rxjs';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 
@@ -34,6 +34,27 @@ export class UserService {
           return {
             total: resp.total,
             users
+            
+            
+          }
+     })
+  )
+  }
+  allEmployesAviblesToAssign(from: number) {
+    return this.http.get(`${environment.THECLINIC_API_URL}/users?pagination=${from}`, this.headers).pipe(
+      delay(200),
+      // filter((resp:any)=>resp.users.rol!=='doctor'),
+      map(
+        (resp:any) => {
+          const doctors = resp.users.map(
+            ({ id, document_type, document_number, email, name,
+              lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
+              new User(id, document_type, document_number, email, name,
+                lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
+          );
+          return {
+            total: resp.total,
+            doctors: doctors
             
             
           }

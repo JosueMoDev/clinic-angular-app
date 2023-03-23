@@ -1,0 +1,42 @@
+
+<p mat-dialog-title class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <span class="px-1 py-2 text-2xl font-semibold text-black dark:text-white">Edit Appointment </span>
+    
+    
+  <mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <form [formGroup]="assignmentForm" (ngSubmit)="saveAssignment()" novalidate>
+       
+        <table class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
+            <tbody>
+              <tr formArrayName="selectedStaff"  *ngFor="let employee of employeeStaff; let i=index" class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
+                <mat-checkbox class="w-full" color="accent" [value]="employee.id" (change)="addToAssignmentList($event)"  >
+                    <div  class="flex w-full p-2 align-middle">
+                        <div>
+                            <img [src]="employee.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />  
+                        </div>
+                       <div>
+                        <p class="mb-0 text-sm leading-normal align-middle dark:text-white">{{employee.name}} {{employee.lastname}}</p>
+                       </div>
+                    </div>
+                </mat-checkbox>
+              </tr>
+              <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
+                <!-- <mat-paginator 
+                  class="flex h-full bg-transparent w-fit dark:text-white"
+                  MatPaginatorIntl
+                  (page)="handlePageEvent($event)"
+                  [length]="length"
+                  [pageSize]="pageSize"
+                  [pageIndex]="pageIndex"
+                  
+                  >
+                </mat-paginator> -->
+              </div>
+            </tbody>
+          </table>
+          <button mat-raised-button type="submit" [disabled]="assignmentForm.invalid" color="accent" ><mat-icon>assignment_ind</mat-icon>Edit Appointment</button>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+    <button mat-raised-button color="warn" class="z-0" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>

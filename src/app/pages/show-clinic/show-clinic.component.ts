@@ -21,6 +21,7 @@ export class ShowClinicComponent {
   public currectPhoto!: string | undefined;
   public imagenTemp!: any
   public isLoading: boolean = false;
+  public showClinicAssingmentView: boolean = true
 
   public provinces!: string[];
   public cities!: string[];

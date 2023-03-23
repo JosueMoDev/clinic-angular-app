@@ -1,4 +1,4 @@
-<div class="w-full p-6 mx-auto">
+<div *ngIf="!showClinicAssingmentView" class="w-full p-6 mx-auto">
     <div class="flex flex-wrap -mx-3">
       <form
         (submit)="updateProfile()"
@@ -205,4 +205,7 @@
       </form>
 
     </div>
-  </div>
+</div>
+<div *ngIf="showClinicAssingmentView" >
+  <app-clinic-assigment></app-clinic-assigment>
+</div>

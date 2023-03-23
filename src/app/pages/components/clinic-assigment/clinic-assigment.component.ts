@@ -1,30 +1,31 @@
 import { Component } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import { Clinic } from 'src/app/models/clinic.model';
-import { ClinicService } from '../../services/clinic.service';
-import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
+import { ClinicService } from '../../../services/clinic.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducer';
+import { AppState } from '../../../app.reducer';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
-import { UpdateProfileService } from '../../services/update-profile.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from '../../models/user.model';
+import { User } from '../../../models/user.model';
 import { Patient } from 'src/app/models/patient.model';
-import { success, error } from '../../helpers/sweetAlert.helper';
-
+import { success, error } from '../../../helpers/sweetAlert.helper';
+import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-clinics',
-  templateUrl: './clinics.component.html',
+  selector: 'app-clinic-assigment',
+  templateUrl: './clinic-assigment.component.html',
   styles: [
   ]
 })
-export class ClinicsComponent {
+export class ClinicAssigmentComponent {
   public uiSubscription!: Subscription;
-  public clinicList: Clinic[] = [];
-  public dataTemp: Clinic[] = [];
+  public doctorsList: User[] = [];
+  public operatorsList: User[] = [];
+
+  public dataTemp: User[] = [];
 
   public length!:number;
   public pageSize: number = 5;
@@ -42,9 +43,9 @@ export class ClinicsComponent {
 
   constructor(
     private clinicService: ClinicService,
+    private userService: UserService,
     private store: Store<AppState>,
     private authService: AuthService,
-    public updateProfileService: UpdateProfileService,
     public matDialog: MatDialog,
     public mat: MatPaginatorIntl
   
@@ -55,43 +56,50 @@ export class ClinicsComponent {
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Clinics per page';
     this.currentUserLogged = this.authService.currentUserLogged;
-    this.allClinics()
+    this.allEmployeesToAssign()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
-        this.allClinics();
-        console.log('hola 1')
-
+        this.allEmployeesToAssign();
       }
     })
   }
 
   ngOnDestroy(): void {
     this.uiSubscription.unsubscribe();
-    console.log('hola 1')
-
   }
-  openDialog(): void {
+  openAssingmentDoctorDialog(): void {
 
-    this.matDialog.open(RegisterClinicComponent, {
+    this.matDialog.open(ClinicAssigmentDialogComponent, {
       width: '100%',
-      height: '80%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
+      data:this.doctorsList
+    });
+  } 
+  openAssingmentOpatorsDialog(): void {
+
+    this.matDialog.open(ClinicAssigmentDialogComponent, {
+      width: '100%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+      data:this.operatorsList
     });
   } 
 
 
-  allClinics() {
-    this.clinicService.allClinics(this.from)
-      .subscribe(
-        ({ clinics, total }) => {
-          this.clinicList = clinics;
-          this.dataTemp = clinics;
+  allEmployeesToAssign() {
+    this.userService.allEmployesAviblesToAssign(this.from)
+    .subscribe(
+      ({ doctors, total }) => {
+          this.doctorsList = doctors;
+          this.dataTemp = doctors;
           this.length = total;
         }
-      )
+    )
   }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -102,7 +110,7 @@ export class ClinicsComponent {
     } else { 
       this.from = this.from - this.pageSize
     }
-    this.allClinics()
+    this.allEmployeesToAssign()
 
   }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -116,10 +124,9 @@ export class ClinicsComponent {
     this.clinicService.changeClinicStatus(clinic_to_change, user_logged).subscribe((resp: any)=> { 
       if (resp.ok) {
         success(resp.message)
-        this.allClinics();
+        this.allEmployeesToAssign();
       }
     }, (err)=>{error(err.error.message)});
   }
 
-  
 }

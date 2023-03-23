@@ -23,6 +23,8 @@ import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
 import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
+import { ClinicAssigmentComponent } from './components/clinic-assigment/clinic-assigment.component';
+import { ClinicAssigmentDialogComponent } from './components/clinic-assigment-dialog/clinic-assigment-dialog.component';
 
 
 
@@ -44,7 +46,9 @@ import { ActionsAppointmentDialogComponent } from './components/actions-appointm
     ShowClinicComponent,
     PasswordRecoveryComponent,
     AppointmentDialogComponent,
-    ActionsAppointmentDialogComponent
+    ActionsAppointmentDialogComponent,
+    ClinicAssigmentComponent,
+    ClinicAssigmentDialogComponent
   ],
   imports: [
     CommonModule,
