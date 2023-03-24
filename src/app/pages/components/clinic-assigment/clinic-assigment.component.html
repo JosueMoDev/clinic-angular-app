@@ -37,7 +37,7 @@
                     <div class="flex-col items-center space-y-1 align-top">
                       <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                         <div class="flex items-center justify-center">
-                          <button mat-raised-button color="warn" class="z-0">
+                          <button mat-raised-button (click)="removeadoctorassigned(doctor._id)" color="warn" class="z-0">
                               <mat-icon  fontIcon="person_remove"></mat-icon> Remove
                           </button>
                         </div>

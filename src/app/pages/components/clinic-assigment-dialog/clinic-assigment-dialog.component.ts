@@ -20,7 +20,8 @@ import * as ui from '../../../store/actions/ui.actions';
 })
 export class ClinicAssigmentDialogComponent {
   public assignmentForm!: FormGroup;
-
+  public assignmentList!: FormArray<any>;
+  public thereIsSomebodyToAssing: number = 0;
   employeeStaff: any[] = [];
 
   constructor(
@@ -41,23 +42,26 @@ export class ClinicAssigmentDialogComponent {
     
   }
   addToAssignmentList(event: any) {
- 
-    const selectedStaff = (this.assignmentForm.controls['selectedStaff'] as FormArray);
+   
+    this.assignmentList = (this.assignmentForm.controls['selectedStaff'] as FormArray);
     if (event.checked) {
-      selectedStaff.push(new FormControl(event.source.value));
+      this.assignmentList.push(new FormControl(event.source.value));
     } else {
-      const index = selectedStaff.controls
-      .findIndex( staff => staff.value === event.source.value);
-      selectedStaff.removeAt(index);
+      const index = this.assignmentList.controls
+      .findIndex( (staff:any) => staff.value === event.source.value);
+      this.assignmentList.removeAt(index);
     }
+    this.thereIsSomebodyToAssing = this.assignmentList.length
   }
   saveAssignment() {
+    
     this.clinicService.assignDoctorsToClinic(this.data.clinic, this.assignmentForm.value).subscribe(
     (resp: any) => { 
         if (resp.ok) {
         this.updateProfile.clinicToUpdate(resp.clinic);
         this.store.dispatch(ui.isLoadingTable());
         success(resp.message);
+        
       }
     }, (err: any) => {
       error(err.error.message)
