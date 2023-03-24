@@ -54,9 +54,9 @@ export class ClinicAssigmentDialogComponent {
   saveAssignment() {
     this.clinicService.assignDoctorsToClinic(this.data.clinic, this.assignmentForm.value).subscribe(
     (resp: any) => { 
-      if (resp.ok) {
+        if (resp.ok) {
         this.updateProfile.clinicToUpdate(resp.clinic);
-        this.store.dispatch(ui.isLoadingTable())
+        this.store.dispatch(ui.isLoadingTable());
         success(resp.message);
       }
     }, (err: any) => {

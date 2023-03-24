@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
-import { Clinic } from 'src/app/models/clinic.model';
-import { ClinicService } from '../../../services/clinic.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
-import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
+
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.reducer';
+import * as ui from '../../../store/actions/ui.actions';
+
+import { ClinicService } from '../../../services/clinic.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from '../../../models/user.model';
-import { Patient } from 'src/app/models/patient.model';
-import { success, error } from '../../../helpers/sweetAlert.helper';
-import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
 import { UserService } from 'src/app/services/user.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
+
+import { Clinic } from 'src/app/models/clinic.model';
+import { User } from '../../../models/user.model';
+import { Patient } from 'src/app/models/patient.model';
+
+import { success, error } from '../../../helpers/sweetAlert.helper';
+
+import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
 
 @Component({
   selector: 'app-clinic-assigment',
@@ -36,12 +42,12 @@ export class ClinicAssigmentComponent {
   public showPageSizeOptions: boolean = true;
   public disabled: boolean = false;
   public pageEvent!: PageEvent;
-  public currentUserLogged!: User | Patient
-  
-  public clinic_id!: string;
 
+  public currentUserLogged!: User | Patient 
+  public clinic_id!: string;
   public doctors_assigned!: any[] | undefined
 
+  public profileSelected!: Clinic;
   constructor(
     private clinicService: ClinicService,
     private userService: UserService,
@@ -64,7 +70,11 @@ export class ClinicAssigmentComponent {
     this.allEmployeesToAssign()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
+        
         this.allEmployeesToAssign();
+        this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
+        this.doctors_assigned = this.profileSelected.doctors_assigned;
+        this.store.dispatch(ui.isLoadingTable());
       }
     })
   }
