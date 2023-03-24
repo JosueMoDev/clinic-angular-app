@@ -36,6 +36,10 @@ export class ClinicService {
   assignDoctorsToClinic(clinic_id: string, doctors_assigned: string[]) {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/assignment/${clinic_id}`, { doctors_assigned }, this.headers)
   }
+  removeAllDoctorsAssignedToClinic(clinic_id: string, doctors_assigned: string[]) {
+
+    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/remove-all-assigned/${clinic_id}`, { doctors_assigned }, this.headers)
+  }
 
   createClinic(clinic:any) {
     return this.http.post(`${environment.THECLINIC_API_URL}/clinics`, clinic, this.headers)

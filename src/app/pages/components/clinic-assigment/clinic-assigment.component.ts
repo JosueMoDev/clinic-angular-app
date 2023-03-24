@@ -133,4 +133,21 @@ export class ClinicAssigmentComponent {
     }, (err)=>{error(err.error.message)});
   }
 
+  removeallassigned() {
+    if (!!this.doctors_assigned?.length) {      
+      const doctors = this.doctors_assigned?.map( doctor => doctor._id )
+      this.clinicService.removeAllDoctorsAssignedToClinic(this.clinic_id, doctors).subscribe(
+        (resp: any) => { 
+            if (resp.ok) {
+            this.updateProfileService.clinicToUpdate(resp.clinic);
+            this.store.dispatch(ui.isLoadingTable());
+            success(resp.message);
+          }
+        }, (err: any) => {
+          error(err.error.message)
+        }
+      );    
+     }
+    }
+
 }

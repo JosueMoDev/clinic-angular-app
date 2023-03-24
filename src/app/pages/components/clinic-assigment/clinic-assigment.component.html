@@ -4,9 +4,14 @@
         <div class="p-4 pb-0 mb-0 rounded-t-4">
           <div class="flex justify-between">
             <p class="text-2xl font-semibold text-black text-start dark:text-white">Doctors assigned</p>
-            <button (click)="openAssingmentDoctorDialog()" color="primary"  mat-raised-button class="z-0">
+            <div class="flex space-x-3 ">
+              <button (click)="removeallassigned()" [disabled]="doctors_assigned?.length===0" color="warn"  mat-raised-button class="z-0">
+                <mat-icon  fontIcon="remove_circle"></mat-icon> <span>remove all assigned</span> 
+              </button>
+              <button (click)="openAssingmentDoctorDialog()"  color="primary"  mat-raised-button class="z-0">
                 <mat-icon  fontIcon="assignment_turned_in"></mat-icon> <span>Assign new</span> 
-            </button>
+              </button>
+            </div>
           </div>
         </div>
         <div class="overflow-x-auto">
