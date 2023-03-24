@@ -59,17 +59,14 @@ export class ClinicsComponent {
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
         this.allClinics();
-        console.log('hola 1')
-
       }
     })
   }
 
   ngOnDestroy(): void {
     this.uiSubscription.unsubscribe();
-    console.log('hola 1')
-
   }
+  
   openDialog(): void {
 
     this.matDialog.open(RegisterClinicComponent, {

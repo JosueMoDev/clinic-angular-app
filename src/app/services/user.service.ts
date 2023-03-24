@@ -41,12 +41,11 @@ export class UserService {
   )
   }
   allEmployesAviblesToAssign(from: number) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/users?pagination=${from}`, this.headers).pipe(
+    return this.http.get(`${environment.THECLINIC_API_URL}/users/doctors?pagination=${from}`, this.headers).pipe(
       delay(200),
-      // filter((resp:any)=>resp.users.rol!=='doctor'),
       map(
         (resp:any) => {
-          const doctors = resp.users.map(
+          const doctors = resp.doctors.map(
             ({ id, document_type, document_number, email, name,
               lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
               new User(id, document_type, document_number, email, name,

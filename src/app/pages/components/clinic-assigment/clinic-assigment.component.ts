@@ -13,6 +13,7 @@ import { Patient } from 'src/app/models/patient.model';
 import { success, error } from '../../../helpers/sweetAlert.helper';
 import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
 import { UserService } from 'src/app/services/user.service';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 @Component({
   selector: 'app-clinic-assigment',
@@ -23,8 +24,6 @@ import { UserService } from 'src/app/services/user.service';
 export class ClinicAssigmentComponent {
   public uiSubscription!: Subscription;
   public doctorsList: User[] = [];
-  public operatorsList: User[] = [];
-
   public dataTemp: User[] = [];
 
   public length!:number;
@@ -39,19 +38,25 @@ export class ClinicAssigmentComponent {
   public pageEvent!: PageEvent;
   public currentUserLogged!: User | Patient
   
-  
+  public clinic_id!: string;
+
+  public doctors_assigned!: any[] | undefined
 
   constructor(
     private clinicService: ClinicService,
     private userService: UserService,
     private store: Store<AppState>,
     private authService: AuthService,
+    private updateProfileService: UpdateProfileService,
     public matDialog: MatDialog,
     public mat: MatPaginatorIntl
   
   ) { }
 
   ngOnInit(): void {
+    this.clinic_id = this.updateProfileService.clinicProfile.clinic_id
+    const doctors = this.updateProfileService.clinicProfile.doctors_assigned?.map(doctor => doctor)
+    this.doctors_assigned = doctors 
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Clinics per page';
@@ -74,20 +79,9 @@ export class ClinicAssigmentComponent {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:this.doctorsList
+      data: { doctors:this.doctorsList, clinic: this.clinic_id }
     });
   } 
-  openAssingmentOpatorsDialog(): void {
-
-    this.matDialog.open(ClinicAssigmentDialogComponent, {
-      width: '100%',
-      hasBackdrop: true,
-      disableClose: true,
-      role: 'dialog',
-      data:this.operatorsList
-    });
-  } 
-
 
   allEmployeesToAssign() {
     this.userService.allEmployesAviblesToAssign(this.from)

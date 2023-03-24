@@ -1,3 +1,4 @@
+
 export class Clinic {
 
     constructor(
@@ -10,7 +11,8 @@ export class Clinic {
         public street: string,
         public register_by: string,
         public validationState: boolean,
-        public photo?: string
+        public photo?: string,
+        public doctors_assigned?: any[] | undefined
     ){}
 
 }
