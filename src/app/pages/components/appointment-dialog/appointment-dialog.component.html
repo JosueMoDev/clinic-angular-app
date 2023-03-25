@@ -75,151 +75,43 @@
       </div>                
           
         <!-- time -->
-        <div class="w-full mb-4">
-          <span class="px-1 py-2 text-sm text-black dark:text-white">Doctor</span>
-          <div class="relative w-full">
-            <!-- <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+        <div class="mb-4">
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select Clinic </span>
+          <div class="relative flex rounded-md">
+            <select
+              type="text"  
+              class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+              placeholder="Clinic" 
+              formControlName="clinic"
+              (change)="getDoctorsByClinic"
+              
+            >
+              <option value="" selected disabled>select clinic</option>
+              <option *ngFor="let clinic of clinicList" [value]="clinic.clinic_id">{{clinic.name}}</option>
+            </select>
+            <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
               <mat-icon class="text-base" color="accent">done</mat-icon>
             </div> -->
-            <input 
-            matInput
-            type="text"  
-            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-            placeholder="Doctor" 
-            formControlName="doctor"
-            />
           </div>
+        </div>
 
-          <!-- <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-              class="alert alert-danger">
-  
-            <div  *ngIf="name?.errors?.['required']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/> 
-                Name is required.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['minlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be at least 3 characters long.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['maxlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be longger than 25 characters.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['forbiddenName']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Name only could have letters a-z.
-              </span>
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Only two names are allowed.
-              </span>
-            </div>
-          </div> -->
-  
-        </div>
-        <div class="w-full mb-4 ">
-          <span class="px-1 py-2 text-sm text-black dark:text-white">Clinic</span>
-          <div class="relative w-full">
-            <!-- <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
+        <div class="mb-4">
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select Doctor </span>
+          <div class="relative flex rounded-md">
+            <select
+              type="text"  
+              class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
+              placeholder="Doctor" 
+              formControlName="doctor"
+            >
+              <option value="" selected disabled>select clinic</option>
+              <option *ngFor="let doctor of doctorList" [value]="doctor._id">{{doctor.name}} {{doctor.lastname}}</option>
+            </select>
+            <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
               <mat-icon class="text-base" color="accent">done</mat-icon>
             </div> -->
-            <input 
-            type="text"  
-            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-            placeholder="Name" 
-            formControlName="clinic"
-            />
           </div>
-          <!-- <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-              class="alert alert-danger">
-  
-            <div  *ngIf="name?.errors?.['required']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/> 
-                Name is required.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['minlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be at least 3 characters long.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['maxlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be longger than 25 characters.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['forbiddenName']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Name only could have letters a-z.
-              </span>
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Only two names are allowed.
-              </span>
-            </div>
-          </div> -->
-  
-        </div>
-        <!-- <div class="w-full mb-4">
-          <span class="px-1 py-2 text-sm text-black dark:text-white">Date</span>
-          <div class="relative w-full">
-            <div *ngIf="!name?.invalid && name?.touched" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5">
-              <mat-icon class="text-base" color="accent">done</mat-icon>
-            </div> 
-            <input 
-            type="date"  
-            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-            placeholder="Name" 
-            formControlName="date"
-            [value]="newAppointmentForm.get('start_date')?.value"
-            
-            />
-          </div>
-           <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-              class="alert alert-danger">
-  
-            <div  *ngIf="name?.errors?.['required']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/> 
-                Name is required.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['minlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be at least 3 characters long.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['maxlength']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                Name must be longger than 25 characters.
-              </span>
-            </div>
-            <div *ngIf="name?.errors?.['forbiddenName']">
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Name only could have letters a-z.
-              </span>
-              <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                <mat-icon class="mx-2"  fontIcon="error"/>
-                  Only two names are allowed.
-              </span>
-            </div>
-          </div> 
-  
-        </div> -->
+        </div>   
       </div>   
 
     

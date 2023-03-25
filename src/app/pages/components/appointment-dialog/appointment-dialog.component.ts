@@ -10,6 +10,9 @@ import * as ui from '../../../store/actions/ui.actions';
 import {addHours} from 'date-fns';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
+import { ClinicService } from 'src/app/services/clinic.service';
+import { Clinic } from '../../../models/clinic.model';
+
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -27,7 +30,8 @@ export class AppointmentDialogComponent {
   public minTime: string = '08:00';
   public maxTime: string = '18:00';
 
- 
+  public clinicList: Clinic[] = []
+  public doctorList: any[] | undefined
 
   constructor(
     private patientService: PatientService,
@@ -35,6 +39,7 @@ export class AppointmentDialogComponent {
     private appointmentService: AppoinmentService,
     private authService: AuthService,
     private store: Store<AppState>,
+    private clinicService: ClinicService,
     public dialogRef: MatDialogRef<AppointmentDialogComponent>,
   ) { 
     const today = new Date();
@@ -53,17 +58,41 @@ export class AppointmentDialogComponent {
     });
     
     this.newAppointmentForm = this.formBuilder.group({
-      clinic: ['6407c555c2b922df6a51892e', [Validators.required]],
-      doctor: ['640f5e005315005242ddb7d9', [Validators.required]],
+      clinic: [null, [Validators.required]],
+      doctor: [null, [Validators.required]],
       start: [null, [Validators.required]],
       time:[null,[Validators.required]]
     });
+    this.allClinics();
+    this.newAppointmentForm.get('doctor')?.disable()
   }
 
+
+  allClinics() {
+    this.clinicService.allClinics(0)
+      .subscribe(
+        ({ clinics }) => {
+          this.clinicList = clinics
+          this.clinics
+        }
+      )
+  }
+  get clinics() { return this.clinicList  }
   get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }) }
   get document_number() { return this.confirmPatientForm.get('document_number') }
   get completename() { return this.patient?.name+' '+this.patient?.lastname }
+  get clinicId() { return this.newAppointmentForm.get('clinic')?.value }
   
+  get getDoctorsByClinic() {
+    this.newAppointmentForm.get('doctor')?.disable()
+    const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
+    if (clinicSelected[0].doctors_assigned!.length>=1) {
+      this.newAppointmentForm.get('doctor')?.enable();
+      this.doctorList = clinicSelected[0].doctors_assigned
+    }
+    return this.doctorList;
+  }
+
   confirmCurrentPatient() {
     if (!this.document_number?.invalid) {
       this.patientService.getSinglePatient(this.document_number?.value).subscribe(
