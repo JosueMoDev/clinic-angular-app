@@ -4,22 +4,23 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
 
 import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
-import * as ui from '../../../store/actions/ui.actions';
 
-import { ClinicService } from '../../../services/clinic.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
+import { ClinicService } from 'src/app/services/clinic.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
-import { User } from '../../../models/user.model';
+import { User } from 'src/app/models/user.model';
 import { Patient } from 'src/app/models/patient.model';
 
-import { success, error } from '../../../helpers/sweetAlert.helper';
-
 import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 
 @Component({
   selector: 'app-clinic-assigment',

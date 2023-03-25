@@ -2,12 +2,15 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { MatCheckboxDefaultOptions, MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import * as ui from 'src/app/store/actions/ui.actions';
+
 import { ClinicService } from 'src/app/services/clinic.service';
-import { UpdateProfileService } from '../../../services/update-profile.service';
-import * as ui from '../../../store/actions/ui.actions';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
+
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 @Component({
   selector: 'app-clinic-assigment-dialog',
@@ -59,8 +62,8 @@ export class ClinicAssigmentDialogComponent {
     (resp: any) => { 
         if (resp.ok) {
         this.updateProfile.clinicToUpdate(resp.clinic);
-        this.store.dispatch(ui.isLoadingTable());
         success(resp.message);
+        this.store.dispatch(ui.isLoadingTable());
         
       }
     }, (err: any) => {

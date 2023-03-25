@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AuthService } from './auth.service';
+
 import { delay, map } from 'rxjs';
-import { Clinic } from '../models/clinic.model';
+
+import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
+import { Clinic } from 'src/app/models/clinic.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
-import provicesAndCities from '../../../../assets/ElSalvadorCities.json';
-import {  User } from '../../../models/user.model';
+
+import {  User } from 'src/app/models/user.model';
+
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import * as ui from '../../../store/actions/ui.actions';
+import provicesAndCities from 'src/assets/ElSalvadorCities.json';
 
 
 

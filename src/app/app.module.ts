@@ -11,8 +11,8 @@ import { appReducers } from './app.reducer';
 //*Components
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -20,14 +20,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     AppComponent,
   ],
   imports: [
-    BrowserModule,
-    AuthModule,
-    SharedModule,
-    PagesModule,
     AppRoutingModule,
+    AuthModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(appReducers),
-    StoreDevtoolsModule.instrument()
+    BrowserModule,
+    PagesModule,
+    SharedModule,
+    StoreDevtoolsModule.instrument(),
+    StoreModule.forRoot(appReducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

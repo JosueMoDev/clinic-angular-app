@@ -1,15 +1,18 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MatDialogRef } from '@angular/material/dialog';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
+import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
+
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
-import * as ui from '../../../store/actions/ui.actions';
-import { UiService } from 'src/app/services/ui.service';
 
 
 @Component({

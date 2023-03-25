@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { error } from 'src/app/helpers/sweetAlert.helper';
-import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { PatientService } from '../../../services/patient.service';
-import { success } from '../../../helpers/sweetAlert.helper';
+import { PatientService } from 'src/app/services/patient.service';
+
+import { Patient } from 'src/app/models/patient.model';
+import { User } from 'src/app/models/user.model';
+
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 
 @Component({
   selector: 'app-password-recovery',

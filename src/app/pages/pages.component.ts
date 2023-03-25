@@ -8,7 +8,5 @@ import { UiService } from '../services/ui.service';
   ]
 })
 export class PagesComponent {
-  constructor(
-    public ui: UiService
-  ){}
+  constructor( public ui: UiService ){}
 }

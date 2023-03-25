@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.model';
-import { UserService } from '../../services/user.service';
 import { MatDialog} from '@angular/material/dialog';
-import { UserRegisterComponent } from '../components/user-register/user-register.component';
-import { UpdateProfileService } from '../../services/update-profile.service';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducer';
-import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { UiService } from 'src/app/services/ui.service';
+import { PageEvent } from '@angular/material/paginator';
+
+import { Subscription } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
+import { User } from 'src/app/models/user.model';
+
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
+import { UiService } from 'src/app/services/ui.service';
+
 import { Patient } from 'src/app/models/patient.model';
-import { success, error } from '../../helpers/sweetAlert.helper';
+
+import { UserRegisterComponent } from '../components/user-register/user-register.component';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 
 
@@ -23,43 +30,46 @@ import { success, error } from '../../helpers/sweetAlert.helper';
   ]
 })
 export class UsersComponent implements OnInit {
-  public uiSubscription!: Subscription;
-  public userList: User[] = [];
-  public dataTemp: User[] = [];
-  
-  public length!:number;
-  public pageSize: number = 5;
-  public from: number = 0;
-  public pageIndex:number = 0;
-  public pageSizeOptions: number[] = [5, 10, 25];
-  public hidePageSize: boolean = false;
-  public showPageSizeOptions: boolean = true;
-  public disabled: boolean = false;
-  public pageEvent!: PageEvent;
   public currentUserLogged!: User | Patient
+  public uiSubscription!: Subscription;
+  // ? Use's Table
+  public dataTemp: User[] = [];
+  public userList: User[] = [];
+  
+  //? Angular Material Paginator
+
+  public from: number = 0;
+  public hidePageSize: boolean = false;
+  public length!:number;
+  public pageEvent!: PageEvent;
+  public pageIndex:number = 0;
+  public pageSize: number = 5;
+  public pageSizeOptions: number[] = [5, 10, 25];
+  public showPageSizeOptions: boolean = true;
 
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private store: Store<AppState>,
     private ui: UiService,
-    private authService: AuthService,
-    public updateProfileService: UpdateProfileService,
+    private userService: UserService,
+    public matconfig: MatPaginatorIntl,
     public matDialog: MatDialog,
-    public mat: MatPaginatorIntl
+    public updateProfileService: UpdateProfileService
   ) { 
  
   }
 
   ngOnInit(): void {
-    this.mat.previousPageLabel = '';
-    this.mat.nextPageLabel = '';
-    this.mat.itemsPerPageLabel = 'Users per page';
+    this.matconfig.previousPageLabel = '';
+    this.matconfig.nextPageLabel = '';
+    this.matconfig.itemsPerPageLabel = 'Users per page';
     this.currentUserLogged = this.authService.currentUserLogged;
-    this.allUsers()
+    this.allUsers();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
         this.allUsers();
+        this.store.dispatch(ui.isLoadingTable());
       }
     })
     
@@ -70,7 +80,7 @@ export class UsersComponent implements OnInit {
   }
 
   openDialog(): void {
-    this.ui.currentUserType('')
+    this.ui.currentUserType('');
     this.matDialog.open(UserRegisterComponent, {
       width: '100%',
       height: '90%',
@@ -87,27 +97,27 @@ export class UsersComponent implements OnInit {
     this.userService.allUsers(this.from)
     .subscribe(
       ({ users, total }) => {
-          this.userList = users;
-          this.dataTemp = users;
-          this.length = total;
-        }
-    )
+        this.userList = users;
+        this.dataTemp = users;
+        this.length = total;
+      }
+    );
   }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
-    this.pageIndex=e.pageIndex
+    this.pageIndex = e.pageIndex;
     
     if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
-      this.from = this.from + this.pageSize
+      this.from = this.from + this.pageSize;
     } else { 
-      this.from = this.from - this.pageSize
+      this.from = this.from - this.pageSize;
     }
-    this.allUsers()
+    this.allUsers();
 
   }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
-    console.log(this.showPageSizeOptions)
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
@@ -116,12 +126,10 @@ export class UsersComponent implements OnInit {
   changeUserState(user_to_change: string, user_logged: string ) {
     this.userService.changeUserStatus(user_to_change, user_logged).subscribe((resp: any)=> { 
       if (resp.ok) {
-        success(resp.message)
+        success(resp.message);
         this.allUsers();
       }
     }, (err)=>{error(err.error.message)});
   }
-
-
   
 }

@@ -1,19 +1,18 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AuthGuard } from '../guards/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 
 //* Components
-import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { MedicalRecordComponent } from './medical-record/medical-record.component';
-import { Error404Component } from './error404/error404.component';
-import { ShowUserComponent } from './show-user/show-user.component';
-import { CalendarComponent } from '../shared/calendar/calendar.component';
-import { PatientsComponent } from './patients/patients.component';
-
+import { CalendarComponent } from 'src/app/shared/calendar/calendar.component';
 import { ClinicsComponent } from './clinics/clinics.component';
-import { UsersComponent } from './users/users.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { Error404Component } from './error404/error404.component';
+import { MedicalRecordComponent } from './medical-record/medical-record.component';
+import { PagesComponent } from './pages.component';
+import { PatientsComponent } from './patients/patients.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
+import { ShowUserComponent } from './show-user/show-user.component';
+import { UsersComponent } from './users/users.component';
  
  const routes: Routes = [
     {
@@ -28,9 +27,6 @@ import { ShowClinicComponent } from './show-clinic/show-clinic.component';
           { path: 'clinics', component: ClinicsComponent, data: { title: 'Clinics'} },
           { path: 'calendar', component: CalendarComponent, data: { title: 'Calendar' } },
           { path: 'users', component:UsersComponent, data: { title: 'Users'} },
-          
-          
-
           {path: '**', component: Error404Component}
         ]
     },

@@ -1,17 +1,22 @@
 import { Component} from '@angular/core';
-import { MatDialogRef} from '@angular/material/dialog'
-import { PatientService } from 'src/app/services/patient.service';
+import { MatDialogRef } from '@angular/material/dialog'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { error, success } from '../../../helpers/sweetAlert.helper';
-import { Patient } from 'src/app/models/patient.model';
+
+import {addHours} from 'date-fns';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
-import * as ui from '../../../store/actions/ui.actions';
-import {addHours} from 'date-fns';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducer';
+import { PatientService } from 'src/app/services/patient.service';
 import { ClinicService } from 'src/app/services/clinic.service';
-import { Clinic } from '../../../models/clinic.model';
+
+import { Patient } from 'src/app/models/patient.model';
+import { Clinic } from 'src/app/models/clinic.model';
+
+import { error, success } from 'src/app/helpers/sweetAlert.helper';
 
 
 @Component({

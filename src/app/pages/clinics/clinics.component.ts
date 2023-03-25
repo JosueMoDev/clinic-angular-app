@@ -1,18 +1,25 @@
 import { Component } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
-import { Clinic } from 'src/app/models/clinic.model';
-import { ClinicService } from '../../services/clinic.service';
-import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducer';
-import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator'
-import { UpdateProfileService } from '../../services/update-profile.service';
+
+import { Subscription } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as ui from 'src/app/store/actions/ui.actions';
+
+
+import { ClinicService } from 'src/app/services/clinic.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from '../../models/user.model';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
+
+import { Clinic } from 'src/app/models/clinic.model';
+import { User } from 'src/app/models/user.model';
 import { Patient } from 'src/app/models/patient.model';
-import { success, error } from '../../helpers/sweetAlert.helper';
+
+import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 
 @Component({
@@ -22,45 +29,47 @@ import { success, error } from '../../helpers/sweetAlert.helper';
   ]
 })
 export class ClinicsComponent {
+
+  public currentUserLogged!: User | Patient
   public uiSubscription!: Subscription;
+
+  // ? table
   public clinicList: Clinic[] = [];
   public dataTemp: Clinic[] = [];
-
-  public length!:number;
-  public pageSize: number = 5;
+  
+  //? angular material paginator 
   public from: number = 0;
-  public pageIndex:number = 0;
-  public pageSizeOptions: number[] = [5, 10, 25];
-  
   public hidePageSize: boolean = false;
-  public showPageSizeOptions: boolean = true;
-  public disabled: boolean = false;
+  public length!:number;
   public pageEvent!: PageEvent;
-  public currentUserLogged!: User | Patient
+  public pageIndex: number = 0;
+  public pageSize: number = 5;
+  public pageSizeOptions: number[] = [5, 10, 25];
+  public showPageSizeOptions: boolean = true;
   
+ 
   
-
   constructor(
+    private authService: AuthService,
     private clinicService: ClinicService,
     private store: Store<AppState>,
-    private authService: AuthService,
     public updateProfileService: UpdateProfileService,
     public matDialog: MatDialog,
-    public mat: MatPaginatorIntl
-  
+    public matconfig: MatPaginatorIntl
   ) { }
 
   ngOnInit(): void {
-    this.mat.previousPageLabel = '';
-    this.mat.nextPageLabel = '';
-    this.mat.itemsPerPageLabel = 'Clinics per page';
+    this.matconfig.previousPageLabel = '';
+    this.matconfig.nextPageLabel = '';
+    this.matconfig.itemsPerPageLabel = 'Clinics per page';
     this.currentUserLogged = this.authService.currentUserLogged;
-    this.allClinics()
+    this.allClinics();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
         this.allClinics();
+        this.store.dispatch(ui.isLoadingTable());
       }
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -68,7 +77,6 @@ export class ClinicsComponent {
   }
   
   openDialog(): void {
-
     this.matDialog.open(RegisterClinicComponent, {
       width: '100%',
       height: '80%',
@@ -81,29 +89,29 @@ export class ClinicsComponent {
 
   allClinics() {
     this.clinicService.allClinics(this.from)
-      .subscribe(
-        ({ clinics, total }) => {
-          this.clinicList = clinics;
-          this.dataTemp = clinics;
-          this.length = total;
-        }
-      )
+    .subscribe(
+      ({ clinics, total }) => {
+        this.clinicList = clinics;
+        this.dataTemp = clinics;
+        this.length = total;
+      }
+    );
   }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
-    this.pageIndex=e.pageIndex
+    this.pageIndex = e.pageIndex;
     
     if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
-      this.from = this.from + this.pageSize
+      this.from = this.from + this.pageSize;
     } else { 
-      this.from = this.from - this.pageSize
+      this.from = this.from - this.pageSize;
     }
-    this.allClinics()
-
+    this.allClinics();
   }
+
   setPageSizeOptions(setPageSizeOptionsInput: string) {
-    console.log(this.showPageSizeOptions)
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
@@ -112,7 +120,7 @@ export class ClinicsComponent {
   changeClinicState(clinic_to_change: string, user_logged: string ) {
     this.clinicService.changeClinicStatus(clinic_to_change, user_logged).subscribe((resp: any)=> { 
       if (resp.ok) {
-        success(resp.message)
+        success(resp.message);
         this.allClinics();
       }
     }, (err)=>{error(err.error.message)});

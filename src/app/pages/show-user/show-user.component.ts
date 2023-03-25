@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { UserService } from '../../services/user.service';
-import { PatientService } from '../../services/patient.service';
-import { UpdateProfileService } from '../../services/update-profile.service';
+import { MatDialog} from '@angular/material/dialog';
+
+import Swal from 'sweetalert2';
+
+import { UserService } from 'src/app/services/user.service';
+import { PatientService } from 'src/app/services/patient.service';
+import { UpdateProfileService } from 'src/app/services/update-profile.service';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 import { Patient } from 'src/app/models/patient.model';
 import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
-import { CloudinaryService } from 'src/app/services/cloudinary.service';
-import Swal from 'sweetalert2';
-import { MatDialog} from '@angular/material/dialog';
-import { PasswordRecoveryComponent } from '../components/password-recovery/password-recovery.component';
+
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
    
 
 
@@ -22,20 +26,35 @@ import { PasswordRecoveryComponent } from '../components/password-recovery/passw
   ]
 })
 export class ShowUserComponent {
-  public profileForm!: FormGroup;
-  public photoForm!: FormGroup;
-
-
-  public document_type:string = 'DUI';
-  public profileSelected: User | Patient;
-  public currectPhoto!: string | undefined;
-  public imagenTemp!: any
   public isLoading: boolean = false;
+  public profileSelected: User | Patient;
   public ShowPassWordButtom: boolean = false;
 
+  //? User Information
+  public document_type:string = 'DUI';
+  public profileForm!: FormGroup;
+
+  // ? User Photo
+  public currectPhoto!: string | undefined;
+  public imagenTemp!: any;
+  public photoForm!: FormGroup;
+
+  constructor(
+    private authService: AuthService,
+    private cloudinary: CloudinaryService,
+    private formbuilder: FormBuilder,
+    private patientService: PatientService,
+    private userService: UserService,
+    public updateProfileService: UpdateProfileService,
+    public matDialog: MatDialog
+
+  ) { 
+    this.profileSelected = updateProfileService.userProfileToUpdate;
+    this.currectPhoto = updateProfileService.userProfileToUpdate.photo;
+
+  }
 
   ngOnInit() {
-
     this.profileForm = this.formbuilder.group({
       document_type: [this.profileSelected.document_type, Validators.required],
       document_number: [this.profileSelected.document_number, Validators.required],
@@ -53,8 +72,7 @@ export class ShowUserComponent {
     })
     
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
-    this.ShowPassWordButtom= (this.authService.currentUserLogged.id === this.profileSelected.id )
-   
+    this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
   }
 
   ngOnDestroy(): void {
@@ -62,29 +80,11 @@ export class ShowUserComponent {
     sessionStorage.removeItem('current-photo-profile');
   }
 
-  constructor(
-    private formbuilder: FormBuilder,
-    private userService: UserService,
-    private patientService: PatientService,
-    private authService: AuthService,
-    private cloudinary: CloudinaryService,
-    public updateProfileService: UpdateProfileService,
-    public matDialog: MatDialog
-
-  ) { 
-    this.profileSelected = updateProfileService.userProfileToUpdate;
-    this.currectPhoto = updateProfileService.userProfileToUpdate.photo;
-
-  }
-
-  
-
   updateProfile() {
     
     if ( !this.profileForm.errors ) {   
 
-      const { document_type, document_number, email_name ,email_provider, email,
-        name, lastname, phone, gender } = this.profileForm.value
+      const { document_type, document_number, email_name, email_provider,name, lastname, phone, gender } = this.profileForm.value;
         const newUpdateForm = {
           document_type,
           document_number,
@@ -99,23 +99,22 @@ export class ShowUserComponent {
       if (this.profileSelected.rol === 'patient') {
           this.patientService.updatePatient(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
             if (resp.ok) {
-              this.updateProfileService.userToUpdate(resp.patient)
+              this.updateProfileService.userToUpdate(resp.patient);
               this.profileSelected = this.updateProfileService.userProfileToUpdate;
-
-              success(resp.message)
+              success(resp.message);
             }
         }, (err: any) => {
-          error(err.error.message)
+            error(err.error.message);
         });
       } else {
         this.userService.updateUser(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
           if (resp.ok) {
-            this.updateProfileService.userToUpdate(resp.user)
+            this.updateProfileService.userToUpdate(resp.user);
             this.profileSelected = this.updateProfileService.userProfileToUpdate;
-            success(resp.message)
+            success(resp.message);
           }
         }, (err: any) => {
-          error(err.error.message)
+          error(err.error.message);
         });
       }
       
@@ -125,32 +124,32 @@ export class ShowUserComponent {
   }
 
   preparePhoto(event: any) {
-    const photo = event.files[0]
-    this.photoForm.patchValue({ 'photoSrc': photo })
+    const photo = event.files[0];
+    this.photoForm.patchValue({ 'photoSrc': photo });
     if (!photo) {
-      return this.imagenTemp = null
+      return this.imagenTemp = null;
     }
     const renderImg = new FileReader();
     renderImg.readAsDataURL(photo);
     renderImg.onloadend = () => { 
       this.imagenTemp = renderImg.result;
     }
-    return this.imagenTemp
+    return this.imagenTemp;
   }
 
   startLoaddingPhoto() {
     let schema!: string;
     if (this.profileSelected.rol === 'patient') {
-      schema = 'patients'
+      schema = 'patients';
     } else { schema='users'}
-    this.uploadPhoto(this.profileSelected.id, schema)
+    this.uploadPhoto(this.profileSelected.id, schema);
   }
 
   deletePhoto(id: string) {
     let schema!: string;
     if (this.profileSelected.rol === 'patient') {
-      schema = 'patients'
-    } else { schema='users'}
+      schema = 'patients';
+    } else { schema = 'users'; }
     Swal.fire({
       title: 'Are you sure?, Do you want to delete your current photo',
       icon: 'warning',
@@ -165,10 +164,10 @@ export class ShowUserComponent {
         this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.updateProfileService.userToUpdate({...this.profileSelected, photo:resp.photo})
-              this.updateProfileService.deletePhoto()
-              this.currectPhoto = this.updateProfileService.currentPhoto
-              success(resp.message)
+              this.updateProfileService.userToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.deletePhoto();
+              this.currectPhoto = this.updateProfileService.currentPhoto;
+              success(resp.message);
             }
           },
           (err) => error(err.error.message)
@@ -178,26 +177,26 @@ export class ShowUserComponent {
   }
   async uploadPhoto(id: string, schema: string) {
       const formData = new FormData();
-      formData.append('photo', this.photoForm.get('photoSrc')?.value) 
+      formData.append('photo', this.photoForm.get('photoSrc')?.value); 
       this.isLoading = true;    
         await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
           (resp: any) => {
             if (resp.ok) {
               this.isLoading = false;
-              this.updateProfileService.userToUpdate({...this.profileSelected, photo:resp.photo})
-              this.updateProfileService.updatePhoto(resp.photo)
-              this.currectPhoto = this.updateProfileService.currentPhoto
-              success(resp.message)
-              formData.delete,
-              this.photoForm.reset()
+              this.updateProfileService.userToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.updatePhoto(resp.photo);
+              this.currectPhoto = this.updateProfileService.currentPhoto;
+              success(resp.message);
+              formData.delete;
+              this.photoForm.reset();
               this.imagenTemp = null;
             }
           },
           (err) => {
-            formData.delete,
-            this.photoForm.reset()
+            formData.delete;
+            this.photoForm.reset();
             this.isLoading = false;
-            error(err.error.message)
+            error(err.error.message);
           }
     );
   }
@@ -212,7 +211,7 @@ export class ShowUserComponent {
  
   
   forbiddenInputTextValidator(): ValidatorFn{
-    const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/
+    const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/;
     return (control: AbstractControl): ValidationErrors | null => {
       const isforbidden = isForbiddenInput.test(control.value);
       return !isforbidden ? {forbiddenName: {value: control.value}} : null;
@@ -220,7 +219,7 @@ export class ShowUserComponent {
   }
 
   forbiddenInputMailValidator(): ValidatorFn {
-    const isForbiddenInput: RegExp = /^[a-zA-Z0-9._]+[a-zA-Z0-9._]+$/
+    const isForbiddenInput: RegExp = /^[a-zA-Z0-9._]+[a-zA-Z0-9._]+$/;
     return (control: AbstractControl): ValidationErrors | null => {
       const isforbidden = isForbiddenInput.test(control.value);
       return !isforbidden ? {forbiddenName: {value: control.value}} : null;

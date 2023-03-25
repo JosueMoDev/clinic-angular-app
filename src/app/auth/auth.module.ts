@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http'
-import { SharedModule } from '../shared/shared.module';
+import { NgModule } from '@angular/core';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 import { LoginComponent } from './login/login.component';
-import { AngularMaterialModule } from '../angular-material.module';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 
@@ -19,15 +20,16 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     PatientRegisterComponent,
   ],
   imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ReactiveFormsModule,
-    HttpClientModule,
     AngularMaterialModule,
+    CommonModule,
+    HttpClientModule,
     NgxMaskDirective,
-    NgxMaskPipe
-  ], exports: [
+    NgxMaskPipe,
+    ReactiveFormsModule,
+    RouterModule,
+    SharedModule
+  ],
+  exports: [
     LoginComponent,
   ],
   providers:[provideNgxMask()]

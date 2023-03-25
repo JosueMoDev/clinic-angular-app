@@ -1,40 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AngularMaterialModule } from '../angular-material.module'; 
+import { AngularMaterialModule } from 'src/app/angular-material.module'; 
+import { RouterModule } from '@angular/router';
 
 //* Components
-import { FooterComponent } from './footer/footer.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { AddButtonComponent } from './add-button/add-button.component';
-import { SetterThemeComponent } from './setter-theme/setter-theme.component';
-import { RouterModule } from '@angular/router';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { SetterThemeComponent } from './setter-theme/setter-theme.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
   declarations: [
+    AddButtonComponent,
     BreadcrumbsComponent,
+    CalendarComponent,
     FooterComponent,
     HeaderComponent,
-    SidebarComponent,
-    AddButtonComponent,
     SetterThemeComponent,
-    CalendarComponent
+    SidebarComponent
   ],
   imports: [
+    AngularMaterialModule,
     CommonModule,
-    RouterModule,
-    AngularMaterialModule
+    RouterModule
   ],
   exports: [
+    AddButtonComponent,
     BreadcrumbsComponent,
     FooterComponent,
     HeaderComponent,
-    SidebarComponent,
-    AddButtonComponent,
-    SetterThemeComponent
+    SetterThemeComponent,
+    SidebarComponent
   ]
 })
 export class SharedModule { }

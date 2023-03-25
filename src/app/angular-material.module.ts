@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DialogModule} from '@angular/cdk/dialog';
-import {MatIconModule} from '@angular/material/icon';
-import { MatStepperModule } from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { DialogModule } from '@angular/cdk/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatRadioModule } from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';   
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';   
 
 @NgModule({
   declarations: [],
@@ -26,22 +25,21 @@ import { MatTableModule } from '@angular/material/table';
   ],
   exports: [
     DialogModule,
-    MatIconModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    // MatMomentDateModule,
-    NgxMatTimepickerModule,
     MatCheckboxModule,
-    MatTableModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatStepperModule,
+    MatTableModule,
+    NgxMatTimepickerModule
   ]
 })
 export class AngularMaterialModule { }

@@ -1,25 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PagesRoutingModule } from './pages/pages.routing';
-import { AuthRoutingModule } from './auth/auth.routing';
+import { AuthRoutingModule } from 'src/app/auth/auth.routing';
+import { PagesRoutingModule } from 'src/app/pages/pages.routing';
 
-import { Error404Component } from './pages/error404/error404.component';
+import { Error404Component } from 'src/app/pages/error404/error404.component';
+
 const routes: Routes = [
   { path:'', redirectTo:'/dashboard/main', pathMatch:'full'},
-  { path: '**', component:Error404Component}
-
-
-  
+  { path: '**', component:Error404Component }
 ]
-
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes),
     AuthRoutingModule,
-    PagesRoutingModule
+    PagesRoutingModule,
+    RouterModule.forRoot(routes)
   ],
   exports:[RouterModule]
 })

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
@@ -37,9 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.currentRoute = event.url
         }
       }
-    )
-
-    this.routeSubs$.unsubscribe
+    );
+    this.routeSubs$.unsubscribe;
   } 
 
   ngOnInit(): void {
@@ -47,12 +47,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.loginForm = this.formBuider.group({
       email: [localStorage.getItem('user_email'), [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
-      rememberme:[localStorage.getItem('rememberme-state')]
-    }) 
+      rememberme: [localStorage.getItem('rememberme-state')]
+    });
   }
 
   ngAfterViewInit(): void {
-    this.googleInit()
+    this.googleInit();
   }
 
   googleInit() { 
@@ -68,51 +68,49 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   async handleCredentialResponse(response: any) {
     await this.authService.googleSingIn(response.credential, this.currentRoute)
-      .subscribe(
-      (response: any )=> {
-        if (response.ok) {
-          // sessionStorage.setItem('userToken', response.token);
-          this._ngZone.run(
-            () => { 
-             this.router.navigate(['/'])
-            })
-            success(`Welcome ${response.user}` );
-        }
-      },
+    .subscribe((response: any) => {
+      if (response.ok) {
+        // sessionStorage.setItem('userToken', response.token);
+        this._ngZone.run(
+          () => {
+            this.router.navigate(['/']);
+          })
+        success(`Welcome ${response.user}`);
+      }
+    },
       (error: any) => this.error(error.error.message)
-    )
+    );
   }
 
 
-  get email() { return this.loginForm.get('email') }
-  get password(){ return this.loginForm.get('password')}
-  get rememberme() { return this.loginForm.get('rememberme')?.value }
+  get email() { return this.loginForm.get('email') };
+  get password() { return this.loginForm.get('password') };
+  get rememberme() { return this.loginForm.get('rememberme')?.value };
 
   changeVisibility() {
     this.visibility= !this.visibility;
-    (this.type==='password')? this.type = 'text': this.type='password'
+    (this.type === 'password') ? this.type = 'text' : this.type = 'password';
   }
  
   
   loginWithEmailAndPassword() { 
     this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
-      .subscribe( 
-        (resp:any) => {
-          if (resp.ok) {
-            if (this.rememberme) {
-              localStorage.setItem('rememberme-state', this.rememberme);
-              localStorage.setItem('user_email', this.email?.value);
-            } else if (!this.rememberme) {
-              localStorage.removeItem('rememberme-state');
-              localStorage.removeItem('user_email');
-            }
-            this.loginForm.reset();
-            this.router.navigateByUrl('/'); 
-            success(`Welcome ${resp.user}`);
-            
-          }
-        },
-        (error) => { this.error(error.error.message)}
-      );}
+    .subscribe( (resp:any) => {
+      if (resp.ok) {
+        if (this.rememberme) {
+          localStorage.setItem('rememberme-state', this.rememberme);
+          localStorage.setItem('user_email', this.email?.value);
+        } else if (!this.rememberme) {
+          localStorage.removeItem('rememberme-state');
+          localStorage.removeItem('user_email');
+        }
+        this.loginForm.reset();
+        this.router.navigateByUrl('/'); 
+        success(`Welcome ${resp.user}`);
+      }
+    },
+    (error) => { this.error(error.error.message)}
+    );
+  }
 
 }
