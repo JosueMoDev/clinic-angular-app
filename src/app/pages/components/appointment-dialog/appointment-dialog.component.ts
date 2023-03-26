@@ -66,7 +66,7 @@ export class AppointmentDialogComponent {
       clinic: [null, [Validators.required]],
       doctor: [null, [Validators.required]],
       start: [null, [Validators.required]],
-      time:[null,[Validators.required]]
+      time:['',[Validators.required]]
     });
     this.allClinics();
     this.newAppointmentForm.get('doctor')?.disable()
@@ -82,11 +82,11 @@ export class AppointmentDialogComponent {
         }
       )
   }
-  get clinics() { return this.clinicList  }
-  get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }) }
-  get document_number() { return this.confirmPatientForm.get('document_number') }
-  get completename() { return this.patient?.name+' '+this.patient?.lastname }
-  get clinicId() { return this.newAppointmentForm.get('clinic')?.value }
+  get clinics() { return this.clinicList;  }
+  get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }); }
+  get document_number() { return this.confirmPatientForm.get('document_number'); }
+  get completename() { return this.patient?.name + ' ' + this.patient?.lastname; }
+  get clinicId() { return this.newAppointmentForm.get('clinic')?.value; }
   
   get getDoctorsByClinic() {
     this.newAppointmentForm.get('doctor')?.disable()

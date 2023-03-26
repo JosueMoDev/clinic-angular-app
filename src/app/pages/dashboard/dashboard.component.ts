@@ -9,6 +9,9 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AppoinmentService } from 'src/app/services/appoinment.service';
+import { ClinicService } from 'src/app/services/clinic.service';
+
+import { Clinic } from 'src/app/models/clinic.model';
 
 import { AppointmentDialogComponent } from 'src/app/pages/components/appointment-dialog/appointment-dialog.component';
 import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/actions-appointment-selected/actions-appointment-dialog.component';
@@ -23,6 +26,7 @@ import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/acti
 export class DashboardComponent {
 
   public uiSubscription!: Subscription;
+  public clinicList: Clinic[] = []
 
   //? Angular Calendar 
 
@@ -36,6 +40,7 @@ export class DashboardComponent {
 
   constructor(
     private appointmentService: AppoinmentService,
+    private clinicService: ClinicService,
     private store: Store<AppState>,
     public matdialig: MatDialog,
   ) { }
@@ -48,6 +53,17 @@ export class DashboardComponent {
         this.store.dispatch(ui.isLoadingTable());
       }
     });
+
+    this.allClinics();
+  }
+
+  allClinics() {
+    this.clinicService.allClinics(0)
+      .subscribe(
+        ({ clinics }) => {
+          this.clinicList = clinics;
+        }
+      )
   }
 
   ngOnDestroy(): void {
@@ -89,13 +105,12 @@ export class DashboardComponent {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ ...event }
+      data:{ ...event  }
     });
   }
 
   addEvent(): void {
     this.matdialig.open(AppointmentDialogComponent, {
-      width:'100%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

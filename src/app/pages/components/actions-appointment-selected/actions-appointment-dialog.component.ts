@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { addHours } from 'date-fns';
+import { addHours, setHours } from 'date-fns';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
@@ -10,6 +10,9 @@ import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { AppoinmentService } from 'src/app/services/appoinment.service';
+import { ClinicService } from 'src/app/services/clinic.service';
+
+import { Clinic } from 'src/app/models/clinic.model';
 
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
@@ -27,12 +30,16 @@ export class ActionsAppointmentDialogComponent {
   public maxDate: Date;
   public minTime: string = '08:00';
   public maxTime: string = '18:00';
-  public dataAppointment!: Appointment;  
-  
+  public dataAppointment!: Appointment; 
+  public clinicList: Clinic[] = []
+  public doctorList: any[] | undefined
+  public someChange: boolean = false;
+
   constructor(
-    private formBuilder: FormBuilder,
     private appointmentService: AppoinmentService,
     private authService: AuthService,
+    private clinicService: ClinicService,
+    private formBuilder: FormBuilder,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ActionsAppointmentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Appointment,
@@ -49,23 +56,66 @@ export class ActionsAppointmentDialogComponent {
   ngOnInit(): void {
     this.dataAppointment = { ...this.data };
     const today = new Date(this.dataAppointment.start);
-    const appointmentTime = today.getHours()+':'+today.getMinutes()
+    const appointmentTime = today.getHours() + ':' + today.getMinutes();
     this.userLogged = this.authService.currentUserLogged.id;
-     
+    
     this.editAppointmentForm = this.formBuilder.group({
       clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.dataAppointment.doctor, [Validators.required]],
       start: [this.dataAppointment.start, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
     });
+    this.allClinics();
+    this.editAppointmentForm.get('doctor')?.disable()
+    this.somethigChange
   }
+  ngOnDestroy(): void {
+    this.somethigChange.unsubscribe
+  }
+
+  allClinics() {
+    this.clinicService.allClinics(0)
+      .subscribe(
+        ({ clinics }) => {
+          this.clinicList = clinics;
+          this.clinics
+        }
+      )
+  }
+
+  get somethigChange() {
+    return this.editAppointmentForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') { this.someChange = true }
+      else { this.someChange = false}
+    })
+  }
+
+  get clinics() { return this.clinicList  }
+  get clinicId() { return this.editAppointmentForm.get('clinic')?.value; }
+  get doctorsByClinicId() {
+    this.editAppointmentForm.patchValue({'doctor': null});
+    this.editAppointmentForm.get('doctor')?.disable();
+    const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
+    if (clinicSelected[0].doctors_assigned!.length>=1) {
+      this.editAppointmentForm.get('doctor')?.enable();
+      this.doctorList = clinicSelected[0].doctors_assigned
+    }
+    return this.doctorList;
+  }
+  get newDate() {
+    const date = setHours(new Date(this.editAppointmentForm.get('start')?.value), 0)
+    return date
+  }
+
+  get newTime() { return this.editAppointmentForm.get('time')?.value; }
 
   editAppointment() {
     if (!this.editAppointmentForm.invalid) {
-      const { start, clinic, doctor, time } = this.editAppointmentForm.value;
-       const appointmentEditForm = {
-        start: addHours( new Date(start), parseInt(time)),
-        end: addHours( new Date(start), parseInt(time)+1),
+      this.editAppointmentForm.get('doctor')?.enable()
+      const { clinic, doctor } = this.editAppointmentForm.value;
+      const appointmentEditForm = {
+        start: addHours( new Date(this.newDate), parseInt(this.newTime)),
+        end: addHours( new Date(this.newDate), parseInt(this.newTime)+1),
         clinic,
         doctor,
       }
@@ -103,4 +153,5 @@ export class ActionsAppointmentDialogComponent {
   close(): void {
     this.dialogRef.close();
   }
+
 }

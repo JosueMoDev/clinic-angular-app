@@ -23,8 +23,8 @@ export class AppoinmentService {
       delay(200),
       map((resp: any) => {
         const appointments = resp.appointments.map(
-          ({ appointment_id, start, end, title, clinic, doctor, patient, createdby }: Appointment) =>
-            new Appointment(appointment_id, new Date(start), new Date(end), title, clinic, doctor, patient, createdby)
+          ({ appointment_id, start, end, title, clinic, clinic_info, doctor, doctor_info, patient, createdby }: Appointment) =>
+            new Appointment(appointment_id, new Date(start), new Date(end), title, clinic, clinic_info, doctor, doctor_info, patient, createdby)
         );
         return {
           total: resp.total,
