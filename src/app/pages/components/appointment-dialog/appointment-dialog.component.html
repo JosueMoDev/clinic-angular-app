@@ -39,22 +39,23 @@
   <form *ngIf="isDocument_numberCorrenct" role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="createAppointment()" [formGroup]="newAppointmentForm">
     <div class="grid w-full grid-cols-1">
       <div class="flex-col w-full columns-1">
-        <p class="flex justify-center w-full px-1 py-2 text-lg text-center text-black dark:text-white">{{completename}}</p>
+        <p class="flex justify-center w-full px-1 py-2 text-lg text-center text-black dark:text-white">Patient selected: {{completename}}</p>
       </div>
       
       <div class="flex-col w-full columns-2">
         <div class="w-full mb-4">
-          <mat-form-field class="w-full" appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput  [min]="minDate" formControlName="start" [max]="maxDate" [matDatepicker]="picker">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Choose a date </span>
+          <mat-form-field class="w-full dark:text-white dark:placeholder:text-white" appearance="fill">
+            <input matInput   [min]="minDate" formControlName="start" [max]="maxDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle class="dark:text-white" matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
   
         <!-- time -->  
         <div class="w-full mb-4">
-          <mat-form-field class="w-full">
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Choose a hour </span>
+          <mat-form-field class="w-full dark:text-white dark:placeholder:text-white">
             <input 
               matInput
               [format]="24"
@@ -63,30 +64,29 @@
               name="selected_time_A"
               formControlName="time"
               [ngxMatTimepicker]="pickerA"
-              placeholder="Choose time"
               [max]="maxTime"
 		          [min]="minTime"
               readonly 
             />
             <mat-icon class="cursor-pointer" matSuffix (click)="pickerA.open()">watch_later</mat-icon>
           </mat-form-field>
-          <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+          <ngx-mat-timepicker class="bg-red-700" #pickerA></ngx-mat-timepicker>
         </div>
       </div>                
           
         <!-- time -->
         <div class="mb-4">
-          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select Clinic </span>
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select a Clinic </span>
           <div class="relative flex rounded-md">
             <select
               type="text"  
               class="placeholder:text-gray-700  text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
               placeholder="Clinic" 
               formControlName="clinic"
-              (change)="getDoctorsByClinic"
+              (change)="doctorsByClinicId"
               
             >
-              <option value="Select a clinic" selected disabled>select clinic</option>
+              <option value="" selected disabled>select clinic</option>
               <option *ngFor="let clinic of clinicList" [value]="clinic.clinic_id">{{clinic.name}} - {{ clinic.province }}/{{clinic.city}}</option>
             </select>
             <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
@@ -96,7 +96,7 @@
         </div>
 
         <div class="mb-4">
-          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select Doctor </span>
+          <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Select a Doctor </span>
           <div class="relative flex rounded-md">
             <select
               type="text"  
@@ -104,7 +104,7 @@
               placeholder="Doctor" 
               formControlName="doctor"
             >
-              <option value="Select a doctor" selected disabled>select clinic</option>
+              <option value="" selected disabled>select a Doctor</option>
               <option *ngFor="let doctor of doctorList" [value]="doctor._id">{{doctor.name}} {{doctor.lastname}} </option>
             </select>
             <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">

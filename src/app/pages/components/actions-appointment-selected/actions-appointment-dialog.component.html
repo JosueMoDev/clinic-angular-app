@@ -1,8 +1,7 @@
 <p mat-dialog-title class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
-    <span class="px-1 py-2 text-2xl font-semibold text-black dark:text-white">Edit Appointment </span>
-    
-    
-  <mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+  <span class="px-1 py-2 text-2xl text-black dark:text-white">Edit Appointment</span>
+</p>    
+<mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
     <form  role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="editAppointment()" [formGroup]="editAppointmentForm">
       <div class="grid w-full grid-cols-1">
         <div class="flex-col w-full mb-5 columns-2">
@@ -12,22 +11,23 @@
         
         <div class="flex-col w-full columns-2">
           <div class="w-full mb-4">
-            <mat-form-field class="w-full" appearance="fill">
-              <mat-label>Choose a date</mat-label>
+            <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Choose a date </span>
+            <mat-form-field class="w-full dark:text-white dark:placeholder:text-white" appearance="fill">
               <input matInput  [min]="minDate" formControlName="start" [max]="maxDate" [matDatepicker]="picker">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle class="dark:text-white" matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
     
           <!-- time -->  
           <div class="w-full mb-4">
-            <mat-form-field class="w-full">
+            <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Choose a hour </span>
+            <mat-form-field class="w-full dark:text-white dark:placeholder:text-white">
               <input 
                 matInput
                 [format]="24"
                 type="datetime"
-                class="w-full"
+                class="w-full "
                 name="selected_time_A"
                 formControlName="time"
                 [ngxMatTimepicker]="pickerA"

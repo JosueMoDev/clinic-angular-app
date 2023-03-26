@@ -57,14 +57,13 @@ export class AppointmentDialogComponent {
 
   ngOnInit(): void {
     this.userLogged = this.authService.currentUserLogged.id 
-    
     this.confirmPatientForm = this.formBuilder.group({
       document_number: ['', [Validators.required, Validators.minLength(9)]]
     });
     
     this.newAppointmentForm = this.formBuilder.group({
-      clinic: [null, [Validators.required]],
-      doctor: [null, [Validators.required]],
+      clinic: ['', [Validators.required]],
+      doctor: ['', [Validators.required]],
       start: [null, [Validators.required]],
       time:['',[Validators.required]]
     });
@@ -88,15 +87,18 @@ export class AppointmentDialogComponent {
   get completename() { return this.patient?.name + ' ' + this.patient?.lastname; }
   get clinicId() { return this.newAppointmentForm.get('clinic')?.value; }
   
-  get getDoctorsByClinic() {
-    this.newAppointmentForm.get('doctor')?.disable()
+  get doctorsByClinicId() {
+    this.newAppointmentForm.get('doctor')?.disable();
     const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
     if (clinicSelected[0].doctors_assigned!.length>=1) {
       this.newAppointmentForm.get('doctor')?.enable();
-      this.doctorList = clinicSelected[0].doctors_assigned
+      this.doctorList = clinicSelected[0].doctors_assigned;
     }
+    this.newAppointmentForm.patchValue({'doctor': ''});
     return this.doctorList;
   }
+
+
 
   confirmCurrentPatient() {
     if (!this.document_number?.invalid) {
@@ -104,8 +106,9 @@ export class AppointmentDialogComponent {
         (resp: any)=>{
           if (resp.ok) {
             this.patient = resp.patient;
-            this.patientByDocumentNumber
-            this.isDocument_numberCorrenct = true
+            this.patientByDocumentNumber;
+            this.isDocument_numberCorrenct = true;
+            this.confirmPatientForm.disable();
           }
         },
         (err:any)=>{ error(err.error.message)}
