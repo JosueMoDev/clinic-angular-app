@@ -19,7 +19,6 @@ import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/acti
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls:['./dashboard.component.css'],
   styles: []
 })
   
