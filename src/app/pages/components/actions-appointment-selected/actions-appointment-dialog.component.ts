@@ -35,6 +35,9 @@ export class ActionsAppointmentDialogComponent {
   public doctorList: any[] | undefined
   public someChange: boolean = false;
 
+  public doctorSelected!: string | null;
+  public doctorSelectedName!: string;
+
   constructor(
     private appointmentService: AppoinmentService,
     private authService: AuthService,
@@ -59,14 +62,16 @@ export class ActionsAppointmentDialogComponent {
     const appointmentTime = today.getHours() + ':' + today.getMinutes();
     this.userLogged = this.authService.currentUserLogged.id;
     
+    this.doctorSelected = this.dataAppointment.doctor
+    this.doctorSelectedName = this.dataAppointment.doctor_info;
+
     this.editAppointmentForm = this.formBuilder.group({
       clinic: [this.dataAppointment.clinic, [Validators.required]],
-      doctor: [this.dataAppointment.doctor, [Validators.required]],
+      doctor: [this.doctorSelected, [Validators.required]],
       start: [this.dataAppointment.start, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
     });
     this.allClinics();
-    this.editAppointmentForm.get('doctor')?.disable()
     this.somethigChange
   }
   ngOnDestroy(): void {
@@ -83,6 +88,16 @@ export class ActionsAppointmentDialogComponent {
       )
   }
 
+  get doctor() {
+    this.doctorSelected = ''
+    this.editAppointmentForm.patchValue({ 'doctor': '' });
+    if (this.editAppointmentForm.get('doctor')?.value) {
+      return this.doctorSelectedName
+    }
+    this.editAppointmentForm.get('doctor')?.enable();
+    return this.doctorSelectedName = 'Select a doctor';
+  }
+
   get somethigChange() {
     return this.editAppointmentForm.statusChanges.subscribe(value => {
       if (value === 'VALID') { this.someChange = true }
@@ -90,17 +105,21 @@ export class ActionsAppointmentDialogComponent {
     })
   }
 
+
   get clinics() { return this.clinicList  }
   get clinicId() { return this.editAppointmentForm.get('clinic')?.value; }
   get doctorsByClinicId() {
-    this.editAppointmentForm.patchValue({'doctor': null});
     this.editAppointmentForm.get('doctor')?.disable();
     const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
     if (clinicSelected[0].doctors_assigned!.length>=1) {
       this.editAppointmentForm.get('doctor')?.enable();
       this.doctorList = clinicSelected[0].doctors_assigned
+      this.doctor
+      return this.doctorList;
     }
-    return this.doctorList;
+    this.doctor
+    return this.doctorList = [];
+
   }
   get newDate() {
     const date = setHours(new Date(this.editAppointmentForm.get('start')?.value), 0)
