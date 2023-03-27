@@ -15,7 +15,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';   
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';  
+import {MatSidenavModule} from '@angular/material/sidenav'; 
 
 @NgModule({
   declarations: [],
@@ -39,7 +40,8 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
     MatRadioModule,
     MatStepperModule,
     MatTableModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    MatSidenavModule
   ]
 })
 export class AngularMaterialModule { }
