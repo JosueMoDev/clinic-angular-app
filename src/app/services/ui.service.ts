@@ -7,7 +7,6 @@ export class UiService {
 
   public darkMode!: string | null;
   public isSideBarOpen: boolean = false;
-  public isNavMenuOpen: boolean = false;
   public userType!: string | null
 
   constructor() { 
@@ -30,13 +29,6 @@ export class UiService {
     this.darkMode = localStorage.getItem('theme');   
   }
 
-  openNavMenu() {
-    this.isNavMenuOpen = true;
-  }
-
-  closeNavMenu() {
-    this.isNavMenuOpen = false;
-  }
 
   openSideBar() {
     this.isSideBarOpen = true;

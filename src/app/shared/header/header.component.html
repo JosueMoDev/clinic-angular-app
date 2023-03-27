@@ -14,10 +14,39 @@
             <input type="text" class="pl-9 text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 md:py-3.5  text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow" placeholder="Type here..." />
           </div>
           <div class="mx-0 md:mx-1">
-            <a (click)="toggleNavMenu()" class="m-2 transition-all cursor-pointer md:text-lg ease-nav-brand">
+            <!-- <a (click)="toggleNavMenu()" class="m-2 transition-all cursor-pointer md:text-lg ease-nav-brand">
               <mat-icon  *ngIf="ui.isNavMenuOpen" class="flex justify-center text-yellow-50"  aria-hidden="false" aria-label="Example home icon" fontIcon="expand_less"></mat-icon>
               <mat-icon  *ngIf="!ui.isNavMenuOpen" class="flex justify-center text-yellow-50"  aria-hidden="false" aria-label="Example home icon" fontIcon="expand_more"></mat-icon>
-          </a>
+          </a> -->
+          <button [matMenuTriggerFor]="menu" class="text-white"><mat-icon>more_vert</mat-icon></button>
+          <mat-menu #menu="matMenu" class="space-y-3 bg-slate-850/100">
+            <div class="text-white" >
+              <a  routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(loggedUser)" class="flex flex-col w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
+                <div class="flex">
+                  <div class="my-auto">
+                    <img [src]="loggedUser.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
+                  </div>
+                  <div class="flex flex-col justify-center">
+                    <p class="mb-1 text-sm font-normal capitalize text-white/80"><span class="font-semibold">{{loggedUser.name}}  {{loggedUser.lastname}}</span></p>
+                    <p class="flex items-center justify-start mb-0 text-xs text-white/80">
+                      <mat-icon  class="relative top-0 text-sm leading-normal" fontIcon="person"/>
+                      User Profile
+                    </p>
+                  </div>
+                </div>
+                <div class="grid w-full mt-3">
+                  <p class="grid w-full mb-1 text-xs font-normal text-center lowercase dark:text-white/80"><span class="font-semibold">{{loggedUser.email}}</span></p>
+                </div>
+              </a>
+            </div>
+            <div class="w-full p-2 text-white">
+              <app-setter-theme></app-setter-theme>
+            </div>
+            <div class="w-full p-2 text-white">
+              <button  (click)="logout()" mat-raised-button class="w-full" color="warn" > Log Out<mat-icon  fontIcon="logout"/></button>
+            </div>
+          </mat-menu>
+            
           </div>
           <div class="mx-0 md:mx-1 ">
             <a (click)="toggleSideNave()" class="m-2 transition-all cursor-pointer md:text-lg ease-nav-brand">
@@ -28,9 +57,8 @@
         </div>
       </div>
     </div>
-    <li *ngIf="ui.isNavMenuOpen" class="relative flex items-center w-full pr-2 z-[2]">
+    <!-- <li *ngIf="ui.isNavMenuOpen" class="relative flex items-center w-full pr-2 z-[2]">
       <ul  class="absolute top-0 px-2 py-4 space-y-3 text-sm font-normal text-left text-white bg-white border-0 border-transparent border-solid divide-y-2 divide-gray-400 rounded-lg cursor-pointer divide-solid right-5 min-w-fit shadow-dark-xl dark:shadow-dark-xl dark:shadow-gray-900 shadow-gray-300 dark:bg-slate-850">
-        <!-- add show class on dropdown open js -->
         <div class="w-full ">
           <li class="relative h-fit ">
             <div class="h-fit">
@@ -64,7 +92,8 @@
           </li>
         </div>
       </ul>
-    </li>
+    </li> -->
+
   </nav>
 
   <!-- end Navbar -->

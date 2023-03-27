@@ -27,13 +27,7 @@ export class HeaderComponent {
   logout() { 
     this.authService.logout();
   }
-  toggleNavMenu() { 
-    if (this.ui.isNavMenuOpen) {
-      this.ui.closeNavMenu()
-    } else {
-      this.ui.openNavMenu()
-    }
-  }
+
   toggleSideNave() { 
     if (this.ui.isSideBarOpen) {
       this.ui.closeSideBar()
