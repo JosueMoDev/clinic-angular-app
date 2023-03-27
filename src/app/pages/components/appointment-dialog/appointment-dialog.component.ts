@@ -73,10 +73,9 @@ export class AppointmentDialogComponent {
 
 
   allClinics() {
-    this.clinicService.allClinics(0)
-      .subscribe(
-        ({ clinics }) => {
-          this.clinicList = clinics
+    this.clinicService.allClinicForAppointments()
+      .subscribe((resp:any) => {
+          this.clinicList = resp.clinics
           this.clinics
         }
       )

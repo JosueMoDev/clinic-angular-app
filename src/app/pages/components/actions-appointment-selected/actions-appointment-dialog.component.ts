@@ -79,10 +79,10 @@ export class ActionsAppointmentDialogComponent {
   }
 
   allClinics() {
-    this.clinicService.allClinics(0)
+    this.clinicService.allClinicForAppointments()
       .subscribe(
-        ({ clinics }) => {
-          this.clinicList = clinics;
+        (resp:any) => {
+          this.clinicList = resp.clinics;
           this.clinics
         }
       )

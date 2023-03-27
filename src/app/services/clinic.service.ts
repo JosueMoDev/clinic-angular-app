@@ -35,6 +35,10 @@ export class ClinicService {
   )
   }
 
+  allClinicForAppointments() {
+    return this.http.get(`${environment.THECLINIC_API_URL}/clinics/appointments`, this.headers)
+  }
+
   assignDoctorsToClinic(clinic_id: string, doctors_assigned: string[]) {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/assignment/${clinic_id}`, { doctors_assigned }, this.headers)
   }
