@@ -16,7 +16,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';  
-import {MatSidenavModule} from '@angular/material/sidenav'; 
+import { MatSidenavModule } from '@angular/material/sidenav'; 
+//! PrimeNG
+import { EditorModule } from 'primeng/editor';
+
 
 @NgModule({
   declarations: [],
@@ -41,7 +44,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatStepperModule,
     MatTableModule,
     NgxMatTimepickerModule,
-    MatSidenavModule
+    MatSidenavModule,
+    // ! PrimeNg
+    EditorModule
   ]
 })
 export class AngularMaterialModule { }

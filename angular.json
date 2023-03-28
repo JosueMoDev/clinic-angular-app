@@ -27,11 +27,14 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/text-editor.css",
               "src/assets/css/angular-calendar.css",
               "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/quill/dist/quill.js"
+            ]
           },
           "configurations": {
             "production": {

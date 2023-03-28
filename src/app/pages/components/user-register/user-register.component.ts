@@ -39,7 +39,7 @@ export class UserRegisterComponent {
 
   ngOnInit() {
     this.rol = this.ui.currentUserToEnrrolled
-    this.registerForm= this.formbuilder.group({
+    this.registerForm = this.formbuilder.group({
       personalInformation: this.formbuilder.group({
         document_type: [this.document_type, Validators.required],
         document_number: [null, Validators.required],

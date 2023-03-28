@@ -1,3 +1,8 @@
-<div class="w-full px-6 py-6 mx-auto">
-    <p>medical-record works!</p>
+<div class="w-full p-10">
+    <form (ngSubmit)="newRecordForPatient()" [formGroup]="medicalRecordForm" enctype="multipart/form-data">
+        <p-editor formControlName="text" class="dark:text-slate-50 text-slate-850" [style]="{ height: '320px' }"></p-editor>
+        <div class="flex justify-center w-full p-5">
+            <button type="submit" mat-raised-button color="accent"><mat-icon>save</mat-icon>save</button>
+        </div>
+    </form>
 </div>
