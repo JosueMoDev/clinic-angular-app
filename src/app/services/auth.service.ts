@@ -38,9 +38,8 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem('the_clinic_session_token');
-    google.accounts.id.revoke(this.currentUserLogged.email, () => { 
-      this._ngZone.run(() => { this.router.navigateByUrl('/login'); })
-    })
+    google.accounts.id.revoke(this.currentUserLogged.email)
+    this.router.navigateByUrl('/login');
   }
 
   loginWithEmailAndPassword(loginForm: LoginForm, currentRoute: string) {

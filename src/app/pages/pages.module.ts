@@ -25,6 +25,7 @@ import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { ShowUserComponent } from './show-user/show-user.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { UsersComponent } from './users/users.component';
+import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { UsersComponent } from './users/users.component';
     ShowClinicComponent,
     ShowUserComponent,
     UserRegisterComponent,
-    UsersComponent
+    UsersComponent,
+    NewMedialRecordComponent
   ],
   imports: [
     AngularMaterialModule,
