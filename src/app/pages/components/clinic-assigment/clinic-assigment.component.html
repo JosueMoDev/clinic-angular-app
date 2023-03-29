@@ -36,7 +36,7 @@
                     <div class="flex-col items-center space-y-1 align-top">
                       <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                         <div class="flex items-center justify-center">
-                          <button mat-raised-button (click)="removeadoctorassigned(doctor._id)" color="warn" class="z-0">
+                          <button mat-raised-button (click)="removeadoctorassigned(doctor.id)" color="warn" class="z-0">
                               <mat-icon  fontIcon="person_remove"></mat-icon> Remove
                           </button>
                         </div>
@@ -44,7 +44,7 @@
                   </td>
               </tr>
               <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
-                <!-- <mat-paginator 
+                <mat-paginator 
                   class="flex h-full bg-transparent w-fit dark:text-white"
                   MatPaginatorIntl
                   (page)="handlePageEvent($event)"
@@ -53,7 +53,7 @@
                   [pageIndex]="pageIndex"
                   
                   >
-                </mat-paginator> -->
+                </mat-paginator>
               </div>
             </tbody>
           </table>

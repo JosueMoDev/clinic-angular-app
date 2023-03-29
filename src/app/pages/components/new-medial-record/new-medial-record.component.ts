@@ -15,17 +15,16 @@ import { PatientMedicalRecordService } from 'src/app/services/patient-medical-re
 })
 export class NewMedialRecordComponent {
   public medicalRecordForm!: FormGroup;
-  public recordInformation!: any[] | null;
   public isEditable!: boolean
+
   ngOnInit() {
-    this.recordInformation = this.data.record;
-    this.isEditable = this.data.isEditable;
-    console.log( this.recordInformation )
+
     this.medicalRecordForm = this.formBuilder.group({
-      reason:['', [Validators.required]],
-      details:['', [Validators.required]]
+      title:['', [Validators.required]],
+      body:['', [Validators.required]]
     })
   }
+
   constructor(
     private formBuilder: FormBuilder,
     private medicalRecord: PatientMedicalRecordService,
@@ -33,11 +32,22 @@ export class NewMedialRecordComponent {
     public matDialogRef: MatDialogRef<NewMedialRecordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
-  get reason() { return this.medicalRecordForm.get('reason') }
-  get isFormValid(){ return this.medicalRecordForm.invalid}
+  get title() { return this.medicalRecordForm.get('title') }
+  get body() { return this.medicalRecordForm.get('body') }
+  get isFormValid() { return this.medicalRecordForm.invalid }
+  
   newRecordForPatient() {
     if (!this.medicalRecordForm.invalid) {
-      this.medicalRecord.createMedicalRecord(this.data.id, this.medicalRecordForm.value, this.data.document_number)
+      const new_record = {
+        doctor: this.data.doctor,
+        patient: this.data.id,
+        document_number: this.data.document_number,
+        date: new Date(),
+        title: this.title?.value,
+        body:this.body?.value
+      }
+
+      this.medicalRecord.createMedicalRecord(new_record)
         .subscribe(
           (resp: any) => {
             if (resp.ok) {

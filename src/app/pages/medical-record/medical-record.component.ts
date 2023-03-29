@@ -10,7 +10,11 @@ import { PatientService } from 'src/app/services/patient.service';
 import { NewMedialRecordComponent } from '../components/new-medial-record/new-medial-record.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { PatientMedicalRecordService } from 'src/app/services/patient-medical-record.service';
+import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MedicalRecord } from 'src/app/models/medical_record.model';
 import { EditMedicalRecordComponent } from '../components/edit-medical-record/edit-medical-record.component';
+
 
 
 @Component({
@@ -20,29 +24,50 @@ import { EditMedicalRecordComponent } from '../components/edit-medical-record/ed
   ]
 })
 export class MedicalRecordComponent  {
-  public confirmPatientForm!: FormGroup;
-  public patient!: Patient | null;
-  public records: any[] = []
-  public isDocument_numberCorrenct: boolean = false;
   public uiSubscription!: Subscription;
-  public isEditable!: boolean;
+  public patient!: Patient | null;
+  public doctor!: string;
+  public isDocument_numberCorrenct: boolean = false;
+  public document!: string;
+
+  // ? Form
+  public confirmPatientForm!: FormGroup;
+
+  // ? table
+  public medicalRecordsList:MedicalRecord[] = [];
+  public dataTemp:[] = [];
+
+  //? angular material paginator 
+  public from: number = 0;
+  public hidePageSize: boolean = false;
+  public length!:number;
+  public pageEvent!: PageEvent;
+  public pageIndex: number = 0;
+  public pageSize: number = 5;
+  public pageSizeOptions: number[] = [5, 10, 25];
+  public showPageSizeOptions: boolean = true;
 
   constructor(
     private patientService: PatientService,
+    private patientMedicalRecord: PatientMedicalRecordService,
     private authService : AuthService,
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
     public matDialog: MatDialog,
+    public matconfig: MatPaginatorIntl
   ) { }
   
   ngOnInit(): void {
-    this.isEditable = (this.authService.currentUserLogged.rol ==='doctor')
+    this.doctor = this.authService.currentUserLogged.id
     this.confirmPatientForm = this.formBuilder.group({
       document_number: ['', [Validators.required, Validators.minLength(9)]]
     });
+
+    this.confirmCurrentPatient();
+
     this.uiSubscription = this.store.select('ui').subscribe(state => {
-      if (state.isLoading) {      
-        this.confirmCurrentPatient();
+      if (state.isLoading) {   
+        this.allRecordByPatient();
         this.store.dispatch(ui.isLoadingTable());
       }
     })
@@ -61,9 +86,9 @@ export class MedicalRecordComponent  {
         (resp: any)=>{
           if (resp.ok) {
             this.patient = resp.patient;
-            this.records = [ ...resp.patient.medical_records]
+            this.document = this.patient!.document_number;
             this.isDocument_numberCorrenct = true;
-            this.store.dispatch(ui.isLoadingTable())
+            this.allRecordByPatient()
             this.confirmPatientForm.disable();
           }
         },
@@ -71,34 +96,65 @@ export class MedicalRecordComponent  {
       )
     }
   }
+  allRecordByPatient() {
+    if (!this.document_number?.invalid) {
+      this.patientMedicalRecord.getAllMedicalRecordsByPatient(this.document, this.from)
+      .subscribe(
+        ({ records, total }) => {
+          this.medicalRecordsList = records;
+          this.dataTemp = records;
+          this.length = total;
+        }
+      );
+    }
+  }
+
   createNewRecord(): void {
     this.matDialog.open(NewMedialRecordComponent, {
       width:'100%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ id:this.patient!.id, document_number: this.patient!.document_number, isEditable:false }
+      data:{ id:this.patient!.id, document_number: this.patient!.document_number, doctor: this.doctor  }
     });
   } 
 
-  editRecord(record:any): void {
-    this.matDialog.open(NewMedialRecordComponent, {
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex = e.pageIndex;
+    
+    if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
+      this.from = this.from + this.pageSize;
+    } else { 
+      this.from = this.from - this.pageSize;
+    }
+    this.allRecordByPatient();
+  }
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
+  }
+
+  showMedicalRecord(medical_record: string) {
+    this.matDialog.open(EditMedicalRecordComponent, {
       width:'100%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ id:this.patient!.id, document_number: this.patient!.document_number, record:{...record}, isEditable:false }
+      data:{ id:medical_record, isReadOnly:true  }
     });
-  } 
-  showRecord(record: any): void {
-    console.log( record)
-    // this.matDialog.open(EditMedicalRecordComponent, {
-    //   width:'100%',
-    //   hasBackdrop: true,
-    //   disableClose: true,
-    //   role: 'dialog',
-    //   data:{ record:{...record}, isEditable:true }
-    // });
+  }
+  editMedicalRecord(medical_record: string) {
+    this.matDialog.open(EditMedicalRecordComponent, {
+      width:'100%',
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+      data:{ id:medical_record, isReadOnly:false  }
+    });
   }
   
 }

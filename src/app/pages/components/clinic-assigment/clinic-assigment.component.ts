@@ -152,7 +152,7 @@ export class ClinicAssigmentComponent {
   }
   removeadoctorassigned(doctor_id: string) {
     if (!!this.doctors_assigned?.length && doctor_id) { 
-      const doctors = this.doctors_assigned?.map(doctor => doctor._id);
+      const doctors = this.doctors_assigned?.map(doctor => doctor.id);
       const doctor_deleted = doctors.filter(doctor => doctor !== doctor_id);
       this.clinicService.removeADoctorAssignedToClinic(this.clinic_id, doctor_id ,doctor_deleted).subscribe(
         (resp: any) => { 

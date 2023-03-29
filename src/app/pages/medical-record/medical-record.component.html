@@ -63,10 +63,10 @@
                                       </button>
                                     </div>
                                 </div>
-                                <div class="overflow-x-auto">
-                                    <table class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
+                                <div *ngIf="medicalRecordsList" class="overflow-x-auto">
+                                    <table  class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
                                       <tbody>
-                                        <tr  *ngFor="let record of records" class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
+                                        <tr  *ngFor="let record of medicalRecordsList" class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
                                           
                                           
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
@@ -78,13 +78,13 @@
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                                                 <div class="text-center align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Doctor</p>
-                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">{{record.doctor}}</h6>
+                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">{{record.doctor.name}}</h6>
                                                 </div>
                                             </td>
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                                             <div class="text-center align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Motivo de consulta:</p>
-                                                <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{record.reason}}</h6>
+                                                <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{record.title}}</h6>
                                             </div>
                                             </td>
                                          
@@ -92,13 +92,13 @@
                                               <div class="flex-col items-center space-y-1 align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                                                 <div class="flex items-center justify-center space-x-2">
-                                                    <button mat-mini-fab color="primary" type="button" (click)="editRecord(record)"><mat-icon >edit</mat-icon></button>
-                                                    <button mat-mini-fab color="primary" type="button" (click)="showRecord(record)"><mat-icon>visibility</mat-icon></button>
+                                                    <button mat-mini-fab color="primary" (click)="editMedicalRecord(record.id)" type="button"><mat-icon >edit</mat-icon></button>
+                                                    <button mat-mini-fab color="primary" (click)="showMedicalRecord(record.id)" type="button"><mat-icon>visibility</mat-icon></button>
                                                 </div>
                                               </div>
                                             </td>
                                         </tr>
-                                        <!-- <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
+                                        <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
                                           <mat-paginator 
                                             class="flex h-full bg-transparent w-fit dark:text-white "
                                             MatPaginatorIntl
@@ -109,7 +109,7 @@
                                             
                                             >
                                           </mat-paginator>
-                                        </div> -->
+                                        </div>
                                       </tbody>
                                     </table>
                                 </div>
