@@ -153,7 +153,7 @@ export class MedicalRecordComponent  {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
-      data:{ id:medical_record, isReadOnly:false  }
+      data:{ id:medical_record, isReadOnly:false, doctor: this.doctor  }
     });
   }
   

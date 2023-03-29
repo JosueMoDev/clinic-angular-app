@@ -64,16 +64,14 @@ export class EditMedicalRecordComponent {
 
   editRecordForPatient(){
     if (!this.medicalRecordForm.invalid) {
-      const new_record = {
-        doctor: this.medicalRecord.doctor.id,
-        patient: this.medicalRecord.patient,
-        document_number: this.medicalRecord.document_number,
-        date: new Date(),
+      const edit_record = {  
         title: this.title?.value,
-        body:this.body?.value
+        body: this.body?.value,
+        edited_by: this.data.doctor,
+        last_edited_date: new Date()
       }
 
-      this.medicalRecordService.createMedicalRecord(new_record)
+      this.medicalRecordService.editMedicalRecord(this.medicalRecord.id, edit_record)
         .subscribe(
           (resp: any) => {
             if (resp.ok) {

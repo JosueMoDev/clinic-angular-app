@@ -38,4 +38,8 @@ export class PatientMedicalRecordService {
   getASingleMedicalRecord(id: string) {
     return this.http.get(`${environment.THECLINIC_API_URL}/patient-records/record/${id}`, this.headers);  
   }
+
+  editMedicalRecord(id: string, edit_record:any) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/patient-records/${id}`, edit_record,  this.headers);  
+  }
 }
