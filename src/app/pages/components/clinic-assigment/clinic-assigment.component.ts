@@ -62,11 +62,10 @@ export class ClinicAssigmentComponent {
 
   ngOnInit(): void {
     this.clinic_id = this.updateProfileService.clinicProfile.clinic_id
-    const doctors = this.updateProfileService.clinicProfile.doctors_assigned?.map(doctor => doctor)
-    this.doctors_assigned = doctors 
+    
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
-    this.mat.itemsPerPageLabel = 'Clinics per page';
+    this.mat.itemsPerPageLabel = 'Doctors assigned per page';
     this.currentUserLogged = this.authService.currentUserLogged;
     this.allEmployeesToAssign()
     this.uiSubscription = this.store.select('ui').subscribe(state => {
@@ -95,12 +94,13 @@ export class ClinicAssigmentComponent {
   } 
 
   allEmployeesToAssign() {
-    this.userService.allEmployesAviblesToAssign(this.from)
+    this.userService.allEmployesAviblesToAssign(this.clinic_id)
     .subscribe(
-      ({ doctors, total }) => {
-          this.doctorsList = doctors;
-          this.dataTemp = doctors;
-          this.length = total;
+      ({doctors_assigned, doctors_avilable}) => {
+          this.doctorsList = doctors_avilable;
+          this.doctors_assigned = doctors_assigned;
+          this.dataTemp = doctors_assigned;
+          this.length = doctors_assigned.length;
         }
     )
   }
@@ -136,7 +136,7 @@ export class ClinicAssigmentComponent {
 
   removeallassigned() {
     if (!!this.doctors_assigned?.length) {      
-      const doctors = this.doctors_assigned?.map( doctor => doctor._id )
+      const doctors = this.doctors_assigned?.map( doctor => doctor.id )
       this.clinicService.removeAllDoctorsAssignedToClinic(this.clinic_id, doctors).subscribe(
         (resp: any) => { 
             if (resp.ok) {

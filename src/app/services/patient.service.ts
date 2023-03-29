@@ -27,9 +27,9 @@ export class PatientService {
       map((resp: any) => {
           const patients = resp.patients.map(
             ({ id, document_type, document_number, email, name,
-              lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: Patient) =>
+              lastname, gender, phone, validationState, email_name, email_provider, rol, photo, medical_records }: Patient) =>
               new Patient(id, document_type, document_number, email, name,
-                lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
+                lastname, gender, phone, validationState, email_name, email_provider, rol, photo, medical_records)
           );
           return {
             total: resp.total,

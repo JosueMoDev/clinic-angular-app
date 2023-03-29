@@ -58,7 +58,7 @@
                                 <div class="p-4 pb-0 mb-0 rounded-t-4">
                                     <div class="flex justify-between">
                                       <p class="text-2xl font-semibold text-black text-start dark:text-white">Medical Records History</p>
-                                      <button (click)="openDialog()" color="primary" mat-raised-button class="z-0">
+                                      <button (click)="createNewRecord()" color="primary" mat-raised-button class="z-0">
                                           <mat-icon  fontIcon="healing"></mat-icon> <span>New Medical Record</span> 
                                       </button>
                                     </div>
@@ -66,25 +66,25 @@
                                 <div class="overflow-x-auto">
                                     <table class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
                                       <tbody>
-                                        <tr   class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
+                                        <tr  *ngFor="let record of records" class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
                                           
                                           
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                                                 <div class="text-center align-top">
                                                     <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Fecha:</p>
-                                                    <h6 class="mb-0 text-sm leading-normal dark:text-white"></h6>
+                                                    <h6 class="mb-0 text-sm leading-normal dark:text-white">{{ record.date | date:'medium'}}</h6>
                                                 </div>
                                             </td>
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                                                 <div class="text-center align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Doctor</p>
-                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">Doctor Name</h6>
+                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">{{record.doctor}}</h6>
                                                 </div>
                                             </td>
                                             <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                                             <div class="text-center align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Motivo de consulta:</p>
-                                                <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white"> Dolor</h6>
+                                                <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{record.reason}}</h6>
                                             </div>
                                             </td>
                                          
@@ -92,8 +92,8 @@
                                               <div class="flex-col items-center space-y-1 align-top">
                                                 <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                                                 <div class="flex items-center justify-center space-x-2">
-                                                    <button mat-mini-fab color="primary"><mat-icon >edit</mat-icon></button>
-                                                    <button mat-mini-fab color="primary"><mat-icon >visibility</mat-icon></button>
+                                                    <button mat-mini-fab color="primary" type="button" (click)="editRecord(record)"><mat-icon >edit</mat-icon></button>
+                                                    <button mat-mini-fab color="primary" type="button" (click)="showRecord(record)"><mat-icon>visibility</mat-icon></button>
                                                 </div>
                                               </div>
                                             </td>

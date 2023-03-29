@@ -9,13 +9,16 @@ import { environment } from 'src/environments/environment';
 export class PatientMedicalRecordService {
 
   public headers: {} = this.authService.headers;
-
+  public doctor: string = this.authService.currentUserLogged.id
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) { }
-  createMedicalRecord(patient: string, medical_record: string, document_number: string) {
+  createMedicalRecord(patient: string, medical_record: any, document_number: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/patients/save-medical-record/${patient}`,
-    { document_number, medical_record }, this.headers);
+      { document_number, medical_record: { ...medical_record, doctor: this.doctor } }, this.headers);
+  }
+  getSinglePatient(document_number:string) {
+    return this.http.get(`${environment.THECLINIC_API_URL}/patients/${document_number}`, this.headers);    
   }
 }

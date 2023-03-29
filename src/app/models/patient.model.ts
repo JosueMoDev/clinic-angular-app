@@ -13,7 +13,8 @@ export class Patient {
         public email_name: string,
         public email_provider: string,
         public rol: string,
-        public photo?: string
+        public photo?: string,
+        public medical_records?:any[] | undefined
     ){}
 
 }

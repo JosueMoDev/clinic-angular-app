@@ -26,6 +26,7 @@ import { ShowUserComponent } from './show-user/show-user.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { UsersComponent } from './users/users.component';
 import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
+import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NewMedialRecordComponent } from './components/new-medial-record/new-med
     ShowUserComponent,
     UserRegisterComponent,
     UsersComponent,
-    NewMedialRecordComponent
+    NewMedialRecordComponent,
+    EditMedicalRecordComponent
   ],
   imports: [
     AngularMaterialModule,

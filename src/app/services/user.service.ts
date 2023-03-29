@@ -41,19 +41,25 @@ export class UserService {
     );
   }
 
-  allEmployesAviblesToAssign(from: number) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/users/doctors?pagination=${from}`, this.headers).pipe(
+  allEmployesAviblesToAssign(clinic:string) {
+    return this.http.get(`${environment.THECLINIC_API_URL}/users/doctors?clinic=${clinic}`, this.headers).pipe(
       delay(200),
       map((resp: any) => {
-        const doctors = resp.doctors.map(
+        const doctors_assigned = resp.doctors_assigned.map(
+          ({ id, document_type, document_number, email, name,
+            lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
+            new User(id, document_type, document_number, email, name,
+              lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
+        );
+        const doctors_avilable = resp.doctors_avilable.map(
           ({ id, document_type, document_number, email, name,
             lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
             new User(id, document_type, document_number, email, name,
               lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
         );
         return {
-          total: resp.total,
-          doctors: doctors
+          doctors_assigned,
+          doctors_avilable
         }
       })
     );
