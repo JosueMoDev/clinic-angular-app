@@ -11,6 +11,7 @@ import { ClinicService } from 'src/app/services/clinic.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 
 @Component({
   selector: 'app-clinic-assigment-dialog',
@@ -25,11 +26,12 @@ export class ClinicAssigmentDialogComponent {
   public assignmentForm!: FormGroup;
   public assignmentList!: FormArray<any>;
   public thereIsSomebodyToAssing: number = 0;
-  employeeStaff: any[] = [];
+  public employeeStaff: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private clinicService: ClinicService,
+    private clinicAssignment: ClinicAssignmentsService,
     private updateProfile: UpdateProfileService,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ClinicAssigmentDialogComponent>,
@@ -41,8 +43,6 @@ export class ClinicAssigmentDialogComponent {
     this.assignmentForm = this.formBuilder.group({
       selectedStaff: this.formBuilder.array([])
     });
-    
-    
   }
   addToAssignmentList(event: any) {
    
@@ -57,14 +57,12 @@ export class ClinicAssigmentDialogComponent {
     this.thereIsSomebodyToAssing = this.assignmentList.length
   }
   saveAssignment() {
-    
-    this.clinicService.assignDoctorsToClinic(this.data.clinic, this.assignmentForm.value).subscribe(
+    this.clinicAssignment.assignDoctorsToClinic(this.data.clinic, this.assignmentForm.value).subscribe(
     (resp: any) => { 
         if (resp.ok) {
         this.updateProfile.clinicToUpdate(resp.clinic);
         success(resp.message);
         this.store.dispatch(ui.isLoadingTable());
-        
       }
     }, (err: any) => {
       error(err.error.message)

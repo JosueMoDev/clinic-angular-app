@@ -41,30 +41,6 @@ export class UserService {
     );
   }
 
-  allEmployesAviblesToAssign(clinic: string) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/users/doctors?clinic=${clinic}`, this.headers).pipe(
-      delay(200),
-      map((resp: any) => {
-        const doctors_assigned = resp.doctors_assigned.map(
-          ({ id, document_type, document_number, email, name,
-            lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
-            new User(id, document_type, document_number, email, name,
-              lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
-        );
-        const doctors_avilable = resp.doctors_avilable.map(
-          ({ id, document_type, document_number, email, name,
-            lastname, gender, phone, validationState, email_name, email_provider, rol, photo }: User) =>
-            new User(id, document_type, document_number, email, name,
-              lastname, gender, phone, validationState, email_name, email_provider, rol, photo)
-        );
-        return {
-          doctors_assigned,
-          doctors_avilable
-        }
-      })
-    );
-  }
-
   crearteNewUserWithEmailAndPassword(user: UserRegisterForm) {
     return this.http.post(`${environment.THECLINIC_API_URL}/users`, user, this.headers);
   }

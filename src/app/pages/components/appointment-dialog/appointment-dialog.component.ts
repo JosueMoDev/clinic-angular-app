@@ -17,6 +17,7 @@ import { Patient } from 'src/app/models/patient.model';
 import { Clinic } from 'src/app/models/clinic.model';
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
+import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class AppointmentDialogComponent {
     private authService: AuthService,
     private store: Store<AppState>,
     private clinicService: ClinicService,
+    private clinicAssignment: ClinicAssignmentsService,
     public dialogRef: MatDialogRef<AppointmentDialogComponent>,
   ) { 
     const today = new Date();
@@ -73,12 +75,14 @@ export class AppointmentDialogComponent {
 
 
   allClinics() {
-    this.clinicService.allClinicForAppointments()
-      .subscribe((resp:any) => {
-          this.clinicList = resp.clinics
-          this.clinics
-        }
-      )
+    //! Refactory
+    // console.warn('refactor at allClinicForAppointments, AppointmentDialogComponent');
+    // this.clinicAssignment.allEmployeesAssingedToClinic()
+    //   .subscribe((resp:any) => {
+    //       this.clinicList = resp.clinics
+    //       this.clinics
+    //     }
+    //   )
   }
   get clinics() { return this.clinicList;  }
   get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }); }
@@ -87,16 +91,17 @@ export class AppointmentDialogComponent {
   get clinicId() { return this.newAppointmentForm.get('clinic')?.value; }
   
   get doctorsByClinicId() {
-    this.newAppointmentForm.get('doctor')?.disable();
-    const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
-    if (clinicSelected[0].doctors_assigned!.length>=1) {
-      this.newAppointmentForm.get('doctor')?.enable();
-      this.doctorList = clinicSelected[0].doctors_assigned;
-      // TODO: refactorizar doctos at list al crear appointment
-      console.log(this.doctorList)
-    }
-    this.newAppointmentForm.patchValue({'doctor': ''});
-    return this.doctorList;
+    // this.newAppointmentForm.get('doctor')?.disable();
+    // const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
+    // if (clinicSelected[0].doctors_assigned!.length>=1) {
+    //   this.newAppointmentForm.get('doctor')?.enable();
+    //   this.doctorList = clinicSelected[0].doctors_assigned;
+    //   // TODO: refactorizar doctos at list al crear appointment
+    //   console.log(this.doctorList)
+    // }
+    // this.newAppointmentForm.patchValue({'doctor': ''});
+    // return this.doctorList;
+    return
   }
 
 

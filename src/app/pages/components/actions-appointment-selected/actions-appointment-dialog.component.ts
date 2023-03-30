@@ -16,6 +16,7 @@ import { Clinic } from 'src/app/models/clinic.model';
 
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
+import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 
 @Component({
   selector: 'app-actions-appointment-selected',
@@ -42,6 +43,7 @@ export class ActionsAppointmentDialogComponent {
     private appointmentService: AppoinmentService,
     private authService: AuthService,
     private clinicService: ClinicService,
+    private clinicAssignment: ClinicAssignmentsService,
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ActionsAppointmentDialogComponent>,
@@ -79,13 +81,15 @@ export class ActionsAppointmentDialogComponent {
   }
 
   allClinics() {
-    this.clinicService.allClinicForAppointments()
-      .subscribe(
-        (resp:any) => {
-          this.clinicList = resp.clinics;
-          this.clinics
-        }
-      )
+    //! Refactory
+    console.warn('refactor at allClinicForAppointments, ActionsAppointmentDialogComponent');
+    // this.clinicAssignment.allEmployeesAssingedToClinic(this.dataAppointment.clinic)
+    //   .subscribe(
+    //     (resp:any) => {
+    //       this.clinicList = resp.clinics;
+    //       this.clinics
+    //     }
+    //   )
   }
 
   get doctor() {
@@ -109,17 +113,17 @@ export class ActionsAppointmentDialogComponent {
   get clinics() { return this.clinicList  }
   get clinicId() { return this.editAppointmentForm.get('clinic')?.value; }
   get doctorsByClinicId() {
-    this.editAppointmentForm.get('doctor')?.disable();
-    const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
-    if (clinicSelected[0].doctors_assigned!.length>=1) {
-      this.editAppointmentForm.get('doctor')?.enable();
-      this.doctorList = clinicSelected[0].doctors_assigned
-      this.doctor
-      return this.doctorList;
-    }
-    this.doctor
-    return this.doctorList = [];
-
+    // this.editAppointmentForm.get('doctor')?.disable();
+    // const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
+    // if (clinicSelected[0].doctors_assigned!.length>=1) {
+    //   this.editAppointmentForm.get('doctor')?.enable();
+    //   this.doctorList = clinicSelected[0].doctors_assigned
+    //   this.doctor
+    //   return this.doctorList;
+    // }
+    // this.doctor
+    // return this.doctorList = [];
+    return
   }
   get newDate() {
     const date = setHours(new Date(this.editAppointmentForm.get('start')?.value), 0)

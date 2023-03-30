@@ -24,8 +24,8 @@ export class ClinicService {
       map(
         (resp: any) => {
           const clinics = resp.clinics.map(
-            ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo, doctors_assigned }: Clinic) =>
-              new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo, doctors_assigned)
+            ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo }: Clinic) =>
+              new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo)
           );
           return {
             total: resp.total,
@@ -33,24 +33,6 @@ export class ClinicService {
           }
         })
     )
-  }
-
-  allClinicForAppointments() {
-    return this.http.get(`${environment.THECLINIC_API_URL}/clinics/appointments`, this.headers)
-  }
-
-  assignDoctorsToClinic(clinic_id: string, doctors_assigned: string[]) {
-    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/assignment/${clinic_id}`, { doctors_assigned }, this.headers)
-  }
-
-
-  removeAllDoctorsAssignedToClinic(clinic_id: string, doctors_assigned: string[]) {
-
-    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/remove-all-assigned/${clinic_id}`, { doctors_assigned }, this.headers)
-  }
-
-  removeADoctorAssignedToClinic(clinic_id: string, doctor_remove: string, doctors_assigned: string[]) {
-    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/remove-doctor-assigned/${clinic_id}`, { doctor_remove, doctors_assigned }, this.headers)
   }
 
   createClinic(clinic: any) {

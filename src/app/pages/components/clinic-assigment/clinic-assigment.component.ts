@@ -11,7 +11,6 @@ import * as ui from 'src/app/store/actions/ui.actions';
 
 import { ClinicService } from 'src/app/services/clinic.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
@@ -20,6 +19,8 @@ import { Patient } from 'src/app/models/patient.model';
 
 import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
+import { DoctorAssigned } from 'src/app/interfaces/doctor_assigment.inteface';
 
 
 @Component({
@@ -30,28 +31,32 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 })
 export class ClinicAssigmentComponent {
   public uiSubscription!: Subscription;
-  public doctorsList: User[] = [];
-  public dataTemp: User[] = [];
+  
+  public currentUserLogged!: User | Patient 
+  public clinic_id!: string;
+  public hasAssignments!: boolean;
+  public profileSelected!: Clinic;
 
+  // ? Doctors Availables to be assigned
+  public doctorsAvailableList: User[] = [];
+
+  // ? Doctors Availables to be assigned
+  public doctorsAssignedList: DoctorAssigned[] = [];
+  public dataTempAssigned: DoctorAssigned[] = [];
+
+  // ? Angular Material Paginator
   public length!:number;
   public pageSize: number = 5;
   public from: number = 0;
   public pageIndex:number = 0;
   public pageSizeOptions: number[] = [5, 10, 25];
-  
   public hidePageSize: boolean = false;
   public showPageSizeOptions: boolean = true;
-  public disabled: boolean = false;
   public pageEvent!: PageEvent;
 
-  public currentUserLogged!: User | Patient 
-  public clinic_id!: string;
-  public doctors_assigned!: any[] | undefined
 
-  public profileSelected!: Clinic;
   constructor(
-    private clinicService: ClinicService,
-    private userService: UserService,
+    private clinicAssignment: ClinicAssignmentsService,
     private store: Store<AppState>,
     private authService: AuthService,
     private updateProfileService: UpdateProfileService,
@@ -62,49 +67,49 @@ export class ClinicAssigmentComponent {
 
   ngOnInit(): void {
     this.clinic_id = this.updateProfileService.clinicProfile.clinic_id
-    
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Doctors assigned per page';
     this.currentUserLogged = this.authService.currentUserLogged;
-    this.allEmployeesToAssign()
+    this.allEmployeesAvaibleToBeAssigned();
+    this.allEmployeesAssignedToClinic();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
-        
-        this.allEmployeesToAssign();
+        this.allEmployeesAvaibleToBeAssigned();
+        this.allEmployeesAssignedToClinic();
         this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
-        this.doctors_assigned = this.profileSelected.doctors_assigned;
+        this.hasAssignments = this.profileSelected.hasAssignments;
         this.store.dispatch(ui.isLoadingTable());
       }
-    })
+    });
+    this.doctorsAvailableList;
+    this.hasAssignments = this.updateProfileService.clinicProfileToUpdate.hasAssignments;
   }
 
   ngOnDestroy(): void {
     this.uiSubscription.unsubscribe();
   }
-  openAssingmentDoctorDialog(): void {
-
-    this.matDialog.open(ClinicAssigmentDialogComponent, {
-      width: '100%',
-      hasBackdrop: true,
-      disableClose: true,
-      role: 'dialog',
-      data: { doctors:this.doctorsList, clinic: this.clinic_id }
-    });
-  } 
-
-  allEmployeesToAssign() {
-    this.userService.allEmployesAviblesToAssign(this.clinic_id)
-    .subscribe(
-      ({doctors_assigned, doctors_avilable}) => {
-          this.doctorsList = doctors_avilable;
-          this.doctors_assigned = doctors_assigned;
-          this.dataTemp = doctors_assigned;
-          this.length = doctors_assigned.length;
+ 
+  allEmployeesAvaibleToBeAssigned() {
+    this.clinicAssignment.allEmployeesAvaibleToBeAssigned()
+      .subscribe(
+        ({ doctors_available }) => {
+          this.doctorsAvailableList = [ ...doctors_available ];
+      });
+    }
+    
+    allEmployeesAssignedToClinic() {
+      console.log()
+      this.clinicAssignment.allEmployeesAssingedToClinic(this.clinic_id, this.from)
+      .subscribe(
+        ({doctors_assigned, total}: any) => {
+          this.doctorsAssignedList = doctors_assigned;
+          this.dataTempAssigned = doctors_assigned;
+          this.length = total;
         }
-    )
-  }
-
+      )
+    }
+    
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -115,57 +120,53 @@ export class ClinicAssigmentComponent {
     } else { 
       this.from = this.from - this.pageSize
     }
-    this.allEmployeesToAssign()
+    this.allEmployeesAssignedToClinic()
 
   }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
-    console.log(this.showPageSizeOptions)
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
   }
 
-  changeClinicState(clinic_to_change: string, user_logged: string ) {
-    this.clinicService.changeClinicStatus(clinic_to_change, user_logged).subscribe((resp: any)=> { 
-      if (resp.ok) {
-        success(resp.message)
-        this.allEmployeesToAssign();
-      }
-    }, (err)=>{error(err.error.message)});
+  removeallassigned() {
+    if (this.hasAssignments) {  
+      this.clinicAssignment.removeAllDoctorsAssignedToClinic(this.clinic_id).subscribe(
+        (resp: any) => { 
+            if (resp.ok) {
+              this.updateProfileService.clinicToUpdate(resp.clinic);
+            this.store.dispatch(ui.isLoadingTable());
+            success(resp.message);
+          }
+        }, (err: any) => {
+          error(err.error.message)
+        }
+      );    
+    }
+  }
+  removeADoctorAssigned(reference: string, doctor_id: string) {
+    if (this.hasAssignments && doctor_id) { 
+      this.clinicAssignment.removeADoctorAssignedToClinic(reference,  this.clinic_id, doctor_id,).subscribe(
+        (resp: any) => { 
+            if (resp.ok) {
+            this.updateProfileService.clinicToUpdate(resp.clinic);
+            this.store.dispatch(ui.isLoadingTable());
+            success(resp.message);
+          }
+        }, (err: any) => {
+          error(err.error.message)
+        }
+      );    
+     }
   }
 
-  removeallassigned() {
-    if (!!this.doctors_assigned?.length) {      
-      const doctors = this.doctors_assigned?.map( doctor => doctor.id )
-      this.clinicService.removeAllDoctorsAssignedToClinic(this.clinic_id, doctors).subscribe(
-        (resp: any) => { 
-            if (resp.ok) {
-            this.updateProfileService.clinicToUpdate(resp.clinic);
-            this.store.dispatch(ui.isLoadingTable());
-            success(resp.message);
-          }
-        }, (err: any) => {
-          error(err.error.message)
-        }
-      );    
-     }
-  }
-  removeadoctorassigned(doctor_id: string) {
-    if (!!this.doctors_assigned?.length && doctor_id) { 
-      const doctors = this.doctors_assigned?.map(doctor => doctor.id);
-      const doctor_deleted = doctors.filter(doctor => doctor !== doctor_id);
-      this.clinicService.removeADoctorAssignedToClinic(this.clinic_id, doctor_id ,doctor_deleted).subscribe(
-        (resp: any) => { 
-            if (resp.ok) {
-            this.updateProfileService.clinicToUpdate(resp.clinic);
-            this.store.dispatch(ui.isLoadingTable());
-            success(resp.message);
-          }
-        }, (err: any) => {
-          error(err.error.message)
-        }
-      );    
-     }
-  }
+  assignmentListDialog(): void {
+    this.matDialog.open(ClinicAssigmentDialogComponent, {
+      hasBackdrop: true,
+      disableClose: true,
+      role: 'dialog',
+      data: { doctors:this.doctorsAvailableList, clinic: this.clinic_id }
+    });
+  } 
 
 }
