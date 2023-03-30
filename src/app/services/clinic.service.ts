@@ -6,6 +6,7 @@ import { delay, map } from 'rxjs';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 import { Clinic } from 'src/app/models/clinic.model';
+import { ClinicAvailableToMakeAnAppointment } from '../interfaces/clinic-available.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,21 @@ export class ClinicService {
           );
           return {
             total: resp.total,
+            clinics
+          }
+        })
+    )
+  }
+  allClinicsAvailableToMakeAnAppointment() {
+    return this.http.get(`${environment.THECLINIC_API_URL}/appointments/clinic-available`, this.headers).pipe(
+      delay(200),
+      map(
+        (resp: any) => {
+          const clinics = resp.clinics.map(
+            ({ clinic_id, register_number, name, province, city }: ClinicAvailableToMakeAnAppointment) =>
+              ({ clinic_id, register_number, name, province, city })
+          );
+          return {
             clinics
           }
         })

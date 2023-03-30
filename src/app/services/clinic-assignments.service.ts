@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DoctorAvailable } from '../interfaces/doctors-available.interface';
 import { DoctorAssigned } from '../interfaces/doctor_assigment.inteface';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
@@ -37,6 +38,18 @@ export class ClinicAssignmentsService {
         }
       })
     );
+  }
+
+  allDoctorsAvailableToMakeAnAppointment(clinic: string) {
+    return this.http.get(`${environment.THECLINIC_API_URL}/clinic-assignments/doctors-available/${clinic}`, this.headers).pipe(
+      delay(200),
+      map((resp: any) => {
+        const doctors = resp.doctors.map(
+          ({ id, name, lastname, photo }: DoctorAvailable) =>
+            ({ id, name, lastname, photo})
+        );
+        return { doctors }
+      }));
   }
 
   assignDoctorsToClinic(clinic_id: string, doctors_assigned: string[]) {

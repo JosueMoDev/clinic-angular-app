@@ -14,10 +14,11 @@ import { PatientService } from 'src/app/services/patient.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 
 import { Patient } from 'src/app/models/patient.model';
-import { Clinic } from 'src/app/models/clinic.model';
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
+import { ClinicAvailableToMakeAnAppointment } from '../../../interfaces/clinic-available.interface';
+import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 
 
 @Component({
@@ -36,8 +37,8 @@ export class AppointmentDialogComponent {
   public minTime: string = '08:00';
   public maxTime: string = '18:00';
 
-  public clinicList: Clinic[] = []
-  public doctorList: any[] | undefined
+  public clinicList: ClinicAvailableToMakeAnAppointment[] = []
+  public doctorList!: DoctorAvailable[];
 
   constructor(
     private patientService: PatientService,
@@ -69,39 +70,33 @@ export class AppointmentDialogComponent {
       start: [null, [Validators.required]],
       time:['',[Validators.required]]
     });
-    this.allClinics();
+    this.allClinicsAvailableToMakeAnAppointment();
     this.newAppointmentForm.get('doctor')?.disable()
   }
 
 
-  allClinics() {
-    //! Refactory
-    // console.warn('refactor at allClinicForAppointments, AppointmentDialogComponent');
-    // this.clinicAssignment.allEmployeesAssingedToClinic()
-    //   .subscribe((resp:any) => {
-    //       this.clinicList = resp.clinics
-    //       this.clinics
-    //     }
-    //   )
+  allClinicsAvailableToMakeAnAppointment() {
+    this.clinicService.allClinicsAvailableToMakeAnAppointment()
+      .subscribe(({ clinics }) => {
+          this.clinicList = clinics
+        }
+      )
   }
   get clinics() { return this.clinicList;  }
   get patientByDocumentNumber() { return this.newAppointmentForm.patchValue({ 'title': this.completename }); }
   get document_number() { return this.confirmPatientForm.get('document_number'); }
   get completename() { return this.patient?.name + ' ' + this.patient?.lastname; }
-  get clinicId() { return this.newAppointmentForm.get('clinic')?.value; }
+  get clinicId() { return (this.newAppointmentForm.get('clinic')?.value); }
   
   get doctorsByClinicId() {
-    // this.newAppointmentForm.get('doctor')?.disable();
-    // const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
-    // if (clinicSelected[0].doctors_assigned!.length>=1) {
-    //   this.newAppointmentForm.get('doctor')?.enable();
-    //   this.doctorList = clinicSelected[0].doctors_assigned;
-    //   // TODO: refactorizar doctos at list al crear appointment
-    //   console.log(this.doctorList)
-    // }
-    // this.newAppointmentForm.patchValue({'doctor': ''});
-    // return this.doctorList;
-    return
+    this.newAppointmentForm.get('doctor')?.enable();
+    this.clinicAssignment.allDoctorsAvailableToMakeAnAppointment(this.newAppointmentForm.get('clinic')?.value)
+      .subscribe(
+        ({ doctors })=>{
+          this.doctorList = doctors;
+      }
+    )
+    return this.doctorList;
   }
 
 
