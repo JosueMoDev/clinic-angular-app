@@ -1,11 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 import { PatientMedicalRecordService } from 'src/app/services/patient-medical-record.service';
+
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 @Component({
   selector: 'app-new-medial-record',
@@ -18,10 +21,9 @@ export class NewMedialRecordComponent {
   public isEditable!: boolean
 
   ngOnInit() {
-
     this.medicalRecordForm = this.formBuilder.group({
-      title:['', [Validators.required]],
-      body:['', [Validators.required]]
+      title: ['', [Validators.required]],
+      body: ['', [Validators.required]]
     })
   }
 
@@ -35,7 +37,7 @@ export class NewMedialRecordComponent {
   get title() { return this.medicalRecordForm.get('title') }
   get body() { return this.medicalRecordForm.get('body') }
   get isFormValid() { return this.medicalRecordForm.invalid }
-  
+
   newRecordForPatient() {
     if (!this.medicalRecordForm.invalid) {
       const new_record = {
@@ -44,20 +46,20 @@ export class NewMedialRecordComponent {
         document_number: this.data.document_number,
         date: new Date(),
         title: this.title?.value,
-        body:this.body?.value
+        body: this.body?.value
       }
 
       this.medicalRecord.createMedicalRecord(new_record)
         .subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.medicalRecordForm.reset()
+              this.medicalRecordForm.reset();
               success(resp.message);
               this.matDialogRef.close();
               this.store.dispatch(ui.isLoadingTable());
             }
           },
-          (err:any)=>{ error(err.error.message) }
+          (err: any) => { error(err.error.message) }
         )
     }
   }

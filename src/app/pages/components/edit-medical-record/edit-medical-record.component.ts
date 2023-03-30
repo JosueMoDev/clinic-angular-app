@@ -1,12 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { MedicalRecord } from 'src/app/models/medical_record.model';
+import * as ui from 'src/app/store/actions/ui.actions';
+
 import { PatientMedicalRecordService } from 'src/app/services/patient-medical-record.service';
-import  * as ui from 'src/app/store/actions/ui.actions';
+import { MedicalRecord } from 'src/app/models/medical_record.model';
+
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 @Component({
   selector: 'app-edit-medical-record',
@@ -40,9 +43,6 @@ export class EditMedicalRecordComponent {
     }
   }
 
-
-
-
   get title() { return this.medicalRecordForm.get('title'); }
   get body() { return this.medicalRecordForm.get('body'); }
 
@@ -62,7 +62,7 @@ export class EditMedicalRecordComponent {
     )
   }
 
-  editRecordForPatient(){
+  editMedicalRecord(){
     if (!this.medicalRecordForm.invalid) {
       const edit_record = {  
         title: this.title?.value,

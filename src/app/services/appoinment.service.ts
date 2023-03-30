@@ -12,12 +12,12 @@ import { Appointment } from 'src/app/models/appointment.model';
   providedIn: 'root'
 })
 export class AppoinmentService {
-  public headers : {} = this.authService.headers
+  public headers: {} = this.authService.headers
   constructor(
     private http: HttpClient,
     private authService: AuthService
   ) { }
- 
+
   getAllAppointments() {
     return this.http.get(`${environment.THECLINIC_API_URL}/appointments`, this.headers).pipe(
       delay(200),
@@ -37,11 +37,11 @@ export class AppoinmentService {
     return this.http.post(`${environment.THECLINIC_API_URL}/appointments`, appointment, this.headers);
   }
 
-  editAppointment(id:string, appointment:any ) {
+  editAppointment(id: string, appointment: any) {
     return this.http.put(`${environment.THECLINIC_API_URL}/appointments/${id}`, appointment, this.headers);
   }
-  
-  deleteAppointment(id:string, userLogged:string) {
+
+  deleteAppointment(id: string, userLogged: string) {
     return this.http.delete(`${environment.THECLINIC_API_URL}/appointments/${id}?user=${userLogged}`, this.headers);
   }
 

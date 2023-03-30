@@ -9,7 +9,7 @@ export class UiService {
   public isSideBarOpen: boolean = false;
   public userType!: string | null
 
-  constructor() { 
+  constructor() {
 
     this.darkMode = localStorage.getItem('theme');
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -20,13 +20,13 @@ export class UiService {
       if (!localStorage.getItem('theme')) { this.darkMode = 'light'; }
     }
   }
-  
 
-  setTheme() { 
+
+  setTheme() {
     (document.documentElement.classList.toggle('dark'))
       ? localStorage.setItem('theme', 'dark')
       : localStorage.setItem('theme', 'light')
-    this.darkMode = localStorage.getItem('theme');   
+    this.darkMode = localStorage.getItem('theme');
   }
 
 

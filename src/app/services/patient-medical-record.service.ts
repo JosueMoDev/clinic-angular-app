@@ -23,23 +23,23 @@ export class PatientMedicalRecordService {
     return this.http.get(`${environment.THECLINIC_API_URL}/patient-records?document_number=${document_number}&pagination=${pagination}`, this.headers).pipe(
       delay(200),
       map((resp: any) => {
-  
-          const records = resp.records.map(
-            ({ id, date, title, body, doctor, patient, document_number}: MedicalRecord) =>
-              new MedicalRecord(id, date, title, body, doctor, patient, document_number)
-          );
-          return {
-            total: resp.total,
-            records
-          }
+
+        const records = resp.records.map(
+          ({ id, date, title, body, doctor, patient, document_number }: MedicalRecord) =>
+            new MedicalRecord(id, date, title, body, doctor, patient, document_number)
+        );
+        return {
+          total: resp.total,
+          records
+        }
       })
-    );   
+    );
   }
   getASingleMedicalRecord(id: string) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/patient-records/record/${id}`, this.headers);  
+    return this.http.get(`${environment.THECLINIC_API_URL}/patient-records/record/${id}`, this.headers);
   }
 
-  editMedicalRecord(id: string, edit_record:any) {
-    return this.http.put(`${environment.THECLINIC_API_URL}/patient-records/${id}`, edit_record,  this.headers);  
+  editMedicalRecord(id: string, edit_record: any) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/patient-records/${id}`, edit_record, this.headers);
   }
 }

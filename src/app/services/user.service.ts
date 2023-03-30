@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class UserService {
-  
+
   public headers: {} = this.authService.headers;
 
   constructor(
@@ -41,7 +41,7 @@ export class UserService {
     );
   }
 
-  allEmployesAviblesToAssign(clinic:string) {
+  allEmployesAviblesToAssign(clinic: string) {
     return this.http.get(`${environment.THECLINIC_API_URL}/users/doctors?clinic=${clinic}`, this.headers).pipe(
       delay(200),
       map((resp: any) => {
@@ -65,7 +65,7 @@ export class UserService {
     );
   }
 
-  crearteNewUserWithEmailAndPassword(user: UserRegisterForm) { 
+  crearteNewUserWithEmailAndPassword(user: UserRegisterForm) {
     return this.http.post(`${environment.THECLINIC_API_URL}/users`, user, this.headers);
   }
 
@@ -77,12 +77,12 @@ export class UserService {
     return this.http.put(`${environment.THECLINIC_API_URL}/users/delete/${user_to_change}`, { user_logged }, this.headers);
   }
 
-  confirmateOldPassword(user: string, oldPassword:string) {
+  confirmateOldPassword(user: string, oldPassword: string) {
     return this.http.post(`${environment.THECLINIC_API_URL}/users/confirm-password/${user}`, { oldPassword }, this.headers);
   }
 
-  changePassword(user: string, newPassword:string) {
-    return this.http.put(`${environment.THECLINIC_API_URL}/users/change-password/${user}`, { newPassword }, this.headers);   
+  changePassword(user: string, newPassword: string) {
+    return this.http.put(`${environment.THECLINIC_API_URL}/users/change-password/${user}`, { newPassword }, this.headers);
   }
-  
+
 }

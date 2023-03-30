@@ -92,6 +92,8 @@ export class AppointmentDialogComponent {
     if (clinicSelected[0].doctors_assigned!.length>=1) {
       this.newAppointmentForm.get('doctor')?.enable();
       this.doctorList = clinicSelected[0].doctors_assigned;
+      // TODO: refactorizar doctos at list al crear appointment
+      console.log(this.doctorList)
     }
     this.newAppointmentForm.patchValue({'doctor': ''});
     return this.doctorList;

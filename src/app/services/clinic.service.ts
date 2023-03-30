@@ -22,7 +22,7 @@ export class ClinicService {
     return this.http.get(`${environment.THECLINIC_API_URL}/clinics?pagination=${from}`, this.headers).pipe(
       delay(200),
       map(
-        (resp:any) => {
+        (resp: any) => {
           const clinics = resp.clinics.map(
             ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo, doctors_assigned }: Clinic) =>
               new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, photo, doctors_assigned)
@@ -31,8 +31,8 @@ export class ClinicService {
             total: resp.total,
             clinics
           }
-     })
-  )
+        })
+    )
   }
 
   allClinicForAppointments() {
@@ -43,25 +43,25 @@ export class ClinicService {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/assignment/${clinic_id}`, { doctors_assigned }, this.headers)
   }
 
-  
+
   removeAllDoctorsAssignedToClinic(clinic_id: string, doctors_assigned: string[]) {
 
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/remove-all-assigned/${clinic_id}`, { doctors_assigned }, this.headers)
   }
 
-  removeADoctorAssignedToClinic(clinic_id: string, doctor_remove: string ,doctors_assigned: string[]) {
+  removeADoctorAssignedToClinic(clinic_id: string, doctor_remove: string, doctors_assigned: string[]) {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/remove-doctor-assigned/${clinic_id}`, { doctor_remove, doctors_assigned }, this.headers)
   }
 
-  createClinic(clinic:any) {
+  createClinic(clinic: any) {
     return this.http.post(`${environment.THECLINIC_API_URL}/clinics`, clinic, this.headers)
   }
 
-  updateClinic(clinic: any, clinic_id:string) {
+  updateClinic(clinic: any, clinic_id: string) {
     return this.http.put(`${environment.THECLINIC_API_URL}/clinics/${clinic_id}`, clinic, this.headers)
   }
 
   changeClinicStatus(clinic_to_change: string, user_logged: string) {
-    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/delete/${clinic_to_change}`, { user_logged } , this.headers)
+    return this.http.put(`${environment.THECLINIC_API_URL}/clinics/delete/${clinic_to_change}`, { user_logged }, this.headers)
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -20,14 +20,13 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private _ngZone: NgZone
   ) { }
 
   get token(): string {
     return sessionStorage.getItem('the_clinic_session_token') || '';
   }
 
-  
+
   get headers() {
     return {
       headers: {
@@ -43,45 +42,43 @@ export class AuthService {
   }
 
   loginWithEmailAndPassword(loginForm: LoginForm, currentRoute: string) {
-    if (currentRoute === '/login/patient') { 
+    if (currentRoute === '/login/patient') {
       return this.http.post(`${environment.THECLINIC_API_URL}/login/patient`, loginForm)
-      .pipe(tap( (resp: any ) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
+        .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token) }));
     }
-   
+
     return this.http.post(`${environment.THECLINIC_API_URL}/login`, loginForm)
-      .pipe(tap( (resp: any ) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
-    
+      .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token) }));
+
   }
 
-  userLogged(userLogged: User) { 
+  userLogged(userLogged: User) {
     const { id, document_type, document_number, email, name,
-      lastname, gender, phone, validationState, email_name, email_provider, rol, photo} = userLogged
+      lastname, gender, phone, validationState, email_name, email_provider, rol, photo } = userLogged
     this.currentUserLogged = new User(id, document_type, document_number, email, name,
       lastname, gender, phone, validationState, email_name, email_provider, rol, photo);
   }
 
-  googleSingIn(token: string, currentRoute:string) { 
+  googleSingIn(token: string, currentRoute: string) {
     if (currentRoute === '/login/patient') {
       return this.http.post(`${environment.THECLINIC_API_URL}/login/google/patient`, { token })
-        .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token)}));
+        .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token) }));
     }
     return this.http.post(`${environment.THECLINIC_API_URL}/login/google`, { token })
-      .pipe(tap((resp: any) => {sessionStorage.setItem('the_clinic_session_token', resp.token)}));
+      .pipe(tap((resp: any) => { sessionStorage.setItem('the_clinic_session_token', resp.token) }));
   }
-  
+
   isValidToken(): Observable<boolean> {
     return this.http.get(`${environment.THECLINIC_API_URL}/login/renew`, this.headers)
-    .pipe(
-      tap((resp: any) => {
-        if (resp.ok) {
-          this.userLogged(resp.user)
-          sessionStorage.setItem('the_clinic_session_token', resp.token)
-        }
-      }),
-      map(resp => true),
-      catchError(error => of(false))
-    );
+      .pipe(
+        tap((resp: any) => {
+          if (resp.ok) {
+            this.userLogged(resp.user)
+            sessionStorage.setItem('the_clinic_session_token', resp.token)
+          }
+        }),
+        map(resp => true),
+        catchError(error => of(false))
+      );
   }
-
-
 }
