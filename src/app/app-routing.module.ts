@@ -7,7 +7,7 @@ import { PagesRoutingModule } from 'src/app/pages/pages.routing';
 import { Error404Component } from 'src/app/pages/error404/error404.component';
 
 const routes: Routes = [
-  { path:'', redirectTo:'/dashboard/main', pathMatch:'full'},
+  { path:'', redirectTo:'/dashboard/calendar', pathMatch:'full'},
   { path: '**', component:Error404Component }
 ]
 

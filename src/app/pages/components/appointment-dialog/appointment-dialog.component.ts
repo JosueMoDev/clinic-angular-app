@@ -9,7 +9,7 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { AppoinmentService } from 'src/app/services/appoinment.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 
@@ -43,7 +43,7 @@ export class AppointmentDialogComponent {
   constructor(
     private patientService: PatientService,
     private formBuilder: FormBuilder,
-    private appointmentService: AppoinmentService,
+    private appointmentService: AppointmentService,
     private authService: AuthService,
     private store: Store<AppState>,
     private clinicService: ClinicService,

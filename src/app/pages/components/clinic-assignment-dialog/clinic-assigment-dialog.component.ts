@@ -14,15 +14,15 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 
 @Component({
-  selector: 'app-clinic-assigment-dialog',
-  templateUrl: './clinic-assigment-dialog.component.html',
+  selector: 'app-clinic-assignment-dialog',
+  templateUrl: './clinic-assignment-dialog.component.html',
   styles: [
   ],
   providers: [
     {provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check'} as MatCheckboxDefaultOptions}
   ]
 })
-export class ClinicAssigmentDialogComponent {
+export class ClinicAssignmentDialogComponent {
   public assignmentForm!: FormGroup;
   public assignmentList!: FormArray<any>;
   public thereIsSomebodyToAssing: number = 0;
@@ -34,7 +34,7 @@ export class ClinicAssigmentDialogComponent {
     private clinicAssignment: ClinicAssignmentsService,
     private updateProfile: UpdateProfileService,
     private store: Store<AppState>,
-    public dialogRef: MatDialogRef<ClinicAssigmentDialogComponent>,
+    public dialogRef: MatDialogRef<ClinicAssignmentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
   

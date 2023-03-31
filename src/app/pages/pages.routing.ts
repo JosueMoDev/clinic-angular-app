@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 
 //* Components
 import { ClinicsComponent } from './clinics/clinics.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
@@ -18,7 +18,7 @@ import { UsersComponent } from './users/users.component';
         path: 'dashboard', component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'main', component: DashboardComponent, data: { title: 'Dasboard'} },
+          { path: 'calendar', component: AppointmentComponent, data: { title: 'Calendar'} },
           { path: 'medical-record', component: MedicalRecordComponent, data: { title: 'Medical Record' } },
           { path: 'show-user', component: ShowUserComponent, data: { title: 'User Profile' } },
           { path: 'show-clinic', component: ShowClinicComponent, data: { title: 'Clinic Profile'} },

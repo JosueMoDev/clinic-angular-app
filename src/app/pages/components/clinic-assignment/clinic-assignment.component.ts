@@ -17,19 +17,19 @@ import { Clinic } from 'src/app/models/clinic.model';
 import { User } from 'src/app/models/user.model';
 import { Patient } from 'src/app/models/patient.model';
 
-import { ClinicAssigmentDialogComponent } from '../clinic-assigment-dialog/clinic-assigment-dialog.component';
+import { ClinicAssignmentDialogComponent } from '../clinic-assignment-dialog/clinic-assigment-dialog.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 import { DoctorAssigned } from 'src/app/interfaces/doctor_assigment.inteface';
 
 
 @Component({
-  selector: 'app-clinic-assigment',
-  templateUrl: './clinic-assigment.component.html',
+  selector: 'app-clinic-assignment',
+  templateUrl: './clinic-assignment.component.html',
   styles: [
   ]
 })
-export class ClinicAssigmentComponent {
+export class ClinicAssignmentComponent {
   public uiSubscription!: Subscription;
   
   public currentUserLogged!: User | Patient 
@@ -161,7 +161,7 @@ export class ClinicAssigmentComponent {
   }
 
   assignmentListDialog(): void {
-    this.matDialog.open(ClinicAssigmentDialogComponent, {
+    this.matDialog.open(ClinicAssignmentDialogComponent, {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

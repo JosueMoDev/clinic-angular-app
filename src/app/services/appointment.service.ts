@@ -11,7 +11,7 @@ import { Appointment } from 'src/app/models/appointment.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AppoinmentService {
+export class AppointmentService {
   public headers: {} = this.authService.headers
   constructor(
     private http: HttpClient,

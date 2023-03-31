@@ -11,10 +11,10 @@ import { SharedModule } from '../shared/shared.module';
 //* Components
 import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
 import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
-import { ClinicAssigmentComponent } from './components/clinic-assigment/clinic-assigment.component';
-import { ClinicAssigmentDialogComponent } from './components/clinic-assigment-dialog/clinic-assigment-dialog.component';
+import { ClinicAssignmentComponent } from './components/clinic-assignment/clinic-assignment.component';
+import { ClinicAssignmentDialogComponent } from './components/clinic-assignment-dialog/clinic-assigment-dialog.component';
 import { ClinicsComponent } from './clinics/clinics.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
@@ -32,10 +32,10 @@ import { EditMedicalRecordComponent } from './components/edit-medical-record/edi
   declarations: [
     ActionsAppointmentDialogComponent,
     AppointmentDialogComponent,
-    ClinicAssigmentComponent,
-    ClinicAssigmentDialogComponent,
+    ClinicAssignmentComponent,
+    ClinicAssignmentDialogComponent,
     ClinicsComponent,
-    DashboardComponent,
+    AppointmentComponent,
     Error404Component,
     MedicalRecordComponent,
     PagesComponent,
@@ -61,7 +61,7 @@ import { EditMedicalRecordComponent } from './components/edit-medical-record/edi
   
   ],
   exports: [
-    DashboardComponent,
+    AppointmentComponent,
     Error404Component,
     PagesComponent,
     UserRegisterComponent

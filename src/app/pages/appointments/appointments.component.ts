@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AppoinmentService } from 'src/app/services/appoinment.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
@@ -17,12 +17,12 @@ import { AppointmentDialogComponent } from 'src/app/pages/components/appointment
 import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/actions-appointment-selected/actions-appointment-dialog.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'app-appointment',
+  templateUrl: './appointments.component.html',
   styles: []
 })
   
-export class DashboardComponent {
+export class AppointmentComponent {
 
   public uiSubscription!: Subscription;
   public clinicList: Clinic[] = []
@@ -38,7 +38,7 @@ export class DashboardComponent {
   
 
   constructor(
-    private appointmentService: AppoinmentService,
+    private appointmentService: AppointmentService,
     private clinicService: ClinicService,
     private store: Store<AppState>,
     public matdialig: MatDialog,
