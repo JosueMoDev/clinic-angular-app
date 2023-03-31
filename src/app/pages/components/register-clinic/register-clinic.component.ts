@@ -42,14 +42,14 @@ export class RegisterClinicComponent {
     this.registerClinicForm = this.formbuilder.group({
       information: this.formbuilder.group({
         register_number: ['', Validators.required],
-        name: ['Geronimo 1990', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         phone: ['', Validators.required],
       }),
       address: this.formbuilder.group({
         country: [{ value:'El Salvador', disabled: true }],
         province: ['', [Validators.required]],
         city: ['', Validators.required],
-        street:[null, Validators.required]
+        street:[null,[ Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
       }),
       photo: [''],
       photoSrc:['']

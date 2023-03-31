@@ -34,7 +34,7 @@
                         <div *ngIf="!isDocument_numberCorrenct" class="flex justify-center w-full mb-4">
                             <button mat-raised-button type="submit" class="dark:disabled:text-white/50"
                                 [disabled]="confirmPatientForm.invalid" [disabled]="!isDocument_numberCorrenct"
-                                color="warn"><mat-icon>badge</mat-icon>Confirmate your Document Number</button>
+                                color="warn"><mat-icon>badge</mat-icon>Confirmate your document number</button>
                         </div>
                     </form>
                     <div *ngIf="isDocument_numberCorrenct" class="flex flex-col justify-center w-full columns-1">
@@ -125,7 +125,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <div class="flex justify-end px-2 pt-2 mx-2 mt-2">
+                                            <div *ngIf=" length > pageSize " class="flex justify-end px-2 pt-2 mx-2 mt-2">
                                                 <mat-paginator class="flex h-full bg-transparent w-fit dark:text-white "
                                                     MatPaginatorIntl (page)="handlePageEvent($event)" [length]="length"
                                                     [pageSize]="pageSize" [pageIndex]="pageIndex">
@@ -133,6 +133,9 @@
                                             </div>
                                         </tbody>
                                     </table>
+                                    <div *ngIf="length===0" class="flex justify-center w-full p-5 ">
+                                        <p class="text-2xl font-bold text-black dark:text-white">No medical records have been registered yet</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

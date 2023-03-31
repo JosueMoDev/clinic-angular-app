@@ -18,25 +18,25 @@
                 <a  routerLink="/dashboard/show-user" [ngClass]="{'opacity-50 pointer-events-none ':!user.validationState}" (click)="this.updateProfileService.userToUpdate(user)" class="flex w-full h-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
                     <td class="flex p-2 align-middle bg-transparent w-fit whitespace-nowrap">
                         <div class="flex items-center align-top">
-                          <img  [src]="user.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
+                          <img  [src]="user.photo||'assets/img/no-photo-user.jpg'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
                         </div>
                     </td>
                     <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                         <div class="text-center align-top">
                           <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Full name:</p>
-                          <h6 class="mb-0 text-sm leading-normal dark:text-white">{{user.name}} {{user.lastname}}</h6>
+                          <p class="mb-0 text-lg leading-normal dark:text-white">{{user.name}} {{user.lastname}}</p>
                         </div>
                     </td>
                     <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                       <div class="text-center align-top">
                         <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">E-mail:</p>
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">{{user.email}}</h6>
+                        <p class="mb-0 text-lg leading-normal dark:text-white">{{user.email}}</p>
                       </div>
                     </td>
                     <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                       <div class="text-center align-top">
                         <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Rol:</p>
-                        <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{user.rol}}</h6>
+                        <p class="mb-0 text-lg leading-normal uppercase dark:text-white">{{user.rol}}</p>
                       </div>
                     </td>
                   </a>
@@ -54,7 +54,7 @@
                     </div>
                   </td>
               </tr>
-              <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
+              <div *ngIf="length>pageSize" class="flex justify-end px-2 pt-2 mx-2 mt-2" >
                 <mat-paginator 
                   class="flex h-full bg-transparent dark:text-white w-fit"
                   MatPaginatorIntl
@@ -62,12 +62,14 @@
                   [length]="length"
                   [pageSize]="pageSize"
                   [pageIndex]="pageIndex"
-                  
                   >
                 </mat-paginator>
               </div>
             </tbody>
           </table>
+          <div *ngIf="length===0" class="flex justify-center w-full p-5 ">
+            <p class="text-2xl font-bold text-black dark:text-white">No user has been registered yet</p>
+          </div>
         </div>
       </div>
     </div>

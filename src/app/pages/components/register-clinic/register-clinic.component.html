@@ -159,7 +159,7 @@
                         (change)="citiesByProvince"
                         
                       >
-                      <option value="" selected disabled>select Province</option>
+                      <option value="" class="capitalize" selected disabled>Select a province</option>
                       <option *ngFor="let province of provinces" [value]="province">{{province}}</option>
                     </select>
                     <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
@@ -178,7 +178,7 @@
                         formControlName="city"
                         
                       >
-                      <option value="" selected disabled>select city</option>
+                      <option value="" class="capitalize" selected disabled>select a city</option>
                       <option *ngFor="let city of citiesByProvince" [value]="city">{{city}}</option>
                     </select>
                     <div *ngIf="city?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
@@ -223,7 +223,7 @@
           </div>
           <div class="flex items-center justify-center w-full mb-5">
             <img *ngIf="imagenTemp" [src]="imagenTemp" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
-            <img *ngIf="!imagenTemp" src="assets/img/no-photo.jpg" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
+            <img *ngIf="!imagenTemp" src="assets/img/no-photo-clinic.jpg" class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl" />
           </div>
           <div class="flex items-center justify-center flex-1 w-full mb-5">
             <button mat-raised-button type="button"  color="accent" >

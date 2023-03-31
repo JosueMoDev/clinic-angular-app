@@ -17,7 +17,7 @@
                     <td class="flex p-2 align-middle bg-transparent w-fit whitespace-nowrap">
                         <div class="flex items-center align-top">
                             <div>
-                                <img  [src]="patient.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />
+                                <img  [src]="patient.photo||'assets/img/no-photo-user.jpg'" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />
                             </div>
                         </div>
                     </td>
@@ -54,7 +54,7 @@
                     </div>
                   </td>
               </tr>
-              <div class="flex justify-end px-2 pt-2 mx-2 mt-2" >
+              <div *ngIf="length>pageSize" class="flex justify-end px-2 pt-2 mx-2 mt-2" >
                 <mat-paginator 
                   class="flex h-full bg-transparent w-fit dark:text-white "
                   MatPaginatorIntl
@@ -68,6 +68,9 @@
               </div>
             </tbody>
           </table>
+          <div *ngIf="length===0" class="flex justify-center w-full p-5 ">
+            <p class="text-2xl font-bold text-black dark:text-white">No patient has been registered yet</p>
+          </div>
         </div>
       </div>
     </div>

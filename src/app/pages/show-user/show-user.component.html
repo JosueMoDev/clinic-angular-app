@@ -220,10 +220,10 @@
                     <fieldset class="px-3 py-1 " data-role="controlgroup">
                       
                       <div class="float-left">
-                        <label for="male">Male</label>
+                        <label class="px-1 py-2 text-sm text-black dark:text-white" for="male">Male</label>
                         <input 
                          type="radio"
-                         class="w-4.8 h-4.8 ease mx-3 rounded-1.4 checked:bg-gradient-to-tl checked:from-blue-500 checked:to-violet-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 dark:border-slate-750 bg-blue-800/13 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
+                         class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left  cursor-pointer appearance-none border border-solid border-teal-500  bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
                          name="gender" 
                          id="male" 
                          value="male"
@@ -231,10 +231,10 @@
                          >
                       </div>
                        <div class="float-right">
-                        <label for="female">Female</label>
+                        <label class="px-1 py-2 text-sm text-black dark:text-white" for="female">Female</label>
                         <input 
                          type="radio" 
-                         class="w-4.8 h-4.8 ease mx-3 rounded-1.4 checked:bg-gradient-to-tl checked:from-blue-500 checked:to-violet-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 dark:border-slate-750  bg-blue-800/13 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
+                         class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left  cursor-pointer appearance-none border border-solid border-teal-500  bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
                          name="gender"
                          id="female" 
                          value="female"
@@ -256,7 +256,7 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
           <div>
             
-            <img *ngIf="!imagenTemp" class="w-full rounded-t-2xl bg-slate-500" [src]="currectPhoto||'assets/img/no-photo-user.png'" alt="profile cover image">
+            <img *ngIf="!imagenTemp" class="w-full p-1 rounded-t-2xl bg-slate-500" [src]="currectPhoto||'assets/img/no-photo-user.jpg'" alt="profile cover image">
             <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full rounded-t-2xl bg-slate-500" />
           </div>
    
@@ -278,7 +278,7 @@
                 <label for="photo" class="flex rounded-md cursor-pointer h-15">
                   <mat-icon  class="text-lg " fontIcon="camera"></mat-icon> <span>New</span>
                 </label>
-                <input  id="photo"  accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden w-full h-full " />
+                <input  id="photo"  accept="image/png, image/jpeg, image/jpg" formControlName="photo" type="file" (change)="preparePhoto($event.target)" class="hidden w-full h-full bg-white " />
               </button>
              
             </div>

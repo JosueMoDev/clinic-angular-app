@@ -2,7 +2,7 @@
   <span class="px-1 py-2 text-2xl text-black dark:text-white">Create New Appointment</span>
 </p>
 <mat-dialog-content class="mat-typography" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
-  <form role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="confirmCurrentPatient()" [formGroup]="confirmPatientForm">
+  <form *ngIf="!isDocument_numberCorrenct" role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="confirmCurrentPatient()" [formGroup]="confirmPatientForm">
     <div class="w-full mb-4">
         <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Confirmate your DUI</span>
         <div class="relative">
@@ -38,8 +38,26 @@
 
   <form *ngIf="isDocument_numberCorrenct" role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="createAppointment()" [formGroup]="newAppointmentForm">
     <div class="grid w-full grid-cols-1">
-      <div class="flex-col w-full columns-1">
-        <p class="flex justify-center w-full px-1 py-2 text-lg text-center text-black dark:text-white">Patient selected: {{completename}}</p>
+      <div class="flex flex-col items-center justify-center w-full p-5 columns-1">
+        <div class="flex flex-col p-3 rounded-lg shadow-lg columns-1 w-fit bg-slate-100">
+          <div class="flex w-full">
+              <p class="text-xl font-bold text-slate-850">Patient ID</p>
+          </div>
+          <div class="flex w-full">
+              <div class="my-auto">
+                  <img [src]="patient?.photo||'assets/img/no-photo-user.png'"
+                      class="inline-flex items-center justify-center object-cover object-top mr-4 overflow-hidden text-sm text-white bg-orange-300 w-34 h-34 max-w-none rounded-xl" />
+              </div>
+              <div class="flex flex-col justify-center">
+                  <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
+                          class="font-semibold">Full Name : </span><span class="font-normal">{{
+                          patient?.name }} {{patient?.lastname}}</span></p>
+                  <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
+                          class="font-semibold">Document Number : </span><span
+                          class="font-normal">{{ patient!.document_number | mask:'00000000-0'}}</span></p>
+              </div>
+          </div>
+        </div>
       </div>
       
       <div class="flex-col w-full columns-2">
