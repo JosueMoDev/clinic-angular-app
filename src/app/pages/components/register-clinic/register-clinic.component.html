@@ -1,15 +1,8 @@
+<p mat-dialog-title class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+  <span class="px-1 py-2 text-2xl text-black dark:text-white">Register New Clinic</span>
+</p>
 <mat-dialog-content disableClose="true"  role="dialog"  align="center" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
-    <div class="flex-col w-full mb-5 align-middle columns-2">
-      <div class="flex justify-start ">
-        <p class="float-left text-2xl text-black text-start dark:text-white">Register New Clinic</p>
-      </div>
-      <div class="flex justify-end">
-        <button (click)="matdialogRef.close()" color="warn" mat-raised-button >
-          <mat-icon  fontIcon="close"></mat-icon> <span>close</span> 
-        </button>
-      </div>
-    </div>
-    <ol class="flex items-center justify-center w-full">
+    <ol class="flex items-center justify-center w-full py-5">
       <div class="flex justify-center w-full">
         <!-- first step -->
         <li *ngIf="!isFirstStepValid" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
@@ -248,5 +241,7 @@
       </div>
     </form>
 </mat-dialog-content>
- 
+<mat-dialog-actions align="end" class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850">
+  <button mat-raised-button color="warn" class="z-0" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
 

@@ -29,7 +29,7 @@ export class ShowUserComponent {
   public isLoading: boolean = false;
   public profileSelected: User | Patient;
   public ShowPassWordButtom: boolean = false;
-
+  public someChange: boolean = false;
   //? User Information
   public document_type:string = 'DUI';
   public profileForm!: FormGroup;
@@ -73,11 +73,13 @@ export class ShowUserComponent {
     
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
+    this.somethigChange
   }
 
   ngOnDestroy(): void {
     sessionStorage.removeItem('profile-to-show');
     sessionStorage.removeItem('current-photo-profile');
+    this.somethigChange.unsubscribe;
   }
 
   updateProfile() {
@@ -209,7 +211,13 @@ export class ShowUserComponent {
   get document_number() { return this.profileForm.get('document_number'); }
   get phone() { return this.profileForm.get('phone'); }
  
-  
+  get somethigChange() {
+    return this.profileForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') { this.someChange = true }
+      else { this.someChange = false}
+    })
+  }
+
   forbiddenInputTextValidator(): ValidatorFn{
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/;
     return (control: AbstractControl): ValidationErrors | null => {

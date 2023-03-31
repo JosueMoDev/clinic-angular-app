@@ -106,6 +106,7 @@ export class ActionsAppointmentDialogComponent {
       if (value === 'VALID') { this.someChange = true }
       else { this.someChange = false}
     })
+    
   }
 
 

@@ -79,7 +79,6 @@ export class ClinicsComponent {
   openDialog(): void {
     this.matDialog.open(RegisterClinicComponent, {
       width: '100%',
-      height: '80%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

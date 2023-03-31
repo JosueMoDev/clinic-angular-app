@@ -83,14 +83,11 @@ export class UsersComponent implements OnInit {
     this.ui.currentUserType('');
     this.matDialog.open(UserRegisterComponent, {
       width: '100%',
-      height: '90%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
     });
   } 
-
- 
 
 
   allUsers() {

@@ -22,7 +22,7 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 export class ShowClinicComponent {
   public profileSelected!: Clinic;
   public isLoading: boolean = false;
-
+  public someChange: boolean = false;
   // ?Information Form
   public cities!: string[];
   public profileForm!: FormGroup;
@@ -50,7 +50,7 @@ export class ShowClinicComponent {
     this.profileForm = this.formbuilder.group({
       information: this.formbuilder.group({
         register_number: [this.profileSelected.register_number, Validators.required],
-        name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+        name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         phone: [this.profileSelected.phone, Validators.required],
       }),
       address: this.formbuilder.group({
@@ -65,13 +65,20 @@ export class ShowClinicComponent {
       photo: [''],
       photoSrc:['']
     })
-    
+    this.somethigChange
     this.provinces = provicesAndCities.map(({ province }) => province);
   }
 
   ngOnDestroy(): void {
     sessionStorage.removeItem('profile-to-show');
     sessionStorage.removeItem('current-photo-profile');
+    this.somethigChange.unsubscribe;
+  }
+  get somethigChange() {
+    return this.profileForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') { this.someChange = true }
+      else { this.someChange = false}
+    })
   }
 
   updateProfile() {

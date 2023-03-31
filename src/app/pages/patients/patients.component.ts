@@ -77,7 +77,7 @@ export class PatientsComponent {
     this.ui.currentUserType(userType);
     this.matDialog.open(UserRegisterComponent, {
       width: '100%',
-      height: '80%',
+      maxHeight:'95vh',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
