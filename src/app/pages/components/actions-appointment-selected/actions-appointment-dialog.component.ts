@@ -17,6 +17,8 @@ import { Clinic } from 'src/app/models/clinic.model';
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
+import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
+import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 
 @Component({
   selector: 'app-actions-appointment-selected',
@@ -32,8 +34,8 @@ export class ActionsAppointmentDialogComponent {
   public minTime: string = '08:00';
   public maxTime: string = '18:00';
   public dataAppointment!: Appointment; 
-  public clinicList: Clinic[] = []
-  public doctorList: any[] | undefined
+  public clinicList: ClinicAvailableToMakeAnAppointment[] = [];
+  public doctorList!: DoctorAvailable[];
   public someChange: boolean = false;
 
   public doctorSelected!: string | null;
@@ -73,23 +75,20 @@ export class ActionsAppointmentDialogComponent {
       start: [this.dataAppointment.start, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
     });
-    this.allClinics();
+    this.allClinicsAvailableToMakeAnAppointment();
+    this.doctorsByClinicId;
     this.somethigChange
   }
   ngOnDestroy(): void {
     this.somethigChange.unsubscribe
   }
 
-  allClinics() {
-    //! Refactory
-    console.warn('refactor at allClinicForAppointments, ActionsAppointmentDialogComponent');
-    // this.clinicAssignment.allEmployeesAssingedToClinic(this.dataAppointment.clinic)
-    //   .subscribe(
-    //     (resp:any) => {
-    //       this.clinicList = resp.clinics;
-    //       this.clinics
-    //     }
-    //   )
+  allClinicsAvailableToMakeAnAppointment() {
+    this.clinicService.allClinicsAvailableToMakeAnAppointment()
+      .subscribe(({ clinics }) => {
+          this.clinicList = clinics
+        }
+      )
   }
 
   get doctor() {
@@ -113,17 +112,13 @@ export class ActionsAppointmentDialogComponent {
   get clinics() { return this.clinicList  }
   get clinicId() { return this.editAppointmentForm.get('clinic')?.value; }
   get doctorsByClinicId() {
-    // this.editAppointmentForm.get('doctor')?.disable();
-    // const clinicSelected = this.clinicList.filter(clinic => clinic.clinic_id === this.clinicId);
-    // if (clinicSelected[0].doctors_assigned!.length>=1) {
-    //   this.editAppointmentForm.get('doctor')?.enable();
-    //   this.doctorList = clinicSelected[0].doctors_assigned
-    //   this.doctor
-    //   return this.doctorList;
-    // }
-    // this.doctor
-    // return this.doctorList = [];
-    return
+    this.clinicAssignment.allDoctorsAvailableToMakeAnAppointment(this.editAppointmentForm.get('clinic')?.value)
+      .subscribe(
+        ({ doctors })=>{
+          this.doctorList = doctors;
+      }
+    )
+    return this.doctorList;
   }
   get newDate() {
     const date = setHours(new Date(this.editAppointmentForm.get('start')?.value), 0)
@@ -133,6 +128,7 @@ export class ActionsAppointmentDialogComponent {
   get newTime() { return this.editAppointmentForm.get('time')?.value; }
 
   editAppointment() {
+
     if (!this.editAppointmentForm.invalid) {
       this.editAppointmentForm.get('doctor')?.enable()
       const { clinic, doctor } = this.editAppointmentForm.value;
