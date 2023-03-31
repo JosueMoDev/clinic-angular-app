@@ -89,10 +89,11 @@ export class AppointmentDialogComponent {
   get clinicId() { return (this.newAppointmentForm.get('clinic')?.value); }
   
   get doctorsByClinicId() {
-    this.newAppointmentForm.get('doctor')?.enable();
+    this.newAppointmentForm.get('doctor')?.disable();
     this.clinicAssignment.allDoctorsAvailableToMakeAnAppointment(this.newAppointmentForm.get('clinic')?.value)
       .subscribe(
-        ({ doctors })=>{
+        ({ doctors }) => {
+          this.newAppointmentForm.get('doctor')?.enable();
           this.doctorList = doctors;
       }
     )
