@@ -1,33 +1,31 @@
-<div class="w-full">
-    <span class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
-      <i class="fas fa-search"></i>
-    </span>
-    <input 
-        type="text" 
-        class="pl-9 w-full text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 md:py-3.5  text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-        placeholder="Type here..."
-        (ngModelChange)="search($event)" 
-    />
+<div class="items-center w-full h-full">
+   
+    <form  role="form " [formGroup]="searchForm">
+        <div class="flex"> 
+            <span class="text-lg  absolute  z-[2]  flex h-fit align-middle  rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2  px-1 text-center ">
+                <mat-icon class="text-base text-white ">search</mat-icon>
+            </span>         
+            <input 
+                type="text" 
+                class="pl-9 w-full text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                placeholder="Type here..."
+                type="text" 
+                formControlName="searchInput"
+            />
+        </div>
+    </form>
 </div>
-<!-- <div class="limit-width" #asBoxInput>
-    <input
-      class="input-src"
-      [ngClass]="{'loading':isLoading}"
-      [spellcheck]="false"
-      placeholder="Canciones"
-      type="text"
-      (ngModelChange)="search($event)"
-      [(ngModel)]="src">
-
-      <div class="results">
-        <ul>
-          <li *ngFor="let item of data$ | async">
-            <a class="name" target="_blank" [href]="item?.external_urls?.spotify">
-              {{item.name}}
-            </a>
-            <img [src]="item.album.images[2].url" alt="">
-          </li>
-        </ul>
-      </div>
-
-  </div> -->
+<div class="w-full h-full" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="searchMenu">
+    <mat-menu  #searchMenu="matMenu" class="w-full h-full bg-slate-850/100">
+        <a  routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(result)" mat-menu-item *ngFor="let result of searchResults$ | async" class="w-full h-full">
+            <div class="flex w-full p-3">
+                <div class="w-full my-auto">
+                  <img [src]="result.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-16 h-16 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
+                </div>
+                <div class="flex justify-center w-full min-w-full space-x-2">
+                  <p class="w-full mb-1 text-sm font-normal capitalize text-white/80"><span class="font-semibold">{{result.name}}  {{result.lastname}} {{result.rol}} {{result.phone}}</span></p>
+                </div>
+            </div>
+        </a>
+    </mat-menu> 
+</div>
