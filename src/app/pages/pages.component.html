@@ -47,10 +47,7 @@
         <div class="flex items-center justify-end grow">
           <div class="flex items-center w-full ">
             <div class="relative flex flex-wrap items-end w-full transition-all rounded-lg ease">
-              <span class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
-                <i class="fas fa-search"></i>
-              </span>
-              <input type="text" class="pl-9 text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 md:py-3.5  text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow" placeholder="Type here..." />
+              <app-searching class="w-full"></app-searching>
             </div>
             <div class="mx-0 md:mx-1">
               <button [matMenuTriggerFor]="menu" class="text-white"><mat-icon>more_vert</mat-icon></button>
