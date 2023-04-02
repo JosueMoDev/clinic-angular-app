@@ -3,9 +3,9 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { SearchingService } from 'src/app/services/searching.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatMenuTrigger} from '@angular/material/menu';
-import { User } from '../../../models/user.model';
+import { User } from 'src/app/models/user.model';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
+
 
 @Component({
   selector: 'app-searching',
@@ -14,7 +14,7 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
   ]
 })
 export class SearchingComponent {
-  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  public openSearchBar: boolean = false;
   public searchForm!: FormGroup;
   public searchResults$!: Observable<User[]> | undefined;
   public data = []
@@ -31,24 +31,30 @@ export class SearchingComponent {
       searchInput: ['']
     });
     this.searchResults$ = this.searchForm.get('searchInput')?.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(200),
       switchMap(async (searchText: string) => {
         return await this.searchAsync(searchText);
       })
     );
   }
+  get toggleOpenBar(){ return !this.openSearchBar}
 
   async searchAsync(searchText: string): Promise<User[]> {
     if (!searchText) {
-      this.menuTrigger.closeMenu();
+      return[]
     }
-    this.menuTrigger.openMenu();
     this.searchingService.getResponse(searchText).subscribe(
-      (resp: any) => { this.data = resp.data })
-      if (!this.data.length) {
-        this.menuTrigger.closeMenu();
-      }
+      (resp: any) => {
+        this.data = resp.data
+        this.toggleOpenBar;
+      })
       return [...this.data] ;
+  }
+
+  setProfile(profile: any) {
+    this.searchForm.patchValue({ searchInput : null })
+    this.toggleOpenBar;
+    this.updateProfileService.userToUpdate(profile)
   }
     
 } 

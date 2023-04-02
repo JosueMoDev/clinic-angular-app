@@ -7,7 +7,7 @@
             </span>         
             <input 
                 type="text" 
-                class="pl-9 w-full text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                class="pl-9 w-full text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow"
                 placeholder="Type here..."
                 type="text" 
                 formControlName="searchInput"
@@ -15,17 +15,19 @@
         </div>
     </form>
 </div>
-<div class="w-full h-full" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="searchMenu">
-    <mat-menu  #searchMenu="matMenu" class="w-full h-full bg-slate-850/100">
-        <a  routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(result)" mat-menu-item *ngFor="let result of searchResults$ | async" class="w-full h-full">
+<ul *ngIf="!openSearchBar" class="absolute right-0 z-50 w-full h-auto text-sm origin-top rounded-md bg-slate-850/100 top-11 transform-dropdown bg-clip-padding">
+    <li class="relative w-full mb-2" *ngFor="let result of searchResults$ | async">
+        <a  routerLink="/dashboard/show-user" (click)="setProfile(result)"  class="w-full h-full">
             <div class="flex w-full p-3">
                 <div class="w-full my-auto">
                   <img [src]="result.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-16 h-16 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
                 </div>
-                <div class="flex justify-center w-full min-w-full space-x-2">
-                  <p class="w-full mb-1 text-sm font-normal capitalize text-white/80"><span class="font-semibold">{{result.name}}  {{result.lastname}} {{result.rol}} {{result.phone}}</span></p>
+                <div class="flex justify-center w-full min-w-full align-middle">
+                  <p class="flex justify-center w-full font-normal capitalize align-middle text-white/80"><mat-icon class="text-base">person</mat-icon><span class="font-semibold">{{result.name}}  {{result.lastname}} </span></p>
+                  <p class="flex justify-center w-full font-normal capitalize align-middle text-white/80"><mat-icon class="text-base">phone</mat-icon><span class="font-semibold">{{result.phone}}</span></p>
+                  <p class="flex justify-center w-full font-normal capitalize align-middle text-white/80"><mat-icon class="text-base">assignment_ind</mat-icon><span class="font-semibold">{{result.rol}}</span></p>
                 </div>
             </div>
         </a>
-    </mat-menu> 
-</div>
+    </li>
+</ul>
