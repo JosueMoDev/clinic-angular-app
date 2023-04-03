@@ -13,6 +13,7 @@ import { PatientService } from 'src/app/services/patient.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -26,8 +27,8 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
   ]
 })
 export class UserRegisterComponent {
- 
-  public isFirstStepValid!: string;
+  public formSub$!: Subscription;
+  public isFirstStepValid : boolean = false;
   public document_type: string = 'DUI';
   public email_provider: string = '@gmail.com';
   public currentStep : number = 1  ;
@@ -36,6 +37,16 @@ export class UserRegisterComponent {
   public imagenTemp!: any;
   public rol!: string | null;
 
+  constructor(
+    private formbuilder: FormBuilder,
+    private userservice: UserService,
+    private patientService: PatientService,
+    private cloudinary: CloudinaryService,
+    private store: Store<AppState>,
+    private ui: UiService,
+    public matdialogRef: MatDialogRef<UserRegisterComponent>,
+
+  ) { }
 
   ngOnInit() {
     this.rol = this.ui.currentUserToEnrrolled
@@ -55,20 +66,22 @@ export class UserRegisterComponent {
       photoSrc: ['']
     });
     
-    this.isPersonalInformationStepValid
+    this.formSub$ = this.registerForm.get('personalInformation')!.statusChanges.subscribe(status => {
+      if (status === 'VALID') {
+        this.isFirstStepValid = true;
+        this.verifyFirstStep;
+      }
+      else {
+        this.isFirstStepValid = false;
+        this.verifyFirstStep;
+      }
+    })
     this.registerForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value) 
   }
-  constructor(
-    private formbuilder: FormBuilder,
-    private userservice: UserService,
-    private patientService: PatientService,
-    private cloudinary: CloudinaryService,
-    private store: Store<AppState>,
-    private ui: UiService,
-    public matdialogRef: MatDialogRef<UserRegisterComponent>,
 
-  ) { }
-  
+  ngOnDestroy(): void {
+    this.formSub$.unsubscribe;
+  }
   preparePhoto(event: any) {
     const photo = event.files[0]
     this.registerForm.patchValue({ 'photoSrc': photo })
@@ -100,7 +113,7 @@ export class UserRegisterComponent {
   }
 
   createUser() {
-    if (this.isFirstStepValid === 'VALID') {   
+    if (this.isFirstStepValid) {   
         const { personalInformation, photo } = this.registerForm.value
         const newRegisterForm = {
           document_type: personalInformation.document_type,
@@ -146,9 +159,7 @@ export class UserRegisterComponent {
     }
      
   }
-  get isPersonalInformationStepValid() {
-    return this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status);
-  }
+  get verifyFirstStep() {return this.isFirstStepValid;}
   get document_number() { return this.registerForm.get('personalInformation.document_number'); }
   get name() { return this.registerForm.get('personalInformation.name'); }
   get lastname() { return this.registerForm.get('personalInformation.lastname'); }
@@ -175,7 +186,7 @@ export class UserRegisterComponent {
   }
   
   nextPage() {
-    if (  this.isFirstStepValid ==='VALID' ) { this.currentStep = this.currentStep+1 }
+    if (  this.isFirstStepValid ) { this.currentStep = this.currentStep+1 }
   }
   previusPage() { this.currentStep = this.currentStep - 1 }
   

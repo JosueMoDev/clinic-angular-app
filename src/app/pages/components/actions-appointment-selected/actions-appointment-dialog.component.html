@@ -85,7 +85,7 @@
   
       
       <div class="flex justify-center w-full mb-4 space-x-2">
-        <button mat-raised-button type="submit" [disabled]="!(someChange && (!editAppointmentForm.invalid || editAppointmentForm.pristine))" color="accent" ><mat-icon>edit_calendar</mat-icon>Edit Appointment</button>
+        <button mat-raised-button type="submit" [disabled]="!(somethingChanged && (!editAppointmentForm.invalid || editAppointmentForm.pristine))" color="accent" ><mat-icon>edit_calendar</mat-icon>Edit Appointment</button>
         <button mat-raised-button type="button" (click)="deleteAppointment()"  color="warn" ><mat-icon>event_busy</mat-icon>Delete Appointment</button>
       </div>  
     </form> 
