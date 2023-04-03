@@ -29,7 +29,7 @@ export class ShowUserComponent {
   public isLoading: boolean = false;
   public profileSelected: User | Patient;
   public ShowPassWordButtom: boolean = false;
-  public someChange: boolean = false;
+  public isFormValid!: string;
   //? User Information
   public document_type:string = 'DUI';
   public profileForm!: FormGroup;
@@ -213,10 +213,8 @@ export class ShowUserComponent {
   get phone() { return this.profileForm.get('phone'); }
  
   get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => {
-      if (value === 'VALID') { this.someChange = true }
-      else { this.someChange = false}
-    })
+    console.log(this.profileForm.statusChanges.subscribe(value => this.isFormValid = value));
+    return this.profileForm.statusChanges.subscribe(value => this.isFormValid = value);
   }
 
   forbiddenInputTextValidator(): ValidatorFn{
