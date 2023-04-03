@@ -50,7 +50,6 @@ export class SearchingComponent {
     this.searchingService.getResponse(searchText).subscribe(
       (resp: any) => {
         this.data = resp.data
-        console.log(this.data)
         this.toggleOpenBar;
       })
       return [...this.data] ;
