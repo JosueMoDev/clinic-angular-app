@@ -166,7 +166,7 @@
               </div>
               </div>
             <div class="flex justify-end w-full p-5 ">
-                <button mat-raised-button type="submit" [disabled]="!(isFormValid==='VALID' && (!profileForm.invalid || profileForm.pristine))" color="accent" class="z-0"><mat-icon>update</mat-icon>update</button>
+                <button mat-raised-button type="submit" [disabled]="!( hasChanges && (!profileForm.invalid || profileForm.pristine))" color="accent" class="z-0"><mat-icon>update</mat-icon>update</button>
             </div>
         </div>
       </form>

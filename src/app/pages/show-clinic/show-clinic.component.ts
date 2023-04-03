@@ -22,7 +22,7 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 export class ShowClinicComponent {
   public profileSelected!: Clinic;
   public isLoading: boolean = false;
-  public isFormValid!:string;
+  public somethingChanged: boolean = false;
   // ?Information Form
   public cities!: string[];
   public profileForm!: FormGroup;
@@ -74,8 +74,17 @@ export class ShowClinicComponent {
     sessionStorage.removeItem('current-photo-profile');
     this.somethigChange.unsubscribe;
   }
+  get hasChanges(){ return this.somethingChanged }
   get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => this.isFormValid = value)
+    return this.profileForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') {
+        this.somethingChanged = true;
+        this.hasChanges;
+      } else { 
+        this.somethingChanged = false;
+        this.hasChanges;
+      }
+    })
   }
 
   updateProfile() {
