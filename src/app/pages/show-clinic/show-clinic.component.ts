@@ -11,6 +11,7 @@ import { Clinic} from 'src/app/models/clinic.model';
 
 import provicesAndCities from 'src/assets/ElSalvadorCities.json';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-show-clinic',
@@ -20,6 +21,7 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 })
   
 export class ShowClinicComponent {
+  public formSub$!: Subscription;
   public profileSelected!: Clinic;
   public isLoading: boolean = false;
   public somethingChanged: boolean = false;
@@ -65,20 +67,8 @@ export class ShowClinicComponent {
       photo: [''],
       photoSrc:['']
     })
-    this.somethigChange
-    this.provinces = provicesAndCities.map(({ province }) => province);
-  }
-
-  ngOnDestroy(): void {
-    sessionStorage.removeItem('profile-to-show');
-    sessionStorage.removeItem('current-photo-profile');
-    this.somethigChange.unsubscribe;
-  }
-  get hasChanges(){ return this.somethingChanged }
-  get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => {
+    this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
-        console.log(value)
         this.somethingChanged = true;
         this.hasChanges;
       } else { 
@@ -86,7 +76,16 @@ export class ShowClinicComponent {
         this.hasChanges;
       }
     })
+    this.provinces = provicesAndCities.map(({ province }) => province);
   }
+
+  ngOnDestroy(): void {
+    sessionStorage.removeItem('profile-to-show');
+    sessionStorage.removeItem('current-photo-profile');
+    this.formSub$.unsubscribe;
+  }
+  get hasChanges(){ return this.somethingChanged }
+
 
   updateProfile() {
     if ( !this.profileForm.errors ) {   
