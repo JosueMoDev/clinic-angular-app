@@ -250,7 +250,7 @@
                 Form{{ !profileForm.invalid}}
                 Prestine{{ profileForm.pristine }}
                 someChange{{someChange}}
-                Resoult{{!(someChange && (!profileForm.invalid || profileForm.pristine))}}
+                Resoult{{!(somethigChange && (!profileForm.invalid || profileForm.pristine))}}
                 <button type="submit" [disabled]="!(someChange && (!profileForm.invalid || profileForm.pristine))" 
                 mat-raised-button color="accent" class="z-0"><mat-icon>update</mat-icon> update</button>
             </div>
