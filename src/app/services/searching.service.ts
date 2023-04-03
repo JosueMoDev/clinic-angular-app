@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
-import { delay, map } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class SearchingService {
   ) { }
 
   getResponse(term: string) {
+    console.log(term)
     return this.http.get(`${environment.THECLINIC_API_URL}/search/${term}`, this.headers)
   }
 }

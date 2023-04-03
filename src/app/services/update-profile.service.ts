@@ -26,6 +26,7 @@ export class UpdateProfileService {
   }
 
   userToUpdate(profile: User | Patient) {
+    console.log(profile)
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.userProfile = profile;
   }
@@ -44,6 +45,7 @@ export class UpdateProfileService {
   }
 
   clinicToUpdate(profile: Clinic) {
+    console.log(profile)
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.clinicProfile = profile;
   }
