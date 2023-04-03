@@ -15,7 +15,6 @@ export class SearchingService {
   ) { }
 
   getResponse(term: string) {
-    console.log(term)
     return this.http.get(`${environment.THECLINIC_API_URL}/search/${term}`, this.headers)
   }
 }
