@@ -213,8 +213,10 @@ export class ShowUserComponent {
   get phone() { return this.profileForm.get('phone'); }
  
   get somethigChange() {
-    console.log(this.profileForm.statusChanges.subscribe(value => this.isFormValid = value));
-    return this.profileForm.statusChanges.subscribe(value => this.isFormValid = value);
+    return this.profileForm.statusChanges.subscribe(value => {
+      console.log(value)
+      this.isFormValid = value
+    });
   }
 
   forbiddenInputTextValidator(): ValidatorFn{
