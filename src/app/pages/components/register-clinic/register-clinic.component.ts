@@ -14,6 +14,7 @@ import {  User } from 'src/app/models/user.model';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import provicesAndCities from 'src/assets/ElSalvadorCities.json';
+import { Subscription } from 'rxjs';
 
 
 
@@ -26,39 +27,15 @@ import provicesAndCities from 'src/assets/ElSalvadorCities.json';
   ]
 })
 export class RegisterClinicComponent {
+  public formSub$!: Subscription;
   public currentStep : number = 1  ;
   public registerClinicForm!: FormGroup;
+  public isFirstStepValid: boolean = false;
   public provinces!: string[];
   public cities!: string[];
-  public informationStep!: string;
-  public addressStep!: string;
   public loggedUser!: User;
   public imagenTemp!: any;
  
-  ngOnInit() {
-
-    this.loggedUser = this.authService.currentUserLogged;
-
-    this.registerClinicForm = this.formbuilder.group({
-      information: this.formbuilder.group({
-        register_number: ['', Validators.required],
-        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-        phone: ['', Validators.required],
-      }),
-      address: this.formbuilder.group({
-        country: [{ value:'El Salvador', disabled: true }],
-        province: ['', [Validators.required]],
-        city: ['', Validators.required],
-        street:[null,[ Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
-      }),
-      photo: [''],
-      photoSrc:['']
-    });
-
-    this.provinces = provicesAndCities.map( ({province}) => province)
-    this.registerClinicForm.get('address.city')?.disable();  
-  }
-  
   constructor(
     private formbuilder: FormBuilder,
     private authService: AuthService,
@@ -68,28 +45,58 @@ export class RegisterClinicComponent {
     private store : Store <AppState>
   ) { }
 
-  get nameProvince() { return this.registerClinicForm.get('address.province')?.value; }
-  get country(){ return this.registerClinicForm.get('address.country')}
-  get isFirstStepValid() {
-    this.registerClinicForm.get('information')?.statusChanges.subscribe(status => this.informationStep = status)
-    this.registerClinicForm.get('address')?.statusChanges.subscribe(status => this.addressStep = status)
-    return( this.informationStep ==='VALID' && this.addressStep ==='VALID')
+  ngOnInit() {
+
+    this.loggedUser = this.authService.currentUserLogged;
+
+    this.registerClinicForm = this.formbuilder.group({
+      firstStep: this.formbuilder.group({
+        register_number: ['', Validators.required],
+        name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+        phone: ['', Validators.required],
+        country: [{ value:'El Salvador', disabled: true }],
+        province: ['', [Validators.required]],
+        city: ['', Validators.required],
+        street:[null,[ Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
+      }),
+      photo: [''],
+      photoSrc:['']
+    });
+    this.formSub$ = this.registerClinicForm.get('firstStep')!.statusChanges.subscribe(status => {
+      if (status === 'VALID') {
+        this.isFirstStepValid = true;
+        this.verifyFirstStep;
+      } else { 
+        this.isFirstStepValid = false;
+        this.verifyFirstStep;
+      }
+    })
+    this.provinces = provicesAndCities.map( ({province}) => province)
+    this.registerClinicForm.get('firstStep.city')?.disable();  
   }
+  
+  ngOnDestroy(): void {
+    this.formSub$.unsubscribe;
+  }
+
+  get nameProvince() { return this.registerClinicForm.get('firstStep.province')?.value; }
+  get country(){ return this.registerClinicForm.get('firstStep.country')}
+  get verifyFirstStep() { return this.isFirstStepValid }
   get photo(){ return this.registerClinicForm.get('photo')?.value}
-  get name() { return this.registerClinicForm.get('information.name'); }
+  get name() { return this.registerClinicForm.get('firstStep.name'); }
   get citiesByProvince() {
     if (this.nameProvince) {
-      this.registerClinicForm.get('address.city')?.enable();
+      this.registerClinicForm.get('firstStep.city')?.enable();
       const province = provicesAndCities.filter(province => province.province === this.nameProvince)
       return province[0].cities
     }
     return;
   }
-  get register_number() { return this.registerClinicForm.get('information.register_number') }
-  get phone_number(){return this.registerClinicForm.get('information.phone')}
-  get province() {return this.registerClinicForm.get('address.province')}
-  get city() { return this.registerClinicForm.get('address.city') }
-  get street(){ return this.registerClinicForm.get('address.street')}
+  get register_number() { return this.registerClinicForm.get('firstStep.register_number') }
+  get phone_number(){return this.registerClinicForm.get('firstStep.phone')}
+  get province() {return this.registerClinicForm.get('firstStep.province')}
+  get city() { return this.registerClinicForm.get('firstStep.city') }
+  get street(){ return this.registerClinicForm.get('firstStep.street')}
 
   forbiddenInputMailValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z0-9]+[\sa-zA-Z0-9]+$/
@@ -135,12 +142,17 @@ export class RegisterClinicComponent {
   previusPage() { this.currentStep = this.currentStep - 1 }
 
   createClinic() { 
-    const { information, address } = this.registerClinicForm.value
+    const {  firstStep } = this.registerClinicForm.value
     const newClinicRegisterForm = {
-      register_number: information.register_number,
-      phone: information.phone,
-      name: information.name,
-      address,
+      register_number: firstStep.register_number,
+      phone: firstStep.phone,
+      name: firstStep.name,
+      address: {
+        country: firstStep.country,
+        province:firstStep.province,
+        city: firstStep.city,
+        street:firstStep.street
+      },
       user_id: this.loggedUser.id,
       user_rol: this.loggedUser.rol
  

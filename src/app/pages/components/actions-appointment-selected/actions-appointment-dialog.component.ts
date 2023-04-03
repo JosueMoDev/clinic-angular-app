@@ -12,13 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 
-import { Clinic } from 'src/app/models/clinic.model';
-
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-actions-appointment-selected',
@@ -27,6 +26,7 @@ import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface'
   ]
 })
 export class ActionsAppointmentDialogComponent {
+  public formSub$!: Subscription;
   public editAppointmentForm!: FormGroup;
   public userLogged!: string;
   public minDate: Date;
@@ -36,7 +36,7 @@ export class ActionsAppointmentDialogComponent {
   public dataAppointment!: Appointment; 
   public clinicList: ClinicAvailableToMakeAnAppointment[] = [];
   public doctorList!: DoctorAvailable[];
-  public someChange: boolean = false;
+  public somethingChanged: boolean = false;
 
   public doctorSelected!: string | null;
   public doctorSelectedName!: string;
@@ -77,10 +77,21 @@ export class ActionsAppointmentDialogComponent {
     });
     this.allClinicsAvailableToMakeAnAppointment();
     this.doctorsByClinicId;
-    this.somethigChange
+    
+    this.formSub$ = this.editAppointmentForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') {
+        this.somethingChanged = true;
+        this.hasChanges;
+      }
+      else {
+        this.somethingChanged = false;
+        this.hasChanges;
+      }
+    })
+
   }
   ngOnDestroy(): void {
-    this.somethigChange.unsubscribe
+    this.formSub$.unsubscribe
   }
 
   allClinicsAvailableToMakeAnAppointment() {
@@ -101,13 +112,7 @@ export class ActionsAppointmentDialogComponent {
     return this.doctorSelectedName = 'Select a doctor';
   }
 
-  get somethigChange() {
-    return this.editAppointmentForm.statusChanges.subscribe(value => {
-      if (value === 'VALID') { this.someChange = true }
-      else { this.someChange = false}
-    })
-    
-  }
+  get hasChanges() {return this.somethingChanged}
 
 
   get clinics() { return this.clinicList  }

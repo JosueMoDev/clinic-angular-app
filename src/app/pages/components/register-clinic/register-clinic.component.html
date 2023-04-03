@@ -43,8 +43,8 @@
       <div class="py-5 ">
         <!-- Step 1 -->
         <div *ngIf="currentStep===1"  >
-          <div class="grid grid-cols-1 gap-4 ">
-            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3" formGroupName="information">
+          <div class="grid grid-cols-1 gap-4 " formGroupName="firstStep">
+            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3" >
               <div class="mb-4">
                 <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Register Number</span>
                 <div class="relative flex rounded-md">
@@ -125,7 +125,7 @@
   
               </div>
             </div>
-            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4" formGroupName="address">
+            <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4">
                 <div class="mb-4">
                   <span class="flex justify-start px-1 py-2 text-sm text-black dark:text-white">Country</span>
                   <div class="relative flex rounded-md">
