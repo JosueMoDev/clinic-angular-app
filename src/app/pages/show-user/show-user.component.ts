@@ -15,6 +15,7 @@ import { User } from 'src/app/models/user.model';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
+import { Subscription } from 'rxjs';
    
 
 
@@ -26,6 +27,7 @@ import { PasswordRecoveryComponent } from 'src/app/pages/components/password-rec
   ]
 })
 export class ShowUserComponent {
+  public formSub$!: Subscription;
   public isLoading: boolean = false;
   public profileSelected: User | Patient;
   public ShowPassWordButtom: boolean = false;
@@ -73,13 +75,22 @@ export class ShowUserComponent {
     
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
-    this.somethigChange;
+
+    this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
+      if (value === 'VALID') {
+        this.somethingChanged = true;
+        this.hasChanges;
+      } else { 
+        this.somethingChanged = false;
+        this.hasChanges;
+      }
+    });
   }
 
   ngOnDestroy(): void {
     sessionStorage.removeItem('profile-to-show');
     sessionStorage.removeItem('current-photo-profile');
-    this.somethigChange.unsubscribe;
+    this.formSub$.unsubscribe;
   }
 
   updateProfile() {
@@ -212,18 +223,7 @@ export class ShowUserComponent {
   get phone() { return this.profileForm.get('phone'); }
   
   get hasChanges(){ return this.somethingChanged }
-  get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => {
-      if (value === 'VALID') {
-        this.somethingChanged = true;
-        this.hasChanges;
-      } else { 
-        this.somethingChanged = false;
-        this.hasChanges;
-      }
-    });
-  }
-
+ 
   forbiddenInputTextValidator(): ValidatorFn{
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/;
     return (control: AbstractControl): ValidationErrors | null => {
