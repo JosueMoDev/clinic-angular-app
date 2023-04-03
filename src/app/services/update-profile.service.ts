@@ -45,7 +45,6 @@ export class UpdateProfileService {
   }
 
   clinicToUpdate(profile: Clinic) {
-    console.log(profile)
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.clinicProfile = profile;
   }
