@@ -74,7 +74,6 @@ export class ShowUserComponent {
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
     this.somethigChange;
-    console.log(this.somethigChange)
   }
 
   ngOnDestroy(): void {
@@ -213,10 +212,7 @@ export class ShowUserComponent {
   get phone() { return this.profileForm.get('phone'); }
  
   get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => {
-      console.log(value)
-      this.isFormValid = value
-    });
+    return this.profileForm.statusChanges.subscribe(value =>this.isFormValid = value);
   }
 
   forbiddenInputTextValidator(): ValidatorFn{

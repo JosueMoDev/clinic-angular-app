@@ -6,7 +6,7 @@
     <ol class="flex items-center justify-center w-full py-5">
       <div class="flex justify-center w-full">
         <!-- first step -->
-        <li *ngIf="isFirstStepValid!=='VALID'" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
+        <li *ngIf="!(isFirstStepValid==='VALID')" Class="flex justify-center w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-300 after:border-4 dark:after:border-blue-800 after:inline-block ">
           <span class="flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-800 lg:h-10 lg:w-10 shrink-0" >
             <div class="flex items-center justify-center">
               <mat-icon *ngIf="isFirstStepValid==='VALID'" class="text-base text-center text-slate-900 dark:text-blue-50" fontIcon="done"/>
@@ -304,7 +304,7 @@
           </div>
           <div class="flex justify-end w-full">
             <div class="flex justify-end text-center w-fit" >
-              <button mat-raised-button type="button" color="primary" [disabled]="isFirstStepValid!=='VALID'" class="dark:disabled:text-white/75" (click)="nextPage()" ><mat-icon  fontIcon="skip_next"></mat-icon>Next</button>
+              <button mat-raised-button type="button" color="primary" [disabled]="!(isFirstStepValid==='VALID')" class="dark:disabled:text-white/75" (click)="nextPage()" ><mat-icon  fontIcon="skip_next"></mat-icon>Next</button>
             </div>
           </div>
         </div>

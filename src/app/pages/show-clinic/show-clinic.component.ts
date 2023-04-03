@@ -22,7 +22,7 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 export class ShowClinicComponent {
   public profileSelected!: Clinic;
   public isLoading: boolean = false;
-  public someChange: boolean = false;
+  public isFormValid!:string;
   // ?Information Form
   public cities!: string[];
   public profileForm!: FormGroup;
@@ -75,10 +75,7 @@ export class ShowClinicComponent {
     this.somethigChange.unsubscribe;
   }
   get somethigChange() {
-    return this.profileForm.statusChanges.subscribe(value => {
-      if (value === 'VALID') { this.someChange = true }
-      else { this.someChange = false}
-    })
+    return this.profileForm.statusChanges.subscribe(value => this.isFormValid = value)
   }
 
   updateProfile() {

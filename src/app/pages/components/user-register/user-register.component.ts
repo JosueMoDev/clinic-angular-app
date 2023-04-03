@@ -27,7 +27,7 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 })
 export class UserRegisterComponent {
  
-  public isFirstStepValid: string = '';
+  public isFirstStepValid!: string;
   public document_type: string = 'DUI';
   public email_provider: string = '@gmail.com';
   public currentStep : number = 1  ;
@@ -147,7 +147,7 @@ export class UserRegisterComponent {
      
   }
   get isPersonalInformationStepValid() {
-    return this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status)
+    return this.registerForm.get('personalInformation')?.statusChanges.subscribe(status => this.isFirstStepValid = status);
   }
   get document_number() { return this.registerForm.get('personalInformation.document_number'); }
   get name() { return this.registerForm.get('personalInformation.name'); }
