@@ -78,6 +78,7 @@ export class ShowClinicComponent {
   get somethigChange() {
     return this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
+        console.log(value)
         this.somethingChanged = true;
         this.hasChanges;
       } else { 
