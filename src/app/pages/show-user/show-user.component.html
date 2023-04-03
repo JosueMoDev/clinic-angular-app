@@ -247,8 +247,7 @@
   
             </div>
             <div class="flex justify-end w-full p-5 ">
-              {{somethigChange | json }}
-              {{!(somethigChange && (!profileForm.invalid || profileForm.pristine))}}
+              {{!(someChange && (!profileForm.invalid || profileForm.pristine))}}
                 <button type="submit" [disabled]="!(somethigChange && (!profileForm.invalid || profileForm.pristine))" 
                 mat-raised-button color="accent" class="z-0"><mat-icon>update</mat-icon> update</button>
             </div>

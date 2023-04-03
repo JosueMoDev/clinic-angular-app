@@ -73,7 +73,9 @@ export class ShowUserComponent {
     
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
-    this.somethigChange
+    this.somethigChange;
+    this.someChange
+    console.log(this.someChange)
   }
 
   ngOnDestroy(): void {
