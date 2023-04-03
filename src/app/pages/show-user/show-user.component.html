@@ -247,7 +247,7 @@
   
             </div>
             <div class="flex justify-end w-full p-5 ">
-                <button type="submit" [disabled]="!(hasChanges && (!profileForm.invalid || profileForm.pristine))" 
+                <button type="submit" [disabled]="!(somethingChanged && (!profileForm.invalid || profileForm.pristine))" 
                 mat-raised-button color="accent" class="z-0"><mat-icon>update</mat-icon> update</button>
             </div>
         </div>

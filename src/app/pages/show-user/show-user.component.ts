@@ -78,6 +78,7 @@ export class ShowUserComponent {
 
     this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
+        console.log( value )
         this.somethingChanged = true;
         this.hasChanges;
       } else { 
