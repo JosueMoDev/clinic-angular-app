@@ -20,6 +20,7 @@ import { error } from 'src/app/helpers/sweetAlert.helper';
 
 import { NewMedialRecordComponent } from '../components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from '../components/edit-medical-record/edit-medical-record.component';
+import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 
 
 
@@ -30,6 +31,7 @@ import { EditMedicalRecordComponent } from '../components/edit-medical-record/ed
   ]
 })
 export class MedicalRecordComponent {
+  public userRol!: Rol
   public doctor!: string;
   public document!: string;
   public isDocument_numberCorrenct: boolean = false;
@@ -64,7 +66,8 @@ export class MedicalRecordComponent {
   ) { }
 
   ngOnInit(): void {
-    this.doctor = this.authService.currentUserLogged.id
+    this.doctor = this.authService.currentUserLogged.id;
+    this.userRol = this.authService.currentUserLogged.rol;
     this.confirmPatientForm = this.formBuilder.group({
       document_number: ['', [Validators.required, Validators.minLength(9)]]
     });
