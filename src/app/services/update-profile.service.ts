@@ -26,7 +26,6 @@ export class UpdateProfileService {
   }
 
   userToUpdate(profile: User | Patient) {
-    console.log(profile)
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.userProfile = profile;
   }
