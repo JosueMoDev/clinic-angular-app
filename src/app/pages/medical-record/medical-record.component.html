@@ -45,32 +45,32 @@
 
 <div *ngIf="isDocument_numberCorrenct" class="flex flex-wrap mx-1 mt-3">
     <div class="w-full max-w-full mt-0 mb-6 lg:mb-0 lg:flex-none ">
+        <div class="flex justify-center w-full">
+            <div class="flex flex-col p-3 rounded-lg shadow-lg columns-1 w-fit bg-slate-100">
+                <div class="flex w-full">
+                    <p class="text-xl font-bold text-slate-850">Patient ID</p>
+                </div>
+                <div class="flex w-full">
+                    <div class="my-auto">
+                        <img [src]="patient?.photo||'assets/img/no-photo-user.png'"
+                            class="inline-flex items-center justify-center object-cover object-top mr-4 overflow-hidden text-sm text-white bg-orange-300 w-34 h-34 max-w-none rounded-xl" />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
+                                class="font-semibold">Full Name : </span><span class="font-normal">{{
+                                patient?.name }} {{patient?.lastname}}</span></p>
+                        <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
+                                class="font-semibold">Document Number : </span><span
+                                class="font-normal">{{ patient!.document_number |
+                                mask:'00000000-0'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid rounded-md shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 bg-clip-border">
             <div class="p-4 pb-0 mb-0 rounded-t-4">
                 <div class="flex flex-col justify-between w-full columns-1">
                     <div class="flex flex-col justify-center w-full columns-1">
-                        <div class="flex justify-center w-full h- ">
-                            <div class="flex flex-col p-3 rounded-lg shadow-lg columns-1 w-fit bg-slate-100">
-                                <div class="flex w-full">
-                                    <p class="text-xl font-bold text-slate-850">Patient ID</p>
-                                </div>
-                                <div class="flex w-full">
-                                    <div class="my-auto">
-                                        <img [src]="patient?.photo||'assets/img/no-photo-user.png'"
-                                            class="inline-flex items-center justify-center object-cover object-top mr-4 overflow-hidden text-sm text-white bg-orange-300 w-34 h-34 max-w-none rounded-xl" />
-                                    </div>
-                                    <div class="flex flex-col justify-center">
-                                        <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
-                                                class="font-semibold">Full Name : </span><span class="font-normal">{{
-                                                patient?.name }} {{patient?.lastname}}</span></p>
-                                        <p class="mb-1 text-sm font-normal capitalize text-slate-850"><span
-                                                class="font-semibold">Document Number : </span><span
-                                                class="font-normal">{{ patient!.document_number |
-                                                mask:'00000000-0'}}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="flex flex-wrap mx-1 mt-3">
                             <div class="w-full max-w-full mt-0 mb-6 lg:mb-0 lg:flex-none">
                                 <div class="p-4 pb-0 mb-0 rounded-t-4">
