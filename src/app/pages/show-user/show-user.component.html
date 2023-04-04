@@ -6,7 +6,7 @@
         class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
        >
         
-        <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border-0 rounded-md shadow-xl dark:bg-slate-850 dark:shadow-dark-xl bg-clip-border">
             <div class="flex justify-between px-2 py-4">
               <p class="px-2 text-xl font-semibold text-black text-start dark:text-white">Edit Information for {{this.profileSelected.rol}}</p>
               <button type="button" color="warn" *ngIf="ShowPassWordButtom" (click)="openDialog()"  mat-raised-button class="z-0">
@@ -256,11 +256,11 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
           <div>
             
-            <img *ngIf="!imagenTemp"  class="w-full p-1 rounded-2xl" [src]="currectPhoto||'assets/img/no-photo-user.jpg'" alt="profile cover image">
-            <img *ngIf="imagenTemp" [src]="imagenTemp" [ngClass]="{'rounded-2xl':(this.userRol!=='admin' || this.currentUserLogged.rol==='patient')}" class="w-full rounded-t-2xl bg-slate-500" />
+            <img *ngIf="!imagenTemp"  class="w-full p-1 rounded-md" [src]="currectPhoto||'assets/img/no-photo-user.jpg'" alt="profile cover image">
+            <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full rounded-md"/>
           </div>
    
-          <div *ngIf="(this.userRol!=='admin' || this.currentUserLogged.rol==='patient')" class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
+          <div *ngIf="(this.userRol ==='admin' || this.currentUserLogged.rol==='patient' ||this.profileSelected.rol==='patient')" class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
             <div class="flex justify-center py-3 space-x-3">
               <div class="flex w-fit">
                 <button mat-raised-button type="button" [disabled]="!currectPhoto" (click)="deletePhoto(profileSelected.id)" color="warn"  class="z-0">
