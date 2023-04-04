@@ -32,7 +32,7 @@ export class ShowUserComponent {
   public userRol!: Rol;
   public formSub$!: Subscription;
   public isLoading: boolean = false;
-  public profileSelected: User | Patient;
+  public profileSelected!: User | Patient;
   public ShowPassWordButtom: boolean = false;
   public somethingChanged: boolean = false;
   //? User Information
@@ -53,13 +53,11 @@ export class ShowUserComponent {
     public updateProfileService: UpdateProfileService,
     public matDialog: MatDialog
 
-  ) { 
-    this.profileSelected = updateProfileService.userProfileToUpdate;
-    this.currectPhoto = updateProfileService.userProfileToUpdate.photo;
-
-  }
+  ) { }
 
   ngOnInit() {
+    this.profileSelected = this.updateProfileService.userProfileToUpdate;
+    this.currectPhoto = this.updateProfileService.userProfileToUpdate.photo;
     this.currentUserLogged = this.authService.currentUserLogged;
     this.userRol = this.authService.userRol;
     this.profileForm = this.formbuilder.group({
