@@ -16,6 +16,7 @@ import { User } from 'src/app/models/user.model';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
 import { Subscription } from 'rxjs';
+import { Rol } from 'src/app/interfaces/authorized-roles.enum';
    
 
 
@@ -27,6 +28,8 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class ShowUserComponent {
+  public currentUserLogged!: User | Patient;
+  public userRol!: Rol;
   public formSub$!: Subscription;
   public isLoading: boolean = false;
   public profileSelected: User | Patient;
@@ -57,6 +60,11 @@ export class ShowUserComponent {
   }
 
   ngOnInit() {
+    this.currentUserLogged = this.authService.currentUserLogged;
+    this.userRol = this.authService.userRol;
+    if (this.currentUserLogged.id !== this.profileSelected.id || this.userRol !== 'admin') {
+      this.profileForm.disable()
+    }
     this.profileForm = this.formbuilder.group({
       document_type: [this.profileSelected.document_type, Validators.required],
       document_number: [this.profileSelected.document_number, Validators.required],
