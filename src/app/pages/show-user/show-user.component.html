@@ -260,7 +260,7 @@
             <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full rounded-t-2xl bg-slate-500" />
           </div>
    
-          <div class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
+          <div *ngIf="(this.userRol!=='admin' || this.currentUserLogged.rol==='patient')" class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
             <div class="flex justify-center py-3 space-x-3">
               <div class="flex w-fit">
                 <button mat-raised-button type="button" [disabled]="!currectPhoto" (click)="deletePhoto(profileSelected.id)" color="warn"  class="z-0">
