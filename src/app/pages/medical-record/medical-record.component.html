@@ -45,7 +45,7 @@
 
 <div *ngIf="isDocument_numberCorrenct" class="flex flex-wrap mx-1 mt-3">
     <div class="w-full max-w-full mt-0 mb-6 lg:mb-0 lg:flex-none ">
-        <div class="flex justify-center w-full">
+        <div class="flex justify-center w-full my-5">
             <div class="flex flex-col p-3 rounded-lg shadow-lg columns-1 w-fit bg-slate-100">
                 <div class="flex w-full">
                     <p class="text-xl font-bold text-slate-850">Patient ID</p>
@@ -84,8 +84,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="medicalRecordsList" class="overflow-x-auto">
-                                    <table
-                                        class="items-center w-full mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
+                                    <table class="items-center w-full my-5 mt-4 mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
                                         <tbody>
                                             <tr *ngFor="let record of medicalRecordsList"
                                                 class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
