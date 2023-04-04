@@ -62,9 +62,6 @@ export class ShowUserComponent {
   ngOnInit() {
     this.currentUserLogged = this.authService.currentUserLogged;
     this.userRol = this.authService.userRol;
-    if (this.currentUserLogged.id !== this.profileSelected.id || this.userRol !== 'admin') {
-      this.profileForm.disable()
-    }
     this.profileForm = this.formbuilder.group({
       document_type: [this.profileSelected.document_type, Validators.required],
       document_number: [this.profileSelected.document_number, Validators.required],
@@ -81,6 +78,10 @@ export class ShowUserComponent {
       photoSrc:['']
     })
     
+    if (this.currentUserLogged.id !== this.profileSelected.id || this.userRol !== 'admin') {
+      this.profileForm.disable()
+    }
+
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
 
