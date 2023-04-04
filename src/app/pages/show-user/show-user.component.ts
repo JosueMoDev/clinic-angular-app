@@ -78,9 +78,8 @@ export class ShowUserComponent {
       photoSrc:['']
     })
 
-    if (this.currentUserLogged.id !== this.profileSelected.id
-      || this.userRol !== Rol.ADMIN
-      || this.profileSelected.rol !== 'patient') {
+    if (this.currentUserLogged.id !== this.profileSelected.id || this.userRol === (Rol.DOCTOR || Rol.PATIENT)) {
+      console.log(this.currentUserLogged.id !== this.profileSelected.id || this.userRol === (Rol.DOCTOR || Rol.PATIENT))
       console.log('hola')
       this.profileForm.disable()
     }
