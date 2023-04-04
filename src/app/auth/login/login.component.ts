@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         this.loginForm.reset();
         this.router.navigateByUrl('/'); 
-        success(`Welcome ${resp.user}`);
+        success(resp.message);
       }
     },
     (error) => { this.error(error.error.message)}

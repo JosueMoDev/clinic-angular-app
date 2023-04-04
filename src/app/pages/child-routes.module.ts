@@ -20,7 +20,7 @@ const childRoutes: Routes = [
   { path: 'medical-record', component: MedicalRecordComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Medical Record',  allowedRoles: [Rol.ADMIN, Rol.PATIENT, Rol.DOCTOR] } },
   { path: 'show-user', component: ShowUserComponent, data: { title: 'User Profile' } },
   { path: 'show-clinic', component: ShowClinicComponent, data: { title: 'Clinic Profile'} },
-  { path: 'patients', component: PatientsComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Patients', allowedRoles: [Rol.ADMIN] } },
+  { path: 'patients', component: PatientsComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Patients', allowedRoles: [Rol.ADMIN, Rol.OPERATOR] } },
   { path: 'clinics', component: ClinicsComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Clinics', allowedRoles: [Rol.ADMIN]} },
   { path: 'users', component: UsersComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Users', allowedRoles: [Rol.ADMIN] } },
   {path: '**', component: Error404Component}
