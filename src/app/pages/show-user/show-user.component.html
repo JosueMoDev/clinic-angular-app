@@ -256,8 +256,8 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
           <div>
             
-            <img *ngIf="!imagenTemp"  class="w-full p-1 rounded-md" [src]="currectPhoto||'assets/img/no-photo-user.jpg'" alt="profile cover image">
-            <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full rounded-md"/>
+            <img *ngIf="!imagenTemp"  class="w-full p-1 border-gray-500 border-0.5 rounded-md" [src]="currectPhoto||'assets/img/no-photo-user.jpg'" alt="profile cover image">
+            <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full  border-gray-500 border-0.5 rounded-md"/>
           </div>
    
           <div *ngIf="(this.userRol ==='admin' || this.currentUserLogged.rol==='patient' ||this.profileSelected.rol==='patient')" class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">

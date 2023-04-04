@@ -79,7 +79,7 @@ export class ShowUserComponent {
     })
 
     if (this.currentUserLogged.id !== this.profileSelected.id
-      || this.userRol !== (Rol.ADMIN||Rol.OPERATOR)
+      || this.userRol !== Rol.ADMIN
       || this.profileSelected.rol !== 'patient') {
       console.log('hola')
       this.profileForm.disable()
