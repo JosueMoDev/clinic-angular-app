@@ -65,7 +65,7 @@
                                     <div class="flex justify-between">
                                         <p class="text-2xl font-semibold text-black text-start dark:text-white">Medical
                                             Records History</p>
-                                        <button (click)="createNewMedicalRecord()" color="primary" mat-raised-button
+                                        <button *ngIf="userRol==='doctor'" (click)="createNewMedicalRecord()" color="primary" mat-raised-button
                                             class="z-0">
                                             <mat-icon fontIcon="healing"></mat-icon> <span>New Medical Record</span>
                                         </button>
