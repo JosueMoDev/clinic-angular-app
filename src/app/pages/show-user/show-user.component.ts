@@ -77,7 +77,8 @@ export class ShowUserComponent {
     })
     // (userRol === 'admin'|| (userRol==='operator' && profileSelected.rol==='patient')||(profileSelected.id===currentUserLogged.id))
     // this.currentUserLogged.id !== this.profileSelected.id && this.userRol === (Rol.DOCTOR || Rol.PATIENT)
-    if (this.userRol!== Rol.ADMIN || (this.currentUserLogged.rol==='operator' && this.profileSelected.rol!=='patient')) {
+    if ((this.userRol !== Rol.ADMIN || Rol.OPERATOR)) {
+      console.log('hola')
       this.profileForm.disable()
     }
 
