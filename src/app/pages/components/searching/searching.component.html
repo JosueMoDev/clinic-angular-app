@@ -20,7 +20,7 @@
         <a routerLink="/dashboard/show-user" (click)="setProfileUser(result)" class="flex w-full p-1 bg-transparent rounded-lg cursor-pointer justify-self-center whitespace-nowrap hover:bg-blue-800/13" *ngIf="result.id">
             <div class="flex w-full h-full">
                 <div class="w-full my-auto">
-                  <img [src]="result.photo||'assets/img/no-photo-user.png'" class="inline-flex items-center justify-center object-cover object-top w-12 h-12 mr-4 overflow-hidden text-sm text-white bg-orange-300 rounded-sm max-w-none" />
+                  <img [src]="result.photo||'assets/img/no-photo-user.jpg'" class="inline-flex items-center justify-center object-cover object-top w-12 h-12 mr-4 overflow-hidden text-sm text-white bg-orange-300 rounded-sm max-w-none" />
                 </div>
                 <div class="flex items-center justify-start w-full min-w-full space-x-5 align-middle">
                   <span class="flex text-base font-semibold text-white align-middle text-start"><mat-icon class="text-base">person</mat-icon>{{result.name}}  {{result.lastname}} </span>
