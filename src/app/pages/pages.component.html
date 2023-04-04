@@ -8,33 +8,10 @@
     <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
     <div class="items-center block w-auto max-h-screen mt-2 overflow-auto">
       <ul class="flex flex-col pl-0 mb-0 space-y-3">
-        <li class="mt-0.5 w-full">
-          <a routerLink="/dashboard/calendar" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
-            <mat-icon fontIcon="event"/>
-            <span >Appointments</span>
-          </a>
-        </li>
-  
-        <li class="mt-0.5 w-full">
-          <a routerLink="/dashboard/users" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
-            <mat-icon fontIcon="person"/><span >Users</span>
-          </a>
-        </li>
-  
-        <li class="mt-0.5 w-full">
-          <a routerLink="/dashboard/clinics" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
-            <mat-icon fontIcon="local_hospital"/><span >Clinics</span>
-          </a>
-        </li>
-  
-        <li class="mt-0.5 w-full">
-          <a routerLink="/dashboard/patients" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
-            <mat-icon  fontIcon="group"/><span >Patients</span>
-          </a>
-        </li>
-        <li class="mt-0.5 w-full">
-          <a routerLink="/dashboard/medical-record" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
-            <mat-icon   fontIcon="description"/><span >medical records</span>
+        <li class="mt-0.5 w-full" *ngFor="let sideNavOption of sideNavMenu">
+          <a routerLink="{{sideNavOption.url}}" routerLinkActive="bg-blue-500/13 ease-nav-brand"  class="flex items-center justify-start px-4 py-2 mx-2 space-x-2 text-lg align-middle rounded-lg cursor-pointer text-slate-50" >
+            <mat-icon fontIcon={{sideNavOption.icon}}/>
+            <span >{{sideNavOption.title}}</span>
           </a>
         </li>
       </ul>

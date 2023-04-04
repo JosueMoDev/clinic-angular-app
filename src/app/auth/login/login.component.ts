@@ -70,12 +70,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     await this.authService.googleSingIn(response.credential, this.currentRoute)
     .subscribe((response: any) => {
       if (response.ok) {
-        // sessionStorage.setItem('userToken', response.token);
         this._ngZone.run(
           () => {
             this.router.navigate(['/']);
           })
-        success(`Welcome ${response.user}`);
+        success(response.message);
       }
     },
       (error: any) => this.error(error.error.message)

@@ -1,3 +1,5 @@
+import { Rol } from "../interfaces/authorized-roles.enum";
+
 export class Patient {
 
     constructor(
@@ -12,7 +14,7 @@ export class Patient {
         public validationState: boolean,
         public email_name: string,
         public email_provider: string,
-        public rol: string,
+        public rol: Rol.PATIENT,
         public photo?: string,
     ){}
 

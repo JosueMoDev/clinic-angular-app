@@ -29,6 +29,7 @@ import { NewMedialRecordComponent } from './components/new-medial-record/new-med
 import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
 import { SearchingComponent } from './components/searching/searching.component';
 
+
 @NgModule({
   declarations: [
     ActionsAppointmentDialogComponent,
@@ -49,7 +50,7 @@ import { SearchingComponent } from './components/searching/searching.component';
     UsersComponent,
     NewMedialRecordComponent,
     EditMedicalRecordComponent,
-    SearchingComponent
+    SearchingComponent,
   ],
   imports: [
     AngularMaterialModule,

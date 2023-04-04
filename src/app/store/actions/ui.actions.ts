@@ -6,8 +6,10 @@ import { User } from 'src/app/models/user.model';
 
 export const isLoadingTable = createAction('[UI Tables] Is Loading');
 export const isLoadedUserTable = createAction('[UI Tables] Load Users',
-    props < { itemList: User[] | Patient[] }>()
-
+    props < { itemList: User[] }>()
+);
+export const isLoadedPatientTable = createAction('[UI Tables] Load Patients',
+    props < { itemList: Patient[] }>()
 );
 export const isLoadedClinicTable = createAction('[UI Tables] Load Clinics',
     props < { itemList: Clinic[] }>()

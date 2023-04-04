@@ -1,3 +1,4 @@
+import { Rol } from "../interfaces/authorized-roles.enum";
 
 export class User {
 
@@ -13,7 +14,7 @@ export class User {
         public validationState: boolean,
         public email_name: string,
         public email_provider: string,
-        public rol: string,
+        public rol: Rol.ADMIN | Rol.DOCTOR | Rol.OPERATOR,
         public photo?: string
     ){}
 

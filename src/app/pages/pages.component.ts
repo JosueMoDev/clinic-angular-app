@@ -8,31 +8,32 @@ import { UpdateProfileService } from '../services/update-profile.service';
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PagesComponent {
   @ViewChild('drawer') drawer!: MatDrawer;
   public loggedUser!: User;
-  
+  public sideNavMenu!: any;
+
   constructor(
     private authService: AuthService,
     public updateProfileService: UpdateProfileService,
     public ui: UiService
-  ) { }
+  ) {}
   ngOnInit(): void {
-    this.loggedUser = this.authService.currentUserLogged 
+    this.loggedUser = this.authService.currentUserLogged;
+    this.sideNavMenu = this.authService.currentSideNav;
   }
 
-  logout() { 
+  logout() {
     this.authService.logout();
   }
 
-  toggleSideNave() { 
+  toggleSideNave() {
     if (this.ui.isSideBarOpen) {
-      this.ui.closeSideBar()
+      this.ui.closeSideBar();
     } else {
-      this.ui.openSideBar()
+      this.ui.openSideBar();
     }
   }
 }

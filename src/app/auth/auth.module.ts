@@ -10,12 +10,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { LoginComponent } from './login/login.component';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
+import { Error403Component } from './error403/error403.component';
 
 
 
 
 @NgModule({
   declarations: [
+    Error403Component,
     LoginComponent,
     PatientRegisterComponent,
   ],
@@ -30,6 +32,7 @@ import { PatientRegisterComponent } from './patient-register/patient-register.co
     SharedModule
   ],
   exports: [
+    Error403Component,
     LoginComponent,
   ],
   providers:[provideNgxMask()]
