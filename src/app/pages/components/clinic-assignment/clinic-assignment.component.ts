@@ -9,13 +9,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { ClinicService } from 'src/app/services/clinic.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
 import { User } from 'src/app/models/user.model';
 import { Patient } from 'src/app/models/patient.model';
+import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 
 import { ClinicAssignmentDialogComponent } from '../clinic-assignment-dialog/clinic-assigment-dialog.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
@@ -36,6 +36,7 @@ export class ClinicAssignmentComponent {
   public clinic_id!: string;
   public hasAssignments!: boolean;
   public profileSelected!: Clinic;
+  public userRol!: Rol;
 
   // ? Doctors Availables to be assigned
   public doctorsAvailableList: User[] = [];
@@ -66,11 +67,11 @@ export class ClinicAssignmentComponent {
   ) { }
 
   ngOnInit(): void {
+    this.userRol = this.authService.userRol;
     this.clinic_id = this.updateProfileService.clinicProfile.clinic_id
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Doctors assigned per page';
-    this.currentUserLogged = this.authService.currentUserLogged;
     this.allEmployeesAvaibleToBeAssigned();
     this.allEmployeesAssignedToClinic();
     this.uiSubscription = this.store.select('ui').subscribe(state => {

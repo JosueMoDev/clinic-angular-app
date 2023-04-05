@@ -6,8 +6,10 @@ import Swal from 'sweetalert2';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { Clinic} from 'src/app/models/clinic.model';
+import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 
 import provicesAndCities from 'src/assets/ElSalvadorCities.json';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
@@ -23,6 +25,7 @@ import { Subscription } from 'rxjs';
 export class ShowClinicComponent {
   public formSub$!: Subscription;
   public profileSelected!: Clinic;
+  public userRol!: Rol;
   public isLoading: boolean = false;
   public somethingChanged: boolean = false;
   // ?Information Form
@@ -36,6 +39,7 @@ export class ShowClinicComponent {
   public photoForm!: FormGroup;
 
   constructor(
+    private authService: AuthService,
     private clinicService: ClinicService,
     private cloudinary: CloudinaryService,
     private formbuilder: FormBuilder,
@@ -48,7 +52,7 @@ export class ShowClinicComponent {
   }
 
   ngOnInit() {
-
+    this.userRol = this.authService.userRol;
     this.profileForm = this.formbuilder.group({
       information: this.formbuilder.group({
         register_number: [this.profileSelected.register_number, Validators.required],
@@ -67,6 +71,11 @@ export class ShowClinicComponent {
       photo: [''],
       photoSrc:['']
     })
+   
+    if (this.userRol!=='admin') {
+      this.profileForm.disable()
+    }
+
     this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
         this.somethingChanged = true;

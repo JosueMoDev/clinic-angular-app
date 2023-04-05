@@ -4,8 +4,7 @@
         <div class="p-4 pb-0 mb-0 rounded-t-4">
           <div class="flex justify-between">
             <p class="text-2xl font-semibold text-black text-start dark:text-white">Doctors assigned</p>
-            <div class="flex space-x-3 ">
-              
+            <div *ngIf="userRol==='admin'" class="flex space-x-3 ">
               <button (click)="removeallassigned()" [disabled]="!hasAssignments" color="warn"  mat-raised-button class="z-0">
                 <mat-icon  fontIcon="remove_circle"></mat-icon> <span>remove all assigned</span> 
               </button>
@@ -33,7 +32,7 @@
                     <h6 class="mb-0 text-sm leading-normal dark:text-white">{{doctor.name}} {{doctor.lastname}}</h6>
                       </div>
                   </td>
-                  <td *ngIf="(currentUserLogged.rol==='admin')"  class="px-4 py-2 align-middle bg-transparent w-fit whitespace-nowrap ">
+                  <td *ngIf="userRol==='admin'"  class="px-4 py-2 align-middle bg-transparent w-fit whitespace-nowrap ">
                     <div class="flex-col items-center space-y-1 align-top">
                       <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">Actions:</p>
                         <div class="flex items-center justify-center">
