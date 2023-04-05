@@ -75,12 +75,15 @@ export class ShowUserComponent {
       photo: [''],
       photoSrc:['']
     })
-    // ((this.userRol.includes('patient' ||'operator')) &&
-    //   (this.profileSelected.rol === 'admin' || this.profileSelected.rol === 'operator' || this.profileSelected.rol === 'doctor'))
-    // && this.profileSelected.id !== this.currentUserLogged.id 
-  
-    if (!(this.userRol === 'admin'|| this.userRol==='operator')) {
-      console.log('hola')
+    
+    if (this.userRol === 'admin' && (this.profileSelected.rol === 'admin' && (this.profileSelected.id !== this.currentUserLogged.id ))) {
+      this.profileForm.disable()
+    }
+   
+    if ((this.userRol!=='admin') && ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
+      this.profileForm.disable()
+    }
+    if ((this.userRol==='operator') && ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
       this.profileForm.disable()
     }
 
