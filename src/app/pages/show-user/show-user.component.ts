@@ -30,6 +30,7 @@ import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 export class ShowUserComponent {
   public currentUserLogged!: User | Patient;
   public userRol!: Rol;
+  public patientRol!: Rol;
   public formSub$!: Subscription;
   public isLoading: boolean = false;
   public profileSelected!: User | Patient;
@@ -60,6 +61,7 @@ export class ShowUserComponent {
     this.currectPhoto = this.updateProfileService.userProfileToUpdate.photo;
     this.currentUserLogged = this.authService.currentUserLogged;
     this.userRol = this.authService.userRol;
+    this.patientRol = this.authService.currentUserLogged.rol
     this.profileForm = this.formbuilder.group({
       document_type: [this.profileSelected.document_type, Validators.required],
       document_number: [this.profileSelected.document_number, Validators.required],
@@ -75,12 +77,18 @@ export class ShowUserComponent {
       photo: [''],
       photoSrc:['']
     })
-    // (userRol === 'admin'|| (userRol==='operator' && profileSelected.rol==='patient')||(profileSelected.id===currentUserLogged.id))
-    // this.currentUserLogged.id !== this.profileSelected.id && this.userRol === (Rol.DOCTOR || Rol.PATIENT)
-    if ((this.userRol !== Rol.ADMIN) ||(this.currentUserLogged.rol !== Rol.OPERATOR)) {
+    // ((this.userRol.includes('patient' ||'operator')) &&
+    //   (this.profileSelected.rol === 'admin' || this.profileSelected.rol === 'operator' || this.profileSelected.rol === 'doctor'))
+    // && this.profileSelected.id !== this.currentUserLogged.id 
+  
+    if (this.userRol.includes('patient' || 'operator')) {
+      console.log(this.userRol.includes('patient' || 'operator'))
       console.log('hola')
       this.profileForm.disable()
     }
+
+  
+    
 
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
     this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
