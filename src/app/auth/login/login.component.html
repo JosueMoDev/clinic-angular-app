@@ -55,22 +55,21 @@
               </div>
             </div>
             <div class="flex-auto p-6">
-              <form  role="form text-left"  (ngSubmit)="loginWithEmailAndPassword()" [formGroup]="loginForm">
+              <form  role="form"  (ngSubmit)="loginWithEmailAndPassword()" [formGroup]="loginForm">
                 <div class="mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Email</span>       
+                  <span class="px-1 py-2 text-sm text-white/80">Email</span>
                   <input type="email"
-                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                   placeholder="Email" 
+                   class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow"
+                   placeholder="Email"
                    aria-label="Email"
                    aria-describedby="email-addon"
                    formControlName="email"
                    value="email?.value"
-                  
                    />
                    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
                     <div  *ngIf="email?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/> 
+                        <mat-icon class="mx-2"  fontIcon="error"/>
                         mail is required.
                       </span>
                     </div>
@@ -83,12 +82,12 @@
                   </div>
                 </div>
                 <div class="mb-4">
-                  <span class="px-1 py-2 text-sm text-white/80">Password</span>       
+                  <span class="px-1 py-2 text-sm text-white/80">Password</span>
                   <div class="relative flex">
-                    <input 
+                    <input
                     type={{type}}
-                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                    placeholder="passoword" 
+                    class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg  bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow"
+                    placeholder="passoword"
                     formControlName="password"
                     />
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
@@ -104,7 +103,7 @@
                    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
                     <div  *ngIf="password?.errors?.['required']">
                       <span  class="flex items-center pt-2 text-red-800 dark:text-red-400">
-                        <mat-icon class="mx-2"  fontIcon="error"/> 
+                        <mat-icon class="mx-2"  fontIcon="error"/>
                         Password is required.
                       </span>
                     </div>
@@ -116,9 +115,9 @@
                     </div>
                   </div>
                 </div>
-               
+
                 <div class="min-h-6 pl-7 mb-0.5 block">
-                  <input class="w-4.8 h-4.8 ease -ml-7 rounded-1.4 checked:bg-gradient-to-tl checked:from-blue-500 checked:to-violet-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 dark:border-slate-750 bg-white dark:bg-slate-600 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100" 
+                  <input class="w-4.8 h-4.8 ease -ml-7 rounded-1.4 checked:bg-gradient-to-tl checked:from-blue-500 checked:to-violet-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left mt-1 cursor-pointer appearance-none border border-solid border-slate-200 dark:border-slate-750 bg-white dark:bg-slate-600 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
                   type="checkbox"
                   formControlName="rememberme"
                   value="rememberme"
@@ -127,10 +126,10 @@
                 </div>
 
                 <div class="text-center">
-                  <button 
+                  <button
                   color="accent"
                   mat-raised-button
-                  type="submit" 
+                  type="submit"
                   [disabled]="loginForm.invalid"
                   class="w-[50%] p-4 dark:disabled:text-white/75"
                   ><mat-icon  fontIcon="login"></mat-icon>Register</button>
@@ -145,7 +144,6 @@
            <div class="flex justify-center w-full p-5 space-x-5 h-fit">
             <a href="https://www.linkedin.com/in/jonas-morales-fullstack-dev/" target="_blank" class="p-1.5 bg-white border-2  border-black rounded-md text sm">  Linkedin </a>
             <a href="mailto:jonasjosuemoralese@gmail.com" target="_blank" class="p-1.5 bg-white border-2  border-black rounded-md text sm">  Gmail </a>
-            
            </div>
           </div>
         </div>
