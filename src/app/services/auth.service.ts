@@ -26,7 +26,7 @@ export class AuthService {
   get headers() {
     return {
       headers: {
-        'x-token': this.token,
+        Authorization: `Bearer ${this.token}`,
       },
     };
   }
@@ -50,11 +50,12 @@ export class AuthService {
         );
     }
 
+    console.log({ loginForm, currentRoute })
     return this.http
-      .post(`${environment.THECLINIC_API_URL}/login`, loginForm)
+      .post(`${environment.THECLINIC_API_URL}/authentication/login`, loginForm)
       .pipe(
         tap((resp: any) => {
-          sessionStorage.setItem('the_clinic_session_token', resp.token);
+          sessionStorage.setItem('the_clinic_session_token', resp.accessToken);
         })
       );
   }
@@ -118,14 +119,16 @@ export class AuthService {
   }
 
   isValidToken(): Observable<boolean> {
+    console.log('Validando token')
     return this.http
-      .get(`${environment.THECLINIC_API_URL}/login/renew`, this.headers)
+      .get(`${environment.THECLINIC_API_URL}/authentication/refresh-token`, this.headers)
       .pipe(
         tap((resp: any) => {
+          console.log(resp)
           if (resp.ok) {
             this.userLogged(resp.user);
             this.sideNaveMenu(resp.menu);
-            sessionStorage.setItem('the_clinic_session_token', resp.token);
+            sessionStorage.setItem('the_clinic_session_token', resp.accessToken);
           }
         }),
         map((resp) => true),

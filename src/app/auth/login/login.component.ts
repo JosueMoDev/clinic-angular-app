@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginWithEmailAndPassword() { 
     this.authService.loginWithEmailAndPassword(this.loginForm.value, this.currentRoute)
     .subscribe( (resp:any) => {
-      if (resp.ok) {
+      if (resp.account) {
         if (this.rememberme) {
           localStorage.setItem('rememberme-state', this.rememberme);
           localStorage.setItem('user_email', this.email?.value);
