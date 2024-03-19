@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
 import { Error403Component } from './error403/error403.component';
+import { LoginComponent } from '../authentication/login/login.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
