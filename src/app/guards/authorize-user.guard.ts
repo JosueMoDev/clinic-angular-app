@@ -21,6 +21,7 @@ export class AuthorizeUserGuard  {
   }
 
   private checkAccess(allowedRoles: Rol[]): Observable<boolean> {
+    console.log('Hola Mundo')
     return this.authService.isValidToken().pipe(
       tap((isAuthenticated) => {
         if (!isAuthenticated) {
