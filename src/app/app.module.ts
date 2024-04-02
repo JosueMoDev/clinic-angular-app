@@ -26,7 +26,7 @@ import { StoreModule } from '@ngrx/store';
     BrowserModule,
     PagesModule,
     SharedModule,
-    StoreDevtoolsModule.instrument(),
+    StoreDevtoolsModule.instrument({connectInZone: true}),
     StoreModule.forRoot(appReducers)
   ],
   providers: [],
