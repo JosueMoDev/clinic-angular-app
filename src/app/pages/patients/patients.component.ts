@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -14,11 +14,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { UiService } from 'src/app/services/ui.service';
 
-import { User } from 'src/app/models/user.model';
-import { Patient } from 'src/app/models/patient.model';
 
 import { UserRegisterComponent } from 'src/app/pages/components/user-register/user-register.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { Account } from 'src/app/authentication/interfaces';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-patients',
@@ -28,11 +28,11 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
 })
 export class PatientsComponent {
   public uiSubscription!: Subscription;
-  public currentUserLogged!: User | Patient
+  public currentUserLogged!: Account
   
   // ? Patient's table
-  public patientList: Patient[] = [];
-  public dataTemp: Patient[] = [];
+  public patientList: Account[] = [];
+  public dataTemp: Account[] = [];
 
   // ? Angular Material Paginator 
 
@@ -44,9 +44,9 @@ export class PatientsComponent {
   public pageSize: number = 5;
   public pageSizeOptions: number[] = [5, 10, 25];
   public showPageSizeOptions: boolean = true;
-  
+  private readonly authenticationService = Inject(AuthenticationService);
   constructor(
-    private authService: AuthService,
+    
     private patientService: PatientService,
     private store: Store<AppState>,
     private ui: UiService,
@@ -59,7 +59,7 @@ export class PatientsComponent {
     this.matconfig.previousPageLabel = '';
     this.matconfig.nextPageLabel = '';
     this.matconfig.itemsPerPageLabel = 'Patients per page';
-    this.currentUserLogged = this.authService.currentUserLogged;
+    this.currentUserLogged = this.authenticationService.currentUserLogged;
     this.allPatients();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {

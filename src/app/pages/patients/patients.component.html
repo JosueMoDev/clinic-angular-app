@@ -16,13 +16,13 @@
             <tr *ngFor="let patient of patientList"
               class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
               <a routerLink="/dashboard/show-user"
-                [ngClass]="{'opacity-50 pointer-events-none ':!patient.validationState}"
+                [ngClass]="{'opacity-50 pointer-events-none ':!patient.isValidated}"
                 (click)="this.updateProfileService.userToUpdate(patient)"
                 class="flex w-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
                 <td class="flex p-2 align-middle bg-transparent w-fit whitespace-nowrap">
                   <div class="flex items-center align-top">
                     <div>
-                      <img [src]="patient.photo||'assets/img/no-photo-user.jpg'"
+                      <img [src]="patient.photoUrl||'assets/img/no-photo-user.jpg'"
                         class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-slate-500 max-w-none rounded-xl" />
                     </div>
                   </div>
@@ -43,23 +43,23 @@
                   <div class="text-center align-top">
                     <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Document Number:
                     </p>
-                    <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{patient.document_number | mask:
+                    <h6 class="mb-0 text-sm leading-normal uppercase dark:text-white">{{patient.duiNumber | mask:
                       '00000000-0'}}</h6>
                   </div>
                 </td>
               </a>
-              <td *ngIf="(currentUserLogged.rol==='admin')"
+              <td *ngIf="(currentUserLogged.role==='admin')"
                 class="px-4 py-2 align-middle bg-transparent w-fit whitespace-nowrap ">
                 <div class="flex-col items-center space-y-1 align-top">
                   <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">
                     Actions:</p>
                   <div class="flex items-center justify-center">
-                    <button *ngIf="!patient.validationState"
+                    <button *ngIf="!patient.isValidated"
                       (click)="changePatientState(patient.id ,currentUserLogged.id)" mat-raised-button color="primary"
                       class="z-0">
                       <mat-icon fontIcon="person"></mat-icon> Enable
                     </button>
-                    <button *ngIf="patient.validationState"
+                    <button *ngIf="patient.isValidated"
                       (click)="changePatientState(patient.id ,currentUserLogged.id)" mat-raised-button color="warn"
                       class="z-0">
                       <mat-icon fontIcon="person_off"></mat-icon> Disable

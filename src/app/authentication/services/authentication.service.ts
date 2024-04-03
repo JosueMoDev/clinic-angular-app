@@ -18,7 +18,9 @@ export class AuthenticationService {
   public currentUserLogged = computed(() => this._currentUserLogged());
 
   constructor() {}
-
+  get userRol() {
+    return this.currentUserLogged()?.role;
+  }
   logout() {}
 
   private setAuthentication(account: Account, accessToken: string): boolean {
@@ -31,13 +33,17 @@ export class AuthenticationService {
     return this.http
       .post<LoggedAccount>(`${this.baseUrl}/authentication/login`, loginForm)
       .pipe(
-        map(({ account, accessToken }) => this.setAuthentication(account, accessToken)),
+        map(({ account, accessToken }) =>
+          this.setAuthentication(account, accessToken)
+        ),
         catchError((err) => throwError(() => err.error.message))
       );
   }
 
   isValidToken() {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('the_clinic_session_token');
+
+    console.log(token);
 
     if (!token) {
       this.logout();
@@ -50,7 +56,9 @@ export class AuthenticationService {
         headers,
       })
       .pipe(
-        map(({ account, accessToken }) => this.setAuthentication(account, accessToken)),
+        map(({ account, accessToken }) =>
+          this.setAuthentication(account, accessToken)
+        ),
         catchError((err) =>
           throwError(() => {
             err.error.message;

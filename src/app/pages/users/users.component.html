@@ -16,12 +16,12 @@
           <tbody>
             <tr *ngFor="let user of userList"
               class="flex w-full min-w-full border-b border-black/40 dark:border-white/40 ">
-              <a routerLink="/dashboard/show-user" [ngClass]="{'opacity-50 pointer-events-none ':!user.validationState}"
+              <a routerLink="/dashboard/show-user" [ngClass]="{'opacity-50 pointer-events-none ':!user.isValidated}"
                 (click)="this.updateProfileService.userToUpdate(user)"
                 class="flex w-full h-full ml-3 rounded-lg dark:hover:bg-blue-500/13 hover:bg-blue-500/13">
                 <td class="flex p-2 align-middle bg-transparent w-fit whitespace-nowrap">
                   <div class="flex items-center align-top">
-                    <img [src]="user.photo||'assets/img/no-photo-user.jpg'"
+                    <img [src]="user.photoUrl||'assets/img/no-photo-user.jpg'"
                       class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
                   </div>
                 </td>
@@ -40,24 +40,24 @@
                 <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                   <div class="text-center align-top">
                     <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Rol:</p>
-                    <p class="mb-0 text-lg leading-normal uppercase dark:text-white">{{user.rol}}</p>
+                    <p class="mb-0 text-lg leading-normal uppercase dark:text-white">{{user.role}}</p>
                   </div>
                 </td>
               </a>
-              <td *ngIf="(currentUserLogged.rol==='admin')"
+              <td *ngIf="(currentUserLogged.role==='admin')"
                 class="px-4 py-2 align-middle bg-transparent w-fit whitespace-nowrap ">
                 <div class="flex-col items-center space-y-1 align-top">
                   <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">
                     Actions:</p>
                   <div class="flex items-center justify-center">
-                    <button *ngIf="!user.validationState"
-                      [disabled]="(user.rol==='admin' || currentUserLogged.id === user.id)"
+                    <button *ngIf="!user.isValidated"
+                      [disabled]="(user.role==='admin' || currentUserLogged.id === user.id)"
                       (click)="changeUserState(user.id ,currentUserLogged.id)" mat-raised-button color="primary"
                       class="z-0">
                       <mat-icon fontIcon="person"></mat-icon> Anable
                     </button>
-                    <button *ngIf="user.validationState"
-                      [disabled]="(user.rol==='admin' || currentUserLogged.id === user.id)"
+                    <button *ngIf="user.isValidated"
+                      [disabled]="(user.role==='admin' || currentUserLogged.id === user.id)"
                       (click)="changeUserState(user.id ,currentUserLogged.id)" mat-raised-button color="warn"
                       class="z-0">
                       <mat-icon fontIcon="person_off"></mat-icon> Disable

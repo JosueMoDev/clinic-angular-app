@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
@@ -20,6 +20,8 @@ import { Patient } from 'src/app/models/patient.model';
 
 import { UserRegisterComponent } from '../components/user-register/user-register.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import { Account } from 'src/app/authentication/interfaces';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 
 
@@ -30,11 +32,11 @@ import { success, error } from 'src/app/helpers/sweetAlert.helper';
   ]
 })
 export class UsersComponent implements OnInit {
-  public currentUserLogged!: User | Patient
+  public currentUserLogged!: Account
   public uiSubscription!: Subscription;
   // ? Use's Table
-  public dataTemp: User[] = [];
-  public userList: User[] = [];
+  public dataTemp: Account[] = [];
+  public userList: Account[] = [];
   
   //? Angular Material Paginator
 
@@ -46,10 +48,10 @@ export class UsersComponent implements OnInit {
   public pageSize: number = 5;
   public pageSizeOptions: number[] = [5, 10, 25];
   public showPageSizeOptions: boolean = true;
+  private readonly authenticationService = Inject(AuthenticationService);
 
 
   constructor(
-    private authService: AuthService,
     private store: Store<AppState>,
     private ui: UiService,
     private userService: UserService,
@@ -64,7 +66,7 @@ export class UsersComponent implements OnInit {
     this.matconfig.previousPageLabel = '';
     this.matconfig.nextPageLabel = '';
     this.matconfig.itemsPerPageLabel = 'Users per page';
-    this.currentUserLogged = this.authService.currentUserLogged;
+    this.currentUserLogged = this.authenticationService.currentUserLogged;
     this.allUsers();
     this.uiSubscription = this.store.select('ui').subscribe(state => {
       if (state.isLoading) {
