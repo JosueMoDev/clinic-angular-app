@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthorizeUserGuard } from '../guards/authorize-user.guard';
-
-import { Rol } from '../interfaces/authorized-roles.enum';
-
 //* Components
 import { ClinicsComponent } from './clinics/clinics.component';
 import { AppointmentComponent } from './appointments/appointments.component';
@@ -14,20 +10,22 @@ import { PatientsComponent } from './patients/patients.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { ShowUserComponent } from './show-user/show-user.component';
 import { UsersComponent } from './users/users.component';
+import { authorizedAccountGuard } from '../authentication/guards';
+import { Role } from '../authentication/interfaces';
 
 const childRoutes: Routes = [
   { path: 'calendar', component: AppointmentComponent, data: { title: 'Calendar'} },
-  { path: 'medical-record', component: MedicalRecordComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Medical Record',  allowedRoles: [Rol.ADMIN, Rol.PATIENT, Rol.DOCTOR] } },
+  { path: 'medical-record', component: MedicalRecordComponent, canActivate: [authorizedAccountGuard], data: { title: 'Medical Record',  allowedRoles: [Role.ADMIN, Role.PATIENT, Role.DOCTOR] } },
   { path: 'show-user', component: ShowUserComponent, data: { title: 'User Profile' } },
   { path: 'show-clinic', component: ShowClinicComponent, data: { title: 'Clinic Profile'} },
-  { path: 'patients', component: PatientsComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Patients', allowedRoles: [Rol.ADMIN] } },
+  { path: 'patients', component: PatientsComponent, canActivate: [authorizedAccountGuard], data: { title: 'Patients', allowedRoles: [Role.ADMIN] } },
   {
     path: 'clinics',
     component: ClinicsComponent,
     // canActivate: [AuthorizeUserGuard],
     // data: { title: 'Clinics', allowedRoles: [Rol.ADMIN] }
   },
-  { path: 'users', component: UsersComponent, canActivate: [AuthorizeUserGuard], data: { title: 'Users', allowedRoles: [Rol.ADMIN] } },
+  { path: 'users', component: UsersComponent, canActivate: [authorizedAccountGuard], data: { title: 'Users', allowedRoles: [Role.ADMIN] } },
   {path: '**', component: Error404Component}
 ]
 

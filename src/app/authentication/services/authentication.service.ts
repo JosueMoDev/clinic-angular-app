@@ -43,8 +43,6 @@ export class AuthenticationService {
   isValidToken() {
     const token = sessionStorage.getItem('the_clinic_session_token');
 
-    console.log(token);
-
     if (!token) {
       this.logout();
       return of(false);
