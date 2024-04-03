@@ -40,24 +40,24 @@
                 <td class="w-full p-2 align-middle bg-transparent whitespace-nowrap ">
                   <div class="text-center align-top">
                     <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Rol:</p>
-                    <p class="mb-0 text-lg leading-normal uppercase dark:text-white">{{user.role}}</p>
+                    <p class="mb-0 text-lg leading-normal uppercase dark:text-white">{{user.role }}</p>
                   </div>
                 </td>
               </a>
-              <td *ngIf="(currentUserLogged.role==='admin')"
+              <td *ngIf="(currentUserLogged.role==='ADMIN')"
                 class="px-4 py-2 align-middle bg-transparent w-fit whitespace-nowrap ">
                 <div class="flex-col items-center space-y-1 align-top">
                   <p class="mb-0 text-xs font-semibold leading-tight text-center dark:text-white dark:opacity-60">
                     Actions:</p>
                   <div class="flex items-center justify-center">
                     <button *ngIf="!user.isValidated"
-                      [disabled]="(user.role==='admin' || currentUserLogged.id === user.id)"
+                      [disabled]="(user.role==='ADMIN' || currentUserLogged.id === user.id)"
                       (click)="changeUserState(user.id ,currentUserLogged.id)" mat-raised-button color="primary"
                       class="z-0">
                       <mat-icon fontIcon="person"></mat-icon> Anable
                     </button>
                     <button *ngIf="user.isValidated"
-                      [disabled]="(user.role==='admin' || currentUserLogged.id === user.id)"
+                      [disabled]="(user.role==='ADMIN' || currentUserLogged.id === user.id)"
                       (click)="changeUserState(user.id ,currentUserLogged.id)" mat-raised-button color="warn"
                       class="z-0">
                       <mat-icon fontIcon="person_off"></mat-icon> Disable

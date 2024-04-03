@@ -35,8 +35,8 @@ export class UsersComponent implements OnInit {
   public currentUserLogged!: Account
   public uiSubscription!: Subscription;
   // ? Use's Table
-  public dataTemp: Account[] = [];
-  public userList: Account[] = [];
+  public dataTemp!: Account[];
+  public userList!: Account[];
   
   //? Angular Material Paginator
 
@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
   public showPageSizeOptions: boolean = true;
   private readonly authenticationService = Inject(AuthenticationService);
 
-
+  
   constructor(
     private store: Store<AppState>,
     private ui: UiService,
@@ -96,6 +96,7 @@ export class UsersComponent implements OnInit {
     this.userService.allUsers(this.from)
     .subscribe(
       ({ users, total }) => {
+        console.log(users);
         this.userList = users;
         this.dataTemp = users;
         this.length = total;
