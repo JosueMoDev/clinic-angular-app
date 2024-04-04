@@ -11,7 +11,7 @@
       <table class="table">
         <tbody>
           <ng-container *ngFor="let user of userList">
-            <tr class="table-row row-link" (click)="updateProfileService.userToUpdate(user)" [class.row-link-disabled]="!user.isValidated">
+            <tr class="table-row row-link" (click)="updateProfileService.userToUpdate(user)" [class.row-link-disabled]="user.isValidated">
               <td class="table-cell user-avatar">
                 <img [src]="user.photoUrl || 'assets/img/no-photo-user.jpg'" class="avatar-image">
               </td>

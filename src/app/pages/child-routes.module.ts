@@ -7,7 +7,7 @@ import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
-import { ShowUserComponent } from './show-user/show-user.component';
+import { ShowAccountComponent } from './show-account/show-account.component';
 import { authorizedAccountGuard } from '../authentication/guards';
 import { Role } from '../authentication/interfaces';
 import { AccountsComponent } from './accounts/accounts.component';
@@ -28,8 +28,8 @@ const childRoutes: Routes = [
     },
   },
   {
-    path: 'show-user',
-    component: ShowUserComponent,
+    path: 'show-account',
+    component: ShowAccountComponent,
     data: { title: 'User Profile' },
   },
   {

@@ -21,7 +21,7 @@ import { PagesComponent } from './pages.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
-import { ShowUserComponent } from './show-user/show-user.component';
+import { ShowAccountComponent } from './show-account/show-account.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
@@ -44,7 +44,7 @@ import { AccountsComponent } from './accounts/accounts.component';
     PasswordRecoveryComponent,
     RegisterClinicComponent,
     ShowClinicComponent,
-    ShowUserComponent,
+    ShowAccountComponent,
     UserRegisterComponent,
     NewMedialRecordComponent,
     EditMedicalRecordComponent,

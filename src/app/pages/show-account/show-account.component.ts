@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog} from '@angular/material/dialog';
 
@@ -8,27 +8,24 @@ import { UserService } from 'src/app/services/user.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
 import { Subscription } from 'rxjs';
-import { Rol } from 'src/app/interfaces/authorized-roles.enum';
-import { Account } from 'src/app/authentication/interfaces';
+import { Account, Role } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
    
 
 
 
 @Component({
-  selector: 'app-show-user',
-  templateUrl: './show-user.component.html',
+  selector: 'app-show-account',
+  templateUrl: './show-account.component.html',
   styles: [
   ]
 })
-export class ShowUserComponent {
+export class ShowAccountComponent {
   public currentUserLogged!: Account;
-  public userRol!: Rol;
   public formSub$!: Subscription;
   public isLoading: boolean = false;
   public profileSelected!: Account;
@@ -42,7 +39,7 @@ export class ShowUserComponent {
   public currectPhoto!: string | undefined;
   public imagenTemp!: any;
   public photoForm!: FormGroup;
-  private readonly authenticationService = Inject(AuthenticationService);
+  private readonly authenticationService = inject(AuthenticationService);
   constructor(
     private cloudinary: CloudinaryService,
     private formbuilder: FormBuilder,
@@ -56,11 +53,10 @@ export class ShowUserComponent {
   ngOnInit() {
     this.profileSelected = this.updateProfileService.userProfileToUpdate;
     this.currectPhoto = this.updateProfileService.userProfileToUpdate.photoUrl;
-    this.currentUserLogged = this.authenticationService.currentUserLogged;
-    this.userRol = this.authenticationService.userRol;
+    this.currentUserLogged = this.authenticationService.currentUserLogged() as Account;
     this.profileForm = this.formbuilder.group({
-      document_number: [this.profileSelected.duiNumber, Validators.required],
-      email_name: [this.profileSelected.email, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+      duiNumber: [this.profileSelected.duiNumber, Validators.required],
+      email: [this.profileSelected.email, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
       name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
       lastname: [this.profileSelected.lastname, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
       phone: [this.profileSelected.phone, Validators.required],
@@ -72,17 +68,16 @@ export class ShowUserComponent {
       photoSrc:['']
     })
     
-    if (this.userRol === 'admin' && (this.profileSelected.role === 'admin' && (this.profileSelected.id !== this.currentUserLogged.id ))) {
+    if ((this.profileSelected.role === 'ADMIN' && (this.profileSelected.id !== this.currentUserLogged.id ))) {
       this.profileForm.disable()
     }
    
-    if ((this.userRol!=='admin') && ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
+    if ( ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
       this.profileForm.disable()
     }
     
 
-    this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
-    this.ShowPassWordButtom = (this.authenticationService.currentUserLogged.id === this.profileSelected.id);
+    this.ShowPassWordButtom = (this.currentUserLogged.role === this.profileSelected.id);
 
     this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
@@ -105,19 +100,16 @@ export class ShowUserComponent {
     
     if ( !this.profileForm.errors ) {   
 
-      const { document_type, document_number, email_name, email_provider,name, lastname, phone, gender } = this.profileForm.value;
+      const { duiNumber, email, name, lastname, phone, gender } = this.profileForm.value;
         const newUpdateForm = {
-          document_type,
-          document_number,
-          email_name,
-          email_provider,
-          email: email_name.trim()+email_provider,
+          duiNumber,
+          email,
           name: name.trim(),
           lastname: lastname.trim(),
           phone,
           gender
         }
-      if (this.profileSelected.role === 'patient') {
+      if (this.profileSelected.role === 'PATIENT') {
           this.patientService.updatePatient(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
             if (resp.ok) {
               this.updateProfileService.userToUpdate(resp.patient);
@@ -226,8 +218,8 @@ export class ShowUserComponent {
 
   get name() { return this.profileForm.get('name'); }
   get lastname() { return this.profileForm.get('lastname'); }
-  get email_name() { return this.profileForm.get('email_name'); } 
-  get document_number() { return this.profileForm.get('document_number'); }
+  get email() { return this.profileForm.get('email'); } 
+  get duiNumber() { return this.profileForm.get('duiNumber'); }
   get phone() { return this.profileForm.get('phone'); }
   
   get hasChanges(){ return this.somethingChanged }
@@ -241,7 +233,7 @@ export class ShowUserComponent {
   }
 
   forbiddenInputMailValidator(): ValidatorFn {
-    const isForbiddenInput: RegExp = /^[a-zA-Z0-9._]+[a-zA-Z0-9._]+$/;
+    const isForbiddenInput: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return (control: AbstractControl): ValidationErrors | null => {
       const isforbidden = isForbiddenInput.test(control.value);
       return !isforbidden ? {forbiddenName: {value: control.value}} : null;
