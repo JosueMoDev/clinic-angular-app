@@ -18,6 +18,17 @@ export class AuthenticationService {
   public currentUserLogged = computed(() => this._currentUserLogged());
 
   constructor() {}
+  get token(): string {
+    return sessionStorage.getItem('the_clinic_session_token') || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+  }
   get userRol() {
     return this.currentUserLogged()?.role;
   }
