@@ -18,6 +18,8 @@ import { MatTableModule } from '@angular/material/table';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';  
 import { MatSidenavModule } from '@angular/material/sidenav'; 
 import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+
 //! PrimeNG
 import { EditorModule } from 'primeng/editor';
 
@@ -47,6 +49,7 @@ import { EditorModule } from 'primeng/editor';
     NgxMatTimepickerModule,
     MatSidenavModule,
     MatListModule,
+    MatCardModule,
     // ! PrimeNg
     EditorModule
   ]

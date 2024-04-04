@@ -19,19 +19,19 @@ import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { PatientsComponent } from './patients/patients.component';
 import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { ShowUserComponent } from './show-user/show-user.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
-import { UsersComponent } from './users/users.component';
 import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
 import { SearchingComponent } from './components/searching/searching.component';
+import { AccountsComponent } from './accounts/accounts.component';
 
 
 @NgModule({
   declarations: [
+    AccountsComponent,
     ActionsAppointmentDialogComponent,
     AppointmentDialogComponent,
     ClinicAssignmentComponent,
@@ -42,12 +42,10 @@ import { SearchingComponent } from './components/searching/searching.component';
     MedicalRecordComponent,
     PagesComponent,
     PasswordRecoveryComponent,
-    PatientsComponent,
     RegisterClinicComponent,
     ShowClinicComponent,
     ShowUserComponent,
     UserRegisterComponent,
-    UsersComponent,
     NewMedialRecordComponent,
     EditMedicalRecordComponent,
     SearchingComponent,

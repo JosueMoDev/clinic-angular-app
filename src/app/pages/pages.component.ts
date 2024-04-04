@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, Signal, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { UiService } from '../services/ui.service';
 import { UpdateProfileService } from '../services/update-profile.service';
+import { Account } from '../authentication/interfaces';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-pages',
@@ -11,8 +12,9 @@ import { UpdateProfileService } from '../services/update-profile.service';
   styles: [],
 })
 export class PagesComponent {
+  private readonly authenticationService = inject(AuthenticationService);
   @ViewChild('drawer') drawer!: MatDrawer;
-  public loggedUser!: User;
+  public loggedUser!: Account;
   public sideNavMenu!: any;
 
   constructor(
@@ -21,7 +23,7 @@ export class PagesComponent {
     public ui: UiService
   ) {}
   ngOnInit(): void {
-    this.loggedUser = this.authService.currentUserLogged;
+    this.loggedUser = this.authenticationService.currentUserLogged()!;
     this.sideNavMenu = this.authService.currentSideNav;
   }
 

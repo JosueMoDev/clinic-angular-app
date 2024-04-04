@@ -8,7 +8,7 @@
         
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 rounded-md shadow-xl dark:bg-slate-850 dark:shadow-dark-xl bg-clip-border">
             <div class="flex justify-between px-2 py-4">
-              <p class="px-2 text-xl font-semibold text-black text-start dark:text-white">Edit Information for {{this.profileSelected.rol}}</p>
+              <p class="px-2 text-xl font-semibold text-black text-start dark:text-white">Edit Information for {{this.profileSelected.role}}</p>
               <button type="button" color="warn" *ngIf="ShowPassWordButtom" (click)="openDialog()"  mat-raised-button class="z-0">
                   <mat-icon  fontIcon="vpn_key"></mat-icon> <span>Change password</span> 
               </button>
@@ -31,14 +31,7 @@
                               </select>
                             </div>
                           </span>
-                          <input 
-                            *ngIf="document_type==='DUI'"
-                            type="text"  
-                            class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full border-r-0 appearance-none rounded-r-lg border border-l  border-y-0 border-r-gray-300 bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300  bg-clip-padding py-4 px-3  font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700   focus:outline-none focus:transition-shadow" 
-                            placeholder="DUI" 
-                            formControlName="document_number"
-                            mask="00000000-0"
-                          />
+                       
                           <input 
                           *ngIf="document_type==='PASSPORT'"
                           type="text"  
@@ -259,7 +252,7 @@
             <img *ngIf="imagenTemp" [src]="imagenTemp" class="w-full  border-gray-500 border-0.5 rounded-md"/>
           </div>
    
-          <div *ngIf="(userRol === 'admin'|| (userRol==='operator' && profileSelected.rol==='patient')||(profileSelected.id===currentUserLogged.id))" class="border-black/12.5 rounded-md p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
+          <div *ngIf="(userRol === 'admin'|| ( profileSelected.role==='patient')||(profileSelected.id===currentUserLogged.id))" class="border-black/12.5 rounded-md p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4">
             <div class="flex justify-center py-3 space-x-3">
               <div class="flex w-fit">
                 <button mat-raised-button type="button" [disabled]="!currectPhoto" (click)="deletePhoto(profileSelected.id)" color="warn"  class="z-0">

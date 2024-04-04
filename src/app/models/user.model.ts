@@ -14,7 +14,7 @@ export class User {
         public validationState: boolean,
         public email_name: string,
         public email_provider: string,
-        public rol: Rol.ADMIN | Rol.DOCTOR | Rol.OPERATOR,
+        public rol: Rol.ADMIN | Rol.DOCTOR,
         public photo?: string
     ){}
 

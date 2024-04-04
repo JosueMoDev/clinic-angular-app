@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 //*Own Modules
-import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +12,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 
 @NgModule({
@@ -21,10 +21,10 @@ import { StoreModule } from '@ngrx/store';
   ],
   imports: [
     AppRoutingModule,
-    AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
     PagesModule,
+    AuthenticationModule,
     SharedModule,
     StoreDevtoolsModule.instrument({connectInZone: true}),
     StoreModule.forRoot(appReducers)

@@ -19,22 +19,22 @@ export class ClinicService {
     private authService: AuthService
   ) { }
 
-  allClinics(from: number) {
-    return this.http.get(`${environment.THECLINIC_API_URL}/clinics?pagination=${from}`, this.headers).pipe(
-      delay(200),
-      map(
-        (resp: any) => {
-          const clinics = resp.clinics.map(
-            ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo }: Clinic) =>
-              new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo)
-          );
-          return {
-            total: resp.total,
-            clinics
-          }
-        })
-    )
-  }
+  // allClinics(from: number) {
+  //   return this.http.get(`${environment.THECLINIC_API_URL}/clinics?pagination=${from}`, this.headers).pipe(
+  //     delay(200),
+  //     map(
+  //       (resp: any) => {
+  //         const clinics = resp.clinics.map(
+  //           ({ clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo }: Clinic) =>
+  //             new Clinic(clinic_id, register_number, name, phone, province, city, street, register_by, validationState, hasAssignments, photo)
+  //         );
+  //         return {
+  //           total: resp.total,
+  //           clinics
+  //         }
+  //       })
+  //   )
+  // }
   allClinicsAvailableToMakeAnAppointment() {
     return this.http.get(`${environment.THECLINIC_API_URL}/appointments/clinic-available`, this.headers).pipe(
       delay(200),

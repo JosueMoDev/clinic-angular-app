@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
 import { Clinic } from 'src/app/models/clinic.model';
+import { Account } from '../authentication/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateProfileService {
-  public userProfile!: User | Patient;
+  public userProfile!: Account;
   public clinicProfile!: Clinic;
 
   constructor() { }
@@ -25,7 +24,7 @@ export class UpdateProfileService {
     return this.clinicProfile;
   }
 
-  userToUpdate(profile: User | Patient) {
+  userToUpdate(profile: Account) {
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.userProfile = profile;
   }

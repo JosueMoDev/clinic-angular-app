@@ -1,18 +1,20 @@
+import {
+  Address,
+  LastUpdate,
+} from '../pages/clinics/interface/clinic-response.interface';
 
 export class Clinic {
-
-    constructor(
-        public clinic_id:string,
-        public register_number: string,
-        public name: string,
-        public phone: string,
-        public province: string,
-        public city: string,
-        public street: string,
-        public register_by: string,
-        public validationState: boolean,
-        public hasAssignments:boolean,
-        public photo?: string,
-    ){}
-
+  constructor(
+    public id: string,
+    public registerNumber: string,
+    public name: string,
+    public phone: string,
+    public address: Address,
+    public photoId: string,
+    public photoUrl: string,
+    public createdAt: Date,
+    public createdBy: string,
+    public status: boolean,
+    public lastUpdate: LastUpdate[]
+  ) {}
 }

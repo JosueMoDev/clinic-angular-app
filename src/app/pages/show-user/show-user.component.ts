@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog} from '@angular/material/dialog';
 
@@ -10,13 +10,12 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { AuthService } from 'src/app/services/auth.service';
 
-import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
-
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
 import { Subscription } from 'rxjs';
 import { Rol } from 'src/app/interfaces/authorized-roles.enum';
+import { Account } from 'src/app/authentication/interfaces';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
    
 
 
@@ -28,11 +27,11 @@ import { Rol } from 'src/app/interfaces/authorized-roles.enum';
   ]
 })
 export class ShowUserComponent {
-  public currentUserLogged!: User | Patient;
+  public currentUserLogged!: Account;
   public userRol!: Rol;
   public formSub$!: Subscription;
   public isLoading: boolean = false;
-  public profileSelected!: User | Patient;
+  public profileSelected!: Account;
   public ShowPassWordButtom: boolean = false;
   public somethingChanged: boolean = false;
   //? User Information
@@ -43,9 +42,8 @@ export class ShowUserComponent {
   public currectPhoto!: string | undefined;
   public imagenTemp!: any;
   public photoForm!: FormGroup;
-
+  private readonly authenticationService = Inject(AuthenticationService);
   constructor(
-    private authService: AuthService,
     private cloudinary: CloudinaryService,
     private formbuilder: FormBuilder,
     private patientService: PatientService,
@@ -57,14 +55,12 @@ export class ShowUserComponent {
 
   ngOnInit() {
     this.profileSelected = this.updateProfileService.userProfileToUpdate;
-    this.currectPhoto = this.updateProfileService.userProfileToUpdate.photo;
-    this.currentUserLogged = this.authService.currentUserLogged;
-    this.userRol = this.authService.userRol;
+    this.currectPhoto = this.updateProfileService.userProfileToUpdate.photoUrl;
+    this.currentUserLogged = this.authenticationService.currentUserLogged;
+    this.userRol = this.authenticationService.userRol;
     this.profileForm = this.formbuilder.group({
-      document_type: [this.profileSelected.document_type, Validators.required],
-      document_number: [this.profileSelected.document_number, Validators.required],
-      email_provider: [this.profileSelected.email_provider, Validators.required],
-      email_name: [this.profileSelected.email_name, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
+      document_number: [this.profileSelected.duiNumber, Validators.required],
+      email_name: [this.profileSelected.email, [Validators.required, Validators.minLength(10), Validators.maxLength(25), this.forbiddenInputMailValidator()]],
       name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(25), this.forbiddenInputTextValidator()]],
       lastname: [this.profileSelected.lastname, [Validators.required, Validators.minLength(3), Validators.maxLength(25),this.forbiddenInputTextValidator()] ],
       phone: [this.profileSelected.phone, Validators.required],
@@ -76,19 +72,17 @@ export class ShowUserComponent {
       photoSrc:['']
     })
     
-    if (this.userRol === 'admin' && (this.profileSelected.rol === 'admin' && (this.profileSelected.id !== this.currentUserLogged.id ))) {
+    if (this.userRol === 'admin' && (this.profileSelected.role === 'admin' && (this.profileSelected.id !== this.currentUserLogged.id ))) {
       this.profileForm.disable()
     }
    
     if ((this.userRol!=='admin') && ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
       this.profileForm.disable()
     }
-    if ((this.userRol==='operator') && ( (this.profileSelected.id !== this.currentUserLogged.id ))) {
-      this.profileForm.disable()
-    }
+    
 
     this.profileForm.get('personalInformation.document_type')?.valueChanges.subscribe(value => this.document_type = value);
-    this.ShowPassWordButtom = (this.authService.currentUserLogged.id === this.profileSelected.id);
+    this.ShowPassWordButtom = (this.authenticationService.currentUserLogged.id === this.profileSelected.id);
 
     this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
@@ -123,7 +117,7 @@ export class ShowUserComponent {
           phone,
           gender
         }
-      if (this.profileSelected.rol === 'patient') {
+      if (this.profileSelected.role === 'patient') {
           this.patientService.updatePatient(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
             if (resp.ok) {
               this.updateProfileService.userToUpdate(resp.patient);
@@ -166,7 +160,7 @@ export class ShowUserComponent {
 
   startLoaddingPhoto() {
     let schema!: string;
-    if (this.profileSelected.rol === 'patient') {
+    if (this.profileSelected.role === 'patient') {
       schema = 'patients';
     } else { schema='users'}
     this.uploadPhoto(this.profileSelected.id, schema);
@@ -174,7 +168,7 @@ export class ShowUserComponent {
 
   deletePhoto(id: string) {
     let schema!: string;
-    if (this.profileSelected.rol === 'patient') {
+    if (this.profileSelected.role === 'patient') {
       schema = 'patients';
     } else { schema = 'users'; }
     Swal.fire({
@@ -191,7 +185,7 @@ export class ShowUserComponent {
         this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.updateProfileService.userToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.userToUpdate({ ...this.profileSelected, photoUrl: resp.photo });
               this.updateProfileService.deletePhoto();
               this.currectPhoto = this.updateProfileService.currentPhoto;
               success(resp.message);
@@ -210,7 +204,7 @@ export class ShowUserComponent {
           (resp: any) => {
             if (resp.ok) {
               this.isLoading = false;
-              this.updateProfileService.userToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.userToUpdate({ ...this.profileSelected, photoUrl: resp.photo });
               this.updateProfileService.updatePhoto(resp.photo);
               this.currectPhoto = this.updateProfileService.currentPhoto;
               success(resp.message);

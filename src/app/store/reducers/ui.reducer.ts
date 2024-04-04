@@ -1,13 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { Clinic } from 'src/app/models/clinic.model';
 import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
 import { isLoadingTable, isLoadedUserTable, isLoadedClinicTable, isLoadedPatientTable} from '../actions/ui.actions';
+import { Account } from 'src/app/models/account.model';
 
 export interface State {
     isLoading: boolean;
-    usersList: User[];
-    patientsList: Patient[];
+    usersList: Account[];
+    patientsList: Account[];
     clinicsList: Clinic[]
 }
 

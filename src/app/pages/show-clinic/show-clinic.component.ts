@@ -47,7 +47,7 @@ export class ShowClinicComponent {
 
   ) { 
     this.profileSelected = updateProfileService.clinicProfileToUpdate;
-    this.currectPhoto = updateProfileService.clinicProfileToUpdate.photo;
+    this.currectPhoto = updateProfileService.clinicProfileToUpdate.photoUrl;
 
   }
 
@@ -55,15 +55,15 @@ export class ShowClinicComponent {
     this.userRol = this.authService.userRol;
     this.profileForm = this.formbuilder.group({
       information: this.formbuilder.group({
-        register_number: [this.profileSelected.register_number, Validators.required],
+        register_number: [this.profileSelected.registerNumber, Validators.required],
         name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         phone: [this.profileSelected.phone, Validators.required],
       }),
       address: this.formbuilder.group({
         country: [{ value:'El Salvador', disabled: true }],
-        province: [this.profileSelected.province, [Validators.required]],
-        city: [this.profileSelected.city, Validators.required],
-        street:[this.profileSelected.street, Validators.required]
+        province: [this.profileSelected.address.state, [Validators.required]],
+        city: [this.profileSelected.address.city, Validators.required],
+        street:[this.profileSelected.address.street, Validators.required]
       })
     });
 
@@ -108,7 +108,7 @@ export class ShowClinicComponent {
         city: address.city,
         street: address.street
       }
-      this.clinicService.updateClinic(newUpdateForm, this.profileSelected.clinic_id).subscribe((resp: any)=> { 
+      this.clinicService.updateClinic(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
         if (resp.ok) {
           this.updateProfileService.clinicToUpdate(resp.clinic);
           this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
@@ -149,7 +149,7 @@ export class ShowClinicComponent {
 
   startLoaddingPhoto() {
     let schema: string='clinics';
-    this.uploadPhoto(this.profileSelected.clinic_id, schema);
+    this.uploadPhoto(this.profileSelected.id, schema);
   }
 
   deletePhoto(id: string) {
@@ -168,7 +168,7 @@ export class ShowClinicComponent {
         this.cloudinary.destroyImageCloudinary(id, schema).subscribe(
           (resp: any) => {
             if (resp.ok) {
-              this.updateProfileService.clinicToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.clinicToUpdate({ ...this.profileSelected, photoUrl: resp.photo });
               this.updateProfileService.deletePhoto();
               this.currectPhoto = this.updateProfileService.currentPhoto;
               success(resp.message);
@@ -187,7 +187,7 @@ export class ShowClinicComponent {
           (resp: any) => {
             if (resp.ok) {
               this.isLoading = false;
-              this.updateProfileService.clinicToUpdate({ ...this.profileSelected, photo: resp.photo });
+              this.updateProfileService.clinicToUpdate({ ...this.profileSelected, photoUrl: resp.photo });
               this.updateProfileService.updatePhoto(resp.photo);
               this.currectPhoto = this.updateProfileService.currentPhoto;
               success(resp.message);

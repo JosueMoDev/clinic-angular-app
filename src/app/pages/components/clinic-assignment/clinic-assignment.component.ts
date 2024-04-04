@@ -68,7 +68,7 @@ export class ClinicAssignmentComponent {
 
   ngOnInit(): void {
     this.userRol = this.authService.userRol;
-    this.clinic_id = this.updateProfileService.clinicProfile.clinic_id
+    this.clinic_id = this.updateProfileService.clinicProfile.id
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Doctors assigned per page';
@@ -79,12 +79,10 @@ export class ClinicAssignmentComponent {
         this.allEmployeesAvaibleToBeAssigned();
         this.allEmployeesAssignedToClinic();
         this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
-        this.hasAssignments = this.profileSelected.hasAssignments;
         this.store.dispatch(ui.isLoadingTable());
       }
     });
     this.doctorsAvailableList;
-    this.hasAssignments = this.updateProfileService.clinicProfileToUpdate.hasAssignments;
   }
 
   ngOnDestroy(): void {

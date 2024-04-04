@@ -53,17 +53,17 @@ export class AppointmentComponent {
       }
     });
 
-    this.allClinics();
+    // this.allClinics();
   }
 
-  allClinics() {
-    this.clinicService.allClinics(0)
-      .subscribe(
-        ({ clinics }) => {
-          this.clinicList = clinics;
-        }
-      )
-  }
+  // allClinics() {
+  //   this.clinicService.allClinics(0)
+  //     .subscribe(
+  //       ({ clinics }) => {
+  //         this.clinicList = clinics;
+  //       }
+  //     )
+  // }
 
   ngOnDestroy(): void {
     this.uiSubscription.unsubscribe();

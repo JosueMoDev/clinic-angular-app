@@ -1,0 +1,57 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        role="form"
+        (ngSubmit)="loginWithEmailAndPassword()"
+        [formGroup]="loginForm"
+      >
+        <mat-form-field class="full-width">
+          <input
+            type="email"
+            matInput
+            placeholder="Email"
+            aria-label="Email"
+            aria-describedby="email-addon"
+            formControlName="email"
+            value="email?.value"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            placeholder="passoword"
+            formControlName="password"
+            require
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon color="primary">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-checkbox class="remember-me">Recordarme</mat-checkbox>
+        <button
+          color="accent"
+          mat-raised-button
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          Iniciar sesión
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

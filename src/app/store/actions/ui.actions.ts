@@ -1,17 +1,16 @@
 import { createAction, props } from '@ngrx/store';
+import { Account } from 'src/app/models/account.model';
 import { Clinic } from 'src/app/models/clinic.model';
 import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
 
 
 export const isLoadingTable = createAction('[UI Tables] Is Loading');
 export const isLoadedUserTable = createAction('[UI Tables] Load Users',
-    props < { itemList: User[] }>()
+    props < { itemList: Account[] }>()
 );
 export const isLoadedPatientTable = createAction('[UI Tables] Load Patients',
-    props < { itemList: Patient[] }>()
+    props < { itemList: Account[] }>()
 );
 export const isLoadedClinicTable = createAction('[UI Tables] Load Clinics',
     props < { itemList: Clinic[] }>()
-
 );
