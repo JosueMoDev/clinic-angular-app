@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Patient } from 'src/app/models/patient.model';
-import { User } from 'src/app/models/user.model';
 import { Clinic } from 'src/app/models/clinic.model';
 import { Account } from '../authentication/interfaces';
 
