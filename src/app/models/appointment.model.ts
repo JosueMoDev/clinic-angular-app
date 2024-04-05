@@ -1,16 +1,13 @@
+import { LastUpdate } from '../pages/appointments/interfaces/appointment-response.interface';
 export class Appointment {
-
-    constructor(
-        public appointment_id:string,
-        public start: Date,
-        public end: Date,
-        public title: string,
-        public clinic: string,
-        public clinic_info:string,
-        public doctor: string,
-        public doctor_info:string,
-        public patient: string,
-        public createdby: string
-    ){}
-
+  constructor(
+    public id: string,
+    public startDate: Date,
+    public endDate: Date,
+    public doctorId: string,
+    public patientId: string,
+    public createdAt: Date,
+    public createdBy: string,
+    public lastUpdate: LastUpdate[]
+  ) {}
 }

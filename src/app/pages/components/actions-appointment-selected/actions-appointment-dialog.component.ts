@@ -62,17 +62,17 @@ export class ActionsAppointmentDialogComponent {
 
   ngOnInit(): void {
     this.dataAppointment = { ...this.data };
-    const today = new Date(this.dataAppointment.start);
+    const today = new Date(this.dataAppointment.startDate);
     const appointmentTime = today.getHours() + ':' + today.getMinutes();
     this.userLogged = this.authService.currentUserLogged.id;
     
-    this.doctorSelected = this.dataAppointment.doctor
-    this.doctorSelectedName = this.dataAppointment.doctor_info;
+    this.doctorSelected = this.dataAppointment.doctorId
+    this.doctorSelectedName = this.dataAppointment.doctorId;
 
     this.editAppointmentForm = this.formBuilder.group({
-      clinic: [this.dataAppointment.clinic, [Validators.required]],
+      // clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.doctorSelected, [Validators.required]],
-      start: [this.dataAppointment.start, [Validators.required]],
+      start: [this.dataAppointment.startDate, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
     });
     this.allClinicsAvailableToMakeAnAppointment();
@@ -144,7 +144,7 @@ export class ActionsAppointmentDialogComponent {
         clinic,
         doctor,
       }
-      this.appointmentService.editAppointment( this.dataAppointment.appointment_id, appointmentEditForm).subscribe(
+      this.appointmentService.editAppointment( this.dataAppointment.id, appointmentEditForm).subscribe(
         (resp: any)=>{
           if (resp.ok) {
             this.editAppointmentForm.reset();
@@ -161,7 +161,7 @@ export class ActionsAppointmentDialogComponent {
   }
 
   deleteAppointment() {
-    this.appointmentService.deleteAppointment( this.dataAppointment.appointment_id, this.userLogged).subscribe(
+    this.appointmentService.deleteAppointment( this.dataAppointment.id, this.userLogged).subscribe(
       (resp: any)=>{
         if (resp.ok) {
           this.dialogRef.close();

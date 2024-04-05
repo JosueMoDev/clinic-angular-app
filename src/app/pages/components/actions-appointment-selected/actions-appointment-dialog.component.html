@@ -5,8 +5,8 @@
     <form  role="form text-left w-full" enctype="multipart/form-data" (ngSubmit)="editAppointment()" [formGroup]="editAppointmentForm">
       <div class="grid w-full grid-cols-1">
         <div class="flex-col w-full mb-5 columns-2">
-            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">person</mat-icon><span class="font-semibold">Patient:<span class="font-normal"> {{ dataAppointment.title}}</span></span></p>
-            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">calendar_month</mat-icon><span class="font-semibold">Date:<span class="font-normal"> {{ dataAppointment.start | date:'medium'}}</span></span></p>
+            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">person</mat-icon><span class="font-semibold">Patient:<span class="font-normal"> {{ dataAppointment.patientId}}</span></span></p>
+            <p class="flex px-1 py-2 text-sm text-black align-middle dark:text-white bg-slate-50 dark:bg-slate-850"><mat-icon class="text-sm">calendar_month</mat-icon><span class="font-semibold">Date:<span class="font-normal"> {{ dataAppointment.startDate | date:'medium'}}</span></span></p>
         </div>
         
         <div class="flex-col w-full columns-2">
