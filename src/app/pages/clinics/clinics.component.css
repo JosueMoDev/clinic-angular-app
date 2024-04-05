@@ -1,11 +1,13 @@
-.container {
+.clinic-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Alineación en la parte superior */
-  min-height: 100vh;
+  align-items: flex-center; /* Alineación en la parte superior */
+  width: 100%;
 }
 
 .table-wrapper {
+  margin-left: 10%;
+  margin-right: 10%;
   width: 100%;
   margin-top: 1.5rem;
   border-bottom: 1px solid rgb(17, 28, 68, 0.1);
