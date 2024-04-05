@@ -13,8 +13,17 @@ export class AccountsService {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly http = inject(HttpClient);
   private readonly headers = this.authenticationService.headers;
-  constructor() { }
-  
+  constructor() {}
+
+  crearteNewAccount(account: any) {
+    console.log(account)
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/account/create`,
+      account,
+      this.headers
+    );
+  }
+
   allUsers(from: number) {
     return this.http
       .get<Account[]>(

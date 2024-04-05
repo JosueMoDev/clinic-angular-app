@@ -15,11 +15,11 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { UiService } from 'src/app/services/ui.service';
 
 
-import { UserRegisterComponent } from '../components/user-register/user-register.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Account } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { AccountsService } from '../accounts/services/accounts.service';
+import { RegisterAccountComponent } from './components/register-account/register-account.component';
 
 @Component({
   selector: 'app-accounts',
@@ -75,7 +75,7 @@ export class AccountsComponent {
 
   openDialog(): void {
     this.ui.currentUserType('');
-    this.matDialog.open(UserRegisterComponent, {
+    this.matDialog.open(RegisterAccountComponent, {
       width: '100%',
       hasBackdrop: true,
       disableClose: true,

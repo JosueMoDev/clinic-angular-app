@@ -22,7 +22,6 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { RegisterClinicComponent } from './components/register-clinic/register-clinic.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { ShowAccountComponent } from './show-account/show-account.component';
-import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
 import { SearchingComponent } from './components/searching/searching.component';
@@ -45,7 +44,6 @@ import { AccountsComponent } from './accounts/accounts.component';
     RegisterClinicComponent,
     ShowClinicComponent,
     ShowAccountComponent,
-    UserRegisterComponent,
     NewMedialRecordComponent,
     EditMedicalRecordComponent,
     SearchingComponent,
@@ -65,7 +63,6 @@ import { AccountsComponent } from './accounts/accounts.component';
     AppointmentComponent,
     Error404Component,
     PagesComponent,
-    UserRegisterComponent
   ],
   providers:[provideNgxMask()]
 })

@@ -61,10 +61,10 @@ export class UserService {
       );
   }
 
-  crearteNewUserWithEmailAndPassword(user: UserRegisterForm) {
+  crearteNewUserWithEmailAndPassword(account: any) {
     return this.http.post(
       `${environment.THECLINIC_API_URL}/users`,
-      user,
+      account,
       this.headers
     );
   }
