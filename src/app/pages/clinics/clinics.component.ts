@@ -37,7 +37,7 @@ export class ClinicsComponent {
   //? angular material paginator
   public from: number = 0;
   public hidePageSize: boolean = false;
-  public length!: number;
+  public length: number = 0;
   public pageEvent!: PageEvent;
   public pageIndex: number = 0;
   public pageSize: number = 5;
@@ -46,6 +46,7 @@ export class ClinicsComponent {
 
   private readonly clinicService = inject(ClinicService);
   private readonly authenticationService = inject(AuthenticationService);
+  displayedColumns: string[] = ['avatar', 'name', 'registerNumber', 'address', 'action'];
 
   constructor(
     private store: Store<AppState>,
@@ -58,7 +59,8 @@ export class ClinicsComponent {
     this.matconfig.previousPageLabel = '';
     this.matconfig.nextPageLabel = '';
     this.matconfig.itemsPerPageLabel = 'Clinics per page';
-    this.currentUserLogged = this.authenticationService.currentUserLogged() as Account;
+    this.currentUserLogged =
+      this.authenticationService.currentUserLogged() as Account;
     this.allClinics();
     this.uiSubscription = this.store.select('ui').subscribe((state) => {
       if (state.isLoading) {
@@ -82,7 +84,9 @@ export class ClinicsComponent {
   }
 
   allClinics() {
-    this.clinicService.allClinics(this.from).subscribe(({ clinics, total }) => {
+    this.clinicService.allClinics(this.pageIndex+1, this.pageSize).subscribe(({ clinics, total }) => {
+        console.log('El total de registros', total);
+
       this.clinicList = clinics;
       this.dataTemp = clinics;
       this.length = total;

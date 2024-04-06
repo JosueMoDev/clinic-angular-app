@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
@@ -12,8 +12,6 @@ import * as ui from 'src/app/store/actions/ui.actions';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { UiService } from 'src/app/services/ui.service';
 
-
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Account } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { AccountsService } from '../accounts/services/accounts.service';
@@ -34,8 +32,9 @@ export class AccountsComponent {
   //? Angular Material Paginator
 
   public from: number = 0;
+  public page: number = 1;
   public hidePageSize: boolean = false;
-  public length!: number;
+  public length: number = 0;
   public pageEvent!: PageEvent;
   public pageIndex: number = 0;
   public pageSize: number = 5;
@@ -43,6 +42,7 @@ export class AccountsComponent {
   public showPageSizeOptions: boolean = true;
   private readonly authenticationService = inject(AuthenticationService);
   private readonly accountService = inject(AccountsService);
+  displayedColumns: string[] = ['avatar', 'name', 'email', 'role', 'action'];
 
   constructor(
     private store: Store<AppState>,
@@ -56,7 +56,8 @@ export class AccountsComponent {
     this.matconfig.previousPageLabel = '';
     this.matconfig.nextPageLabel = '';
     this.matconfig.itemsPerPageLabel = 'Users per page';
-    this.currentUserLogged = this.authenticationService.currentUserLogged() as Account;
+    this.currentUserLogged =
+      this.authenticationService.currentUserLogged() as Account;
     this.allUsers();
     this.uiSubscription = this.store.select('ui').subscribe((state) => {
       if (state.isLoading) {
@@ -82,7 +83,7 @@ export class AccountsComponent {
 
   allUsers() {
     this.accountService
-      .getAllAccounts(this.from)
+      .getAllAccounts(this.pageIndex+1, this.pageSize)
       .subscribe(({ users, total }: any) => {
         this.userList = users;
         this.dataTemp = users;
@@ -123,5 +124,5 @@ export class AccountsComponent {
   //     }
   //   );
   // }
-  changeAccountStatus(){}
+  changeAccountStatus() {}
 }
