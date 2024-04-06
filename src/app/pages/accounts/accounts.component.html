@@ -24,10 +24,10 @@
               </td>
               <td *ngIf="currentUserLogged?.role==='ADMIN'" class="table-cell action-cell">
                 <div class="action-buttons">
-                  <button *ngIf="!user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="enable-button" (click)="changeUserState(user.id, currentUserLogged.id)">
+                  <button *ngIf="!user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="enable-button" (click)="changeAccountStatus()">
                     <mat-icon fontIcon="person"></mat-icon> Enable
                   </button>
-                  <button *ngIf="user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="disable-button" (click)="changeUserState(user.id, currentUserLogged.id)">
+                  <button *ngIf="user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="disable-button" (click)="changeAccountStatus()">
                     <mat-icon fontIcon="person_off"></mat-icon> Disable
                   </button>
                 </div>

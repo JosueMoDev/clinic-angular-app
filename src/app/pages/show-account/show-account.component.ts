@@ -4,7 +4,6 @@ import { MatDialog} from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
 
-import { UserService } from 'src/app/services/user.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 
@@ -42,7 +41,6 @@ export class ShowAccountComponent {
   constructor(
     private cloudinary: CloudinaryService,
     private formbuilder: FormBuilder,
-    private userService: UserService,
     public updateProfileService: UpdateProfileService,
     public matDialog: MatDialog
 
@@ -118,15 +116,15 @@ export class ShowAccountComponent {
         //     error(err.error.message);
         // });
       } else {
-        this.userService.updateUser(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
-          if (resp.ok) {
-            this.updateProfileService.userToUpdate(resp.user);
-            this.profileSelected = this.updateProfileService.userProfileToUpdate;
-            success(resp.message);
-          }
-        }, (err: any) => {
-          error(err.error.message);
-        });
+        // this.userService.updateAccount(newUpdateForm, this.profileSelected.id).subscribe((resp: any)=> { 
+        //   if (resp.ok) {
+        //     this.updateProfileService.userToUpdate(resp.user);
+        //     this.profileSelected = this.updateProfileService.userProfileToUpdate;
+        //     success(resp.message);
+        //   }
+        // }, (err: any) => {
+        //   error(err.error.message);
+        // });
       }
       
           

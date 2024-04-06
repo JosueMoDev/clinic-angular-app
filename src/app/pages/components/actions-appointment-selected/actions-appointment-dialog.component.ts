@@ -9,7 +9,6 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AppointmentService } from 'src/app/services/appointment.service';
-import { ClinicService } from 'src/app/services/clinic.service';
 
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
@@ -18,6 +17,7 @@ import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-av
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
+import { ClinicService } from '../../clinics/services/clinic.service';
 
 @Component({
   selector: 'app-actions-appointment-selected',

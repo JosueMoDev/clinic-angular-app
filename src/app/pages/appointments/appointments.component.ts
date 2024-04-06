@@ -9,12 +9,12 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AppointmentService } from 'src/app/services/appointment.service';
-import { ClinicService } from 'src/app/services/clinic.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
 
 import { AppointmentDialogComponent } from 'src/app/pages/components/appointment-dialog/appointment-dialog.component';
 import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/actions-appointment-selected/actions-appointment-dialog.component';
+import { ClinicService } from '../clinics/services/clinic.service';
 
 @Component({
   selector: 'app-appointment',

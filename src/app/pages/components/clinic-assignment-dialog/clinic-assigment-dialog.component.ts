@@ -7,11 +7,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { ClinicService } from 'src/app/services/clinic.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
+import { ClinicService } from '../../clinics/services/clinic.service';
 
 @Component({
   selector: 'app-clinic-assignment-dialog',

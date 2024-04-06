@@ -72,6 +72,10 @@ export class AccountsService {
   }
 
   changePassword(){
+
+  }
+
+  changeAccountStatus(){
     
   }
 }

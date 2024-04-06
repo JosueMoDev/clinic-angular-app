@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { UserService } from 'src/app/services/user.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AccountsService } from '../../accounts/services/accounts.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class PasswordRecoveryComponent {
   constructor(
     private formbuilder: FormBuilder,
     private authService: AuthenticationService,
-    private userService: UserService,
+    private userService: AccountsService,
     public matdialogRef: MatDialogRef<PasswordRecoveryComponent>
   ) { }
   
@@ -53,33 +53,7 @@ export class PasswordRecoveryComponent {
     return (this.newPasswordForm.get('password')?.value === this.newPasswordForm.get('confirmationPassword')?.value)
   }
 
-  confirmCurrentPasswor() {
-    if (!this.oldPassword?.invalid) {
-      if (this.currentUserLogged.rol === 'patient') {
-        // this.PatientService.confirmateOldPassword(this.currentUserLogged.id, this.oldPassword?.value).subscribe(
-        //   (resp: any)=>{
-        //     if (resp.ok) {
-        //       this.isOldPasswordValid = true;
-        //       this.oldPassword?.disable();
-        //       this.password?.enable();
-        //       this.confirmationPassword?.enable();
-        //     }
-        //   },(err:any)=>{ error(err.error.message)}
-        // )
-      } else {
-        this.userService.confirmateOldPassword(this.currentUserLogged.id, this.oldPassword?.value).subscribe(
-          (resp: any)=>{
-            if (resp.ok) {
-              this.isOldPasswordValid = true;
-              this.oldPassword?.disable();
-              this.password?.enable();
-              this.confirmationPassword?.enable();
-            }
-          },(err:any)=>{ error(err.error.message)}
-        )
-      }
-    }
-  }
+  
 
   passwordRecoveryForm() {
     if (!this.newPasswordForm?.invalid) {
@@ -98,19 +72,19 @@ export class PasswordRecoveryComponent {
         //   },(err:any)=>{ error(err.error.message)}
         // )
       } else {
-        this.userService.changePassword(this.currentUserLogged.id, this.password?.value).subscribe(
-          (resp: any)=>{
-            if (resp.ok) {
-              this.isOldPasswordValid = false;
-              this.oldPassword?.enable();
-              this.password?.disable();
-              this.confirmationPassword?.disable();
-              this.oldPasswordForm.reset();
-              this.newPasswordForm.reset();
-              success(resp.message)
-            }
-          },(err:any)=>{ error(err.error.message)}
-        )
+        // this.userService.changePassword().subscribe(
+        //   (resp: any)=>{
+        //     if (resp.ok) {
+        //       this.isOldPasswordValid = false;
+        //       this.oldPassword?.enable();
+        //       this.password?.disable();
+        //       this.confirmationPassword?.disable();
+        //       this.oldPasswordForm.reset();
+        //       this.newPasswordForm.reset();
+        //       success(resp.message)
+        //     }
+        //   },(err:any)=>{ error(err.error.message)}
+        // )
       }
     }
   }

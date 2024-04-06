@@ -9,7 +9,6 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { AppointmentService } from 'src/app/services/appointment.service';
-import { ClinicService } from 'src/app/services/clinic.service';
 
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
@@ -17,6 +16,7 @@ import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.se
 import { ClinicAvailableToMakeAnAppointment } from '../../../interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { ClinicService } from '../../clinics/services/clinic.service';
 
 
 @Component({

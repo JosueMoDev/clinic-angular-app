@@ -9,8 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-
-import { UserService } from 'src/app/services/user.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -49,7 +47,6 @@ export class AccountsComponent {
   constructor(
     private store: Store<AppState>,
     private ui: UiService,
-    private userService: UserService,
     public matconfig: MatPaginatorIntl,
     public matDialog: MatDialog,
     public updateProfileService: UpdateProfileService
@@ -113,17 +110,18 @@ export class AccountsComponent {
     }
   }
 
-  changeUserState(user_to_change: string, user_logged: string) {
-    this.userService.changeUserStatus(user_to_change, user_logged).subscribe(
-      (resp: any) => {
-        if (resp.ok) {
-          success(resp.message);
-          this.allUsers();
-        }
-      },
-      (err) => {
-        error(err.error.message);
-      }
-    );
-  }
+  // changeUserState(user_to_change: string, user_logged: string) {
+  //   this.userService.changeUserStatus(user_to_change, user_logged).subscribe(
+  //     (resp: any) => {
+  //       if (resp.ok) {
+  //         success(resp.message);
+  //         this.allUsers();
+  //       }
+  //     },
+  //     (err) => {
+  //       error(err.error.message);
+  //     }
+  //   );
+  // }
+  changeAccountStatus(){}
 }
