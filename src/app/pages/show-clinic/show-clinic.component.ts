@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import Swal from 'sweetalert2';
@@ -6,12 +6,9 @@ import Swal from 'sweetalert2';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 import { Clinic} from 'src/app/models/clinic.model';
-import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 
-import provicesAndCities from 'src/assets/ElSalvadorCities.json';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
 
@@ -25,7 +22,6 @@ import { Subscription } from 'rxjs';
 export class ShowClinicComponent {
   public formSub$!: Subscription;
   public profileSelected!: Clinic;
-  public userRol!: Rol;
   public isLoading: boolean = false;
   public somethingChanged: boolean = false;
   // ?Information Form
@@ -39,43 +35,33 @@ export class ShowClinicComponent {
   public photoForm!: FormGroup;
 
   constructor(
-    private authService: AuthService,
     private clinicService: ClinicService,
     private cloudinary: CloudinaryService,
     private formbuilder: FormBuilder,
     public updateProfileService: UpdateProfileService
 
-  ) { 
-    this.profileSelected = updateProfileService.clinicProfileToUpdate;
-    this.currectPhoto = updateProfileService.clinicProfileToUpdate.photoUrl;
-
-  }
+  ) { }
 
   ngOnInit() {
-    this.userRol = this.authService.userRol;
+    this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
+    this.currectPhoto = this.updateProfileService.clinicProfileToUpdate.photoUrl;
     this.profileForm = this.formbuilder.group({
       information: this.formbuilder.group({
-        register_number: [this.profileSelected.registerNumber, Validators.required],
+        registerNumber: [this.profileSelected.registerNumber, Validators.required],
         name: [this.profileSelected.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         phone: [this.profileSelected.phone, Validators.required],
       }),
       address: this.formbuilder.group({
-        country: [{ value:'El Salvador', disabled: true }],
-        province: [this.profileSelected.address.state, [Validators.required]],
+        state: [this.profileSelected.address.state, [Validators.required]],
         city: [this.profileSelected.address.city, Validators.required],
         street:[this.profileSelected.address.street, Validators.required]
       })
     });
 
     this.photoForm = this.formbuilder.group({
-      photo: [''],
-      photoSrc:['']
+      photoUrl: [this.profileSelected.photoUrl, Validators.required]
     })
    
-    if (this.userRol!=='admin') {
-      this.profileForm.disable()
-    }
-
     this.formSub$ = this.profileForm.statusChanges.subscribe(value => {
       if (value === 'VALID') {
         this.somethingChanged = true;
@@ -85,7 +71,6 @@ export class ShowClinicComponent {
         this.hasChanges;
       }
     })
-    this.provinces = provicesAndCities.map(({ province }) => province);
   }
 
   ngOnDestroy(): void {
@@ -100,10 +85,9 @@ export class ShowClinicComponent {
     if ( !this.profileForm.errors ) {   
       const { information, address } = this.profileForm.value;
       const newUpdateForm = {
-        register_number: information.register_number,
+        registerNumber: information.registerNumber,
         phone: information.phone,
         name: information.name,
-        country: 'El Salvador',
         province: address.province,
         city: address.city,
         street: address.street
@@ -122,35 +106,12 @@ export class ShowClinicComponent {
 
   get name() { return this.profileForm.get('information.name'); }
   get street() { return this.profileForm.get('address.street'); }
-  get nameProvince() { return this.profileForm.get('address.province')?.value; }
-  get citiesByProvince() {
-    const province = provicesAndCities.filter(province => province.province === this.nameProvince)
-    return province[0].cities
-  }
-  get register_number() { return this.profileForm.get('information.register_number');}
+  get registerNumber() { return this.profileForm.get('information.registerNumber');}
   get phone_number(){return this.profileForm.get('information.phone');}
-  get province() {return this.profileForm.get('address.province');}
+  get state() {return this.profileForm.get('address.state');}
   get city() { return this.profileForm.get('address.city');}
-  get country(){ return this.profileForm.get('address.country');}
 
-  preparePhoto(event: any) {
-    const photo = event.files[0];
-    this.photoForm.patchValue({ 'photoSrc': photo });
-    if (!photo) {
-      return this.imagenTemp = null;
-    }
-    const renderImg = new FileReader();
-    renderImg.readAsDataURL(photo);
-    renderImg.onloadend = () => { 
-      this.imagenTemp = renderImg.result;
-    }
-    return this.imagenTemp;
-  }
 
-  startLoaddingPhoto() {
-    let schema: string='clinics';
-    this.uploadPhoto(this.profileSelected.id, schema);
-  }
 
   deletePhoto(id: string) {
     let schema: string='clinics';
@@ -179,32 +140,7 @@ export class ShowClinicComponent {
       }
     });
   }
-  async uploadPhoto(id: string, schema: string) {
-      const formData = new FormData();
-      formData.append('photo', this.photoForm.get('photoSrc')?.value);   
-      this.isLoading = true;    
-        await this.cloudinary.uploadImageCloudinary(id, formData, schema ).subscribe(
-          (resp: any) => {
-            if (resp.ok) {
-              this.isLoading = false;
-              this.updateProfileService.clinicToUpdate({ ...this.profileSelected, photoUrl: resp.photo });
-              this.updateProfileService.updatePhoto(resp.photo);
-              this.currectPhoto = this.updateProfileService.currentPhoto;
-              success(resp.message);
-              formData.delete;
-              this.photoForm.reset();
-              this.imagenTemp = null;
-            }
-          },
-          (err) => {
-            formData.delete;
-            this.photoForm.reset();
-            this.isLoading = false;
-            error(err.error.message);
-          }
-    );
-  }
-
+  
   forbiddenInputTextValidator(): ValidatorFn{
     const isForbiddenInput: RegExp = /^[a-zA-Z0-9._]+[a-zA-Z0-9._]+$/;
     return (control: AbstractControl): ValidationErrors | null => {

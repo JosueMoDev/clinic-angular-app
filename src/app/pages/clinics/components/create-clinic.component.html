@@ -1,27 +1,31 @@
-<div class="w-full p-6 mx-auto">
-  <div class="flex flex-wrap -mx-3">
-    <form
-      (submit)="updateProfile()"
-      [formGroup]="profileForm"
-      class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
-    >
-      <div
-        class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-      >
-        <div class="flex w-full p-5">
-          <p
-            class="flex justify-start text-2xl font-semibold text-slate-850 dark:text-slate-50"
-          >
-            Edit Information for Clinic
-          </p>
-        </div>
-        <div class="grid grid-cols-1 gap-4 p-5">
-          <div
-            class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3"
-            formGroupName="information"
-          >
+<p
+  mat-dialog-title
+  class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
+>
+  <span class="px-1 py-2 text-2xl text-black dark:text-white"
+    >Register New Clinic</span
+  >
+</p>
+<mat-dialog-content
+  disableClose="true"
+  role="dialog"
+  align="center"
+  class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
+>
+  <form
+    role="form text-left w-full"
+    enctype="multipart/form-data"
+    (ngSubmit)="createClinic()"
+    [formGroup]="registerClinicForm"
+  >
+    <div class="py-5">
+      <!-- Step 1 -->
+      <div >
+        <div class="grid grid-cols-1 gap-4" >
+          <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-3">
             <div class="mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
                 >Register Number</span
               >
               <div class="relative flex rounded-md">
@@ -33,7 +37,7 @@
                   mask="0000-0000-000-0"
                 />
                 <div
-                  *ngIf="!registerNumber?.invalid && registerNumber?.touched"
+                  *ngIf="!registerNumber?.invalid"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
@@ -41,7 +45,8 @@
               </div>
             </div>
             <div class="w-full mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
                 >Phone</span
               >
               <div class="relative flex rounded-md">
@@ -54,7 +59,7 @@
                   mask="0000-0000"
                 />
                 <div
-                  *ngIf="!phone_number?.invalid && phone_number?.touched"
+                  *ngIf="!phone?.invalid"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
@@ -62,7 +67,8 @@
               </div>
             </div>
             <div class="w-full mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
                 >Name</span
               >
               <div class="relative flex rounded-md">
@@ -73,7 +79,7 @@
                   formControlName="name"
                 />
                 <div
-                  *ngIf="!name?.invalid && name?.touched"
+                  *ngIf="!name?.invalid"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
@@ -124,14 +130,12 @@
               </div>
             </div>
           </div>
-          <div
-            class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4"
-            formGroupName="address"
-          >
+          <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-4" formGroupName="address">
             <div class="mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
-                >State</span
-              >
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
+                >Province
+              </span>
               <div class="relative flex rounded-md">
                 <input
                   type="text"
@@ -140,15 +144,17 @@
                   formControlName="state"
                 />
                 <div
-                  *ngIf="!state?.invalid && state?.touched"
+                  *ngIf="state?.value"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
                 </div>
               </div>
             </div>
+
             <div class="mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
                 >City</span
               >
               <div class="relative flex rounded-md">
@@ -159,7 +165,7 @@
                   formControlName="city"
                 />
                 <div
-                  *ngIf="!city?.invalid && city?.touched"
+                  *ngIf="city?.value"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
@@ -168,7 +174,8 @@
             </div>
 
             <div class="mb-4">
-              <span class="px-1 py-2 text-sm dark:text-white/80 text-black/80"
+              <span
+                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
                 >Street</span
               >
               <div class="relative flex rounded-md">
@@ -179,7 +186,7 @@
                   formControlName="street"
                 />
                 <div
-                  *ngIf="!street?.invalid && street?.touched"
+                  *ngIf="!street?.invalid"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   <mat-icon class="text-base" color="accent">done</mat-icon>
@@ -188,92 +195,42 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-end w-full p-5">
-          <button
-            mat-raised-button
-            type="submit"
-            [disabled]="
-              !(
-                somethingChanged &&
-                (!profileForm.invalid || profileForm.pristine)
-              )
-            "
-            color="accent"
-            class="z-0"
-          >
-            <mat-icon>update</mat-icon>update
-          </button>
+
+        <div class="flex justify-end w-full">
+          <div class="flex justify-end text-center w-fit">
+            <button mat-raised-button type="submit" color="accent"  [disabled]="registerClinicForm.invalid">
+              <mat-icon fontIcon="save"></mat-icon>enrollement
+            </button>
+          </div>
         </div>
       </div>
-    </form>
-    <form
-      [formGroup]="photoForm"
-      class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0"
-    >
-      <div
-        class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-      >
-        <div>
-          <img
-            *ngIf="!imagenTemp"
-            class="w-full border-gray-500 border-0.5 rounded-md"
-            [src]="currectPhoto || 'assets/img/no-photo-clinic.jpg'"
-            alt="profile cover image"
-          />
-          <img
-            *ngIf="imagenTemp"
-            [src]="imagenTemp"
-            class="w-full border-gray-500 border-0.5 rounded-md"
-          />
-        </div>
 
-        <div
-          class="border-black/12.5 rounded-t-2xl p-6 text-center pt-0 pb-6 lg:pt-2 lg:pb-4"
-        >
-          <div class="flex justify-center py-3 space-x-3">
-            <div class="flex w-fit">
-              <button
-                mat-raised-button
-                [disabled]="!currectPhoto"
-                type="button"
-                (click)="deletePhoto(profileSelected.id)"
-                color="warn"
-                class="z-0"
-              >
-                <mat-icon fontIcon="delete"></mat-icon> <span>Delete</span>
-              </button>
-            </div>
-            <div
-              *ngIf="
-                !this.photoForm.get('photoSrc')?.touched &&
-                this.photoForm.get('photoSrc')?.value
-              "
-              class="flex w-fit"
+      <!-- Step 2 -->
+
+      <section *ngIf="currentStep === 2">
+        <div class="mb-4">
+          <div class="flex items-center justify-center flex-1 w-full mb-5">
+            <span class="px-1 py-2 text-sm text-black dark:text-white"
+              >Choose photo for clinic</span
             >
-              <button
-                mat-raised-button
-                type="submit"
-                color="accent"
-                [disabled]="isLoading"
-                class="z-0 dark:disabled:text-white"
-              >
-                <mat-icon
-                  *ngIf="!isLoading"
-                  fontIcon="upload_imagen"
-                ></mat-icon>
-                <mat-icon
-                  *ngIf="isLoading"
-                  class="animate-spin"
-                  fontIcon="autorenew"
-                ></mat-icon>
-                <span>Upload</span>
-              </button>
-            </div>
-
-            <button mat-raised-button type="button" color="primary" class="z-0">
+          </div>
+          <div class="flex items-center justify-center w-full mb-5">
+            <img
+              *ngIf="imagenTemp"
+              [src]="imagenTemp"
+              class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl"
+            />
+            <img
+              *ngIf="!imagenTemp"
+              src="assets/img/no-photo-clinic.jpg"
+              class="inline-flex items-center justify-center object-cover object-top w-[25%] h-[25%] mr-4 overflow-hidden text-sm text-white max-w-none rounded-xl"
+            />
+          </div>
+          <div class="flex items-center justify-center flex-1 w-full mb-5">
+            <button mat-raised-button type="button" color="accent">
               <label for="photo" class="flex rounded-md cursor-pointer h-15">
-                <mat-icon class="text-lg" fontIcon="camera"></mat-icon>
-                <span>New</span>
+                <mat-icon fontIcon="camera"></mat-icon>
+                <span class="text-sm">Select a photo</span>
               </label>
               <input
                 id="photo"
@@ -285,10 +242,15 @@
             </button>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
-</div>
-<div>
-  <app-clinic-assignment></app-clinic-assignment>
-</div>
+      </section>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions
+  align="end"
+  class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
+>
+  <button mat-raised-button color="warn" class="z-0" mat-dialog-close>
+    Cancel
+  </button>
+</mat-dialog-actions>

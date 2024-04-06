@@ -61,14 +61,6 @@ export class UserService {
       );
   }
 
-  crearteNewUserWithEmailAndPassword(account: any) {
-    return this.http.post(
-      `${environment.THECLINIC_API_URL}/users`,
-      account,
-      this.headers
-    );
-  }
-
   updateUser(user: any, id: string) {
     return this.http.put(
       `${environment.THECLINIC_API_URL}/users/${id}`,

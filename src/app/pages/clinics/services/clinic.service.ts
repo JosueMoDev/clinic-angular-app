@@ -95,8 +95,9 @@ export class ClinicService {
   }
 
   createClinic(clinic: any) {
+    console.log(clinic)
     return this.http.post(
-      `${environment.THECLINIC_API_URL}/clinics`,
+      `${environment.THECLINIC_API_URL}/clinic/create`,
       clinic,
       this.headers
     );

@@ -13,12 +13,12 @@ import * as ui from 'src/app/store/actions/ui.actions';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 
-import { RegisterClinicComponent } from '../components/register-clinic/register-clinic.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicService } from './services/clinic.service';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Account } from 'src/app/models/account.model';
 import { Clinic } from './interface/clinic-response.interface';
+import { CreateClinicComponent } from './components/create-clinic.component';
 
 
 @Component({
@@ -73,7 +73,7 @@ export class ClinicsComponent {
   }
 
   openDialog(): void {
-    this.matDialog.open(RegisterClinicComponent, {
+    this.matDialog.open(CreateClinicComponent, {
       width: '100%',
       hasBackdrop: true,
       disableClose: true,

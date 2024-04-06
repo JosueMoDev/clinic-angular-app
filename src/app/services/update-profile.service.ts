@@ -48,5 +48,7 @@ export class UpdateProfileService {
   clinicToUpdate(profile: Clinic) {
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.clinicProfile = profile;
+    this.router.navigateByUrl('/dashboard/show-clinic');
+
   }
 }
