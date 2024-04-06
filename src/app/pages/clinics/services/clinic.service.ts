@@ -1,8 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { delay, map } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
 import { Clinic as ClinicModel } from 'src/app/models/clinic.model';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
@@ -19,16 +17,16 @@ export class ClinicService {
 
   constructor() {}
 
-  allClinics(from: number) {
+  allClinics(page: number, pageSize: number) {
     return this.http
       .get<ClinicResponse>(
-        `${environment.THECLINIC_API_URL}/clinic/find-many?pagination=${from}`,
+        `${environment.THECLINIC_API_URL}/clinic/find-many?page=${page}&pageSize=${pageSize}`,
         this.headers
       )
       .pipe(
         delay(200),
-        map((resp: any) => {
-          const clinics = resp.clinics.map(
+        map(({clinics, pagination}) => {
+          const clinicsList = clinics.map(
             ({
               id,
               registerNumber,
@@ -57,8 +55,8 @@ export class ClinicService {
               )
           );
           return {
-            total: resp.total,
-            clinics,
+            total: pagination.total,
+            clinics: clinicsList,
           };
         })
       );
@@ -96,7 +94,7 @@ export class ClinicService {
 
   createClinic(clinic: any) {
     return this.http.post(
-      `${environment.THECLINIC_API_URL}/clinics`,
+      `${environment.THECLINIC_API_URL}/clinic/create`,
       clinic,
       this.headers
     );

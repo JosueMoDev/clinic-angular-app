@@ -1,46 +1,55 @@
-<div class="container">
+<div class="account-container">
   <div class="table-wrapper">
     <div class="table-header">
-      <p class="header-text">User's Accounts</p>
-      <button class="new-user-button" (click)="openDialog()">
-        <mat-icon fontIcon="person_add"></mat-icon>
+      <p>User's Accounts</p>
+      <button mat-raised-button color="primary"  (click)="openDialog()">
+        <mat-icon>person_add</mat-icon>
         New User
       </button>
     </div>
-    <div class="table-scroll">
-      <table class="table">
-        <tbody>
-          <ng-container *ngFor="let user of userList">
-            <tr class="table-row row-link" (click)="updateProfileService.userToUpdate(user)" [class.row-link-disabled]="!user.isValidated">
-              <td class="table-cell user-avatar">
-                <img [src]="user.photoUrl || 'assets/img/no-photo-user.jpg'" class="avatar-image">
-              </td>
-              <td class="table-cell user-info">
-                <p class="user-name">{{ user.name }} {{ user.lastname }}</p>
-                <p class="user-email">{{ user.email }}</p>
-              </td>
-              <td class="table-cell user-role">
-                <p>{{ user.role }}</p>
-              </td>
-              <td *ngIf="currentUserLogged?.role==='ADMIN'" class="table-cell action-cell">
-                <div class="action-buttons">
-                  <button *ngIf="!user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="enable-button" (click)="changeUserState(user.id, currentUserLogged.id)">
-                    <mat-icon fontIcon="person"></mat-icon> Enable
-                  </button>
-                  <button *ngIf="user.isValidated && user.role !== 'ADMIN' && currentUserLogged.id !== user.id" class="disable-button" (click)="changeUserState(user.id, currentUserLogged.id)">
-                    <mat-icon fontIcon="person_off"></mat-icon> Disable
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
+    <div>
+      <table mat-table  [dataSource]="userList">
+        <ng-container matColumnDef="avatar">
+          <td mat-cell  *matCellDef="let user">
+            <img [src]="user.photoUrl || 'assets/img/no-photo-user.jpg'" class="avatar-image">
+          </td>
+        </ng-container>
+          <ng-container matColumnDef="name">
+          <td mat-cell  *matCellDef="let user">
+            <p>{{ user.name }} {{ user.lastname }}</p>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <td mat-cell *matCellDef="let user">
+            <p>{{ user.email }}</p>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+          <td mat-cell *matCellDef="let user">
+            <p>{{ user.role }}</p>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action" *ngIf="currentUserLogged?.role==='ADMIN'">
+          <td mat-cell *matCellDef="let user">
+            <div>
+              <button mat-raised-button color="accent" *ngIf="!user.isValidated" (click)="changeAccountStatus()">
+                <mat-icon>person</mat-icon>
+                Enable
+              </button>
+              <button mat-raised-button color="warn" *ngIf="user.isValidated" (click)="changeAccountStatus()">
+                <mat-icon>person_off</mat-icon>
+                Disable
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-row (click)="updateProfileService.userToUpdate(user)" [class.row-link-disabled]="user.isValidated" *matRowDef="let user; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <div *ngIf="length === 0" class="no-user-message">
+    <div *ngIf="length === 0">
       <p>No user has been registered yet</p>
     </div>
-    <div *ngIf="length > pageSize" class="mat-paginator">
+    <div >
       <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handlePageEvent($event)"></mat-paginator>
     </div>
   </div>

@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { Clinic } from 'src/app/models/clinic.model';
 import { Account } from '../authentication/interfaces';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateProfileService {
+  private readonly router = inject(Router)
   public userProfile!: Account;
   public clinicProfile!: Clinic;
 
@@ -27,6 +29,7 @@ export class UpdateProfileService {
   userToUpdate(profile: Account) {
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.userProfile = profile;
+    this.router.navigateByUrl('/dashboard/show-account');
   }
 
   get currentPhoto() {
@@ -45,5 +48,7 @@ export class UpdateProfileService {
   clinicToUpdate(profile: Clinic) {
     sessionStorage.setItem('profile-to-show', JSON.stringify(profile));
     this.clinicProfile = profile;
+    this.router.navigateByUrl('/dashboard/show-clinic');
+
   }
 }

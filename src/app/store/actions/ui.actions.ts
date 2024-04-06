@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Account } from 'src/app/models/account.model';
 import { Clinic } from 'src/app/models/clinic.model';
-import { Patient } from 'src/app/models/patient.model';
 
 
 export const isLoadingTable = createAction('[UI Tables] Is Loading');

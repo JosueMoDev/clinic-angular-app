@@ -9,11 +9,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { PatientService } from 'src/app/services/patient.service';
 import { PatientMedicalRecordService } from 'src/app/services/patient-medical-record.service';
 
-import { Patient } from 'src/app/models/patient.model';
 import { MedicalRecord } from 'src/app/models/medical_record.model';
 
 import { error } from 'src/app/helpers/sweetAlert.helper';
@@ -21,6 +18,7 @@ import { error } from 'src/app/helpers/sweetAlert.helper';
 import { NewMedialRecordComponent } from '../components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from '../components/edit-medical-record/edit-medical-record.component';
 import { Rol } from 'src/app/interfaces/authorized-roles.enum';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 
 
 
@@ -35,7 +33,7 @@ export class MedicalRecordComponent {
   public doctor!: string;
   public document!: string;
   public isDocument_numberCorrenct: boolean = false;
-  public patient!: Patient | null;
+  public patient!: any
   public uiSubscription!: Subscription;
 
   // ? Form
@@ -56,9 +54,8 @@ export class MedicalRecordComponent {
   public showPageSizeOptions: boolean = true;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private patientService: PatientService,
     private patientMedicalRecord: PatientMedicalRecordService,
     private store: Store<AppState>,
     public matDialog: MatDialog,
@@ -66,8 +63,8 @@ export class MedicalRecordComponent {
   ) { }
 
   ngOnInit(): void {
-    this.doctor = this.authService.currentUserLogged.id;
-    this.userRol = this.authService.currentUserLogged.rol;
+    this.doctor = this.authService.currentUserLogged()?.id as any;
+    this.userRol = this.authService.currentUserLogged()?.role as any;
     this.confirmPatientForm = this.formBuilder.group({
       document_number: ['', [Validators.required, Validators.minLength(9)]]
     });
@@ -91,18 +88,18 @@ export class MedicalRecordComponent {
 
   confirmCurrentPatient() {
     if (!this.document_number?.invalid) {
-      this.patientService.getSinglePatient(this.document_number?.value).subscribe(
-        (resp: any) => {
-          if (resp.ok) {
-            this.patient = resp.patient;
-            this.document = this.patient!.document_number;
-            this.isDocument_numberCorrenct = true;
-            this.allRecordByPatient()
-            this.confirmPatientForm.disable();
-          }
-        },
-        (err: any) => { error(err.error.message) }
-      )
+      // this.patientService.getSinglePatient(this.document_number?.value).subscribe(
+      //   (resp: any) => {
+      //     if (resp.ok) {
+      //       this.patient = resp.patient;
+      //       this.document = this.patient!.document_number;
+      //       this.isDocument_numberCorrenct = true;
+      //       this.allRecordByPatient()
+      //       this.confirmPatientForm.disable();
+      //     }
+      //   },
+      //   (err: any) => { error(err.error.message) }
+      // )
     }
   }
   allRecordByPatient() {

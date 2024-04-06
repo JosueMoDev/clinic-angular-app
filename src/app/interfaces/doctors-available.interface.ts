@@ -1,6 +1,5 @@
-import { User } from "../models/user.model";
 
-export interface DoctorAvailable extends User {
+export interface DoctorAvailable {
     id: string,
     name: string,
     lastname: string,

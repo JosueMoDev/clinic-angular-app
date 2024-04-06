@@ -73,14 +73,14 @@ export class SearchingComponent {
       disableClose: true,
       role: 'dialog',
       data: {
-        clinic: appointment.clinic,
-        doctor: appointment.doctor,
-        start: appointment.start,
-        doctor_info: appointment.doctor_info,
-        clinic_info: appointment.clinic_info,
-        appointment_id: appointment.appointment_id,
-        patient: appointment.patient,
-        title: appointment.title
+        // clinic: appointment.clinic,
+        doctor: appointment.doctorId,
+        start: appointment.startDate,
+        doctor_info: appointment.doctorId,
+        // clinic_info: appointment.clinic_info,
+        appointment_id: appointment.id,
+        patient: appointment.patientId,
+        // title: appointment.title
       }
     });
   }

@@ -9,18 +9,17 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AuthService } from 'src/app/services/auth.service';
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
-import { User } from 'src/app/models/user.model';
-import { Patient } from 'src/app/models/patient.model';
+
 import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 
 import { ClinicAssignmentDialogComponent } from '../clinic-assignment-dialog/clinic-assigment-dialog.component';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 import { DoctorAssigned } from 'src/app/interfaces/doctor_assigment.inteface';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 
 
 @Component({
@@ -32,14 +31,14 @@ import { DoctorAssigned } from 'src/app/interfaces/doctor_assigment.inteface';
 export class ClinicAssignmentComponent {
   public uiSubscription!: Subscription;
   
-  public currentUserLogged!: User | Patient 
+  public currentUserLogged!: any
   public clinic_id!: string;
   public hasAssignments!: boolean;
   public profileSelected!: Clinic;
   public userRol!: Rol;
 
   // ? Doctors Availables to be assigned
-  public doctorsAvailableList: User[] = [];
+  public doctorsAvailableList: any[] = [];
 
   // ? Doctors Availables to be assigned
   public doctorsAssignedList: DoctorAssigned[] = [];
@@ -59,7 +58,7 @@ export class ClinicAssignmentComponent {
   constructor(
     private clinicAssignment: ClinicAssignmentsService,
     private store: Store<AppState>,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private updateProfileService: UpdateProfileService,
     public matDialog: MatDialog,
     public mat: MatPaginatorIntl
@@ -67,7 +66,7 @@ export class ClinicAssignmentComponent {
   ) { }
 
   ngOnInit(): void {
-    this.userRol = this.authService.userRol;
+    this.userRol = this.authService.currentUserLogged()?.role as any;
     this.clinic_id = this.updateProfileService.clinicProfile.id
     this.mat.previousPageLabel = '';
     this.mat.nextPageLabel = '';

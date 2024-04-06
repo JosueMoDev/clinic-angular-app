@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Account as AccountModel } from 'src/app/models/account.model';
 import { delay, map } from 'rxjs';
 import { Account } from 'src/app/authentication/interfaces';
+import { AccountResponse } from '../interfaces/account-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,17 +14,26 @@ export class AccountsService {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly http = inject(HttpClient);
   private readonly headers = this.authenticationService.headers;
-  constructor() { }
-  
-  allUsers(from: number) {
+  constructor() {}
+
+  crearteNewAccount(account: any) {
+    console.log(account)
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/account/create`,
+      account,
+      this.headers
+    );
+  }
+
+  getAllAccounts(page: number, pageSize: number) {
     return this.http
-      .get<Account[]>(
-        `${environment.THECLINIC_API_URL}/account/find-many?pagination=${from}`,
+      .get<AccountResponse>(
+        `${environment.THECLINIC_API_URL}/account/find-many?page=${page}&pageSize=${pageSize}`,
         this.headers
       )
       .pipe(
         delay(200),
-        map(({ accounts, pagination }: any) => {
+        map(({ accounts, pagination }) => {
           const users = accounts.map(
             ({
               id,
@@ -56,5 +66,17 @@ export class AccountsService {
           };
         })
       );
+  }
+
+  updateAccount(){
+
+  }
+
+  changePassword(){
+
+  }
+
+  changeAccountStatus(){
+    
   }
 }

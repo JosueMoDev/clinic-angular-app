@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -8,9 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
-import { ClinicService } from 'src/app/services/clinic.service';
 
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
@@ -18,6 +16,8 @@ import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.se
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
+import { ClinicService } from '../../clinics/services/clinic.service';
 
 @Component({
   selector: 'app-actions-appointment-selected',
@@ -40,10 +40,10 @@ export class ActionsAppointmentDialogComponent {
 
   public doctorSelected!: string | null;
   public doctorSelectedName!: string;
+  private readonly authenticationService = inject(AuthenticationService);
 
   constructor(
     private appointmentService: AppointmentService,
-    private authService: AuthService,
     private clinicService: ClinicService,
     private clinicAssignment: ClinicAssignmentsService,
     private formBuilder: FormBuilder,
@@ -62,17 +62,17 @@ export class ActionsAppointmentDialogComponent {
 
   ngOnInit(): void {
     this.dataAppointment = { ...this.data };
-    const today = new Date(this.dataAppointment.start);
+    const today = new Date(this.dataAppointment.startDate);
     const appointmentTime = today.getHours() + ':' + today.getMinutes();
-    this.userLogged = this.authService.currentUserLogged.id;
+    this.userLogged = this.authenticationService.currentUserLogged()?.id as any;
     
-    this.doctorSelected = this.dataAppointment.doctor
-    this.doctorSelectedName = this.dataAppointment.doctor_info;
+    this.doctorSelected = this.dataAppointment.doctorId
+    this.doctorSelectedName = this.dataAppointment.doctorId;
 
     this.editAppointmentForm = this.formBuilder.group({
-      clinic: [this.dataAppointment.clinic, [Validators.required]],
+      // clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.doctorSelected, [Validators.required]],
-      start: [this.dataAppointment.start, [Validators.required]],
+      start: [this.dataAppointment.startDate, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
     });
     this.allClinicsAvailableToMakeAnAppointment();
@@ -144,7 +144,7 @@ export class ActionsAppointmentDialogComponent {
         clinic,
         doctor,
       }
-      this.appointmentService.editAppointment( this.dataAppointment.appointment_id, appointmentEditForm).subscribe(
+      this.appointmentService.editAppointment( this.dataAppointment.id, appointmentEditForm).subscribe(
         (resp: any)=>{
           if (resp.ok) {
             this.editAppointmentForm.reset();
@@ -161,7 +161,7 @@ export class ActionsAppointmentDialogComponent {
   }
 
   deleteAppointment() {
-    this.appointmentService.deleteAppointment( this.dataAppointment.appointment_id, this.userLogged).subscribe(
+    this.appointmentService.deleteAppointment( this.dataAppointment.id, this.userLogged).subscribe(
       (resp: any)=>{
         if (resp.ok) {
           this.dialogRef.close();
