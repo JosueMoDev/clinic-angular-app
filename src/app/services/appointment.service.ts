@@ -5,7 +5,6 @@ import { delay, map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { AuthService } from './auth.service';
 import { Appointment as AppointmentModel } from 'src/app/models/appointment.model';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import {

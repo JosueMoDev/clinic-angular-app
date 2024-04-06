@@ -3,10 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { delay, map } from 'rxjs';
 
-import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
-import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicAvailableToMakeAnAppointment } from '../interfaces/clinic-available.interface';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class ClinicService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthenticationService
   ) { }
 
   // allClinics(from: number) {

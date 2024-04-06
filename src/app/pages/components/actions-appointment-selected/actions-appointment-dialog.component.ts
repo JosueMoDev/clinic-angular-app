@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { ClinicService } from 'src/app/services/clinic.service';
 
@@ -18,6 +17,7 @@ import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.se
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-actions-appointment-selected',
@@ -40,10 +40,10 @@ export class ActionsAppointmentDialogComponent {
 
   public doctorSelected!: string | null;
   public doctorSelectedName!: string;
+  private readonly authenticationService = inject(AuthenticationService);
 
   constructor(
     private appointmentService: AppointmentService,
-    private authService: AuthService,
     private clinicService: ClinicService,
     private clinicAssignment: ClinicAssignmentsService,
     private formBuilder: FormBuilder,
@@ -64,7 +64,7 @@ export class ActionsAppointmentDialogComponent {
     this.dataAppointment = { ...this.data };
     const today = new Date(this.dataAppointment.startDate);
     const appointmentTime = today.getHours() + ':' + today.getMinutes();
-    this.userLogged = this.authService.currentUserLogged.id;
+    this.userLogged = this.authenticationService.currentUserLogged()?.id as any;
     
     this.doctorSelected = this.dataAppointment.doctorId
     this.doctorSelectedName = this.dataAppointment.doctorId;

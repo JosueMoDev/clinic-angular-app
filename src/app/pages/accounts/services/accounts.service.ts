@@ -24,7 +24,7 @@ export class AccountsService {
     );
   }
 
-  allUsers(from: number) {
+  getAllAccounts(from: number) {
     return this.http
       .get<Account[]>(
         `${environment.THECLINIC_API_URL}/account/find-many?pagination=${from}`,
@@ -65,5 +65,13 @@ export class AccountsService {
           };
         })
       );
+  }
+
+  updateAccount(){
+
+  }
+
+  changePassword(){
+    
   }
 }

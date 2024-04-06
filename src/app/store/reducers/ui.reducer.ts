@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
 import { Clinic } from 'src/app/models/clinic.model';
-import { Patient } from 'src/app/models/patient.model';
 import { isLoadingTable, isLoadedUserTable, isLoadedClinicTable, isLoadedPatientTable} from '../actions/ui.actions';
 import { Account } from 'src/app/models/account.model';
 

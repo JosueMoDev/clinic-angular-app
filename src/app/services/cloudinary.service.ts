@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class CloudinaryService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthenticationService
   ) { }
 
   uploadImageCloudinary(id: string, photo: any, schema: string) {

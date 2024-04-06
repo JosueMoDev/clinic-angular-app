@@ -85,7 +85,7 @@ export class AccountsComponent {
 
   allUsers() {
     this.accountService
-      .allUsers(this.from)
+      .getAllAccounts(this.from)
       .subscribe(({ users, total }: any) => {
         this.userList = users;
         this.dataTemp = users;

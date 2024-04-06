@@ -6,11 +6,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { CloudinaryService } from 'src/app/services/cloudinary.service';
-
-import {  User } from 'src/app/models/user.model';
-
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';

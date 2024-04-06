@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, map } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { MedicalRecord } from '../models/medical_record.model';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,10 @@ import { MedicalRecord } from '../models/medical_record.model';
 export class PatientMedicalRecordService {
 
   public headers: {} = this.authService.headers;
-  public doctor: string = this.authService.currentUserLogged.id
+  public doctor: string = this.authService.currentUserLogged()?.id as any
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthenticationService
   ) { }
   createMedicalRecord(new_record: any) {
     return this.http.post(`${environment.THECLINIC_API_URL}/patient-records`, new_record, this.headers);

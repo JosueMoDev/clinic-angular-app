@@ -1,6 +1,5 @@
 import { Component, inject, Signal, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { AuthService } from '../services/auth.service';
 import { UiService } from '../services/ui.service';
 import { UpdateProfileService } from '../services/update-profile.service';
 import { Account } from '../authentication/interfaces';
@@ -18,13 +17,12 @@ export class PagesComponent {
   public sideNavMenu!: any;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     public updateProfileService: UpdateProfileService,
     public ui: UiService
   ) {}
   ngOnInit(): void {
     this.loggedUser = this.authenticationService.currentUserLogged()!;
-    this.sideNavMenu = this.authService.currentSideNav;
   }
 
   logout() {

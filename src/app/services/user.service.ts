@@ -4,11 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { delay, map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { UserRegisterForm } from 'src/app/interfaces/user.interface';
 
-import { AuthService } from './auth.service';
 import { Account } from '../authentication/interfaces';
 import { Account as AccountModel } from '../models/account.model';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,7 @@ import { Account as AccountModel } from '../models/account.model';
 export class UserService {
   public headers: {} = this.authService.headers;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthenticationService) {}
 
   allUsers(from: number) {
     return this.http
