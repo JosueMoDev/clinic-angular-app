@@ -22,6 +22,7 @@ import { Account } from 'src/app/authentication/interfaces';
 @Component({
   selector: 'app-create-clinic',
   standalone: true,
+  styleUrl: './create-clinic.component.css',
   imports: [
     AngularMaterialModule,
     CommonModule,
@@ -117,11 +118,11 @@ export class CreateClinicComponent {
   }
 
   createClinic() {
+    console.log(this.registerClinicForm.value);
     this.clinicService.createClinic(this.registerClinicForm.value).subscribe(
       async (resp: any) => {
         success(resp.message);
         this.store.dispatch(ui.isLoadingTable());
-        this.currentStep = 1;
         this.matdialogRef.close();
         this.registerClinicForm.reset();
       },

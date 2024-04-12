@@ -76,7 +76,7 @@ export class ClinicsComponent {
 
   openDialog(): void {
     this.matDialog.open(CreateClinicComponent, {
-      width: '100%',
+      width: '60%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
@@ -85,8 +85,6 @@ export class ClinicsComponent {
 
   allClinics() {
     this.clinicService.allClinics(this.pageIndex+1, this.pageSize).subscribe(({ clinics, total }) => {
-        console.log('El total de registros', total);
-
       this.clinicList = clinics;
       this.dataTemp = clinics;
       this.length = total;
