@@ -1,350 +1,123 @@
-<p
-  mat-dialog-title
-  class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
->
-  <span class="px-1 py-2 text-2xl text-black dark:text-white"
-    >Enroll New Account</span
-    >
-    {{registerForm.invalid}}
-</p>
-<mat-dialog-content
-  disableClose="true"
-  role="dialog"
-  align="center"
-  class="w-full h-full min-w-full min-h-80-screen rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
->
-  <form
-    role="form text-left w-full"
-    enctype="multipart/form-data"
-    (ngSubmit)="createAccount()"
-    [formGroup]="registerForm"
-  >
-    <div class="py-5">
-      <!-- Step 1 -->
-      <div >
-        <div class="grid grid-cols-1 gap-4">
-          <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-            <div class="mb-4">
-              <span
-                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-                >Document Number</span
-              >
+<mat-dialog-content class="mat-typography form-content">
+  <mat-card-title>
+    <h1 class="title">Register new account</h1>
+  </mat-card-title>
+  <form [formGroup]="registerForm" (ngSubmit)="createAccount()">
+    <div class="input-group">
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name" placeholder="Name" />
+        <mat-icon matSuffix *ngIf="!name?.invalid">done</mat-icon>
+        <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+          <span *ngIf="name?.errors?.['required']">Name is required.</span>
+          <span *ngIf="name?.errors?.['minlength']"
+            >Name must be at least 3 characters long.</span
+          >
+          <span *ngIf="name?.errors?.['maxlength']"
+            >Name must be longer than 25 characters.</span
+          >
+          <span *ngIf="name?.errors?.['forbiddenName']"
+            >Name only could have letters a-z. Only two names are allowed.</span
+          >
+        </mat-error>
+      </mat-form-field>
 
-              <div class="relative flex rounded-md">
-                <div
-                  *ngIf="!duiNumber?.invalid"
-                  class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5"
-                >
-                  <mat-icon class="text-base" color="accent">done</mat-icon>
-                </div>
-                <input
-                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300 bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700 focus:outline-none focus:transition-shadow"
-                  type="text"
-                  placeholder="DUI"
-                  formControlName="duiNumber"
-                  mask="00000000-0"
-                />
-                <div
-                  *ngIf="!duiNumber?.invalid"
-                  class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
-                >
-                  <mat-icon class="text-base" color="accent">done</mat-icon>
-                </div>
-              </div>
-            </div>
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="lastname"
+          placeholder="Last Name"
+        />
+        <mat-icon matSuffix *ngIf="!lastname?.invalid">done</mat-icon>
+        <mat-error
+          *ngIf="lastname?.invalid && (lastname?.dirty || lastname?.touched)"
+        >
+          <span *ngIf="lastname?.errors?.['required']"
+            >Last Name is required.</span
+          >
+          <span *ngIf="lastname?.errors?.['minlength']"
+            >Last Name must be at least 3 characters long.</span
+          >
+          <span *ngIf="lastname?.errors?.['forbiddenName']"
+            >Last Name only could have letters a-z. Only two Last Names are
+            allowed.</span
+          >
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Document Number</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="duiNumber"
+          placeholder="DUI"
+          mask="00000000-0"
+        />
+        <mat-icon matSuffix *ngIf="!duiNumber?.invalid">done</mat-icon>
+      </mat-form-field>
 
-            <div class="mb-4">
-              <span
-                class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-                >Email</span
-              >
-              <div class="relative flex rounded-md">
-                 <div
-                  *ngIf="!email?.invalid"
-                  class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5"
-                >
-                  <mat-icon class="text-base" color="accent">done</mat-icon>
-                </div>
-                <input
-                  type="text"
-                  class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300 bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700 focus:outline-none focus:transition-shadow"
-                  matInput
-                  placeholder="Email"
-                  formControlName="email"
-                />
-              </div>
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <mat-icon matSuffix *ngIf="!email?.invalid">done</mat-icon>
+        <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          <span *ngIf="email?.errors?.['required']">Email is required.</span>
+          <span *ngIf="email?.errors?.['minlength']"
+            >Email must be at least 10 characters long.</span
+          >
+          <span *ngIf="email?.errors?.['forbiddenName']"
+            >Email only could have a-z and dot(.) or underscore(_)</span
+          >
+        </mat-error>
+      </mat-form-field>
 
-              <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-                <div *ngIf="email?.errors?.['required']">
-                  <span
-                    class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                  >
-                    <mat-icon class="mx-2" fontIcon="error" />
-                    mail is required.
-                  </span>
-                </div>
-                <div *ngIf="email?.errors?.['minlength']">
-                  <span
-                    class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                  >
-                    <mat-icon class="mx-2" fontIcon="error" />
-                    mail must be at least 10 characters long.
-                  </span>
-                </div>
-                <div *ngIf="email?.errors?.['forbiddenName']">
-                  <span
-                    class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                  >
-                    <mat-icon class="mx-2" fontIcon="error" />
-                    mail only could have a-z and dot(.) or underscore(_)
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Phone</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="phone"
+          placeholder="Phone"
+          prefix="(+503) "
+          mask="0000-0000"
+        />
+        <mat-icon matSuffix *ngIf="!phone?.invalid">done</mat-icon>
+      </mat-form-field>
+    </div>
 
-        <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-          <div class="w-full mb-4">
-            <span
-              class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-              >Name</span
-            >
-            <div class="relative w-full">
-              <div
-                *ngIf="!name?.invalid"
-                class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5"
-              >
-                <mat-icon class="text-base" color="accent">done</mat-icon>
-              </div>
-              <input
-                type="text"
-                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300 bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700 focus:outline-none focus:transition-shadow"
-                placeholder="Name"
-                formControlName="name"
-              />
-            </div>
-            <div
-              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="name?.errors?.['required']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Name is required.
-                </span>
-              </div>
-              <div *ngIf="name?.errors?.['minlength']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Name must be at least 3 characters long.
-                </span>
-              </div>
-              <div *ngIf="name?.errors?.['maxlength']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Name must be longger than 25 characters.
-                </span>
-              </div>
-              <div *ngIf="name?.errors?.['forbiddenName']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Name only could have letters a-z.
-                </span>
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Only two names are allowed.
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="w-full mb-4">
-            <span
-              class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-              >Last name</span
-            >
-            <div class="relative w-full">
-              <div
-                *ngIf="!lastname?.invalid"
-                class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5"
-              >
-                <mat-icon class="text-base" color="accent">done</mat-icon>
-              </div>
-              <input
-                type="text"
-                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300 bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700 focus:outline-none focus:transition-shadow"
-                placeholder="Lastname"
-                formControlName="lastname"
-              />
-            </div>
-            <div
-              *ngIf="
-                lastname?.invalid && (lastname?.dirty || lastname?.touched)
-              "
-            >
-              <div *ngIf="lastname?.errors?.['required']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Lastame is required.
-                </span>
-              </div>
-              <div *ngIf="lastname?.errors?.['minlength']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Lastname must be at least 3 characters long.
-                </span>
-              </div>
-              <div *ngIf="lastname?.errors?.['forbiddenName']">
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Lastname only could have letters a-z.
-                </span>
-                <span
-                  class="flex items-center pt-2 text-red-800 dark:text-red-400"
-                >
-                  <mat-icon class="mx-2" fontIcon="error" />
-                  Only two lastnames are allowed.
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="input-group">
+      <div class="radio-group">
+        <mat-radio-group formControlName="role">
+          <mat-radio-button value="doctor">Doctor</mat-radio-button>
+          <mat-radio-button value="patient">Patient</mat-radio-button>
+        </mat-radio-group>
 
-        <div class="grid w-full grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-          <div class="w-full mb-4">
-            <span
-              class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-              >Phone</span
-            >
-            <div class="relative w-full">
-              <div
-                *ngIf="!phone?.invalid"
-                class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5"
-              >
-                <mat-icon class="text-base" color="accent">done</mat-icon>
-              </div>
-              <input
-                type="text"
-                class="placeholder:text-gray-700 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg bg-blue-500/13 dark:border-slate-750 dark:placeholder:text-slate-300 bg-clip-padding py-4 px-3 font-normal text-slate-800 dark:text-slate-100 transition-all focus:border-slate-300 dark:focus:border-slate-700 focus:outline-none focus:transition-shadow"
-                placeholder="Phone"
-                formControlName="phone"
-                prefix="(+503) "
-                mask="0000-0000"
-              />
-            </div>
-          </div>
-
-          <div class="w-full mb-4">
-            <span
-              class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-              >Choose your gender</span
-            >
-            <fieldset class="px-3 py-1" data-role="controlgroup">
-              <div class="float-left">
-                <label for="male" class="text-base text-black dark:text-white"
-                  >Male</label
-                >
-                <input
-                  type="radio"
-                  class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-teal-500 bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
-                  name="gender"
-                  id="male"
-                  value="male"
-                  formControlName="gender"
-                />
-              </div>
-              <div
-                class="items-center justify-center flex-initial float-right align-middle"
-              >
-                <label
-                  for="female"
-                  class="text-base text-center text-black dark:text-white"
-                  >Female</label
-                >
-                <input
-                  type="radio"
-                  class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-teal-500 bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
-                  name="gender"
-                  id="female"
-                  value="female"
-                  formControlName="gender"
-                />
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="mb-4">
-            <span
-              class="flex justify-start px-1 py-2 text-sm text-black dark:text-white"
-              >Choose user rol</span
-            >
-            <fieldset class="px-3 py-1" data-role="controlgroup">
-              <div class="float-left">
-                <label class="text-base text-black dark:text-white" for="doctor"
-                  >Doctor</label
-                >
-                <input
-                  type="radio"
-                  class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-teal-500 bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
-                  name="role"
-                  id="doctor"
-                  value="doctor"
-                  formControlName="role"
-                />
-              </div>
-              <div class="float-right">
-                <label class="text-base text-black dark:text-white" for="opator"
-                  >Patient</label
-                >
-                <input
-                  type="radio"
-                  class="w-6 h-6 ease mx-3 rounded-1.4 checked:bg-teal-500 after:text-xxs after:font-awesome after:duration-250 after:ease-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-teal-500 bg-transparent bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all after:content-['\f00c'] checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
-                  name="role"
-                  id="patient"
-                  value="patient"
-                  formControlName="role"
-                />
-              </div>
-            </fieldset>
-          </div>
-        </div>
-        <div class="flex justify-end w-full">
-          <div class="flex justify-end text-center w-fit">
-            <button
-              color="accent"
-              mat-raised-button
-              type="submit"
-              [disabled]="registerForm.invalid"
-            >
-              <mat-icon fontIcon="save"></mat-icon>enrollement
-            </button>
-          </div>
-        </div>
+        <mat-radio-group formControlName="gender">
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
       </div>
+    </div>
+
+    <div class="mat-dialog-actions">
+      <button
+        mat-button
+        color="accent"
+        type="submit"
+        [disabled]="registerForm.invalid"
+      >
+        <mat-icon>save</mat-icon> Enroll
+      </button>
+      <button mat-button mat-dialog-close color="warn">Cancel</button>
     </div>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions
-  align="end"
-  class="w-full spacey-2 h-full min-w-full min-h-full rounded-0 p-[10%] bg-slate-50 dark:bg-slate-850"
->
-  <button mat-raised-button color="warn" class="z-0" mat-dialog-close>
-    Cancel
-  </button>
-</mat-dialog-actions>

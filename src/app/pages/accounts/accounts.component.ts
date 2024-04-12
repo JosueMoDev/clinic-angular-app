@@ -74,7 +74,7 @@ export class AccountsComponent {
   openDialog(): void {
     this.ui.currentUserType('');
     this.matDialog.open(RegisterAccountComponent, {
-      width: '100%',
+      width: '50%',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
