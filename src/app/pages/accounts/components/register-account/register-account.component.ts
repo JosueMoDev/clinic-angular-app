@@ -23,6 +23,7 @@ import { AccountsService } from '../../services/accounts.service';
 @Component({
   selector: 'app-register-account',
   templateUrl: './register-account.component.html',
+  styleUrl: './register-account.component.css',
   standalone: true,
   imports: [
     AngularMaterialModule,

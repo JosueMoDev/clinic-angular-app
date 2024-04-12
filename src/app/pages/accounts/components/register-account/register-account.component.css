@@ -1,0 +1,51 @@
+.form-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+}
+
+.radio-group  > :not([hidden]) ~ :not([hidden]) {
+    padding: 1rem;
+    --tw-space-x-reverse: 0;
+    margin-right: calc(3.5rem/* 50px */ * var(--tw-space-x-reverse));
+    margin-left: calc(3.5rem/* 50px */ * calc(1 - var(--tw-space-x-reverse)));
+}
+
+mat-radio-button {
+    margin-right: 30px;
+    margin-left: 30px;
+
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.mat-dialog-actions button {
+  flex: 1;
+  margin: 0 5px; /* Espacio entre botones */
+}
+
+button {
+    height: 50px;
+}
