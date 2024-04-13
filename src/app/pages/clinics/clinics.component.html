@@ -46,8 +46,9 @@
         <tr mat-row (click)="updateProfileService.clinicToUpdate(clinic)" [class.row-link-disabled]="clinic.isValidated" *matRowDef="let clinic; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <div *ngIf="length === 0">
-      <p>No user has been registered yet</p>
+   <div *ngIf="length === 0" class="loading">
+      <mat-progress-spinner color="warn" mode="indeterminate"></mat-progress-spinner>
+      <p>No clinics have been registered yet</p>
     </div>
     <div *ngIf=" length > pageSize">
       <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handlePageEvent($event)"></mat-paginator>

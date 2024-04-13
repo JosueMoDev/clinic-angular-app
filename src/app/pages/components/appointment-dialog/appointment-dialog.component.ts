@@ -12,11 +12,11 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
-import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
 import { ClinicAvailableToMakeAnAppointment } from '../../../interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { ClinicService } from '../../clinics/services/clinic.service';
+import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
 
 
 @Component({
@@ -44,7 +44,7 @@ export class AppointmentDialogComponent {
     private authService: AuthenticationService,
     private store: Store<AppState>,
     private clinicService: ClinicService,
-    private clinicAssignment: ClinicAssignmentsService,
+    private clinicAssignment: ClinicAssigmentService,
     public dialogRef: MatDialogRef<AppointmentDialogComponent>,
   ) { 
     const today = new Date();
@@ -88,12 +88,12 @@ export class AppointmentDialogComponent {
   get doctorsByClinicId() {
     this.newAppointmentForm.get('doctor')?.disable();
     this.clinicAssignment.allDoctorsAvailableToMakeAnAppointment(this.newAppointmentForm.get('clinic')?.value)
-      .subscribe(
-        ({ doctors }) => {
-          this.newAppointmentForm.get('doctor')?.enable();
-          this.doctorList = doctors;
-      }
-    )
+    //   .subscribe(
+    //     ({ doctors }) => {
+    //       this.newAppointmentForm.get('doctor')?.enable();
+    //       this.doctorList = doctors;
+    //   }
+    // )
     return this.doctorList;
   }
 

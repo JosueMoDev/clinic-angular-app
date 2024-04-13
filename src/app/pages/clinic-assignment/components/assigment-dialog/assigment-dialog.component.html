@@ -1,0 +1,44 @@
+<mat-dialog-content>
+  <mat-card-title>
+    <h1 class="text-xl">Doctors avilable to assign</h1>
+  </mat-card-title>
+  <form
+    *ngIf="doctors.length >= 1"
+    [formGroup]="assignmentForm"
+    (ngSubmit)="saveAssignment()"
+  >
+    <div
+      formArrayName="doctors"
+      *ngFor="let employee of doctors; let i = index"
+    >
+      <mat-checkbox
+        class="flex px-10 space-x-5 space-y-3"
+        [value]="employee.id"
+        (change)="addToAssignmentList($event)"
+      >
+        <div class="flex items-center px-10 py-3 space-x-5 align-middle">
+          <div class="w-20 h-20">
+            <img [src]="employee.photoUrl || 'assets/img/no-photo-user.jpg'" />
+          </div>
+          <div>
+            <p>{{ employee.name }} {{ employee.lastname }}</p>
+          </div>
+        </div>
+      </mat-checkbox>
+    </div>
+    <mat-dialog-actions class="flex w-full mx-10 my-3 space-x-10">
+      <div class="flex justify-center w-full">
+        <button
+          mat-button
+          color="accent"
+          type="submit"
+          [disabled]="thereIsSomebodyToAssing === 0"
+        >
+          <mat-icon>assignment_ind</mat-icon>Assign
+        </button>
+        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+      </div>
+    </mat-dialog-actions>
+  </form>
+  <p *ngIf="doctors.length < 1">Any user available to be assigned</p>
+</mat-dialog-content>

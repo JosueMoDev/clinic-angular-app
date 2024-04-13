@@ -1,0 +1,8 @@
+
+.avatar-image {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+  object-fit: cover;
+  object-position: top;
+}

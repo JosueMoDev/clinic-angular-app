@@ -11,8 +11,6 @@ import { SharedModule } from '../shared/shared.module';
 //* Components
 import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
 import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
-import { ClinicAssignmentComponent } from './components/clinic-assignment/clinic-assignment.component';
-import { ClinicAssignmentDialogComponent } from './components/clinic-assignment-dialog/clinic-assigment-dialog.component';
 import { ClinicsComponent } from './clinics/clinics.component';
 import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
@@ -25,6 +23,7 @@ import { NewMedialRecordComponent } from './components/new-medial-record/new-med
 import { EditMedicalRecordComponent } from './components/edit-medical-record/edit-medical-record.component';
 import { SearchingComponent } from './components/searching/searching.component';
 import { AccountsComponent } from './accounts/accounts.component';
+import { ClinicAssignmentComponent } from './clinic-assignment/clinic-assignment.component';
 
 
 @NgModule({
@@ -33,7 +32,6 @@ import { AccountsComponent } from './accounts/accounts.component';
     ActionsAppointmentDialogComponent,
     AppointmentDialogComponent,
     ClinicAssignmentComponent,
-    ClinicAssignmentDialogComponent,
     ClinicsComponent,
     AppointmentComponent,
     Error404Component,
@@ -45,6 +43,7 @@ import { AccountsComponent } from './accounts/accounts.component';
     NewMedialRecordComponent,
     EditMedicalRecordComponent,
     SearchingComponent,
+    
   ],
   imports: [
     AngularMaterialModule,
