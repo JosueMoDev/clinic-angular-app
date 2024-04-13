@@ -12,7 +12,7 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 
 import { Appointment } from 'src/app/models/appointment.model';
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
-import { ClinicAssignmentsService } from 'src/app/services/clinic-assignments.service';
+import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { Subscription } from 'rxjs';
@@ -45,7 +45,7 @@ export class ActionsAppointmentDialogComponent {
   constructor(
     private appointmentService: AppointmentService,
     private clinicService: ClinicService,
-    private clinicAssignment: ClinicAssignmentsService,
+    private clinicAssignment: ClinicAssigmentService,
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ActionsAppointmentDialogComponent>,
@@ -119,11 +119,11 @@ export class ActionsAppointmentDialogComponent {
   get clinicId() { return this.editAppointmentForm.get('clinic')?.value; }
   get doctorsByClinicId() {
     this.clinicAssignment.allDoctorsAvailableToMakeAnAppointment(this.editAppointmentForm.get('clinic')?.value)
-      .subscribe(
-        ({ doctors })=>{
-          this.doctorList = doctors;
-      }
-    )
+    //   .subscribe(
+    //     ({ doctors }: any)=>{
+    //       this.doctorList = doctors;
+    //   }
+    // )
     return this.doctorList;
   }
   get newDate() {

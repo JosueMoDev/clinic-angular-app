@@ -1,0 +1,68 @@
+  <mat-card  class="mx-10">
+  <mat-card-header>
+    <div class="flex justify-between w-full">
+      <div>
+        <h1 class="text-xl">Doctors Assigned</h1>
+      </div>
+      <div *ngIf="!!userRol" class="flex space-x-4 justify-items-end">
+        <button
+          mat-raised-button
+          (click)="removeallassigned()"
+          [disabled]="!hasAssignments"
+          color="warn"
+        >
+          <mat-icon>remove_circle</mat-icon>
+          <span>Remove all assigned</span>
+        </button>
+        <button
+          mat-raised-button
+          (click)="assignmentListDialog()"
+          color="primary"
+        >
+          <mat-icon>assignment_turned_in</mat-icon>
+          <span>Assign new</span>
+        </button>
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tbody>
+        <tr *ngFor="let doctor of doctorsAssignedList">
+          <td>
+            <div>
+              <div>
+                <img [src]="doctor.photoUrl || 'assets/img/no-photo-clinic.png'" />
+              </div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>{{ doctor.name }} {{ doctor.lastname }}</p>
+            </div>
+          </td>
+          <td *ngIf="userRol === 'admin'">
+            <div>
+              <p>Actions:</p>
+              <div>
+                <button
+                  mat-raised-button
+                  (click)="
+                    removeADoctorAssigned(doctor.id)
+                  "
+                  color="warn"
+                >
+                  <mat-icon>person_remove</mat-icon> Remove
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="length === 0">
+      <p>No doctors have been assigned yet</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
