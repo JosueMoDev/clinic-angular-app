@@ -21,19 +21,17 @@ import { DoctorAssigned } from './interfaces/doctor-assigned.interface';
 import { AssigmentDialogComponent } from './components/assigment-dialog/assigment-dialog.component';
 import { ClinicAssigmentService } from './services/clinic-assigment.service';
 
-
 @Component({
   selector: 'app-clinic-assignment',
   templateUrl: './clinic-assignment.component.html',
   styleUrl: './clinic-assignment.component.css',
 })
 export class ClinicAssignmentComponent {
-  private readonly clinicAssignment = inject(ClinicAssigmentService)
+  private readonly clinicAssignment = inject(ClinicAssigmentService);
   public uiSubscription!: Subscription;
 
   public currentUserLogged!: any;
   public clinic_id!: string;
-  public hasAssignments!: boolean;
   public profileSelected!: Clinic;
   public userRol!: Rol;
 
@@ -53,6 +51,13 @@ export class ClinicAssignmentComponent {
   public hidePageSize: boolean = false;
   public showPageSizeOptions: boolean = true;
   public pageEvent!: PageEvent;
+  displayedColumns: string[] = [
+    'avatar',
+    'name',
+    'email',
+    'duiNumber',
+    'action',
+  ];
 
   constructor(
     private store: Store<AppState>,
@@ -69,15 +74,15 @@ export class ClinicAssignmentComponent {
     this.mat.nextPageLabel = '';
     this.mat.itemsPerPageLabel = 'Doctors assigned per page';
     this.allEmployeesAvaibleToBeAssigned();
-    // this.allEmployeesAssignedToClinic();
-    // this.uiSubscription = this.store.select('ui').subscribe((state) => {
-    //   if (state.isLoading) {
-    //     this.allEmployeesAvaibleToBeAssigned();
-    //     // this.allEmployeesAssignedToClinic();
-    //     this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
-    //     this.store.dispatch(ui.isLoadingTable());
-    //   }
-    // });
+    this.allEmployeesAssignedToClinic();
+    this.uiSubscription = this.store.select('ui').subscribe((state) => {
+      if (state.isLoading) {
+        this.allEmployeesAvaibleToBeAssigned();
+        this.allEmployeesAssignedToClinic();
+        this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
+        this.store.dispatch(ui.isLoadingTable());
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -85,36 +90,33 @@ export class ClinicAssignmentComponent {
   }
 
   allEmployeesAvaibleToBeAssigned() {
+    this.clinicAssignment.getDoctorsAvilableToAssign().subscribe((doctors) => {
+      this.doctorsAvailableList = doctors;
+    });
+  }
+
+  allEmployeesAssignedToClinic() {
     this.clinicAssignment
-      .getDoctorsAvilableToAssign()
+      .allEmployeesAssingedToClinic(this.clinic_id)
       .subscribe((doctors) => {
-        this.doctorsAvailableList = doctors;
+        this.doctorsAssignedList = doctors;
+        this.dataTempAssigned = doctors;
+        this.length = this.doctorsAssignedList.length;
       });
   }
 
-  // allEmployeesAssignedToClinic() {
-  //   this.clinicAssignment
-  //     .allEmployeesAssingedToClinic()
-  //     .subscribe(({ doctors }) => {
-  //       console.log(doctors)
-  //       this.doctorsAssignedList = doctors;
-  //       this.dataTempAssigned = doctors;
-  //       // this.length = this.doctorsAssignedList.length;
-  //     });
-  // }
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageIndex = e.pageIndex;
 
-  // handlePageEvent(e: PageEvent) {
-  //   this.pageEvent = e;
-  //   this.length = e.length;
-  //   this.pageIndex = e.pageIndex;
-
-  //   if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
-  //     this.from = this.from + this.pageSize;
-  //   } else {
-  //     this.from = this.from - this.pageSize;
-  //   }
-  //   this.allEmployeesAssignedToClinic();
-  // }
+    if (this.pageEvent.pageIndex > this.pageEvent.previousPageIndex!) {
+      this.from = this.from + this.pageSize;
+    } else {
+      this.from = this.from - this.pageSize;
+    }
+    this.allEmployeesAssignedToClinic();
+  }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput
@@ -123,41 +125,32 @@ export class ClinicAssignmentComponent {
     }
   }
 
-  removeallassigned() {
-    // if (this.hasAssignments) {
-    //   this.clinicAssignment
-    //     .removeAllDoctorsAssignedToClinic(this.clinic_id)
-    //     .subscribe(
-    //       (resp: any) => {
-    //         if (resp.ok) {
-    //           this.updateProfileService.clinicToUpdate(resp.clinic);
-    //           this.store.dispatch(ui.isLoadingTable());
-    //           success(resp.message);
-    //         }
-    //       },
-    //       (err: any) => {
-    //         error(err.error.message);
-    //       }
-    //     );
-    // }
+  removeAllAssigned() {
+    const doctors = this.doctorsAssignedList.map(({ id }) => id);
+    this.clinicAssignment
+      .removeADoctorsAssignedToClinic( doctors, this.clinic_id)
+      .subscribe({
+        next: () => {
+          this.store.dispatch(ui.isLoadingTable());
+          success('Deleted Correctly');
+        },
+        error: () => {
+          error('No Deleted');
+        },
+      });
   }
   removeADoctorAssigned(doctor_id: string) {
-    // if (this.hasAssignments && doctor_id) {
-    //   this.clinicAssignment
-    //     .removeADoctorAssignedToClinic(this.clinic_id, doctor_id)
-    //     .subscribe(
-    //       (resp: any) => {
-    //         if (resp.ok) {
-    //           this.updateProfileService.clinicToUpdate(resp.clinic);
-    //           this.store.dispatch(ui.isLoadingTable());
-    //           success(resp.message);
-    //         }
-    //       },
-    //       (err: any) => {
-    //         error(err.error.message);
-    //       }
-    //     );
-    // }
+    this.clinicAssignment
+      .removeADoctorsAssignedToClinic([doctor_id], this.clinic_id)
+      .subscribe({
+        next: () => {
+          this.store.dispatch(ui.isLoadingTable());
+          success('Deleted Correctly');
+        },
+        error: () => {
+          error('No Deleted');
+        },
+      });
   }
 
   assignmentListDialog(): void {

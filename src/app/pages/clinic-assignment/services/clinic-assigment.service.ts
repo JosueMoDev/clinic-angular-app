@@ -29,13 +29,19 @@ export class ClinicAssigmentService {
       );
   }
 
-  allEmployeesAssingedToClinic(clinic: string, from: number) {
+  allEmployeesAssingedToClinic(clinic: string) {
     return this.http
-      .get(
-        `${environment.THECLINIC_API_URL}/clinic-assignments/all-assigned?clinic=${clinic}&pagination=${from}`,
+      .get<Account[]>(
+        `${environment.THECLINIC_API_URL}/clinic-assignment/assigned-doctors/${clinic}`,
         this.headers
       )
-      .pipe(delay(200));
+      .pipe(
+        delay(200),
+        map((doctors) => {
+          // TODO: se debe incluir la paginacion
+          return doctors;
+        })
+      );
   }
 
   allDoctorsAvailableToMakeAnAppointment(clinic: string) {
@@ -74,20 +80,10 @@ export class ClinicAssigmentService {
       );
   }
 
-  removeAllDoctorsAssignedToClinic(clinic_id: string) {
-    return this.http.delete(
-      `${environment.THECLINIC_API_URL}/clinic-assignments/remove-all/${clinic_id}`,
-      this.headers
-    );
-  }
-
-  removeADoctorAssignedToClinic(
-    reference: string,
-    clinic_id: string,
-    doctor_id: string
-  ) {
-    return this.http.delete(
-      `${environment.THECLINIC_API_URL}/clinic-assignments/remove-one/${reference}?clinic=${clinic_id}&doctor=${doctor_id}`,
+  removeADoctorsAssignedToClinic(doctors: string[], clinic: string) {
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/clinic-assignment/delete`,
+      { doctors, clinic },
       this.headers
     );
   }
