@@ -1,6 +1,6 @@
+import { LastUpdate } from '../interfaces';
 import {
   Address,
-  LastUpdate,
 } from '../pages/clinics/interface/clinic-response.interface';
 
 export class Clinic {

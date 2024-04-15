@@ -1,3 +1,5 @@
+import { LastUpdate } from "src/app/pages/appointments/interfaces/appointment-response.interface";
+
 export interface Account {
   id: string;
   duiNumber: string;
@@ -11,5 +13,5 @@ export interface Account {
   photoUrl: string;
   photoId: string;
   createdAt: Date;
-  lastUpdate: any[];
+  lastUpdate: LastUpdate[];
 }

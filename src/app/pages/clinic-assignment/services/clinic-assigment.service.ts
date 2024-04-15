@@ -3,7 +3,6 @@ import { AuthenticationService } from '../../../authentication/services/authenti
 import { environment } from 'src/environments/environment';
 import { delay, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { GetDoctorsAvilableResponse } from '../interfaces/get-doctors-avilable.interface';
 import { Account } from 'src/app/authentication/interfaces';
 
 @Injectable({

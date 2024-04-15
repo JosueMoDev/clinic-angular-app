@@ -17,7 +17,6 @@ export class AccountsService {
   constructor() {}
 
   crearteNewAccount(account: any) {
-    console.log(account)
     return this.http.post(
       `${environment.THECLINIC_API_URL}/account/create`,
       account,
@@ -35,29 +34,18 @@ export class AccountsService {
         delay(200),
         map(({ accounts, pagination }) => {
           const users = accounts.map(
-            ({
-              id,
-              duiNumber,
-              email,
-              name,
-              lastname,
-              gender,
-              phone,
-              isValidated,
-              role,
-              photoUrl,
-            }: Account) =>
+            (account: Account) =>
               new AccountModel(
-                id,
-                duiNumber,
-                email,
-                name,
-                lastname,
-                gender,
-                phone,
-                isValidated,
-                role,
-                photoUrl
+                account.id,
+                account.duiNumber,
+                account.email,
+                account.name,
+                account.lastname,
+                account.gender,
+                account.phone,
+                account.isValidated,
+                account.role,
+                account.photoUrl
               )
           );
           return {
@@ -68,15 +56,9 @@ export class AccountsService {
       );
   }
 
-  updateAccount(){
+  updateAccount() {}
 
-  }
+  changePassword() {}
 
-  changePassword(){
-
-  }
-
-  changeAccountStatus(){
-    
-  }
+  changeAccountStatus() {}
 }

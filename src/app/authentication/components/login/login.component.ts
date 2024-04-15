@@ -1,10 +1,8 @@
-
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { AuthenticationService } from '../../services/authentication.service';
-
 
 @Component({
   selector: 'app-login',
@@ -12,16 +10,12 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  public error: any = error;
-  hide = true;
-
-  @ViewChild('googleLogin') googleLogin!: ElementRef;
-
+  public hide = true;
   private authenticationService = inject(AuthenticationService);
   private router = inject(Router);
   private formBuider = inject(FormBuilder);
 
-  public loginForm: FormGroup= this.formBuider.group({
+  public loginForm: FormGroup = this.formBuider.group({
     email: [
       localStorage.getItem('user_email'),
       [Validators.required, Validators.email],
@@ -39,6 +33,7 @@ export class LoginComponent {
   get rememberme() {
     return this.loginForm.get('rememberme')?.value;
   }
+
   loginWithEmailAndPassword() {
     this.authenticationService
       .loginWithEmailAndPassword(this.loginForm.value)
@@ -48,7 +43,7 @@ export class LoginComponent {
           this.router.navigateByUrl('/dashboard');
           success('Welcome');
         },
-        error: (error) => this.error(error.error.message),
+        error: () => error('Error intenta nuevamente'),
       });
   }
 }

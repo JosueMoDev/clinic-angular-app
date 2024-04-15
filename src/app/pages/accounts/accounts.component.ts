@@ -10,7 +10,6 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
-import { UiService } from 'src/app/services/ui.service';
 
 import { Account } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
@@ -23,45 +22,40 @@ import { RegisterAccountComponent } from './components/register-account/register
   styleUrl: './accounts.component.css',
 })
 export class AccountsComponent {
-  public currentUserLogged!: Account;
-  public uiSubscription!: Subscription;
-  // ? Use's Table
-  public dataTemp!: Account[];
-  public userList!: Account[];
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly accountService = inject(AccountsService);
+  private readonly updateProfileService = inject(UpdateProfileService);
+  private readonly store = inject(Store<AppState>)
 
-  //? Angular Material Paginator
+  public currentUserLogged: Account = this.authenticationService.currentUserLogged() as Account;
+  // TODO: cambiar rxjs por
+  public uiSubscription!: Subscription;
+  public dataTemp!: Account[];
+  public accountList!: Account[];
+
+
 
   public from: number = 0;
   public page: number = 1;
-  public hidePageSize: boolean = false;
   public length: number = 0;
   public pageEvent!: PageEvent;
   public pageIndex: number = 0;
-  public pageSize: number = 5;
-  public pageSizeOptions: number[] = [5, 10, 25];
-  public showPageSizeOptions: boolean = true;
-  private readonly authenticationService = inject(AuthenticationService);
-  private readonly accountService = inject(AccountsService);
-  displayedColumns: string[] = ['avatar', 'name', 'email', 'role', 'action'];
+  public pageSize: number = 10;
+  public displayedColumns: string[] = ['avatar', 'name', 'email', 'role', 'action'];
+
+
 
   constructor(
-    private store: Store<AppState>,
-    private ui: UiService,
     public matconfig: MatPaginatorIntl,
     public matDialog: MatDialog,
-    public updateProfileService: UpdateProfileService
   ) {}
 
   ngOnInit(): void {
-    this.matconfig.previousPageLabel = '';
-    this.matconfig.nextPageLabel = '';
-    this.matconfig.itemsPerPageLabel = 'Users per page';
-    this.currentUserLogged =
-      this.authenticationService.currentUserLogged() as Account;
-    this.allUsers();
+    this.matconfig.itemsPerPageLabel = 'Accounts per page';
+    this.allAccounts();
     this.uiSubscription = this.store.select('ui').subscribe((state) => {
       if (state.isLoading) {
-        this.allUsers();
+        this.allAccounts();
         this.store.dispatch(ui.isLoadingTable());
       }
     });
@@ -72,7 +66,6 @@ export class AccountsComponent {
   }
 
   openDialog(): void {
-    this.ui.currentUserType('');
     this.matDialog.open(RegisterAccountComponent, {
       width: '50%',
       hasBackdrop: true,
@@ -81,11 +74,11 @@ export class AccountsComponent {
     });
   }
 
-  allUsers() {
+  allAccounts() {
     this.accountService
-      .getAllAccounts(this.pageIndex+1, this.pageSize)
+      .getAllAccounts(this.pageIndex + 1, this.pageSize)
       .subscribe(({ users, total }: any) => {
-        this.userList = users;
+        this.accountList = users;
         this.dataTemp = users;
         this.length = total;
       });
@@ -101,15 +94,9 @@ export class AccountsComponent {
     } else {
       this.from = this.from - this.pageSize;
     }
-    this.allUsers();
+    this.allAccounts();
   }
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput
-        .split(',')
-        .map((str) => +str);
-    }
-  }
+ 
 
   // changeUserState(user_to_change: string, user_logged: string) {
   //   this.userService.changeUserStatus(user_to_change, user_logged).subscribe(
@@ -124,5 +111,8 @@ export class AccountsComponent {
   //     }
   //   );
   // }
-  changeAccountStatus() {}
+  changeAccountStatus() { }
+  showAccount(account: Account) {
+    this.updateProfileService.userToUpdate(account);
+  }
 }
