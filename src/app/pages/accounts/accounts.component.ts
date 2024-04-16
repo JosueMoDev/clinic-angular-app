@@ -11,10 +11,10 @@ import * as ui from 'src/app/store/actions/ui.actions';
 
 import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
-import { Account } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { AccountsService } from '../accounts/services/accounts.service';
 import { RegisterAccountComponent } from './components/register-account/register-account.component';
+import { Account } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-accounts',
@@ -30,8 +30,8 @@ export class AccountsComponent {
   public currentUserLogged: Account = this.authenticationService.currentUserLogged() as Account;
   // TODO: cambiar rxjs por
   public uiSubscription!: Subscription;
-  public dataTemp!: Account[];
-  public accountList!: Account[];
+  public dataTemp: Account[] = [];
+  public accountList: Account[] = [];
 
 
 
@@ -77,10 +77,10 @@ export class AccountsComponent {
   allAccounts() {
     this.accountService
       .getAllAccounts(this.pageIndex + 1, this.pageSize)
-      .subscribe(({ users, total }: any) => {
-        this.accountList = users;
-        this.dataTemp = users;
-        this.length = total;
+      .subscribe(({ accounts, pagination }) => {
+        this.accountList = accounts;
+        this.dataTemp = accounts;
+        this.length = pagination.total;
       });
   }
 

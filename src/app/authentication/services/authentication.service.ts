@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, of, throwError } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { LoginForm } from 'src/app/interfaces/auth.interface';
-import { Account, LoggedAccount } from '../interfaces';
+import { LoggedAccount } from '../interfaces';
+import { Account } from 'src/app/models/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,9 +42,9 @@ export class AuthenticationService {
     return true;
   }
 
-  loginWithEmailAndPassword(loginForm: LoginForm) {
+  loginWithEmailAndPassword(email: string, password: string) {
     return this.http
-      .post<LoggedAccount>(`${this.baseUrl}/authentication/login`, loginForm)
+      .post<LoggedAccount>(`${this.baseUrl}/authentication/login`, { email, password })
       .pipe(
         map(({ account, accessToken }) =>
           this.setAuthentication(account, accessToken)

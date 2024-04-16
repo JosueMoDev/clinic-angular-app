@@ -35,8 +35,9 @@ export class LoginComponent {
   }
 
   loginWithEmailAndPassword() {
+    const { email, password } = this.loginForm.value;
     this.authenticationService
-      .loginWithEmailAndPassword(this.loginForm.value)
+      .loginWithEmailAndPassword(email, password)
       .subscribe({
         next: () => {
           this.loginForm.reset();

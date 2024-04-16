@@ -13,7 +13,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { ClinicService } from '../services/clinic.service';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { Account } from 'src/app/authentication/interfaces';
+import { Account } from 'src/app/models/account.model';
 
 
 

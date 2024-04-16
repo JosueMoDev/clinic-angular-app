@@ -3,7 +3,7 @@ import { AuthenticationService } from '../../../authentication/services/authenti
 import { environment } from 'src/environments/environment';
 import { delay, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Account } from 'src/app/authentication/interfaces';
+import { Account } from 'src/app/models/account.model';
 
 @Injectable({
   providedIn: 'root',

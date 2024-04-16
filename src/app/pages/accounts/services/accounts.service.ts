@@ -3,9 +3,9 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { Account as AccountModel } from 'src/app/models/account.model';
-import { delay, map } from 'rxjs';
-import { Account } from 'src/app/authentication/interfaces';
-import { AccountResponse } from '../interfaces/account-response.interface';
+import { delay, map, Observable } from 'rxjs';
+import { Account, AccountResponse } from '../../../interfaces/account-response.interface';
+import { Pagination } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,10 @@ export class AccountsService {
     );
   }
 
-  getAllAccounts(page: number, pageSize: number) {
+  getAllAccounts(page: number, pageSize: number): Observable<{
+    pagination: Pagination;
+    accounts: AccountModel[];
+}>{
     return this.http
       .get<AccountResponse>(
         `${environment.THECLINIC_API_URL}/account/find-many?page=${page}&pageSize=${pageSize}`,
@@ -33,24 +36,12 @@ export class AccountsService {
       .pipe(
         delay(200),
         map(({ accounts, pagination }) => {
-          const users = accounts.map(
-            (account: Account) =>
-              new AccountModel(
-                account.id,
-                account.duiNumber,
-                account.email,
-                account.name,
-                account.lastname,
-                account.gender,
-                account.phone,
-                account.isValidated,
-                account.role,
-                account.photoUrl
-              )
+          const accounstMapped = accounts.map(
+            (account: Account) => new AccountModel(account)
           );
           return {
-            total: pagination.total,
-            users,
+            pagination,
+            accounts: accounstMapped,
           };
         })
       );

@@ -2,8 +2,8 @@ import { Component, inject, Signal, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { UiService } from '../services/ui.service';
 import { UpdateProfileService } from '../services/update-profile.service';
-import { Account } from '../authentication/interfaces';
 import { AuthenticationService } from '../authentication/services/authentication.service';
+import { Account } from '../models/account.model';
 
 @Component({
   selector: 'app-pages',

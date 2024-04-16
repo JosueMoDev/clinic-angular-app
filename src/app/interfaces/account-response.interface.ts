@@ -1,4 +1,9 @@
-import { LastUpdate } from "src/app/pages/appointments/interfaces/appointment-response.interface";
+import { LastUpdate, Pagination } from "src/app/interfaces";
+
+export interface AccountResponse {
+  pagination: Pagination;
+  accounts: Account[];
+}
 
 export interface Account {
   id: string;

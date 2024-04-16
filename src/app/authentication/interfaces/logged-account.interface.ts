@@ -1,4 +1,4 @@
-import { Account } from "./account.interface";
+import { Account } from "src/app/interfaces/account-response.interface";
 
 export interface LoggedAccount {
   account: Account;

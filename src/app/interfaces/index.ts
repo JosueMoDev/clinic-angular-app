@@ -1,4 +1,4 @@
-export * from './auth.interface';
+export * from './account-response.interface';
 export * from './authorized-roles.enum';
 export * from './clinic-available.interface';
 export * from './doctor_assigment.inteface';
