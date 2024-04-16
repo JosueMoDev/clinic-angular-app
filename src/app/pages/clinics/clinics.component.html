@@ -1,7 +1,7 @@
 <div class="clinic-container">
   <div class="table-wrapper">
     <div class="table-header">
-      <p>Clinic's Table</p>
+      <p class="text-xl">Clinic's Table</p>
       <button mat-raised-button color="primary"  (click)="openDialog()">
         <mat-icon>domain</mat-icon>
         New Clinic
@@ -51,7 +51,7 @@
       <p>No clinics have been registered yet</p>
     </div>
     <div *ngIf=" length > pageSize">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="handlePageEvent($event)"></mat-paginator>
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="matPaginatinatorHander($event)"></mat-paginator>
     </div>
   </div>
 </div>

@@ -26,19 +26,22 @@
         </div>
       </mat-checkbox>
     </div>
-    <mat-dialog-actions class="flex w-full mx-10 my-3 space-x-10">
-      <div class="flex justify-center w-full">
-        <button
-          mat-button
-          color="accent"
-          type="submit"
-          [disabled]="thereIsSomebodyToAssing === 0"
-        >
-          <mat-icon>assignment_ind</mat-icon>Assign
-        </button>
-        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-      </div>
-    </mat-dialog-actions>
+    <div class="flex justify-center w-full">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="hasDoctorsToAssign === 0"
+        class="w-full"
+      >
+        <mat-icon>assignment_ind</mat-icon>Assign
+      </button>
+    </div>
   </form>
   <p *ngIf="doctors.length < 1">Any user available to be assigned</p>
 </mat-dialog-content>
+<mat-dialog-actions
+  class="flex justify-center w-full"
+>
+  <button mat-raised-button color="warn" class="w-full" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

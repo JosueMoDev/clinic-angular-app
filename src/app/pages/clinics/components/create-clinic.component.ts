@@ -1,23 +1,17 @@
-import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import * as ui from 'src/app/store/actions/ui.actions';
-
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { AngularMaterialModule } from 'src/app/angular-material.module';
-import { ClinicService } from '../services/clinic.service';
-import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { Account } from 'src/app/models/account.model';
-
-
-
-
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { AppState } from 'src/app/app.reducer';
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
+import { ClinicService } from '../services/clinic.service';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import * as ui from 'src/app/store/actions/ui.actions';
  
 @Component({
   selector: 'app-create-clinic',
@@ -34,27 +28,14 @@ import { Account } from 'src/app/models/account.model';
   styles: [],
 })
 export class CreateClinicComponent {
-  public formSub$!: Subscription;
-  public currentStep: number = 1;
-  public registerClinicForm!: FormGroup;
-  public isFirstStepValid: boolean = false;
-  public provinces!: string[];
-  public cities!: string[];
-  public loggedUser!: Account;
-  public imagenTemp!: any;
   private readonly clinicService = inject(ClinicService);
   private readonly authenticationService= inject(AuthenticationService);
+  private formbuilder = inject(FormBuilder);
+  private store = inject(Store<AppState>);
 
-  constructor(
-    private formbuilder: FormBuilder,
-    public matdialogRef: MatDialogRef<CreateClinicComponent>,
-    private store: Store<AppState>
-  ) {}
-
-  ngOnInit() {
-    this.loggedUser = this.authenticationService.currentUserLogged() as Account;
-
-    this.registerClinicForm = this.formbuilder.group({
+  public formSub$!: Subscription;
+  public loggedUser: Account  = this.authenticationService.currentUserLogged() as Account;;
+  public registerClinicForm: FormGroup =  this.formbuilder.group({
       registerNumber: ['', Validators.required],
       name: [
         '',
@@ -79,8 +60,11 @@ export class CreateClinicComponent {
         ],
       }),
       createdBy: [this.loggedUser.id],
-    });
-  }
+    });;
+
+  constructor(
+    public matdialogRef: MatDialogRef<CreateClinicComponent>,
+  ) {}
 
   ngOnDestroy(): void {
     this.formSub$.unsubscribe;
@@ -118,15 +102,14 @@ export class CreateClinicComponent {
   }
 
   createClinic() {
-    console.log(this.registerClinicForm.value);
-    this.clinicService.createClinic(this.registerClinicForm.value).subscribe(
-      async (resp: any) => {
-        success(resp.message);
-        this.store.dispatch(ui.isLoadingTable());
-        this.matdialogRef.close();
-        this.registerClinicForm.reset();
+    this.clinicService.createClinic(this.registerClinicForm.value).subscribe({
+      next: () => {
+         success('Clinic Created success');
+         this.store.dispatch(ui.isLoadingTable());
+         this.matdialogRef.close();
+         this.registerClinicForm.reset();
       },
-      (err) => error(err.error.message)
-    );
+      error: () => {  error('An Errors happend while we were creating clinic')}
+    });
   }
 }
