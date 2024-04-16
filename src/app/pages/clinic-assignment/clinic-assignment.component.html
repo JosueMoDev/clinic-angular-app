@@ -12,7 +12,7 @@
           color="warn"
         >
           <mat-icon>remove_circle</mat-icon>
-          <span>Remove all assigned</span>
+          <span>Unassign All</span>
         </button>
         <button
           mat-raised-button
@@ -51,8 +51,8 @@
           <td mat-cell *matCellDef="let doctor">
             <div>
               <button mat-raised-button color="warn"  (click)="removeADoctorAssigned(doctor.id)">
-                <mat-icon>delete</mat-icon>
-                Delete
+                <mat-icon>remove_circle</mat-icon>
+                Remove
               </button>
             </div>
           </td>

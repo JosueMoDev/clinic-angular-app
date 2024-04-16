@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 
 import { Clinic } from 'src/app/models/clinic.model';
-import { Account } from '../authentication/interfaces';
 import { Router } from '@angular/router';
+import { Account } from '../models/account.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,3 +1,10 @@
+import { LastUpdate, Pagination } from "src/app/interfaces";
+
+export interface AccountResponse {
+  pagination: Pagination;
+  accounts: Account[];
+}
+
 export interface Account {
   id: string;
   duiNumber: string;
@@ -11,5 +18,5 @@ export interface Account {
   photoUrl: string;
   photoId: string;
   createdAt: Date;
-  lastUpdate: any[];
+  lastUpdate: LastUpdate[];
 }

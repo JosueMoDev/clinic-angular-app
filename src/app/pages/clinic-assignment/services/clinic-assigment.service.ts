@@ -3,8 +3,7 @@ import { AuthenticationService } from '../../../authentication/services/authenti
 import { environment } from 'src/environments/environment';
 import { delay, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { GetDoctorsAvilableResponse } from '../interfaces/get-doctors-avilable.interface';
-import { Account } from 'src/app/authentication/interfaces';
+import { Account } from 'src/app/models/account.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +22,12 @@ export class ClinicAssigmentService {
       .pipe(
         delay(200),
         map((doctors) => {
-          // TODO: se debe incluir la paginacion
           return doctors;
         })
       );
   }
 
-  allEmployeesAssingedToClinic(clinic: string) {
+  allDoctorsAssingedToClinic(clinic: string) {
     return this.http
       .get<Account[]>(
         `${environment.THECLINIC_API_URL}/clinic-assignment/assigned-doctors/${clinic}`,
@@ -38,7 +36,6 @@ export class ClinicAssigmentService {
       .pipe(
         delay(200),
         map((doctors) => {
-          // TODO: se debe incluir la paginacion
           return doctors;
         })
       );
@@ -68,7 +65,7 @@ export class ClinicAssigmentService {
 
   assignDoctorsToClinic(clinic_id: string, doctors_assigned: string[]) {
     return this.http
-      .post<any>(
+      .post(
         `${environment.THECLINIC_API_URL}/clinic-assignment/create`,
         { doctors: doctors_assigned, clinic: clinic_id },
         this.headers

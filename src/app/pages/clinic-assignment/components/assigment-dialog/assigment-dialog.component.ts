@@ -1,23 +1,25 @@
-import { Component, inject, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatCheckboxDefaultOptions,
-  MAT_CHECKBOX_DEFAULT_OPTIONS,
-} from '@angular/material/checkbox';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import * as ui from 'src/app/store/actions/ui.actions';
-
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
-
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { ClinicAssignmentComponent } from '../../clinic-assignment.component';
-import { AngularMaterialModule } from 'src/app/angular-material.module';
-import { CommonModule } from '@angular/common';
-import { ClinicAssigmentService } from '../../services/clinic-assigment.service';
 import { Account } from 'src/app/models/account.model';
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { AppState } from 'src/app/app.reducer';
+import { ClinicAssigmentService } from '../../services/clinic-assigment.service';
+import { ClinicAssignmentComponent } from '../../clinic-assignment.component';
+import { CommonModule } from '@angular/common';
+import { Component, inject, Inject } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  FormArray,
+  FormControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { success, error } from 'src/app/helpers/sweetAlert.helper';
+import * as ui from 'src/app/store/actions/ui.actions';
+interface ClinicAssignmentData {
+  doctors: Account[];
+  clinic: string;
+}
 @Component({
   selector: 'app-asigment-dialog',
   standalone: true,
@@ -27,59 +29,48 @@ import { Account } from 'src/app/models/account.model';
 })
 export class AssigmentDialogComponent {
   private readonly clinicAssignmentService = inject(ClinicAssigmentService);
+  private formBuilder = inject(FormBuilder);
+  private store = inject(Store<AppState>);
 
-  public assignmentForm!: FormGroup;
   public assignmentList!: FormArray<any>;
-  public thereIsSomebodyToAssing: number = 0;
-  public doctors: Account[] = [];
+  public hasDoctorsToAssign: number = 0;
+  public doctors: Account[] = this.data.doctors;
+  public assignmentForm: FormGroup = this.formBuilder.group({
+    doctors: this.formBuilder.array([]),
+  });
 
   constructor(
-    private formBuilder: FormBuilder,
-    private updateProfile: UpdateProfileService,
-    private store: Store<AppState>,
     public dialogRef: MatDialogRef<ClinicAssignmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ClinicAssignmentData
   ) {}
 
-  ngOnInit(): void {
-    this.doctors = this.data.doctors;
-    this.assignmentForm = this.formBuilder.group({
-      doctors: this.formBuilder.array([]),
-    });
-  }
   addToAssignmentList(event: any) {
-    this.assignmentList = this.assignmentForm.controls[
-      'doctors'
-    ] as FormArray;
+    this.assignmentList = this.assignmentForm.controls['doctors'] as FormArray;
     if (event.checked) {
       this.assignmentList.push(new FormControl(event.source.value));
     } else {
       const index = this.assignmentList.controls.findIndex(
-        (staff: any) => staff.value === event.source.value
+        (doctor: any) => doctor.value === event.source.value
       );
       this.assignmentList.removeAt(index);
     }
-    this.thereIsSomebodyToAssing = this.assignmentList.length;
+    this.hasDoctorsToAssign = this.assignmentList.length;
   }
   get doctorsList() {
     return this.assignmentForm.get('doctors')?.value;
   }
   saveAssignment() {
-    console.log(this.doctorsList)
     this.clinicAssignmentService
       .assignDoctorsToClinic(this.data.clinic, this.doctorsList)
       .subscribe({
-
         next: () => {
-          
           success('Assignment completed');
           this.store.dispatch(ui.isLoadingTable());
         },
         error: () => {
           error('Error on assigment');
-        }
-      }
-      );
+        },
+      });
     this.dialogRef.close();
   }
 }

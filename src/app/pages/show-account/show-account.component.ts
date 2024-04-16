@@ -10,8 +10,8 @@ import { CloudinaryService } from 'src/app/services/cloudinary.service';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
 import { Subscription } from 'rxjs';
-import { Account, Role } from 'src/app/authentication/interfaces';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { Account } from 'src/app/models/account.model';
    
 
 

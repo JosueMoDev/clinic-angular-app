@@ -5,14 +5,17 @@ import { environment } from 'src/environments/environment';
 import { Clinic as ClinicModel } from 'src/app/models/clinic.model';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
-import { Clinic, ClinicResponse } from '../interface/clinic-response.interface';
+import {
+  Clinic,
+  ClinicResponse,
+} from '../../../interfaces/clinic-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClinicService {
-    private readonly http = inject(HttpClient);
-    private readonly authenticationService = inject(AuthenticationService);
+  private readonly http = inject(HttpClient);
+  private readonly authenticationService = inject(AuthenticationService);
   public headers: {} = this.authenticationService.headers;
 
   constructor() {}
@@ -25,37 +28,10 @@ export class ClinicService {
       )
       .pipe(
         delay(200),
-        map(({clinics, pagination}) => {
-          const clinicsList = clinics.map(
-            ({
-              id,
-              registerNumber,
-              name,
-              phone,
-              address,
-              photoUrl,
-              photoId,
-              createdAt,
-              createdBy,
-              status,
-              lastUpdate,
-            }: Clinic) =>
-              new ClinicModel(
-                id,
-                registerNumber,
-                name,
-                phone,
-                address,
-                photoUrl,
-                photoId,
-                createdAt,
-                createdBy,
-                status,
-                lastUpdate
-              )
-          );
+        map(({ clinics, pagination }) => {
+          const clinicsList = clinics.map((clinic) => new ClinicModel(clinic));
           return {
-            total: pagination.total,
+            pagination,
             clinics: clinicsList,
           };
         })
@@ -92,7 +68,7 @@ export class ClinicService {
       );
   }
 
-  createClinic(clinic: any) {
+  createClinic(clinic: Clinic) {
     return this.http.post(
       `${environment.THECLINIC_API_URL}/clinic/create`,
       clinic,

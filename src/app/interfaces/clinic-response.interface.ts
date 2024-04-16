@@ -1,3 +1,5 @@
+import {LastUpdate, Pagination } from "src/app/interfaces";
+
 export interface ClinicResponse {
   pagination: Pagination;
   clinics: Clinic[];
@@ -23,16 +25,4 @@ export interface Address {
   state: string;
 }
 
-export interface LastUpdate {
-  account: string;
-  date: Date;
-  action: string;
-}
 
-export interface Pagination {
-  currentPage: number;
-  nextPage: string;
-  previousPage: null;
-  pageSize: number;
-  total: number;
-}
