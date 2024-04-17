@@ -32,7 +32,7 @@ export class Account {
   constructor(options: AccountOptions) {
     this.id = options.id;
     this.duiNumber = options.duiNumber;
-    this.email = options.duiNumber;
+    this.email = options.email;
     this.name = options.name;
     this.lastname = options.lastname;
     this.gender = options.gender;
