@@ -6,7 +6,11 @@ import { Account as AccountModel } from 'src/app/models/account.model';
 import { delay, map, Observable } from 'rxjs';
 import { Account, AccountResponse } from '../../../interfaces/account-response.interface';
 import { Pagination } from 'src/app/interfaces';
-
+interface ChangePassword {
+  account: string;
+  oldPassword: string;
+  newPassword: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +20,7 @@ export class AccountsService {
   private readonly headers = this.authenticationService.headers;
   constructor() {}
 
-  crearteNewAccount(account: any) {
+  crearteNewAccount(account: Account) {
     return this.http.post(
       `${environment.THECLINIC_API_URL}/account/create`,
       account,
@@ -49,7 +53,14 @@ export class AccountsService {
 
   updateAccount() {}
 
-  changePassword() {}
+  changePassword(chagePassword: ChangePassword) {
+    console.log(chagePassword, this.headers)
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/account/change-password`,
+      chagePassword,
+      this.headers
+    );
+  }
 
   changeAccountStatus() {}
 }

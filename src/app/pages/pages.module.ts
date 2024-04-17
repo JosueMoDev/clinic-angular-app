@@ -16,7 +16,6 @@ import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
 import { MedicalRecordComponent } from './medical-record/medical-record.component';
 import { PagesComponent } from './pages.component';
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { ShowClinicComponent } from './show-clinic/show-clinic.component';
 import { ShowAccountComponent } from './show-account/show-account.component';
 import { NewMedialRecordComponent } from './components/new-medial-record/new-medial-record.component';
@@ -37,7 +36,6 @@ import { ClinicAssignmentComponent } from './clinic-assignment/clinic-assignment
     Error404Component,
     MedicalRecordComponent,
     PagesComponent,
-    PasswordRecoveryComponent,
     ShowClinicComponent,
     ShowAccountComponent,
     NewMedialRecordComponent,

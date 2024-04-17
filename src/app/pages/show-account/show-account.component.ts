@@ -8,10 +8,10 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { CloudinaryService } from 'src/app/services/cloudinary.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { PasswordRecoveryComponent } from 'src/app/pages/components/password-recovery/password-recovery.component';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Account } from 'src/app/models/account.model';
+import { ChangePasswordComponent } from '../accounts/components';
    
 
 
@@ -236,8 +236,9 @@ export class ShowAccountComponent {
     };
   }
   openDialog(): void {
-    this.matDialog.open(PasswordRecoveryComponent, {
-      height:'70%',
+    this.matDialog.open(ChangePasswordComponent, {
+      width: '30%',
+      height: 'auto',
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',
