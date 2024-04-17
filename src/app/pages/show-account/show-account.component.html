@@ -1,8 +1,8 @@
 <div class="w-full p-6 mx-auto">
   <div class="flex flex-wrap -mx-3">
     <form
-      (submit)="updateProfile()"
-      [formGroup]="profileForm"
+      (submit)="updateAccount()"
+      [formGroup]="updateForm"
       class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
     >
       <mat-card>
@@ -134,10 +134,7 @@
             mat-raised-button
             type="submit"
             [disabled]="
-              !(
-                somethingChanged &&
-                (!profileForm.invalid || profileForm.pristine)
-              )
+              updateForm.invalid
             "
           >
             <mat-icon>update</mat-icon>
@@ -148,8 +145,7 @@
     </form>
 
     <form
-      (submit)="startLoaddingPhoto()"
-      [formGroup]="photoForm"
+      [formGroup]="updatePhoto"
       class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0"
     >
       <mat-card>
@@ -176,7 +172,7 @@
                   mat-raised-button
                   type="button"
                   [disabled]="!currectPhoto"
-                  (click)="deletePhoto(profileSelected.id)"
+                  (click)="deletePhoto()"
                   color="warn"
                 >
                   <mat-icon>delete</mat-icon>
@@ -185,8 +181,8 @@
               </div>
               <div
                 *ngIf="
-                  !this.photoForm.get('photoSrc')?.touched &&
-                  this.photoForm.get('photoSrc')?.value
+                  !this.updateForm.get('photoSrc')?.touched &&
+                  this.updateForm.get('photoSrc')?.value
                 "
                 class="flex w-fit"
               >
@@ -213,7 +209,6 @@
                   accept="image/png, image/jpeg, image/jpg"
                   formControlName="photo"
                   type="file"
-                  (change)="preparePhoto($event.target)"
                   style="display: none"
                 />
               </button>

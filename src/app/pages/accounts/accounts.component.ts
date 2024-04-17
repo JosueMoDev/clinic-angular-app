@@ -24,11 +24,9 @@ import { Account } from 'src/app/models/account.model';
 export class AccountsComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly accountService = inject(AccountsService);
-  private readonly updateProfileService = inject(UpdateProfileService);
   private readonly store = inject(Store<AppState>)
 
   public currentUserLogged: Account = this.authenticationService.currentUserLogged() as Account;
-  // TODO: cambiar rxjs por
   public uiSubscription!: Subscription;
   public dataTemp: Account[] = [];
   public accountList: Account[] = [];
@@ -97,22 +95,8 @@ export class AccountsComponent {
     this.allAccounts();
   }
  
-
-  // changeUserState(user_to_change: string, user_logged: string) {
-  //   this.userService.changeUserStatus(user_to_change, user_logged).subscribe(
-  //     (resp: any) => {
-  //       if (resp.ok) {
-  //         success(resp.message);
-  //         this.allUsers();
-  //       }
-  //     },
-  //     (err) => {
-  //       error(err.error.message);
-  //     }
-  //   );
-  // }
   changeAccountStatus() { }
   showAccount(account: Account) {
-    this.updateProfileService.userToUpdate(account);
+    this.accountService.showAccount(account);
   }
 }
