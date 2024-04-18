@@ -64,7 +64,6 @@ export class AccountsService {
   }
   
   updateAccount(account: Account) {
-    console.log(account)
      return this.http.patch(
        `${environment.THECLINIC_API_URL}/account/update`,
        account,

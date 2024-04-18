@@ -18,7 +18,7 @@ import { AccountsService } from '../accounts/services/accounts.service';
 @Component({
   selector: 'app-show-account',
   templateUrl: './show-account.component.html',
-  styles: [],
+  styleUrl: './show-account.component.css',
 })
 export class ShowAccountComponent {
   private readonly authenticationService = inject(AuthenticationService);
@@ -102,7 +102,6 @@ export class ShowAccountComponent {
   }
 
   updateAccount() {
-    console.log(this.updateForm.valid)
     if (this.updateForm.valid) {
       const {gender, ...rest} = this.updateForm.value
       this.accountService.updateAccount({ gender: gender.toLowerCase(), ...rest, id: this.profileSelected.id })

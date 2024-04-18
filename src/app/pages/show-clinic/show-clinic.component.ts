@@ -8,15 +8,12 @@ import {
   FormGroup,
 } from '@angular/forms';
 
-import Swal from 'sweetalert2';
-
 import { Clinic } from 'src/app/models/clinic.model';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
 import { ClinicService } from '../clinics/services/clinic.service';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { Account } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-show-clinic',
