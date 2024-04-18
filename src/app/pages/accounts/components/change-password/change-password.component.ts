@@ -13,7 +13,6 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { AccountsService } from '../../services/accounts.service';
 import { Account } from 'src/app/models/account.model';
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 @Component({
   selector: 'app-change-password',
@@ -23,7 +22,6 @@ import { UpdateProfileService } from 'src/app/services/update-profile.service';
   styleUrl: './change-password.component.css',
 })
 export class ChangePasswordComponent {
-  private readonly profileSelectedService = inject(UpdateProfileService)
   private authenticationService = inject(AuthenticationService);
   private accountService = inject(AccountsService);
   private formbuilder = inject(FormBuilder);
@@ -36,7 +34,7 @@ export class ChangePasswordComponent {
     ],
   });
   public hide = true;
-  public account: string = this.profileSelectedService.userProfile.id;
+  public account: string = this.accountService.selectedAccount()!.id;
   public currentUserLogged: Account =
     this.authenticationService.currentUserLogged() as Account;
 

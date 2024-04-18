@@ -4,6 +4,7 @@ import { AssigmentDialogComponent } from './components/assigment-dialog/assigmen
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicAssigmentService } from './services/clinic-assigment.service';
+import { ClinicService } from '../clinics/services/clinic.service';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -12,7 +13,6 @@ import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 @Component({
@@ -24,7 +24,7 @@ export class ClinicAssignmentComponent {
   private readonly clinicAssignment = inject(ClinicAssigmentService);
   private store = inject(Store<AppState>);
   private authService = inject(AuthenticationService);
-  private updateProfileService = inject(UpdateProfileService);
+  private clinicService = inject(ClinicService);
 
   public uiSubscription!: Subscription;
 
@@ -53,7 +53,7 @@ export class ClinicAssignmentComponent {
   constructor(public matDialog: MatDialog, public mat: MatPaginatorIntl) {}
 
   ngOnInit(): void {
-    this.clinic_id = this.updateProfileService.clinicProfile.id;
+    this.clinic_id = this.clinicService.selectedClinic()!.id;
     this.mat.itemsPerPageLabel = 'Doctors assigned per page';
     this.allDoctorsAvaibleToBeAssigned();
     this.allDoctorsAssignedToClinic();
@@ -61,7 +61,7 @@ export class ClinicAssignmentComponent {
       if (state.isLoading) {
         this.allDoctorsAvaibleToBeAssigned();
         this.allDoctorsAssignedToClinic();
-        this.profileSelected = this.updateProfileService.clinicProfileToUpdate;
+        this.profileSelected = this.clinicService.selectedClinic() as Clinic;
         this.store.dispatch(ui.isLoadingTable());
       }
     });

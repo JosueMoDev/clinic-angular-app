@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicService } from './services/clinic.service';
@@ -27,7 +26,6 @@ export class ClinicsComponent {
   private readonly clinicService = inject(ClinicService);
   private readonly authenticationService = inject(AuthenticationService);
   private readonly store = inject(Store<AppState>);
-  public updateProfileService = inject(UpdateProfileService);
 
   public currentUserLogged: Account =
     this.authenticationService.currentUserLogged() as Account;
@@ -117,5 +115,9 @@ export class ClinicsComponent {
           error(err.error.message);
         }
       );
+  }
+
+  showClinic(clinic: Clinic) {
+    this.clinicService.showClinic(clinic);
   }
 }

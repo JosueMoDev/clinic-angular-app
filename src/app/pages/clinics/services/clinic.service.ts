@@ -1,14 +1,14 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { delay, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Clinic as ClinicModel } from 'src/app/models/clinic.model';
+import { Clinic, Clinic as ClinicModel } from 'src/app/models/clinic.model';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import {
-  Clinic,
   ClinicResponse,
 } from '../../../interfaces/clinic-response.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,13 @@ import {
 export class ClinicService {
   private readonly http = inject(HttpClient);
   private readonly authenticationService = inject(AuthenticationService);
+  private readonly router = inject(Router);
+
   public headers: {} = this.authenticationService.headers;
 
+  private _selectedClinic = signal<Clinic | null>(null);
+  public selectedClinic = computed(() => this._selectedClinic());
+  
   constructor() {}
 
   allClinics(page: number, pageSize: number) {
@@ -76,9 +81,9 @@ export class ClinicService {
     );
   }
 
-  updateClinic(clinic: any, clinic_id: string) {
-    return this.http.put(
-      `${environment.THECLINIC_API_URL}/clinics/${clinic_id}`,
+  updateClinic(clinic: Clinic) {
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/clinic/update`,
       clinic,
       this.headers
     );
@@ -90,5 +95,13 @@ export class ClinicService {
       { user_logged },
       this.headers
     );
+  }
+
+  showClinic(clinic: Clinic) {
+    this._selectedClinic.set(clinic);
+    sessionStorage.setItem('clinic-selected', JSON.stringify(clinic));
+    if (sessionStorage.getItem('clinic-selected'))
+      this.router.navigateByUrl('/dashboard/show-clinic');
+    else this.router.navigateByUrl('/dashboard/clinics');
   }
 }

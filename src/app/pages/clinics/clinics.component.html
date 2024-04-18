@@ -43,7 +43,7 @@
             </div>
           </td>
         </ng-container>
-        <tr mat-row (click)="updateProfileService.clinicToUpdate(clinic)" [class.row-link-disabled]="clinic.isValidated" *matRowDef="let clinic; columns: displayedColumns;"></tr>
+        <tr mat-row (click)="showClinic(clinic)" [class.row-link-disabled]="clinic.isValidated" *matRowDef="let clinic; columns: displayedColumns;"></tr>
       </table>
     </div>
    <div *ngIf="length === 0" class="loading">

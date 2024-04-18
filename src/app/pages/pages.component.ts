@@ -1,7 +1,7 @@
 import { Component, inject, Signal, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { UiService } from '../services/ui.service';
-import { UpdateProfileService } from '../services/update-profile.service';
+// import { UpdateProfileService } from '../services/update-profile.service';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { Account } from '../models/account.model';
 
@@ -18,7 +18,7 @@ export class PagesComponent {
 
   constructor(
     private authService: AuthenticationService,
-    public updateProfileService: UpdateProfileService,
+    // public updateProfileService: UpdateProfileService,
     public ui: UiService
   ) {}
   ngOnInit(): void {
@@ -27,6 +27,10 @@ export class PagesComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  updateAccount(account: Account) {
+    
   }
 
   toggleSideNave() {
