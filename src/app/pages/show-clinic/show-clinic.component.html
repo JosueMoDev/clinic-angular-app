@@ -1,99 +1,169 @@
-<div  class="container px-6 py-6 mx-auto">
+<div class="container px-6 py-6 mx-auto">
   <div class="flex flex-wrap -mx-3">
-    <form (submit)="updateCLinic()" [formGroup]="updateForm" class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0">
+    <form
+      (submit)="updateCLinic()"
+      [formGroup]="updateForm"
+      class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
+    >
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Edit Information for Clinic</mat-card-title>
+          <mat-card-title><p class="py-5 text-2xl">Edit Information for Clinic</p></mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
               <mat-form-field>
                 <mat-label>Register Number</mat-label>
-                <input matInput placeholder="Register Number" formControlName="registerNumber" mask="0000-0000-000-0">
-                <mat-icon matSuffix *ngIf="!updateForm.get('information.registerNumber')?.invalid && updateForm.get('information.registerNumber')?.touched" color="accent">done</mat-icon>
+                <input
+                  matInput
+                  placeholder="Register Number"
+                  formControlName="registerNumber"
+                  mask="0000-0000-000-0"
+                />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('information.registerNumber')?.invalid &&
+                    updateForm.get('information.registerNumber')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Phone</mat-label>
-                <input matInput placeholder="Phone" formControlName="phone" prefix="(+503) " mask="0000-0000">
-                <mat-icon matSuffix *ngIf="!updateForm.get('information.phone')?.invalid && updateForm.get('information.phone')?.touched" color="accent">done</mat-icon>
+                <input
+                  matInput
+                  placeholder="Phone"
+                  formControlName="phone"
+                  prefix="(+503) "
+                  mask="0000-0000"
+                />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('information.phone')?.invalid &&
+                    updateForm.get('information.phone')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input matInput placeholder="Name" formControlName="name">
-                <mat-icon matSuffix *ngIf="!updateForm.get('information.name')?.invalid && updateForm.get('information.name')?.touched" color="accent">done</mat-icon>
-                <mat-error *ngIf="updateForm.get('information.name')?.errors?.['required']">Name is required.</mat-error>
-                <mat-error *ngIf="updateForm.get('information.name')?.errors?.['minlength']">Name must be at least 3 characters long.</mat-error>
-                <mat-error *ngIf="updateForm.get('information.name')?.errors?.['maxlength']">Name must be longer than 25 characters.</mat-error>
-                <mat-error *ngIf="updateForm.get('information.name')?.errors?.['forbiddenName']">
+                <input matInput placeholder="Name" formControlName="name" />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('information.name')?.invalid &&
+                    updateForm.get('information.name')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
+                <mat-error
+                  *ngIf="updateForm.get('information.name')?.errors?.['required']"
+                  >Name is required.</mat-error
+                >
+                <mat-error
+                  *ngIf="updateForm.get('information.name')?.errors?.['minlength']"
+                  >Name must be at least 3 characters long.</mat-error
+                >
+                <mat-error
+                  *ngIf="updateForm.get('information.name')?.errors?.['maxlength']"
+                  >Name must be longer than 25 characters.</mat-error
+                >
+                <mat-error
+                  *ngIf="updateForm.get('information.name')?.errors?.['forbiddenName']"
+                >
                   <span>Name only could have letters a-z.</span>
                   <span>Only two names are allowed.</span>
                 </mat-error>
               </mat-form-field>
             </div>
-            <div formGroupName="address" class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div
+              formGroupName="address"
+              class="grid grid-cols-1 gap-4 md:grid-cols-3"
+            >
               <mat-form-field>
                 <mat-label>State</mat-label>
-                <input matInput placeholder="State" formControlName="state">
-                <mat-icon matSuffix *ngIf="!updateForm.get('address.state')?.invalid && updateForm.get('address.state')?.touched" color="accent">done</mat-icon>
+                <input matInput placeholder="State" formControlName="state" />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('address.state')?.invalid &&
+                    updateForm.get('address.state')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
               </mat-form-field>
               <mat-form-field>
                 <mat-label>City</mat-label>
-                <input matInput placeholder="City" formControlName="city">
-                <mat-icon matSuffix *ngIf="!updateForm.get('address.city')?.invalid && updateForm.get('address.city')?.touched" color="accent">done</mat-icon>
+                <input matInput placeholder="City" formControlName="city" />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('address.city')?.invalid &&
+                    updateForm.get('address.city')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Street</mat-label>
-                <input matInput placeholder="Street" formControlName="street">
-                <mat-icon matSuffix *ngIf="!updateForm.get('address.street')?.invalid && updateForm.get('address.street')?.touched" color="accent">done</mat-icon>
+                <input matInput placeholder="Street" formControlName="street" />
+                <mat-icon
+                  matSuffix
+                  *ngIf="
+                    !updateForm.get('address.street')?.invalid &&
+                    updateForm.get('address.street')?.touched
+                  "
+                  color="accent"
+                  >done</mat-icon
+                >
               </mat-form-field>
             </div>
           </div>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button type="submit" [disabled]="updateForm.invalid || updateForm.pristine" color="accent">
+        <mat-card-actions class="flex justify-center w-full">
+          <button
+            mat-raised-button
+            type="submit"
+            [disabled]="updateForm.invalid || updateForm.pristine"
+            color="accent"
+          >
             <mat-icon>update</mat-icon>Update
           </button>
         </mat-card-actions>
       </mat-card>
     </form>
-    <form [formGroup]="uploadPhotoForm" 
+    <form
+      [formGroup]="uploadPhotoForm"
       class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0"
-    
     >
       <mat-card>
-        <div >
-          <img  [src]="'assets/img/no-photo-clinic.jpg'" alt="profile cover image">
+        <div>
+          <img
+            [src]="'assets/img/no-photo-clinic.jpg'"
+            alt="profile cover image"
+          />
         </div>
         <mat-card-content>
-           <div class="flex justify-center py-3 space-x-3">
-              <div class="flex w-fit">
-                <button
-                  mat-raised-button
-                  type="button"
-                  (click)="deletePhoto()"
-                  color="warn"
-                >
-                  <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
-                </button>
-              </div>
-              <div           
-                class="flex w-fit"
+          <div class="flex justify-center w-full py-3 space-x-3">
+              <button
+                mat-raised-button
+                type="button"
+                (click)="deletePhoto()"
+                color="warn"
               >
-                <button
-                  mat-raised-button
-                  type="submit"
-                  color="accent"
-                >
-                  <span>Upload</span>
-                </button>
-              </div>
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
               <button mat-raised-button type="button" color="primary">
-                <label for="photo">
-                  <mat-icon>camera</mat-icon>
-                  <span>New</span>
-                </label>
+                <mat-icon>camera</mat-icon>
+                <span>New</span>
                 <input
                   id="photo"
                   accept="image/png, image/jpeg, image/jpg"
@@ -102,7 +172,10 @@
                   style="display: none"
                 />
               </button>
-            </div>
+              <button mat-raised-button type="submit" color="accent">
+                <span>Upload</span>
+              </button>
+          </div>
         </mat-card-content>
       </mat-card>
     </form>
