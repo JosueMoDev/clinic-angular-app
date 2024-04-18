@@ -85,5 +85,11 @@ export class AccountsService {
     if (sessionStorage.getItem('account-selected')) this.router.navigateByUrl('/dashboard/show-account');
   }
 
-  changeAccountStatus() {}
+  changeAccountStatus(id: string) {
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/account/change-status`,
+      {id: id},
+      this.headers
+    );
+  }
 }

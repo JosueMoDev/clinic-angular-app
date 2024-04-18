@@ -89,10 +89,10 @@ export class ClinicService {
     );
   }
 
-  changeClinicStatus(clinic_to_change: string, user_logged: string) {
-    return this.http.put(
-      `${environment.THECLINIC_API_URL}/clinics/delete/${clinic_to_change}`,
-      { user_logged },
+  changeClinicStatus(id: string, account: string) {
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/clinic/change-status`,
+      { id: id, lastUpdate:{ account: account } },
       this.headers
     );
   }

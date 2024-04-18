@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicService } from './services/clinic.service';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
@@ -101,20 +100,17 @@ export class ClinicsComponent {
     this.allClinics();
   }
 
-  changeClinicState(clinic_to_change: string, user_logged: string) {
-    this.clinicService
-      .changeClinicStatus(clinic_to_change, user_logged)
-      .subscribe(
-        (resp: any) => {
-          if (resp.ok) {
-            success(resp.message);
-            this.allClinics();
-          }
-        },
-        (err) => {
-          error(err.error.message);
-        }
-      );
+  changeClinicState(clinic: string, account: string) {
+    this.clinicService.changeClinicStatus(clinic, account).subscribe({
+      next: () => {
+        success('Se cambio el estado exitosamente');
+        this.allClinics();
+      },
+      error: (err) => {
+        error('Error cambiando status');
+        console.log(err);
+      },
+    });
   }
 
   showClinic(clinic: Clinic) {
