@@ -4,8 +4,6 @@ import { MatDialog} from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
 
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
-import { CloudinaryService } from 'src/app/services/cloudinary.service';
 
 import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
@@ -99,8 +97,7 @@ export class ShowAccountComponent {
   }
 
   ngOnDestroy(): void {
-    sessionStorage.removeItem('profile-to-show');
-    sessionStorage.removeItem('current-photo-profile');
+    sessionStorage.removeItem('account-selected');
     this.formSub$.unsubscribe;
   }
 

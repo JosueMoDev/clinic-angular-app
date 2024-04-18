@@ -3,7 +3,6 @@ import { debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchingService } from 'src/app/services/searching.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
 import { Appointment } from 'src/app/models/appointment.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ActionsAppointmentDialogComponent } from '../actions-appointment-selected/actions-appointment-dialog.component';
@@ -25,7 +24,6 @@ export class SearchingComponent {
   constructor(
     private searchingService: SearchingService,
     private formBuilder: FormBuilder,
-    public updateProfileService: UpdateProfileService,
     public matdialig: MatDialog,
   ) { }
 
@@ -58,12 +56,12 @@ export class SearchingComponent {
   setProfileUser(profile: any) {
     this.searchForm.patchValue({ searchInput : null })
     this.toggleOpenBar;
-    this.updateProfileService.userToUpdate(profile)
+    // this.updateProfileService.userToUpdate(profile)
   }
   setProfileClinic(profile: any) {
     this.searchForm.patchValue({ searchInput : null })
     this.toggleOpenBar;
-    this.updateProfileService.clinicToUpdate(profile)
+    // this.updateProfileService.clinicToUpdate(profile)
   }
   editEvent(appointment: Appointment): void {
     this.searchForm.patchValue({ searchInput : null })

@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { UpdateProfileService } from 'src/app/services/update-profile.service';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { AccountsService } from '../accounts/services/accounts.service';

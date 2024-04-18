@@ -30,7 +30,7 @@
               <button [matMenuTriggerFor]="menu" class="text-white"><mat-icon>more_vert</mat-icon></button>
               <mat-menu #menu="matMenu" class="space-y-3 bg-slate-850/100">
                 <div class="text-white" >
-                  <a  routerLink="/dashboard/show-user" (click)="this.updateProfileService.userToUpdate(loggedUser)" class="flex flex-col w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
+                  <a  routerLink="/dashboard/show-user" (click)="updateAccount(loggedUser)" class="flex flex-col w-full px-2 py-2 bg-transparent rounded-lg cursor-pointer xl:py-6 justify-self-center dark:hover:bg-blue-500/13 whitespace-nowrap hover:bg-blue-500/13 hover:text-slate-700">
                     <div class="flex">
                       <div class="my-auto">
                         <img [src]="loggedUser.photoUrl" class="inline-flex items-center justify-center object-cover object-top w-20 h-20 mr-4 overflow-hidden text-sm text-white bg-orange-300 max-w-none rounded-xl" />
