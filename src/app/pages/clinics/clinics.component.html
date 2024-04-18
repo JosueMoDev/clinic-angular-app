@@ -10,40 +10,45 @@
     <div>
       <table mat-table  [dataSource]="clinicList">
         <ng-container matColumnDef="avatar">
-          <td mat-cell  *matCellDef="let clinic">
+          <td mat-cell  *matCellDef="let clinic" [class.row-link-disabled]="!clinic.status">
             <img [src]="clinic.photoUrl || 'assets/img/no-photo-clinic.jpg'" class="avatar-image">
           </td>
         </ng-container>
-          <ng-container matColumnDef="name">
-          <td mat-cell  *matCellDef="let clinic">
-            <p>{{ clinic.name }} </p>
+          <ng-container matColumnDef="name" >
+          <td mat-cell  *matCellDef="let clinic" [class.row-link-disabled]="!clinic.status" >
+            <p>{{ clinic.status }} </p>
           </td>
         </ng-container>
         <ng-container matColumnDef="registerNumber">
-          <td mat-cell *matCellDef="let clinic">
+          <td mat-cell *matCellDef="let clinic" [class.row-link-disabled]="!clinic.status">
             <p>{{ clinic.registerNumber | mask: '0000-0000-000-0' }}</p>
           </td>
         </ng-container>
         <ng-container matColumnDef="address">
-          <td mat-cell *matCellDef="let clinic">
+          <td mat-cell *matCellDef="let clinic" [class.row-link-disabled]="!clinic.status">
             <p class="clinic-address">{{ clinic.address.state }}/{{ clinic.address.city }}</p>
           </td>
         </ng-container>
         <ng-container matColumnDef="action" *ngIf="currentUserLogged?.role==='ADMIN'">
           <td mat-cell *matCellDef="let clinic">
-            <div>
+            <div class="flex space-x-3">
               <button mat-raised-button color="accent" *ngIf="!clinic.status" (click)="changeClinicState(clinic.id, currentUserLogged.id)">
                 <mat-icon fontIcon="domain"></mat-icon> 
                 Enable
               </button>
               <button mat-raised-button color="warn" *ngIf="clinic.status" (click)="changeClinicState(clinic.id, currentUserLogged.id)">
-                <mat-icon fontIcon="domain_disabled"></mat-icon> Disable
+                <mat-icon fontIcon="domain_disabled"></mat-icon>
                 Disable
+              </button>
+
+               <button mat-button color="primary" (click)="showClinic(clinic)">
+                <mat-icon>visibility</mat-icon> 
+                show
               </button>
             </div>
           </td>
         </ng-container>
-        <tr mat-row (click)="showClinic(clinic)" [class.row-link-disabled]="clinic.isValidated" *matRowDef="let clinic; columns: displayedColumns;"></tr>
+        <tr mat-row   *matRowDef="let clinic; columns: displayedColumns;"></tr>
       </table>
     </div>
    <div *ngIf="length === 0" class="loading">

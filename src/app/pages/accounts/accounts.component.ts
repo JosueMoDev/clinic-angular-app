@@ -81,7 +81,7 @@ export class AccountsComponent {
       });
   }
 
-  handlePageEvent(e: PageEvent) {
+  matPaginatorHandler(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
     this.pageIndex = e.pageIndex;
@@ -94,7 +94,16 @@ export class AccountsComponent {
     this.allAccounts();
   }
  
-  changeAccountStatus() { }
+  changeAccountStatus(id: string) {
+    this.accountService.changeAccountStatus(id).subscribe({
+      next:() => {
+      this.allAccounts();
+    },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+  }
   showAccount(account: Account) {
     this.accountService.showAccount(account);
   }
