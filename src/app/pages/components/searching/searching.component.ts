@@ -72,12 +72,12 @@ export class SearchingComponent {
       role: 'dialog',
       data: {
         // clinic: appointment.clinic,
-        doctor: appointment.doctorId,
-        start: appointment.startDate,
-        doctor_info: appointment.doctorId,
+        doctor: appointment.doctor,
+        start: appointment.start,
+        doctor_info: appointment.doctor,
         // clinic_info: appointment.clinic_info,
         appointment_id: appointment.id,
-        patient: appointment.patientId,
+        patient: appointment.patient,
         // title: appointment.title
       }
     });

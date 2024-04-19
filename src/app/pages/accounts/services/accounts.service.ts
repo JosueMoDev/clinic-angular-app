@@ -71,6 +71,13 @@ export class AccountsService {
      );
   }
 
+  confirmDocumentNumber(document: string) {
+    return this.http.get<Account>(
+      `${environment.THECLINIC_API_URL}/account/find-by-document/${document}`,
+      this.headers
+    );
+  }
+
   changePassword(chagePassword: ChangePassword) {
     return this.http.patch(
       `${environment.THECLINIC_API_URL}/account/change-password`,

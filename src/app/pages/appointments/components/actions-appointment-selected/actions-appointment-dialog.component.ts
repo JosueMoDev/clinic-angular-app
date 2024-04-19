@@ -95,7 +95,11 @@ export class ActionsAppointmentDialogComponent {
   }
 
   allClinicsAvailableToMakeAnAppointment() {
-  
+    this.clinicService.allClinicsAvailableToMakeAnAppointment()
+      .subscribe(({ clinics }) => {
+          this.clinicList = clinics
+        }
+      )
   }
 
   get doctor() {

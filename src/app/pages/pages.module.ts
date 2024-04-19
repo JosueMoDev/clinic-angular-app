@@ -10,7 +10,6 @@ import { SharedModule } from '../shared/shared.module';
 
 //* Components
 import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
-import { AppointmentDialogComponent } from './components/appointment-dialog/appointment-dialog.component';
 import { ClinicsComponent } from './clinics/clinics.component';
 import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
@@ -29,7 +28,6 @@ import { ClinicAssignmentComponent } from './clinic-assignment/clinic-assignment
   declarations: [
     AccountsComponent,
     ActionsAppointmentDialogComponent,
-    AppointmentDialogComponent,
     ClinicAssignmentComponent,
     ClinicsComponent,
     AppointmentComponent,

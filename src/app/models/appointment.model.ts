@@ -1,13 +1,21 @@
 import { LastUpdate } from '../pages/appointments/interfaces/appointment-response.interface';
 export class Appointment {
-  constructor(
-    public id: string,
-    public startDate: Date,
-    public endDate: Date,
-    public doctorId: string,
-    public patientId: string,
-    public createdAt: Date,
-    public createdBy: string,
-    public lastUpdate: LastUpdate[]
-  ) {}
+  public id: string;
+  public start: Date;
+  public end: Date;
+  public doctor: string;
+  public patient: string;
+  public createdAt: Date;
+  public createdBy: string;
+  public lastUpdate: LastUpdate[];
+  constructor(options: any) {
+    this.id = options.id;
+    this.start = new Date(options.startDate);
+    this.end = new Date(options.endDate);
+    this.doctor = options.doctor;
+    this.patient = options.patient;
+    this.createdAt = options.createdAt;
+    this.createdBy = options.createdBy;
+    this.lastUpdate = options.lastUpdate;
+  }
 }

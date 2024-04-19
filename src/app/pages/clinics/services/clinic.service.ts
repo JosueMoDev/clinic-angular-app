@@ -42,35 +42,22 @@ export class ClinicService {
         })
       );
   }
-  allClinicsAvailableToMakeAnAppointment() {
-    return this.http
-      .get(
-        `${environment.THECLINIC_API_URL}/appointments/clinic-available`,
-        this.headers
-      )
-      .pipe(
-        delay(200),
-        map((resp: any) => {
-          const clinics = resp.clinics.map(
-            ({
-              clinic_id,
-              register_number,
-              name,
-              province,
-              city,
-            }: ClinicAvailableToMakeAnAppointment) => ({
-              clinic_id,
-              register_number,
-              name,
-              province,
-              city,
-            })
-          );
-          return {
-            clinics,
-          };
-        })
-      );
+  allClinicsAvailable() {
+  return this.http
+    .get<ClinicResponse>(
+      `${environment.THECLINIC_API_URL}/clinic/find-many?sort=true`,
+      this.headers
+    )
+    .pipe(
+      delay(200),
+      map(({ clinics, pagination }) => {
+        const clinicsList = clinics.map((clinic) => new ClinicModel(clinic));
+        return {
+          pagination,
+          clinics: clinicsList,
+        };
+      })
+    );
   }
 
   createClinic(clinic: Clinic) {

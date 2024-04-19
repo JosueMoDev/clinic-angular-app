@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AppointmentService } from 'src/app/services/appointment.service';
 
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
@@ -17,6 +16,7 @@ import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface'
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { ClinicService } from '../../clinics/services/clinic.service';
 import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
+import { AppointmentService } from '../../appointments/services/appoinment.service';
 
 
 @Component({
