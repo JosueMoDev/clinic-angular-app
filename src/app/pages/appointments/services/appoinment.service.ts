@@ -16,8 +16,9 @@ import { AuthenticationService } from 'src/app/authentication/services/authentic
 })
 export class AppointmentService {
   private readonly authenticationService = inject(AuthenticationService);
+  private readonly http = inject(HttpClient);
   public headers: {} = this.authenticationService.headers;
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   getAllAppointments() {
     return this.http
@@ -29,8 +30,7 @@ export class AppointmentService {
         delay(200),
         map((resp) => {
           const appointments = resp.appointments.map(
-            (appointment) =>
-              new Appointment(appointment)
+            (appointment) => new Appointment(appointment)
           );
           return {
             total: resp.pagination.total,

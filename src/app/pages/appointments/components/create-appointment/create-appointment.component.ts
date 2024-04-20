@@ -6,25 +6,21 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
-import { addHours } from 'date-fns';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import * as ui from 'src/app/store/actions/ui.actions';
-
-import { error, success } from 'src/app/helpers/sweetAlert.helper';
-import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
-import { AppointmentService } from '../../services/appoinment.service';
-import { CommonModule } from '@angular/common';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { AngularMaterialModule } from 'src/app/angular-material.module';
-import { AccountsService } from 'src/app/pages/accounts/services/accounts.service';
 import { Account } from 'src/app/models/account.model';
-import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
+import { AccountsService } from 'src/app/pages/accounts/services/accounts.service';
+import { addHours } from 'date-fns';
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { AppointmentService } from '../../services/appoinment.service';
+import { AppState } from 'src/app/app.reducer';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
+import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
+import { CommonModule } from '@angular/common';
+import { error, success } from 'src/app/helpers/sweetAlert.helper';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { Store } from '@ngrx/store';
+import * as ui from 'src/app/store/actions/ui.actions';
 
 @Component({
   selector: 'app-create-appointment',
@@ -45,6 +41,8 @@ export class CreateAppointmentComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly clinicService = inject(ClinicService);
   private readonly clinicAssignment = inject(ClinicAssigmentService);
+  private formBuilder = inject(FormBuilder);
+  private store = inject(Store<AppState>);
   public confirmDocumentForm!: FormGroup;
   public createAppointmentForm!: FormGroup;
   public patient!: Account;
@@ -58,8 +56,7 @@ export class CreateAppointmentComponent {
   public doctorList: Account[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
-    private store: Store<AppState>,
+   
     public dialogRef: MatDialogRef<CreateAppointmentComponent>
   ) {
     const today = new Date();
