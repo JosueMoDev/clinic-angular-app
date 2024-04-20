@@ -5,7 +5,7 @@ import { SearchingService } from 'src/app/services/searching.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Appointment } from 'src/app/models/appointment.model';
 import { MatDialog } from '@angular/material/dialog';
-import { ActionsAppointmentDialogComponent } from '../actions-appointment-selected/actions-appointment-dialog.component';
+import { EditAppointmentComponent } from '../../appointments/components';
 
 
 @Component({
@@ -66,7 +66,7 @@ export class SearchingComponent {
   editEvent(appointment: Appointment): void {
     this.searchForm.patchValue({ searchInput : null })
     this.toggleOpenBar;
-    this.matdialig.open(ActionsAppointmentDialogComponent, {
+    this.matdialig.open(EditAppointmentComponent, {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

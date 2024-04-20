@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 //* Components
-import { ActionsAppointmentDialogComponent } from './components/actions-appointment-selected/actions-appointment-dialog.component';
 import { ClinicsComponent } from './clinics/clinics.component';
 import { AppointmentComponent } from './appointments/appointments.component';
 import { Error404Component } from './error404/error404.component';
@@ -27,7 +26,6 @@ import { ClinicAssignmentComponent } from './clinic-assignment/clinic-assignment
 @NgModule({
   declarations: [
     AccountsComponent,
-    ActionsAppointmentDialogComponent,
     ClinicAssignmentComponent,
     ClinicsComponent,
     AppointmentComponent,
