@@ -1,6 +1,6 @@
 import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { addHours, setHours } from 'date-fns';
 
@@ -15,17 +15,35 @@ import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services
 import { ClinicAvailableToMakeAnAppointment } from 'src/app/interfaces/clinic-available.interface';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { ClinicService } from '../../clinics/services/clinic.service';
-import { AppointmentService } from '../../appointments/services/appoinment.service';
+import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
+import { AppointmentService } from '../../services/appoinment.service';
 
 @Component({
-  selector: 'app-actions-appointment-selected',
-  templateUrl: './actions-appointment-dialog.component.html',
+  selector: 'app-edit-appointment',
+  templateUrl: './edit-appointment.component.html',
+  standalone: true,
+  imports: [
+     AngularMaterialModule,
+    CommonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
+  ],
   styles: [
   ]
 })
-export class ActionsAppointmentDialogComponent {
+export class EditAppointmentComponent {
+  private readonly appointmentService = inject(AppointmentService);
+  private readonly clinicService = inject(ClinicService);
+  private readonly clinicAssignment = inject(ClinicAssigmentService);
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly store = inject(Store<AppState>);
+
   public formSub$!: Subscription;
   public editAppointmentForm!: FormGroup;
   public userLogged!: string;
@@ -40,15 +58,9 @@ export class ActionsAppointmentDialogComponent {
 
   public doctorSelected!: string | null;
   public doctorSelectedName!: string;
-  private readonly authenticationService = inject(AuthenticationService);
 
   constructor(
-    private appointmentService: AppointmentService,
-    private clinicService: ClinicService,
-    private clinicAssignment: ClinicAssigmentService,
-    private formBuilder: FormBuilder,
-    private store: Store<AppState>,
-    public dialogRef: MatDialogRef<ActionsAppointmentDialogComponent>,
+    public dialogRef: MatDialogRef<EditAppointmentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Appointment,
   ) { 
     const today = new Date();
@@ -64,13 +76,13 @@ export class ActionsAppointmentDialogComponent {
     this.dataAppointment = { ...this.data };
     const today = new Date(this.dataAppointment.start);
     const appointmentTime = today.getHours() + ':' + today.getMinutes();
-    this.userLogged = this.authenticationService.currentUserLogged()?.id as any;
+    this.userLogged = this.authenticationService.currentUserLogged()!.id;
     
     this.doctorSelected = this.dataAppointment.doctor
     this.doctorSelectedName = this.dataAppointment.doctor;
 
     this.editAppointmentForm = this.formBuilder.group({
-      // clinic: [this.dataAppointment.clinic, [Validators.required]],
+      clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.doctorSelected, [Validators.required]],
       start: [this.dataAppointment.start, [Validators.required]],
       time:[ appointmentTime ,[Validators.required]]
@@ -95,7 +107,11 @@ export class ActionsAppointmentDialogComponent {
   }
 
   allClinicsAvailableToMakeAnAppointment() {
-  
+    // this.clinicService.allClinicsAvailableToMakeAnAppointment()
+    //   .subscribe(({ clinics }) => {
+    //       this.clinicList = clinics
+    //     }
+    //   )
   }
 
   get doctor() {
