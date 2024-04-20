@@ -6,30 +6,26 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
-import { addHours } from 'date-fns';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
-import * as ui from 'src/app/store/actions/ui.actions';
-
-import { error, success } from 'src/app/helpers/sweetAlert.helper';
-import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
-import { AppointmentService } from '../../services/appoinment.service';
-import { CommonModule } from '@angular/common';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { AngularMaterialModule } from 'src/app/angular-material.module';
-import { AccountsService } from 'src/app/pages/accounts/services/accounts.service';
 import { Account } from 'src/app/models/account.model';
-import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
+import { AccountsService } from 'src/app/pages/accounts/services/accounts.service';
+import { addHours } from 'date-fns';
+import { AngularMaterialModule } from 'src/app/angular-material.module';
+import { AppointmentService } from '../../services/appoinment.service';
+import { AppState } from 'src/app/app.reducer';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
+import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
+import { CommonModule } from '@angular/common';
+import { error, success } from 'src/app/helpers/sweetAlert.helper';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { Store } from '@ngrx/store';
+import * as ui from 'src/app/store/actions/ui.actions';
 
 @Component({
   selector: 'app-create-appointment',
   templateUrl: './create-appointment.component.html',
-  styles: [],
+  styleUrl: './create-appointment.component.css',
   standalone: true,
   imports: [
     AngularMaterialModule,
@@ -45,8 +41,10 @@ export class CreateAppointmentComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly clinicService = inject(ClinicService);
   private readonly clinicAssignment = inject(ClinicAssigmentService);
+  private formBuilder = inject(FormBuilder);
+  private store = inject(Store<AppState>);
   public confirmDocumentForm!: FormGroup;
-  public newAppointmentForm!: FormGroup;
+  public createAppointmentForm!: FormGroup;
   public patient!: Account;
   public userLogged!: string;
   public minDate: Date;
@@ -55,11 +53,10 @@ export class CreateAppointmentComponent {
   public maxTime: string = '18:00';
 
   public clinicList: Clinic[] = [];
-  public doctorList!: Account[];
+  public doctorList: Account[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
-    private store: Store<AppState>,
+   
     public dialogRef: MatDialogRef<CreateAppointmentComponent>
   ) {
     const today = new Date();
@@ -76,13 +73,13 @@ export class CreateAppointmentComponent {
       document: ['', [Validators.required, Validators.minLength(9)]],
     });
 
-    this.newAppointmentForm = this.formBuilder.group({
+    this.createAppointmentForm = this.formBuilder.group({
       clinic: ['', [Validators.required]],
       doctor: ['', [Validators.required]],
       start: [null, [Validators.required]],
       time: ['', [Validators.required]],
     });
-
+    this.doctor?.disable();
     this.getAllClinicAvilable();
   }
 
@@ -93,7 +90,7 @@ export class CreateAppointmentComponent {
   }
 
   get patientByDocumentNumber() {
-    return this.newAppointmentForm.patchValue({ title: this.completename });
+    return this.createAppointmentForm.patchValue({ title: this.completename });
   }
   get document_number() {
     return this.confirmDocumentForm.get('document');
@@ -102,19 +99,28 @@ export class CreateAppointmentComponent {
     return this.patient?.name + ' ' + this.patient?.lastname;
   }
   get clinic() {
-    return this.newAppointmentForm.get('clinic');
+    return this.createAppointmentForm.get('clinic');
+  }
+
+  get date() {
+    return this.createAppointmentForm.get('date');
+  }
+
+  get time() {
+    return this.createAppointmentForm.get('time');
   }
 
   get doctor() {
-    return this.newAppointmentForm.get('doctor');
+    return this.createAppointmentForm.get('doctor');
   }
 
   getDoctorsAssigned() {
     this.clinicAssignment
-      .allDoctorsAssingedToClinic(this.newAppointmentForm.get('clinic')?.value)
+      .allDoctorsAssingedToClinic(this.createAppointmentForm.get('clinic')?.value)
       .subscribe({
         next: (doctors) => {
           this.doctorList = doctors;
+          if (doctors.length >= 1) this.doctor?.enable();
         },
         error: (err) => {
           console.log(err);
@@ -138,8 +144,8 @@ export class CreateAppointmentComponent {
   }
 
   createAppointment() {
-    if (this.newAppointmentForm.value) {
-      const { start, clinic, doctor, time } = this.newAppointmentForm.value;
+    if (this.createAppointmentForm.value) {
+      const { start, clinic, doctor, time } = this.createAppointmentForm.value;
       const appointmentForm = {
         startDate: addHours(new Date(start), parseInt(time)).toISOString(),
         endDate: addHours(new Date(start), parseInt(time) + 1).toISOString(),
@@ -150,7 +156,7 @@ export class CreateAppointmentComponent {
       };
       this.appointmentService.createNewAppointment(appointmentForm).subscribe({
         next: () => {
-          this.newAppointmentForm.reset();
+          this.createAppointmentForm.reset();
           this.confirmDocumentForm.reset();
           this.dialogRef.close();
           success('Appointment has created success');
@@ -164,7 +170,4 @@ export class CreateAppointmentComponent {
     }
   }
 
-  close(): void {
-    this.dialogRef.close();
-  }
 }
