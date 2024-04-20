@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 //! PrimeNG
 import { EditorModule } from 'primeng/editor';
 import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatCardModule,
     MatSelectModule,
+    MatToolbarModule,
     // ! PrimeNg
     EditorModule
   ]
