@@ -9,7 +9,6 @@ import * as ui from 'src/app/store/actions/ui.actions';
 import { PatientMedicalRecordService } from 'src/app/services/patient-medical-record.service';
 import { MedicalRecord } from 'src/app/models/medical_record.model';
 
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 
 @Component({
   selector: 'app-edit-medical-record',
@@ -58,7 +57,7 @@ export class EditMedicalRecordComponent {
           this.medicalRecordForm.patchValue({ 'body': resp.record.body });
         }
       },
-      (err:any)=>{error(err.error.message)}
+      (err:any)=>{console.log(err.error.message)}
     )
   }
 
@@ -76,12 +75,11 @@ export class EditMedicalRecordComponent {
           (resp: any) => {
             if (resp.ok) {
               this.medicalRecordForm.reset()
-              success(resp.message);
               this.matDialogRef.close();
               this.store.dispatch(ui.isLoadingTable());
             }
           },
-          (err:any)=>{ error(err.error.message) }
+          (err:any)=>{ console.log(err.error.message) }
       )
     }
   }

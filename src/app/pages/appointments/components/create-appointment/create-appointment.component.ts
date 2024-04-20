@@ -17,10 +17,12 @@ import { Clinic } from 'src/app/models/clinic.model';
 import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
 import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
 import { CommonModule } from '@angular/common';
-import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Store } from '@ngrx/store';
 import * as ui from 'src/app/store/actions/ui.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'console';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-create-appointment',
@@ -42,6 +44,7 @@ export class CreateAppointmentComponent {
   private readonly clinicService = inject(ClinicService);
   private readonly clinicAssignment = inject(ClinicAssigmentService);
   private formBuilder = inject(FormBuilder);
+  public snackBar = inject(MatSnackBar);
   private store = inject(Store<AppState>);
   public confirmDocumentForm!: FormGroup;
   public createAppointmentForm!: FormGroup;
@@ -55,10 +58,7 @@ export class CreateAppointmentComponent {
   public clinicList: Clinic[] = [];
   public doctorList: Account[] = [];
 
-  constructor(
-   
-    public dialogRef: MatDialogRef<CreateAppointmentComponent>
-  ) {
+  constructor(public dialogRef: MatDialogRef<CreateAppointmentComponent>) {
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth();
@@ -116,14 +116,22 @@ export class CreateAppointmentComponent {
 
   getDoctorsAssigned() {
     this.clinicAssignment
-      .allDoctorsAssingedToClinic(this.createAppointmentForm.get('clinic')?.value)
+      .allDoctorsAssingedToClinic(
+        this.createAppointmentForm.get('clinic')?.value
+      )
       .subscribe({
         next: (doctors) => {
           this.doctorList = doctors;
           if (doctors.length >= 1) this.doctor?.enable();
         },
-        error: (err) => {
-          console.log(err);
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
         },
       });
   }
@@ -159,15 +167,25 @@ export class CreateAppointmentComponent {
           this.createAppointmentForm.reset();
           this.confirmDocumentForm.reset();
           this.dialogRef.close();
-          success('Appointment has created success');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Appointment has created success',
+              isSuccess: false,
+            },
+          });
           this.store.dispatch(ui.isLoadingTable());
         },
-        error: (err) => {
-          console.log(err)
-          error('Error while creating appointment')
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
         },
       });
     }
   }
-
 }

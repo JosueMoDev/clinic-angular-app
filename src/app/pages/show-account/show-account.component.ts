@@ -5,12 +5,13 @@ import { MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Account } from 'src/app/models/account.model';
 import { ChangePasswordComponent } from '../accounts/components';
 import { AccountsService } from '../accounts/services/accounts.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
    
 
 
@@ -24,6 +25,7 @@ export class ShowAccountComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly accountService = inject(AccountsService);
   private formbuilder = inject(FormBuilder);
+  public snackBar = inject(MatSnackBar);
 
   public currentUserLogged!: Account;
   public formSub$!: Subscription;
@@ -39,9 +41,7 @@ export class ShowAccountComponent {
   public currectPhoto!: string | undefined;
   public imagenTemp!: any;
   public updatePhoto!: FormGroup;
-  constructor(
-    public matDialog: MatDialog
-  ) {}
+  constructor(public matDialog: MatDialog) {}
 
   ngOnInit() {
     this.profileSelected = this.accountService.selectedAccount() as Account;
@@ -84,16 +84,12 @@ export class ShowAccountComponent {
       photoSrc: [''],
     });
 
-    if (
-      this.profileSelected.role !== 'ADMIN') {
+    if (this.profileSelected.role !== 'ADMIN') {
       this.updateForm.disable();
     }
 
-    
-
     this.ShowPassWordButtom =
       this.currentUserLogged.id === this.profileSelected.id;
-
   }
 
   ngOnDestroy(): void {
@@ -103,28 +99,38 @@ export class ShowAccountComponent {
 
   updateAccount() {
     if (this.updateForm.valid) {
-      const {gender, ...rest} = this.updateForm.value
-      this.accountService.updateAccount({ gender: gender.toLowerCase(), ...rest, id: this.profileSelected.id })
+      const { gender, ...rest } = this.updateForm.value;
+      this.accountService
+        .updateAccount({
+          gender: gender.toLowerCase(),
+          ...rest,
+          id: this.profileSelected.id,
+        })
         .subscribe({
           next: () => {
-            success('Account updated correctly')
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: 'Account successfuly updated',
+                isSuccess: false,
+              },
+            });
           },
-          error: (err) => {
-            error('Not updated');
-            console.log(err);
-          }
-      })
+          error: ({error}) => {
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: error.error,
+                isSuccess: false,
+              },
+            });
+          },
+        });
     }
   }
 
-  
-
-  deletePhoto() {
-  
-  }
-  uploadPhoto() {
-  
-  }
+  deletePhoto() {}
+  uploadPhoto() {}
 
   get name() {
     return this.updateForm.get('name');

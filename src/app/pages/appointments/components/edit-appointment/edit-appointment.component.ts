@@ -14,7 +14,6 @@ import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
 import { Appointment } from 'src/app/models/appointment.model';
-import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -28,7 +27,7 @@ import { Account } from 'src/app/models/account.model';
 @Component({
   selector: 'app-edit-appointment',
   templateUrl: './edit-appointment.component.html',
-  styleUrl:'./edit-appointment.component.css',
+  styleUrl: './edit-appointment.component.css',
   standalone: true,
   imports: [
     AngularMaterialModule,
@@ -88,18 +87,17 @@ export class EditAppointmentComponent {
       start: [this.dataAppointment.start, [Validators.required]],
       time: [appointmentTime, [Validators.required]],
     });
-
   }
- 
+
   get hasChanges() {
     return this.somethingChanged;
   }
 
   get clinic() {
-    return this.editAppointmentForm.get('clinic')
+    return this.editAppointmentForm.get('clinic');
   }
   get doctor() {
-    return this.editAppointmentForm.get('doctor')
+    return this.editAppointmentForm.get('doctor');
   }
   get newDate() {
     const date = setHours(
@@ -130,12 +128,11 @@ export class EditAppointmentComponent {
             if (resp.ok) {
               this.editAppointmentForm.reset();
               this.dialogRef.close();
-              success(resp.message);
               this.store.dispatch(ui.isLoadingTable());
             }
           },
           (err: any) => {
-            error(err.error.message);
+     
           }
         );
     }
@@ -148,12 +145,10 @@ export class EditAppointmentComponent {
         (resp: any) => {
           if (resp.ok) {
             this.dialogRef.close();
-            success(resp.message);
             this.store.dispatch(ui.isLoadingTable());
           }
         },
         (err: any) => {
-          error(err.error.message);
         }
       );
   }

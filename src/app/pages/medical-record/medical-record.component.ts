@@ -13,7 +13,6 @@ import { PatientMedicalRecordService } from 'src/app/services/patient-medical-re
 
 import { MedicalRecord } from 'src/app/models/medical_record.model';
 
-import { error } from 'src/app/helpers/sweetAlert.helper';
 
 import { NewMedialRecordComponent } from '../components/new-medial-record/new-medial-record.component';
 import { EditMedicalRecordComponent } from '../components/edit-medical-record/edit-medical-record.component';

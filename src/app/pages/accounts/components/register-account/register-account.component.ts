@@ -13,12 +13,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
-
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { AccountsService } from '../../services/accounts.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-register-account',
@@ -38,64 +38,80 @@ export class RegisterAccountComponent {
   public formSubmitted: boolean = false;
   private readonly accountService = inject(AccountsService);
   private readonly formBuilder = inject(FormBuilder);
+  public snackBar = inject(MatSnackBar);
+
   public hide = true;
-  public registerForm: FormGroup =  this.formBuilder.group(
-      {
-        duiNumber: [null, Validators.required],
-        email: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(10),
-            this.forbiddenInputMailValidator(),
-          ],
+  public registerForm: FormGroup = this.formBuilder.group(
+    {
+      duiNumber: [null, Validators.required],
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(10),
+          this.forbiddenInputMailValidator(),
         ],
-        name: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(25),
-            this.forbiddenInputTextValidator(),
-          ],
+      ],
+      name: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(25),
+          this.forbiddenInputTextValidator(),
         ],
-        lastname: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(25),
-            this.forbiddenInputTextValidator(),
-          ],
+      ],
+      lastname: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(25),
+          this.forbiddenInputTextValidator(),
         ],
-        phone: [null, Validators.required],
-        gender: [null, Validators.required],
-        role: [null, Validators.required],
-        password: [null, [Validators.required, Validators.minLength(9)]],
-        confirmationPassword: [null, [Validators.required, Validators.minLength(9)]],
-      },
-      { validators: this.passwordMatchValidator }
-    );
-    
+      ],
+      phone: [null, Validators.required],
+      gender: [null, Validators.required],
+      role: [null, Validators.required],
+      password: [null, [Validators.required, Validators.minLength(9)]],
+      confirmationPassword: [
+        null,
+        [Validators.required, Validators.minLength(9)],
+      ],
+    },
+    { validators: this.passwordMatchValidator }
+  );
 
   constructor(
     private store: Store<AppState>,
     public matdialogRef: MatDialogRef<RegisterAccountComponent>
-  ) {
-    
-  }
+  ) {}
 
   createAccount() {
     const { confirmationPassword, ...rest } = this.registerForm.value;
     if (this.registerForm.valid) {
       this.accountService.crearteNewAccount(rest).subscribe({
         next: () => {
-          success('Account save correctly');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Account save correctly',
+              isSuccess: false,
+            },
+          });
           this.store.dispatch(ui.isLoadingTable());
           this.registerForm.reset();
           this.matdialogRef.close();
         },
-        error: () => error('Account not save'),
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
+        },
       });
     }
   }
@@ -127,7 +143,9 @@ export class RegisterAccountComponent {
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmationPassword = control.get('confirmationPassword')?.value;
-    return password === confirmationPassword ? null : { passwordMismatch: control.value };
+    return password === confirmationPassword
+      ? null
+      : { passwordMismatch: control.value };
   }
   forbiddenInputTextValidator(): ValidatorFn {
     const isForbiddenInput: RegExp = /^[a-zA-Z\s]+[a-zA-Z]+$/;
@@ -145,4 +163,3 @@ export class RegisterAccountComponent {
     };
   }
 }
-
