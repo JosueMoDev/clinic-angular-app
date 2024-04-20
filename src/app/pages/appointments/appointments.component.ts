@@ -8,13 +8,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { AppointmentService } from 'src/app/services/appointment.service';
 
 import { Clinic } from 'src/app/models/clinic.model';
 
-import { AppointmentDialogComponent } from 'src/app/pages/components/appointment-dialog/appointment-dialog.component';
 import { ActionsAppointmentDialogComponent } from 'src/app/pages/components/actions-appointment-selected/actions-appointment-dialog.component';
 import { ClinicService } from '../clinics/services/clinic.service';
+import { AppointmentService } from './services/appoinment.service';
+import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 
 @Component({
   selector: 'app-appointment',
@@ -109,7 +109,7 @@ export class AppointmentComponent {
   }
 
   addEvent(): void {
-    this.matdialig.open(AppointmentDialogComponent, {
+    this.matdialig.open(CreateAppointmentComponent, {
       hasBackdrop: true,
       disableClose: true,
       role: 'dialog',

@@ -16,7 +16,7 @@
         </ng-container>
           <ng-container matColumnDef="name" >
           <td mat-cell  *matCellDef="let clinic" [class.row-link-disabled]="!clinic.status" >
-            <p>{{ clinic.status }} </p>
+            <p>{{ clinic.name }} </p>
           </td>
         </ng-container>
         <ng-container matColumnDef="registerNumber">
