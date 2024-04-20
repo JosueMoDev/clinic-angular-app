@@ -29,7 +29,7 @@ import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services
 @Component({
   selector: 'app-create-appointment',
   templateUrl: './create-appointment.component.html',
-  styles: [],
+  styleUrl: './create-appointment.component.css',
   standalone: true,
   imports: [
     AngularMaterialModule,
@@ -46,7 +46,7 @@ export class CreateAppointmentComponent {
   private readonly clinicService = inject(ClinicService);
   private readonly clinicAssignment = inject(ClinicAssigmentService);
   public confirmDocumentForm!: FormGroup;
-  public newAppointmentForm!: FormGroup;
+  public createAppointmentForm!: FormGroup;
   public patient!: Account;
   public userLogged!: string;
   public minDate: Date;
@@ -55,7 +55,7 @@ export class CreateAppointmentComponent {
   public maxTime: string = '18:00';
 
   public clinicList: Clinic[] = [];
-  public doctorList!: Account[];
+  public doctorList: Account[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,13 +76,13 @@ export class CreateAppointmentComponent {
       document: ['', [Validators.required, Validators.minLength(9)]],
     });
 
-    this.newAppointmentForm = this.formBuilder.group({
+    this.createAppointmentForm = this.formBuilder.group({
       clinic: ['', [Validators.required]],
       doctor: ['', [Validators.required]],
       start: [null, [Validators.required]],
       time: ['', [Validators.required]],
     });
-
+    this.doctor?.disable();
     this.getAllClinicAvilable();
   }
 
@@ -93,7 +93,7 @@ export class CreateAppointmentComponent {
   }
 
   get patientByDocumentNumber() {
-    return this.newAppointmentForm.patchValue({ title: this.completename });
+    return this.createAppointmentForm.patchValue({ title: this.completename });
   }
   get document_number() {
     return this.confirmDocumentForm.get('document');
@@ -102,19 +102,28 @@ export class CreateAppointmentComponent {
     return this.patient?.name + ' ' + this.patient?.lastname;
   }
   get clinic() {
-    return this.newAppointmentForm.get('clinic');
+    return this.createAppointmentForm.get('clinic');
+  }
+
+  get date() {
+    return this.createAppointmentForm.get('date');
+  }
+
+  get time() {
+    return this.createAppointmentForm.get('time');
   }
 
   get doctor() {
-    return this.newAppointmentForm.get('doctor');
+    return this.createAppointmentForm.get('doctor');
   }
 
   getDoctorsAssigned() {
     this.clinicAssignment
-      .allDoctorsAssingedToClinic(this.newAppointmentForm.get('clinic')?.value)
+      .allDoctorsAssingedToClinic(this.createAppointmentForm.get('clinic')?.value)
       .subscribe({
         next: (doctors) => {
           this.doctorList = doctors;
+          if (doctors.length >= 1) this.doctor?.enable();
         },
         error: (err) => {
           console.log(err);
@@ -138,8 +147,8 @@ export class CreateAppointmentComponent {
   }
 
   createAppointment() {
-    if (this.newAppointmentForm.value) {
-      const { start, clinic, doctor, time } = this.newAppointmentForm.value;
+    if (this.createAppointmentForm.value) {
+      const { start, clinic, doctor, time } = this.createAppointmentForm.value;
       const appointmentForm = {
         startDate: addHours(new Date(start), parseInt(time)).toISOString(),
         endDate: addHours(new Date(start), parseInt(time) + 1).toISOString(),
@@ -150,7 +159,7 @@ export class CreateAppointmentComponent {
       };
       this.appointmentService.createNewAppointment(appointmentForm).subscribe({
         next: () => {
-          this.newAppointmentForm.reset();
+          this.createAppointmentForm.reset();
           this.confirmDocumentForm.reset();
           this.dialogRef.close();
           success('Appointment has created success');
@@ -164,7 +173,4 @@ export class CreateAppointmentComponent {
     }
   }
 
-  close(): void {
-    this.dialogRef.close();
-  }
 }
