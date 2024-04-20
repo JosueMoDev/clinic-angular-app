@@ -41,7 +41,7 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           this.loginForm.reset();
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard/calendar');
           success('Welcome');
         },
         error: () => error('Error intenta nuevamente'),

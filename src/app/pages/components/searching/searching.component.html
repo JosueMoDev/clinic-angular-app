@@ -1,21 +1,11 @@
-<div class="items-center w-full h-full">
-   
-    <form  role="form " [formGroup]="searchForm">
-        <div class="flex"> 
-            <span class="text-lg  absolute  z-[2]  flex h-fit align-middle  rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2  px-1 text-center ">
-                <mat-icon class="text-base text-white">search</mat-icon>
-            </span>         
-            <input 
-                type="text" 
-                class="pl-9 w-full text-sm md:text-normal focus:shadow-primary-outline ease w-12/12 leading-5.6 relative  block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-slate-850 text-white bg-clip-padding py-2  transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow"
-                placeholder="Type here..."
-                type="text" 
-                formControlName="searchInput"
-            />
-        </div>
-    </form>
-</div>
-<mat-list role="list" *ngIf="!openSearchBar" class="absolute right-0 z-50 w-full h-auto text-sm origin-top rounded-md bg-slate-850/100 top-11 transform-dropdown bg-clip-padding">
+<form class="flex w-full justify-center" role="form " [formGroup]="searchForm">
+  <mat-form-field class="w-full">
+    <mat-label>searching</mat-label>
+    <input type="text" matInput placeholder="Type here..." formControlName="searchInput">
+    <mat-icon matSuffix color="primary">search</mat-icon>
+  </mat-form-field>
+</form>
+<!-- <mat-list role="list" *ngIf="!openSearchBar">
     <div mat-list-item role="listitem" class="h-auto " *ngFor="let result of searchResults$ | async">
         <a routerLink="/dashboard/show-user" (click)="setProfileUser(result)" class="flex w-full p-1 bg-transparent rounded-lg cursor-pointer justify-self-center whitespace-nowrap hover:bg-blue-800/13" *ngIf="result.id">
             <div class="flex w-full h-full">
@@ -55,4 +45,4 @@
             </div>
         </a>
     </div>
-</mat-list>
+</mat-list> -->
