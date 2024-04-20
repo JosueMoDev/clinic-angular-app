@@ -14,8 +14,10 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 import * as ui from 'src/app/store/actions/ui.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 interface ClinicAssignmentData {
   doctors: Account[];
   clinic: string;
@@ -31,6 +33,7 @@ export class AssigmentDialogComponent {
   private readonly clinicAssignmentService = inject(ClinicAssigmentService);
   private formBuilder = inject(FormBuilder);
   private store = inject(Store<AppState>);
+  public snackBar = inject(MatSnackBar);
 
   public assignmentList!: FormArray<any>;
   public hasDoctorsToAssign: number = 0;
@@ -64,11 +67,23 @@ export class AssigmentDialogComponent {
       .assignDoctorsToClinic(this.data.clinic, this.doctorsList)
       .subscribe({
         next: () => {
-          success('Assignment completed');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Assignment has done',
+              isSuccess: false,
+            },
+          });
           this.store.dispatch(ui.isLoadingTable());
         },
-        error: () => {
-          error('Error on assigment');
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
         },
       });
     this.dialogRef.close();

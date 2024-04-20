@@ -10,8 +10,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import * as ui from 'src/app/store/actions/ui.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
  
 @Component({
   selector: 'app-create-clinic',
@@ -29,42 +30,38 @@ import * as ui from 'src/app/store/actions/ui.actions';
 })
 export class CreateClinicComponent {
   private readonly clinicService = inject(ClinicService);
-  private readonly authenticationService= inject(AuthenticationService);
+  private readonly authenticationService = inject(AuthenticationService);
   private formbuilder = inject(FormBuilder);
   private store = inject(Store<AppState>);
+  public snackBar = inject(MatSnackBar);
 
   public formSub$!: Subscription;
-  public loggedUser: Account  = this.authenticationService.currentUserLogged() as Account;;
-  public registerClinicForm: FormGroup =  this.formbuilder.group({
-      registerNumber: ['', Validators.required],
-      name: [
-        '',
+  public loggedUser: Account =
+    this.authenticationService.currentUserLogged() as Account;
+  public registerClinicForm: FormGroup = this.formbuilder.group({
+    registerNumber: ['', Validators.required],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+    ],
+
+    phone: ['', Validators.required],
+    address: this.formbuilder.group({
+      state: ['', [Validators.required]],
+      city: ['', Validators.required],
+      street: [
+        null,
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(50),
         ],
       ],
+    }),
+    createdBy: [this.loggedUser.id],
+  });
 
-      phone: ['', Validators.required],
-      address: this.formbuilder.group({
-        state: ['', [Validators.required]],
-        city: ['', Validators.required],
-        street: [
-          null,
-          [
-            Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(50),
-          ],
-        ],
-      }),
-      createdBy: [this.loggedUser.id],
-    });;
-
-  constructor(
-    public matdialogRef: MatDialogRef<CreateClinicComponent>,
-  ) {}
+  constructor(public matdialogRef: MatDialogRef<CreateClinicComponent>) {}
 
   ngOnDestroy(): void {
     this.formSub$.unsubscribe;
@@ -104,12 +101,26 @@ export class CreateClinicComponent {
   createClinic() {
     this.clinicService.createClinic(this.registerClinicForm.value).subscribe({
       next: () => {
-         success('Clinic Created success');
-         this.store.dispatch(ui.isLoadingTable());
-         this.matdialogRef.close();
-         this.registerClinicForm.reset();
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: 'Clinic has been created',
+            isSuccess: false,
+          },
+        });
+        this.store.dispatch(ui.isLoadingTable());
+        this.matdialogRef.close();
+        this.registerClinicForm.reset();
       },
-      error: () => {  error('An Errors happend while we were creating clinic')}
+      error: ({ error }) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: error.error,
+            isSuccess: false,
+          },
+        });
+      },
     });
   }
 }

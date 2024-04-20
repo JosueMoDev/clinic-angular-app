@@ -10,10 +10,11 @@ import {
 
 import { Clinic } from 'src/app/models/clinic.model';
 
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { Subscription } from 'rxjs';
 import { ClinicService } from '../clinics/services/clinic.service';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-show-clinic',
@@ -24,6 +25,8 @@ export class ShowClinicComponent {
   private readonly clinicService = inject(ClinicService);
   private readonly authenticationService = inject(AuthenticationService);
   private readonly formbuilder = inject(FormBuilder);
+  public snackBar = inject(MatSnackBar);
+
   public authenticatedAccount!: string;
   public clinicSelected!: Clinic;
   public formSub$!: Subscription;
@@ -34,7 +37,8 @@ export class ShowClinicComponent {
 
   ngOnInit() {
     this.clinicSelected = this.clinicService.selectedClinic() as Clinic;
-    this.authenticatedAccount = this.authenticationService.currentUserLogged()!.id;
+    this.authenticatedAccount =
+      this.authenticationService.currentUserLogged()!.id;
     this.updateForm = this.formbuilder.group({
       registerNumber: [this.clinicSelected.registerNumber, Validators.required],
       name: [
@@ -67,14 +71,30 @@ export class ShowClinicComponent {
     if (this.updateForm.valid) {
       const { address, ...rest } = this.updateForm.value;
       this.clinicService
-        .updateClinic({ id: this.clinicSelected.id, address, ...rest, lastUpdate:{ account: this.authenticatedAccount } })
+        .updateClinic({
+          id: this.clinicSelected.id,
+          address,
+          ...rest,
+          lastUpdate: { account: this.authenticatedAccount },
+        })
         .subscribe({
           next: () => {
-            success('Clinic Update Success');
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: 'Clinic has been updated',
+                isSuccess: false,
+              },
+            });
           },
-          error: (err) => {
-            error('Ocurrio un error');
-            console.log(err);
+          error: ({ error }) => {
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: error.error,
+                isSuccess: false,
+              },
+            });
           },
         });
     }

@@ -9,12 +9,14 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
 
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
+
 import { ClinicService } from './services/clinic.service';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Account } from 'src/app/models/account.model';
 import { Clinic } from '../../interfaces/clinic-response.interface';
 import { CreateClinicComponent } from './components/create-clinic.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-clinics',
@@ -25,6 +27,7 @@ export class ClinicsComponent {
   private readonly clinicService = inject(ClinicService);
   private readonly authenticationService = inject(AuthenticationService);
   private readonly store = inject(Store<AppState>);
+  public snackBar = inject(MatSnackBar);
 
   public currentUserLogged: Account =
     this.authenticationService.currentUserLogged() as Account;
@@ -103,12 +106,23 @@ export class ClinicsComponent {
   changeClinicState(clinic: string, account: string) {
     this.clinicService.changeClinicStatus(clinic, account).subscribe({
       next: () => {
-        success('Se cambio el estado exitosamente');
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: 'Se cambio el estado exitosamente',
+            isSuccess: true,
+          },
+        });
         this.allClinics();
       },
-      error: (err) => {
-        error('Error cambiando status');
-        console.log(err);
+      error: ({ error }) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: error.error,
+            isSuccess: false,
+          },
+        });
       },
     });
   }

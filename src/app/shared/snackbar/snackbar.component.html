@@ -1,0 +1,12 @@
+<div class="flex w-full items-center" matSnackBarLabel>
+  <p
+    [ngClass]="{
+      'text-green-300': data.isSuccess,
+      'text-pink370': !data.isSuccess
+    }"
+  >
+    <span *ngIf="data.isSuccess">✅</span>
+    <span *ngIf="!data.isSuccess">🛑</span>
+    {{ data.message }}
+  </p>
+</div>

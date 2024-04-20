@@ -48,8 +48,7 @@ export class AuthenticationService {
       .pipe(
         map(({ account, accessToken }) =>
           this.setAuthentication(account, accessToken)
-        ),
-        catchError((err) => throwError(() => err.error.message))
+        )
       );
   }
 
@@ -69,12 +68,6 @@ export class AuthenticationService {
       .pipe(
         map(({ account, accessToken }) =>
           this.setAuthentication(account, accessToken)
-        ),
-        catchError((err) =>
-          throwError(() => {
-            err.error.message;
-            return of(false);
-          })
         )
       );
   }

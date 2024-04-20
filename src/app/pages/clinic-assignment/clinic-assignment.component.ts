@@ -12,8 +12,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { Rol } from 'src/app/interfaces/authorized-roles.enum';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import * as ui from 'src/app/store/actions/ui.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-clinic-assignment',
@@ -25,6 +26,7 @@ export class ClinicAssignmentComponent {
   private store = inject(Store<AppState>);
   private authService = inject(AuthenticationService);
   private clinicService = inject(ClinicService);
+  public snackBar = inject(MatSnackBar);
 
   public uiSubscription!: Subscription;
 
@@ -108,10 +110,22 @@ export class ClinicAssignmentComponent {
       .subscribe({
         next: () => {
           this.store.dispatch(ui.isLoadingTable());
-          success('Deleted Correctly');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Unassigned successfully',
+              isSuccess: false,
+            },
+          });
         },
-        error: () => {
-          error('No Deleted');
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
         },
       });
   }
@@ -121,10 +135,22 @@ export class ClinicAssignmentComponent {
       .subscribe({
         next: () => {
           this.store.dispatch(ui.isLoadingTable());
-          success('Deleted Correctly');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Unassigned successfully',
+              isSuccess: false,
+            },
+          });
         },
-        error: () => {
-          error('No Deleted');
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
         },
       });
   }

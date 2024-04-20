@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { success, error } from 'src/app/helpers/sweetAlert.helper';
 import { AuthenticationService } from '../../services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   private authenticationService = inject(AuthenticationService);
   private router = inject(Router);
   private formBuider = inject(FormBuilder);
-
+  public snackBar = inject(MatSnackBar);
   public loginForm: FormGroup = this.formBuider.group({
     email: [
       localStorage.getItem('user_email'),
@@ -42,9 +43,24 @@ export class LoginComponent {
         next: () => {
           this.loginForm.reset();
           this.router.navigateByUrl('/dashboard/calendar');
-          success('Welcome');
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Wellcome',
+              action: 'Undo',
+              isSuccess: true,
+            },
+          });
         },
-        error: () => error('Error intenta nuevamente'),
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
+        },
       });
   }
 }
