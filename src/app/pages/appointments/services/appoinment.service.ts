@@ -5,10 +5,9 @@ import { delay, map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { Appointment as AppointmentModel } from 'src/app/models/appointment.model';
+import { Appointment  } from 'src/app/models/appointment.model';
 import {
   AppointmentResponse,
-  Appointment,
 } from '../interfaces/appointment-response.interface'
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 
@@ -31,7 +30,7 @@ export class AppointmentService {
         map((resp) => {
           const appointments = resp.appointments.map(
             (appointment) =>
-              new AppointmentModel(appointment)
+              new Appointment(appointment)
           );
           return {
             total: resp.pagination.total,
@@ -42,7 +41,7 @@ export class AppointmentService {
   }
   createNewAppointment(appointment: any) {
     return this.http.post(
-      `${environment.THECLINIC_API_URL}/appointments`,
+      `${environment.THECLINIC_API_URL}/appointment/create`,
       appointment,
       this.headers
     );

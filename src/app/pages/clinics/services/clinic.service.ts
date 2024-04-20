@@ -45,7 +45,7 @@ export class ClinicService {
   allClinicsAvailable() {
   return this.http
     .get<ClinicResponse>(
-      `${environment.THECLINIC_API_URL}/clinic/find-many?sort=true`,
+      `${environment.THECLINIC_API_URL}/clinic/find-many?sort=${true}`,
       this.headers
     )
     .pipe(

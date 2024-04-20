@@ -107,9 +107,9 @@
               <option class="capitalize text-start" value="" selected disabled>select clinic</option>
               <option class="capitalize text-start" *ngFor="let clinic of clinicList" [value]="clinic.id">{{clinic.name}} - {{ clinic.address.state }}/{{clinic.address.city}}</option>
             </select>
-            <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+            <div *ngIf="clinic?.valid" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
               <mat-icon class="text-base" color="accent">done</mat-icon>
-            </div> -->
+            </div>
           </div>
         </div>
 
@@ -125,9 +125,9 @@
               <option class="capitalize text-start"  value="" selected disabled>select Doctor</option>
               <option class="capitalize text-start"  *ngFor="let doctor of doctorList" [value]="doctor.id">{{doctor.name}} {{doctor.lastname}} </option>
             </select>
-            <!-- <div *ngIf="province?.value" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+            <div *ngIf="doctor?.valid" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
               <mat-icon class="text-base" color="accent">done</mat-icon>
-            </div> -->
+            </div>
           </div>
         </div>   
       </div>   

@@ -9,6 +9,7 @@ export interface Appointment {
   endDate: Date;
   doctorId: string;
   patientId: string;
+  clinicId: string
   createdAt: Date;
   createdBy: string;
   lastUpdate: LastUpdate[];

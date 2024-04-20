@@ -1,14 +1,17 @@
-import { Component, inject} from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog'
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
-import {addHours} from 'date-fns';
+import { addHours } from 'date-fns';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as ui from 'src/app/store/actions/ui.actions';
-
-
 
 import { error, success } from 'src/app/helpers/sweetAlert.helper';
 import { DoctorAvailable } from 'src/app/interfaces/doctors-available.interface';
@@ -21,7 +24,7 @@ import { AccountsService } from 'src/app/pages/accounts/services/accounts.servic
 import { Account } from 'src/app/models/account.model';
 import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
 import { Clinic } from 'src/app/models/clinic.model';
-
+import { ClinicAssigmentService } from 'src/app/pages/clinic-assignment/services/clinic-assigment.service';
 
 @Component({
   selector: 'app-create-appointment',
@@ -40,7 +43,8 @@ export class CreateAppointmentComponent {
   private readonly appointmentService = inject(AppointmentService);
   private readonly accountService = inject(AccountsService);
   private readonly authenticationService = inject(AuthenticationService);
-  private readonly clinicService = inject(ClinicService)
+  private readonly clinicService = inject(ClinicService);
+  private readonly clinicAssignment = inject(ClinicAssigmentService);
   public confirmDocumentForm!: FormGroup;
   public newAppointmentForm!: FormGroup;
   public patient!: Account;
@@ -51,7 +55,7 @@ export class CreateAppointmentComponent {
   public maxTime: string = '18:00';
 
   public clinicList: Clinic[] = [];
-  public doctorList!: DoctorAvailable[];
+  public doctorList!: Account[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,23 +84,14 @@ export class CreateAppointmentComponent {
     });
 
     this.getAllClinicAvilable();
-
   }
 
   getAllClinicAvilable() {
-    this.clinicService.allClinicsAvailable()
-      .subscribe(({ clinics }) => {
-          console.log(clinics)
-          this.clinicList = clinics
-        }
-      )
+    this.clinicService.allClinicsAvailable().subscribe(({ clinics }) => {
+      this.clinicList = clinics;
+    });
   }
 
-
-
-  get clinics() {
-    return this.clinicList;
-  }
   get patientByDocumentNumber() {
     return this.newAppointmentForm.patchValue({ title: this.completename });
   }
@@ -106,56 +101,67 @@ export class CreateAppointmentComponent {
   get completename() {
     return this.patient?.name + ' ' + this.patient?.lastname;
   }
-  get clinicId() {
-    return this.newAppointmentForm.get('clinic')?.value;
+  get clinic() {
+    return this.newAppointmentForm.get('clinic');
   }
 
-  
+  get doctor() {
+    return this.newAppointmentForm.get('doctor');
+  }
+
   getDoctorsAssigned() {
-    console.log(this.newAppointmentForm.get('clinic')?.value);
+    this.clinicAssignment
+      .allDoctorsAssingedToClinic(this.newAppointmentForm.get('clinic')?.value)
+      .subscribe({
+        next: (doctors) => {
+          this.doctorList = doctors;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   isDocumentNumberCorrect() {
     if (this.confirmDocumentForm.valid) {
-      this.accountService.confirmDocumentNumber(this.confirmDocumentForm.value.document).subscribe({
-        next: (patient) => {
-          this.patient = patient;
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      })
+      this.accountService
+        .confirmDocumentNumber(this.confirmDocumentForm.value.document)
+        .subscribe({
+          next: (patient) => {
+            this.patient = patient;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
     }
   }
 
   createAppointment() {
-    // if (!this.newAppointmentForm.invalid && this.patient?.id) {
-    //   const { start, clinic, doctor, time } = this.newAppointmentForm.value;
-    //   const appointmentForm = {
-    //     start: addHours(new Date(start), parseInt(time)),
-    //     end: addHours(new Date(start), parseInt(time) + 1),
-    //     title: this.completename,
-    //     clinic,
-    //     doctor,
-    //     patient: this.patient?.id,
-    //     createdby: this.userLogged,
-    //   };
-    //   this.appointmentService.createNewAppointment(appointmentForm).subscribe(
-    //     (resp: any) => {
-    //       if (resp.ok) {
-    //         this.isDocument_numberCorrenct = false;
-    //         this.newAppointmentForm.reset();
-    //         this.confirmDocumentForm.reset();
-    //         this.dialogRef.close();
-    //         success(resp.message);
-    //         this.store.dispatch(ui.isLoadingTable());
-    //       }
-    //     },
-    //     (err: any) => {
-    //       error(err.error.message);
-    //     }
-    //   );
-    // }
+    if (this.newAppointmentForm.value) {
+      const { start, clinic, doctor, time } = this.newAppointmentForm.value;
+      const appointmentForm = {
+        startDate: addHours(new Date(start), parseInt(time)).toISOString(),
+        endDate: addHours(new Date(start), parseInt(time) + 1).toISOString(),
+        clinicId: clinic as string,
+        doctorId: doctor as string,
+        patientId: this.patient?.id,
+        createdBy: this.userLogged,
+      };
+      this.appointmentService.createNewAppointment(appointmentForm).subscribe({
+        next: () => {
+          this.newAppointmentForm.reset();
+          this.confirmDocumentForm.reset();
+          this.dialogRef.close();
+          success('Appointment has created success');
+          this.store.dispatch(ui.isLoadingTable());
+        },
+        error: (err) => {
+          console.log(err)
+          error('Error while creating appointment')
+        },
+      });
+    }
   }
 
   close(): void {
