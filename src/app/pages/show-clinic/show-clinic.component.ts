@@ -31,7 +31,6 @@ export class ShowClinicComponent {
 
   public authenticatedAccount!: string;
   public clinicSelected!: Clinic;
-  public formSub$!: Subscription;
   public updateForm!: FormGroup;
   public uploadPhotoForm!: FormGroup;
   public file!: File;
@@ -41,7 +40,7 @@ export class ShowClinicComponent {
   ngOnInit() {
     this.clinicSelected = this.clinicService.selectedClinic() as Clinic;
     this.authenticatedAccount =
-      this.authenticationService.currentUserLogged()!.id;
+    this.authenticationService.currentUserLogged()!.id;
     this.updateForm = this.formbuilder.group({
       registerNumber: [this.clinicSelected.registerNumber, Validators.required],
       name: [
@@ -60,8 +59,7 @@ export class ShowClinicComponent {
       }),
     });
 
-    this.uploadPhotoForm = this.formbuilder.group({
-      photoUrl: [this.clinicSelected.photoUrl, Validators.required],
+    this.uploadPhotoForm = this.formbuilder.group({ file: [this.clinicSelected.photoUrl],
     });
   }
 

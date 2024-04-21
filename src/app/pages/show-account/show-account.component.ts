@@ -30,7 +30,6 @@ export class ShowAccountComponent {
   private router = inject(Router);
 
   public currentUserLogged!: Account;
-  public formSub$!: Subscription;
   public isLoading: boolean = false;
   public profileSelected!: Account;
   public ShowPassWordButtom: boolean = false;
