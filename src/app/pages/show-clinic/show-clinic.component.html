@@ -7,7 +7,11 @@
     >
       <mat-card>
         <mat-card-header>
-          <mat-card-title><p class="py-5 text-2xl">Edit Information for Clinic</p></mat-card-title>
+          <mat-card-title
+            ><p class="py-5 text-2xl">
+              Edit Information for Clinic
+            </p></mat-card-title
+          >
         </mat-card-header>
         <mat-card-content>
           <div>
@@ -140,41 +144,53 @@
       </mat-card>
     </form>
     <form
-      [formGroup]="uploadPhotoForm"
+      (ngSubmit)="uploadPhoto()"
+      [formGroup]="updateForm"
       class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0"
     >
       <mat-card>
         <div>
           <img
-            [src]="'assets/img/no-photo-clinic.jpg'"
+            [src]="clinicSelected.photoUrl || 'assets/img/no-photo-clinic.jpg'"
             alt="profile cover image"
           />
         </div>
         <mat-card-content>
           <div class="flex justify-center w-full py-3 space-x-3">
-              <button
-                mat-raised-button
-                type="button"
-                (click)="deletePhoto()"
-                color="warn"
-              >
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-              </button>
-              <button mat-raised-button type="button" color="primary">
-                <mat-icon>camera</mat-icon>
-                <span>New</span>
-                <input
-                  id="photo"
-                  accept="image/png, image/jpeg, image/jpg"
-                  formControlName="photoUrl"
-                  type="file"
-                  style="display: none"
-                />
-              </button>
-              <button mat-raised-button type="submit" color="accent">
-                <span>Upload</span>
-              </button>
+            <button
+              mat-raised-button
+              type="button"
+              [disabled]="!clinicSelected.photoId"
+              (click)="deletePhoto()"
+              color="warn"
+            >
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+            <input
+              type="file"
+              #fileInput
+              (change)="onFileSelected($event)"
+              accept="image/png, image/jpeg, image/jpg, image/heic"
+              formControlName="file"
+              style="display: none"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="fileInput.click()"
+            >
+              <mat-icon>photo_camera</mat-icon> <span>New</span>
+            </button>
+            <button
+              mat-raised-button
+              [disabled]="!file"
+              type="submit"
+              color="accent"
+            >
+              <mat-icon>upload</mat-icon> <span>Upload</span>
+            </button>
           </div>
         </mat-card-content>
       </mat-card>

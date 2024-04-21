@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from '../accounts/components';
 import { AccountsService } from '../accounts/services/accounts.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
+import { Router } from '@angular/router';
    
 
 
@@ -26,6 +27,7 @@ export class ShowAccountComponent {
   private readonly accountService = inject(AccountsService);
   private formbuilder = inject(FormBuilder);
   public snackBar = inject(MatSnackBar);
+  private router = inject(Router);
 
   public currentUserLogged!: Account;
   public formSub$!: Subscription;
@@ -40,8 +42,9 @@ export class ShowAccountComponent {
   // ? User Photo
   public currectPhoto!: string | undefined;
   public imagenTemp!: any;
-  public updatePhoto!: FormGroup;
+  public updatePhotoForm!: FormGroup;
   constructor(public matDialog: MatDialog) {}
+  public file!: File;
 
   ngOnInit() {
     this.profileSelected = this.accountService.selectedAccount() as Account;
@@ -79,9 +82,8 @@ export class ShowAccountComponent {
       gender: [this.profileSelected.gender, Validators.required],
     });
 
-    this.updatePhoto = this.formbuilder.group({
-      photo: [''],
-      photoSrc: [''],
+    this.updatePhotoForm = this.formbuilder.group({
+      file: [''],
     });
 
     if (this.profileSelected.role !== 'ADMIN') {
@@ -94,7 +96,6 @@ export class ShowAccountComponent {
 
   ngOnDestroy(): void {
     sessionStorage.removeItem('account-selected');
-    this.formSub$.unsubscribe;
   }
 
   updateAccount() {
@@ -112,11 +113,11 @@ export class ShowAccountComponent {
               duration: 2000,
               data: {
                 message: 'Account successfuly updated',
-                isSuccess: false,
+                isSuccess: true,
               },
             });
           },
-          error: ({error}) => {
+          error: ({ error }) => {
             this.snackBar.openFromComponent(SnackbarComponent, {
               duration: 2000,
               data: {
@@ -129,8 +130,60 @@ export class ShowAccountComponent {
     }
   }
 
-  deletePhoto() {}
-  uploadPhoto() {}
+  deletePhoto() {
+    this.accountService.deletePhoto(this.profileSelected.id).subscribe({
+      next: () => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: 'Photo Deleted',
+            isSuccess: true,
+          },
+        });
+        this.router.navigateByUrl('/dashboard/accounts');
+      },
+      error: ({ error }) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: error.error,
+            isSuccess: false,
+          },
+        });
+      },
+    });
+  }
+  uploadPhoto() {
+    if (this.updatePhotoForm.valid) {
+      this.accountService
+        .uploadPhoto(this.profileSelected.id, this.file)
+        .subscribe({
+          next: () => {
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: 'Photo uploaded',
+                isSuccess: true,
+              },
+            });
+            this.router.navigateByUrl('/dashboard/accounts');
+          },
+          error: ({ error }) => {
+             this.snackBar.openFromComponent(SnackbarComponent, {
+               duration: 2000,
+               data: {
+                 message: error.error,
+                 isSuccess: false,
+               },
+             });
+          },
+        });
+    }
+  }
+
+  onFileSelected(event: any): void {
+    this.file = event.target.files[0];
+  }
 
   get name() {
     return this.updateForm.get('name');

@@ -22,7 +22,7 @@ export class ClinicService {
 
   private _selectedClinic = signal<Clinic | null>(null);
   public selectedClinic = computed(() => this._selectedClinic());
-  
+
   constructor() {}
 
   allClinics(page: number, pageSize: number) {
@@ -43,21 +43,21 @@ export class ClinicService {
       );
   }
   allClinicsAvailable() {
-  return this.http
-    .get<ClinicResponse>(
-      `${environment.THECLINIC_API_URL}/clinic/find-many?sort=${true}`,
-      this.headers
-    )
-    .pipe(
-      delay(200),
-      map(({ clinics, pagination }) => {
-        const clinicsList = clinics.map((clinic) => new ClinicModel(clinic));
-        return {
-          pagination,
-          clinics: clinicsList,
-        };
-      })
-    );
+    return this.http
+      .get<ClinicResponse>(
+        `${environment.THECLINIC_API_URL}/clinic/find-many?sort=${true}`,
+        this.headers
+      )
+      .pipe(
+        delay(200),
+        map(({ clinics, pagination }) => {
+          const clinicsList = clinics.map((clinic) => new ClinicModel(clinic));
+          return {
+            pagination,
+            clinics: clinicsList,
+          };
+        })
+      );
   }
 
   createClinic(clinic: Clinic) {
@@ -79,7 +79,7 @@ export class ClinicService {
   changeClinicStatus(id: string, account: string) {
     return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic/change-status`,
-      { id: id, lastUpdate:{ account: account } },
+      { id: id, lastUpdate: { account: account } },
       this.headers
     );
   }
@@ -90,5 +90,25 @@ export class ClinicService {
     if (sessionStorage.getItem('clinic-selected'))
       this.router.navigateByUrl('/dashboard/show-clinic');
     else this.router.navigateByUrl('/dashboard/clinics');
+  }
+
+  deletePhoto(id: string, account: string) {
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/clinic/delete-photo`,
+      { id: id, lastUpdate: { account } },
+      this.headers
+    );
+  }
+
+  uploadPhoto(id: string, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('id', id);
+
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/clinic/upload-photo`,
+      formData,
+      this.headers
+    );
   }
 }

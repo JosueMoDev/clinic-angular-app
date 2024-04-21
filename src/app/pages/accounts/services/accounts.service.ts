@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Account, Account as AccountModel } from 'src/app/models/account.model';
 import { delay, map, Observable } from 'rxjs';
 import { AccountResponse } from '../../../interfaces/account-response.interface';
@@ -21,7 +21,7 @@ export class AccountsService {
   private readonly headers = this.authenticationService.headers;
   private _selectedAccount = signal<Account | null>(null);
   public selectedAccount = computed(() => this._selectedAccount());
-  private readonly router = inject(Router)
+  private readonly router = inject(Router);
 
   constructor() {}
 
@@ -62,13 +62,13 @@ export class AccountsService {
   set refreshAccount(account: Account) {
     this._selectedAccount.set(account);
   }
-  
+
   updateAccount(account: Account) {
-     return this.http.patch(
-       `${environment.THECLINIC_API_URL}/account/update`,
-       account,
-       this.headers
-     );
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/account/update`,
+      account,
+      this.headers
+    );
   }
 
   confirmDocumentNumber(document: string) {
@@ -89,13 +89,34 @@ export class AccountsService {
   showAccount(account: Account) {
     this._selectedAccount.set(account);
     sessionStorage.setItem('account-selected', JSON.stringify(account));
-    if (sessionStorage.getItem('account-selected')) this.router.navigateByUrl('/dashboard/show-account');
+    if (sessionStorage.getItem('account-selected'))
+      this.router.navigateByUrl('/dashboard/show-account');
   }
 
   changeAccountStatus(id: string) {
     return this.http.patch(
       `${environment.THECLINIC_API_URL}/account/change-status`,
-      {id: id},
+      { id: id },
+      this.headers
+    );
+  }
+
+  deletePhoto(id: string) {
+     return this.http.post(
+       `${environment.THECLINIC_API_URL}/account/delete-photo`,
+       {id: id},
+       this.headers
+     );
+  }
+
+  uploadPhoto(id: string, file: File) { 
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('id', id);
+
+    return this.http.post(
+      `${environment.THECLINIC_API_URL}/account/upload-photo`,
+      formData,
       this.headers
     );
   }
