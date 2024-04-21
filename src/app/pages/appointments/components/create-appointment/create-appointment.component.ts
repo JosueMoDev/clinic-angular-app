@@ -21,7 +21,6 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Store } from '@ngrx/store';
 import * as ui from 'src/app/store/actions/ui.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { error } from 'console';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
@@ -171,7 +170,7 @@ export class CreateAppointmentComponent {
             duration: 2000,
             data: {
               message: 'Appointment has created success',
-              isSuccess: false,
+              isSuccess: true,
             },
           });
           this.store.dispatch(ui.isLoadingTable());

@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { delay, map } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
-
 import { Appointment  } from 'src/app/models/appointment.model';
 import {
   AppointmentResponse,
@@ -47,17 +44,17 @@ export class AppointmentService {
     );
   }
 
-  editAppointment(id: string, appointment: any) {
-    return this.http.put(
-      `${environment.THECLINIC_API_URL}/appointments/${id}`,
+  editAppointment(appointment: any) {
+    return this.http.patch(
+      `${environment.THECLINIC_API_URL}/appointment/update`,
       appointment,
       this.headers
     );
   }
 
-  deleteAppointment(id: string, userLogged: string) {
+  deleteAppointment(id: string) {
     return this.http.delete(
-      `${environment.THECLINIC_API_URL}/appointments/${id}?user=${userLogged}`,
+      `${environment.THECLINIC_API_URL}/appointment/delete/${id}`,
       this.headers
     );
   }

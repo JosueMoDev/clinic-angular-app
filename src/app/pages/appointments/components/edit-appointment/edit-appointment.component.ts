@@ -23,6 +23,8 @@ import { ClinicService } from 'src/app/pages/clinics/services/clinic.service';
 import { AppointmentService } from '../../services/appoinment.service';
 import { Clinic } from 'src/app/models/clinic.model';
 import { Account } from 'src/app/models/account.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-edit-appointment',
@@ -45,6 +47,7 @@ export class EditAppointmentComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly store = inject(Store<AppState>);
+  public snackBar = inject(MatSnackBar);
 
   public editAppointmentForm!: FormGroup;
   public userLogged!: string;
@@ -55,7 +58,6 @@ export class EditAppointmentComponent {
   public dataAppointment!: Appointment;
   public clinicList: Clinic[] = [];
   public doctorList: Account[] = [];
-  public somethingChanged: boolean = false;
 
   public doctorSelected!: string | null;
   public doctorSelectedName!: string;
@@ -74,23 +76,20 @@ export class EditAppointmentComponent {
 
   ngOnInit(): void {
     this.dataAppointment = { ...this.data };
-    const today = new Date(this.dataAppointment.start);
-    const appointmentTime = today.getHours() + ':' + today.getMinutes();
     this.userLogged = this.authenticationService.currentUserLogged()!.id;
-
     this.doctorSelected = this.dataAppointment.doctor;
     this.doctorSelectedName = this.dataAppointment.doctor;
+
 
     this.editAppointmentForm = this.formBuilder.group({
       clinic: [this.dataAppointment.clinic, [Validators.required]],
       doctor: [this.doctorSelected, [Validators.required]],
-      start: [this.dataAppointment.start, [Validators.required]],
-      time: [appointmentTime, [Validators.required]],
+      start: [new Date(this.dataAppointment.start), [Validators.required]],
+      time: [
+        `${this.dataAppointment.start.getHours()}:00`,
+        [Validators.required],
+      ],
     });
-  }
-
-  get hasChanges() {
-    return this.somethingChanged;
   }
 
   get clinic() {
@@ -99,61 +98,74 @@ export class EditAppointmentComponent {
   get doctor() {
     return this.editAppointmentForm.get('doctor');
   }
-  get newDate() {
-    const date = setHours(
-      new Date(this.editAppointmentForm.get('start')?.value),
-      0
-    );
-    return date;
-  }
-
-  get newTime() {
-    return this.editAppointmentForm.get('time')?.value;
-  }
+ 
 
   editAppointment() {
     if (!this.editAppointmentForm.invalid) {
       this.editAppointmentForm.get('doctor')?.enable();
-      const { clinic, doctor } = this.editAppointmentForm.value;
+      const { clinic, doctor, start, time } = this.editAppointmentForm.value;
+      // TODO: debemos corregir fechas
       const appointmentEditForm = {
-        start: addHours(new Date(this.newDate), parseInt(this.newTime)),
-        end: addHours(new Date(this.newDate), parseInt(this.newTime) + 1),
-        clinic,
-        doctor,
+        startDate: addHours(new Date(start), parseInt(time)).toISOString(),
+        endDate: addHours(new Date(start), parseInt(time) + 1).toISOString(),
+        clinicId: clinic,
+        doctorId: doctor,
+        patientId: this.dataAppointment.patient,
+        id: this.dataAppointment.id,
+        lastUpdate: {
+          account: this.userLogged,
+        },
       };
-      this.appointmentService
-        .editAppointment(this.dataAppointment.id, appointmentEditForm)
-        .subscribe(
-          (resp: any) => {
-            if (resp.ok) {
-              this.editAppointmentForm.reset();
-              this.dialogRef.close();
-              this.store.dispatch(ui.isLoadingTable());
-            }
-          },
-          (err: any) => {
-     
-          }
-        );
+      this.appointmentService.editAppointment(appointmentEditForm).subscribe({
+        next: () => {
+          this.editAppointmentForm.reset();
+          this.dialogRef.close();
+          this.store.dispatch(ui.isLoadingTable());
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Appointment has updated success',
+              isSuccess: true,
+            },
+          });
+        },
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
+        },
+      });
     }
   }
 
   deleteAppointment() {
     this.appointmentService
-      .deleteAppointment(this.dataAppointment.id, this.userLogged)
-      .subscribe(
-        (resp: any) => {
-          if (resp.ok) {
-            this.dialogRef.close();
-            this.store.dispatch(ui.isLoadingTable());
-          }
+      .deleteAppointment(this.dataAppointment.id)
+      .subscribe({
+        next: () => {
+          this.dialogRef.close();
+          this.store.dispatch(ui.isLoadingTable());
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: 'Appointment has deleted success',
+              isSuccess: true,
+            },
+          });
         },
-        (err: any) => {
-        }
-      );
-  }
-
-  close(): void {
-    this.dialogRef.close();
+        error: ({ error }) => {
+          this.snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: {
+              message: error.error,
+              isSuccess: false,
+            },
+          });
+        },
+      });
   }
 }

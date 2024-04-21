@@ -139,15 +139,16 @@
         </mat-card-actions>
       </mat-card>
     </form>
-            
+
     <form
-      [formGroup]="updatePhoto"
+      (ngSubmit)="uploadPhoto()"
+      [formGroup]="updatePhotoForm"
       class="w-full max-w-full px-3 mt-6 shrink-0 md:w-4/12 md:flex-0 md:mt-0"
     >
       <mat-card>
         <div>
           <img
-            [src]="'assets/img/no-photo-user.jpg'"
+            [src]="profileSelected.photoUrl ||'assets/img/no-photo-user.jpg'"
             alt="profile cover image"
           />
         </div>
@@ -156,25 +157,31 @@
             <button
               mat-raised-button
               type="button"
+              [disabled]="!profileSelected.photoId"
               (click)="deletePhoto()"
               color="warn"
             >
               <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>
-            <button mat-raised-button type="button" color="primary">
-              <mat-icon>camera</mat-icon>
-              <span>New</span>
-              <input
-                id="photo"
-                accept="image/png, image/jpeg, image/jpg"
-                formControlName="photo"
-                type="file"
-                style="display: none"
-              />
+            <input
+              type="file"
+              #fileInput
+              (change)="onFileSelected($event)"
+              accept="image/png, image/jpeg, image/jpg, image/heic"
+              formControlName="file"
+              style="display: none"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="fileInput.click()"
+            >
+              <mat-icon>photo_camera</mat-icon> <span>New</span>
             </button>
-            <button mat-raised-button type="submit" color="accent">
-              <span>Upload</span>
+            <button mat-raised-button [disabled]="!file" type="submit"  color="accent">
+              <mat-icon>upload</mat-icon> <span>Upload</span>
             </button>
           </div>
         </mat-card-content>

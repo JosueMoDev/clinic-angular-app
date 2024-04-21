@@ -15,6 +15,7 @@ import { ClinicService } from '../clinics/services/clinic.service';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-clinic',
@@ -26,19 +27,20 @@ export class ShowClinicComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly formbuilder = inject(FormBuilder);
   public snackBar = inject(MatSnackBar);
+  private router = inject(Router);
 
   public authenticatedAccount!: string;
   public clinicSelected!: Clinic;
-  public formSub$!: Subscription;
   public updateForm!: FormGroup;
   public uploadPhotoForm!: FormGroup;
+  public file!: File;
 
   constructor() {}
 
   ngOnInit() {
     this.clinicSelected = this.clinicService.selectedClinic() as Clinic;
     this.authenticatedAccount =
-      this.authenticationService.currentUserLogged()!.id;
+    this.authenticationService.currentUserLogged()!.id;
     this.updateForm = this.formbuilder.group({
       registerNumber: [this.clinicSelected.registerNumber, Validators.required],
       name: [
@@ -57,14 +59,12 @@ export class ShowClinicComponent {
       }),
     });
 
-    this.uploadPhotoForm = this.formbuilder.group({
-      photoUrl: [this.clinicSelected.photoUrl, Validators.required],
+    this.uploadPhotoForm = this.formbuilder.group({ file: [this.clinicSelected.photoUrl],
     });
   }
 
   ngOnDestroy(): void {
     sessionStorage.removeItem('clinic-selected');
-    this.formSub$.unsubscribe;
   }
 
   updateCLinic() {
@@ -100,9 +100,60 @@ export class ShowClinicComponent {
     }
   }
 
-  deletePhoto() {}
+  deletePhoto() {
+    this.clinicService.deletePhoto(this.clinicSelected.id, this.authenticatedAccount).subscribe({
+      next: () => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: 'Photo Deleted',
+            isSuccess: true,
+          },
+        });
+        this.router.navigateByUrl('/dashboard/clinics');
+      },
+      error: ({ error }) => {
+        this.snackBar.openFromComponent(SnackbarComponent, {
+          duration: 2000,
+          data: {
+            message: error.error,
+            isSuccess: false,
+          },
+        });
+      },
+    });
+  }
+  uploadPhoto() {
+    if (this.updateForm.valid) {
+      this.clinicService
+        .uploadPhoto(this.clinicSelected.id, this.file)
+        .subscribe({
+          next: () => {
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: 'Photo uploaded',
+                isSuccess: true,
+              },
+            });
+            this.router.navigateByUrl('/dashboard/clinics');
+          },
+          error: ({ error }) => {
+            this.snackBar.openFromComponent(SnackbarComponent, {
+              duration: 2000,
+              data: {
+                message: error.error,
+                isSuccess: false,
+              },
+            });
+          },
+        });
+    }
+  }
 
-  uploadPhoto() {}
+  onFileSelected(event: any): void {
+    this.file = event.target.files[0];
+  }
 
   get name() {
     return this.updateForm.get('name');
