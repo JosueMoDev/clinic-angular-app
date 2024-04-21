@@ -112,14 +112,22 @@
       </mat-form-field>
     </div>
 
-    <div class="flex justify-center w-full mb-4">
+    <div class="flex justify-center w-full mb-4 space-x-5">
       <button
         mat-raised-button
         type="submit"
         [disabled]="editAppointmentForm.invalid"
         color="accent"
       >
-        <mat-icon>event</mat-icon>Create New Appointment
+        <mat-icon>edit</mat-icon>Update Appointment
+      </button>
+       <button
+        mat-raised-button
+        type="button"
+        (click)="deleteAppointment()"
+        color="warn"
+      >
+        <mat-icon>delete</mat-icon>Delete Appointment
       </button>
     </div>
   </form>

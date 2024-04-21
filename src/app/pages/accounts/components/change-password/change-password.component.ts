@@ -11,7 +11,6 @@ import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { AccountsService } from '../../services/accounts.service';
 import { Account } from 'src/app/models/account.model';
-import { error } from 'console';
 import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
