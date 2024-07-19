@@ -95,7 +95,7 @@ export class ClinicService {
   deletePhoto(id: string, account: string) {
     return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic/delete-photo`,
-      { id: id, lastUpdate: { account } },
+      { id: id, updatedBy: account },
       this.headers
     );
   }
