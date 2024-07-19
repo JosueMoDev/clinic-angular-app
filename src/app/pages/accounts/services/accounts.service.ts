@@ -102,19 +102,20 @@ export class AccountsService {
   }
 
   deletePhoto(id: string) {
-     return this.http.post(
+     return this.http.patch(
        `${environment.THECLINIC_API_URL}/account/delete-photo`,
-       {id: id},
+       { id: id, updatedBy: this.selectedAccount()?.id},
        this.headers
      );
   }
 
-  uploadPhoto(id: string, file: File) { 
+  uploadPhoto(id: string, file: File) {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('id', id);
+    formData.append('updatedBy', this.selectedAccount()!.id);
 
-    return this.http.post(
+    return this.http.patch(
       `${environment.THECLINIC_API_URL}/account/upload-photo`,
       formData,
       this.headers

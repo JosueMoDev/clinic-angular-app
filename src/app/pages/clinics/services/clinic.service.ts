@@ -79,7 +79,7 @@ export class ClinicService {
   changeClinicStatus(id: string, account: string) {
     return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic/change-status`,
-      { id: id, lastUpdate: { account: account } },
+      { id: id, updatedBy: account  },
       this.headers
     );
   }
@@ -93,19 +93,21 @@ export class ClinicService {
   }
 
   deletePhoto(id: string, account: string) {
-    return this.http.post(
+    return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic/delete-photo`,
       { id: id, lastUpdate: { account } },
       this.headers
     );
   }
 
-  uploadPhoto(id: string, file: File) {
+  uploadPhoto(id: string, file: File, account: string) {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('id', id);
+    formData.append('updatedBy', account);
 
-    return this.http.post(
+
+    return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic/upload-photo`,
       formData,
       this.headers
