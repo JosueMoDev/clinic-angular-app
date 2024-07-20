@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { environment } from 'src/environments/environment';
-import { delay, map } from 'rxjs';
+import { delay, map, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Account } from 'src/app/models/account.model';
 
@@ -78,10 +78,10 @@ export class ClinicAssigmentService {
   }
 
   removeADoctorsAssignedToClinic(doctors: string[], clinic: string) {
-    return this.http.post(
+    return this.http.patch(
       `${environment.THECLINIC_API_URL}/clinic-assignment/delete`,
       { doctors, clinic },
       this.headers
-    );
+    )
   }
 }

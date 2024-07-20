@@ -124,9 +124,9 @@ export class ShowClinicComponent {
     });
   }
   uploadPhoto() {
-    if (this.updateForm.valid) {
+    if (this.uploadPhotoForm.valid) {
       this.clinicService
-        .uploadPhoto(this.clinicSelected.id, this.file)
+        .uploadPhoto(this.clinicSelected.id, this.file, this.authenticatedAccount)
         .subscribe({
           next: () => {
             this.snackBar.openFromComponent(SnackbarComponent, {
